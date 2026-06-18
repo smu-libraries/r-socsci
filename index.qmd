@@ -1,6 +1,6 @@
 ---
 title: "Introductory R for Social Sciences"
-subtitle: "Academic Year 25/26 Term 2 (Jan - Feb)"
+subtitle: "Academic Year 26/27 Term 1 (Aug-Sep)"
 format: html
 ---
 
@@ -16,7 +16,7 @@ This site serves as a repository for the slides and codes developed for the 'Int
 * Bella Ratmelia, Research & Data Services, SMU Libraries
 
 
-Teaching Assistant: Bryan Bramaskara, MITB
+Teaching Assistant: Camille Ong
 
 
 ## Schedule
