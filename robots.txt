@@ -1,1 +1,1 @@
-Sitemap: https://bellaratmelia.github.io/introductory-r-socsci/sitemap.xml
+Sitemap: https://smu-libraries.github.io/r-socsci/sitemap.xml
