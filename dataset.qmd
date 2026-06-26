@@ -3,17 +3,11 @@ title: "The WVS Dataset"
 format: html
 ---
 
-For this workshop, we will be using dataset stored in a CSV file called `wvs-wave7-sg-ca-nz.csv`.
+For this workshop, we will be using dataset stored in a CSV file called `wvs-4-countries.csv`.
 
 ```{=html}
-<a href="https://raw.githubusercontent.com/bellaratmelia/introductory-r-socsci/refs/heads/main/data/wvs-wave7-sg-ca-nz.csv" type="button" class="btn btn-success">Click here to open wvs-wave7-sg-ca-nz.csv, and then Ctrl + S / Cmd + S to save it locally into your data folder</a>
+<a href="https://raw.githubusercontent.com/smu-libraries/r-socsci/refs/heads/main/data/wvs-4-countries.csv" type="button" class="btn btn-success">Click here to open wvs-4-countries.csv, and then Ctrl + S / Cmd + S to save it locally into your data folder</a>
 ```
-
-
-### Data for session 3 onwards
-
-If you missed Session 2 where we cleaned and tidy our data, you can download the cleaned data here: [wvs_cleaned_v1.csv](https://raw.githubusercontent.com/bellaratmelia/introductory-r-socsci/refs/heads/main/data-output/wvs_cleaned_v1.csv)
-
 
 ::: {.callout-note appearance="simple"}
 ### What is a CSV?
@@ -27,93 +21,86 @@ You can open CSV files in Excel, Google Sheets, or even Notepad!
 
 ### Data Dictionary for WVS dataset
 
-The World Values Survey (<www.worldvaluessurvey.org>) is a global network of social scientists studying changing values and their impact on social and political life, led by an international team of scholars, with the WVS association and secretariat headquartered in Stockholm, Sweden. 
+The World Values Survey (<www.worldvaluessurvey.org>) is a global network of social scientists studying changing values and their impact on social and political life, led by an international team of scholars, with the WVS association and secretariat headquartered in Stockholm, Sweden.
 
-The actual questionnaire consists of over 200 questions with respondents from various countries. For the purpose of this workshop, we will only use 16 variables/questions with respondents from Canada, New Zealand, and Singapore. The 16 variables are:
+The actual questionnaire consists of over 200 questions with respondents from various countries. For the purpose of this workshop, we will use 15 variables/questions with respondents from four countries: Hong Kong SAR, Indonesia, Malaysia, and Turkey. Each country contributes 1,313 respondents, for a total of 5,252 rows. The 15 variables are:
 
 `country`
 
-:   Character variable containing three-letter country codes: `CAN`,
-    `NZL`, and `SGP`
+:   Character variable indicating the respondent's country: `Hong Kong SAR`,
+    `Indonesia`, `Malaysia`, or `Turkey`
 
-`ID`
+`respondent_id`
 
 :   Numeric identifier unique to each survey respondent
 
-`family_importance`
+`age`
 
-:   Numeric scale from 1 to 4 measuring importance of family, where 1
-    indicates highest importance
+:   Numeric variable indicating respondent's age in years
 
-`friends_importance`
+`urban_rural`
 
-:   Numeric scale from 1 to 4 measuring importance of friends, where 1
-    indicates highest importance
+:   Indicates the type of settlement where the respondent lives:
+    `Urban` or `Rural`
 
-`leisure_importance`
+`income_level`
 
-:   Numeric scale from 1 to 4 measuring importance of leisure time,
-    where 1 indicates highest importance
+:   Indicates the respondent's household income level (recoded into
+    three groups): `Low`, `Medium`, or `High`
 
-`work_importance`
+`sex`
 
-:   Numeric scale from 1 to 4 measuring importance of work, where 1
-    indicates highest importance
+:   Indicates respondent's gender: `Male` or `Female`
 
-`freedom`
+`marital_status`
 
-:   Numeric scale from 1-10 measuring perceived freedom of choice and
-    control, where 10 indicates most freedom
+:   Indicates current marital status: `Married`, `Single`, `Divorced`,
+    `Separated`, or `Widowed`
+
+`education`
+
+:   Highest educational level attained by the respondent, recoded into
+    three groups: `Lower`, `Middle`, or `Higher`
 
 `life_satisfaction`
 
 :   Numeric scale from 1-10 measuring overall life satisfaction, where
-    10 indicates highest satisfaction
+    1 indicates lowest satisfaction and 10 indicates highest satisfaction
+
+`freedom_of_choice`
+
+:   Numeric scale from 1-10 measuring perceived freedom of choice and
+    control, where 1 indicates no freedom at all and 10 indicates a great deal
+
+`emancipative_values`
+
+:   Numeric index from 0-1 measuring emancipative values (Welzel), where
+    higher values indicate stronger support for personal freedom, gender
+    equality, and civic participation. Composed of four sub-indices:
+    autonomy, equality, choice, and voice.
+
+`trust_people`
+
+:   Indicates general social trust: `Trusted` (most people can be trusted)
+    or `Not trusted` (need to be very careful)
+
+`importance_of_god`
+
+:   Numeric scale from 1-10 measuring how important God is in the
+    respondent's life, where 1 indicates not at all important and 10
+    indicates very important
 
 `financial_satisfaction`
 
-:   Numeric scale from 1-10 measuring satisfaction with financial
-    situation, where 10 indicates highest satisfaction
+:   Numeric scale from 1-10 measuring satisfaction with the household's
+    financial situation, where 1 indicates dissatisfied and 10 indicates satisfied
 
-`religiousity`
+`secular_values`
 
-:   indicates religious self-identification: `A religious person`,
-    `Not a religious person`, `An atheist`
+:   Numeric index from 0-1 measuring overall secular values (Welzel),
+    where higher values indicate more secular orientations. Composed of
+    four sub-indices: defiance, disbelief, relativism, and scepticism.
 
-`political_scale`
-
-:   Numeric scale from 1-10 measuring left-right political orientation,
-    where 1 is left and 10 is right
-
-`sex`
-
-:   indicates respondent's gender: `male` or `female`
-
-`birthyear`
-
-:   Numeric variable indicating year of birth
-
-`age`
-
-:   Numeric variable indicating respondent's age
-
-`marital_status`
-
-:   indicates current marital status: `Married`,
-    `Living together as married`, `Divorced`, `Separated`, `Widowed`,
-    `Single`
-
-`employment`
-
-:   indicates current employment status: `Full time`, `Part time`,
-    `Self employed`, `Retired/pensioned`,
-    `Housewife not otherwise employed`, `Student`, `Unemployed`
-
-Below is the snapshot of the selected questions and how they appeared in the questionnaire:
-
-![](images/Selected Questions for WVS-images-1.jpg)
-
-![](images/Selected Questions for WVS-images-2.jpg)
 
 If you'd like to find out more about this data, including the original
 codebook and questionnaire, check out their homepage here:

@@ -93,7 +93,7 @@ library(tidyverse)
 wvs_cleaned <- read_csv("data-output/wvs_cleaned_v1.csv")
 
 # Convert categorical variables to factors
-columns_to_convert <- c("country", "religiousity", "sex", "marital_status", "employment")
+columns_to_convert <- c("country", "sex", "marital_status", "urban_rural", "income_level", "education", "trust_people")
 
 wvs_cleaned <- wvs_cleaned |> 
     mutate(across(all_of(columns_to_convert), as_factor))
@@ -109,13 +109,13 @@ The $X^2$ test of independence evaluates whether there is a statistically signif
 
 This is done by analyzing the frequency table (i.e., contingency table) formed by two categorical variables.
 
-**Example**: Is there a relationship between `religiousity` and `country` in our WVS data?
+**Example**: Is there a relationship between `education` level and `country` in our WVS data?
 
 Typically, we can start with the contigency table first, and then the visualization
 
 ```{r}
 #| echo: true
-table(wvs_cleaned$religiousity, wvs_cleaned$country)
+table(wvs_cleaned$education, wvs_cleaned$country)
 ```
 
 
@@ -126,21 +126,21 @@ We can use percent-stacked barchart to visualize this (remember from last week!)
 ```{r}
 #| echo: true
 
-wvs_cleaned |> 
-    ggplot(aes(x = country, fill = religiousity)) +
+wvs_cleaned |>
+    ggplot(aes(x = country, fill = education)) +
     geom_bar(position = "fill") +
-    labs(title = "Proportion of religiousity for each country") +
+    labs(title = "Proportion of education level for each country") +
     theme_minimal()
 
 ```
 
 ## Chi-Square: Sample problem and results
 
-Is there a relationship between religiosity and country?
+Is there a relationship between education level and country?
 
 ```{r}
 #| echo: true
-chisq.test(table(wvs_cleaned$religiousity, wvs_cleaned$country))
+chisq.test(table(wvs_cleaned$education, wvs_cleaned$country))
 ```
 
 ::: {style="font-size: 75%; width: 75%"}
@@ -225,13 +225,13 @@ cor.test(wvs_cleaned$life_satisfaction,
 
 ## Learning Check #1
 
-Is there a relationship between religiousity and age group? What do you think based on this result?
+Is there a relationship between education level and age group? What do you think based on this result?
 
 
 ```{r}
 #| echo: true
 
-chisq.test(table(wvs_cleaned$religiousity, wvs_cleaned$age_group))
+chisq.test(table(wvs_cleaned$education, wvs_cleaned$age_group))
 
 ```
 
@@ -538,7 +538,7 @@ TukeyHSD(satisfaction_country_anova)
 
 ## Two-Way ANOVA: Sample problem and result
 
-RQ: **Is there a significant difference in life satisfaction across religiousity and countries?**
+RQ: **Is there a significant difference in life satisfaction across education levels and countries?**
 
 Let's visualize the data!
 
@@ -546,8 +546,8 @@ Let's visualize the data!
 #| echo: true
 #| output-location: slide
 
-wvs_cleaned |> 
-    ggplot(aes(x = religiousity, y = life_satisfaction)) +
+wvs_cleaned |>
+    ggplot(aes(x = education, y = life_satisfaction)) +
     geom_boxplot() +
     facet_wrap(~ country) +
     theme_minimal() +
@@ -560,9 +560,9 @@ wvs_cleaned |>
 ```{r}
 #| echo: true
 #| output-location: fragment
-satisfaction_relig_country_anova <- aov(life_satisfaction ~ religiousity + country, 
+satisfaction_edu_country_anova <- aov(life_satisfaction ~ education + country,
                                     data = wvs_cleaned)
-summary(satisfaction_relig_country_anova)
+summary(satisfaction_edu_country_anova)
 ```
 
 ## Post-hoc test for Two-way ANOVA
@@ -570,19 +570,19 @@ summary(satisfaction_relig_country_anova)
 ```{r}
 #| echo: true
 #| output-location: fragment
-TukeyHSD(satisfaction_relig_country_anova)
+TukeyHSD(satisfaction_edu_country_anova)
 ```
 
 ## Conduct the Two-way ANOVA test (with Interaction)
 
-"With interaction" means we are testing whether the effect of one variable (religiosity) on the outcome (life satisfaction) depends on the level of the other variable (country), or vice versa. For the R code, we use `religiousity * country` instead of `religiousity + country`
+"With interaction" means we are testing whether the effect of one variable (education) on the outcome (life satisfaction) depends on the level of the other variable (country), or vice versa. For the R code, we use `education * country` instead of `education + country`
 
 ```{r}
 #| echo: true
 #| output-location: fragment
-satisfaction_relig_country_anova <- aov(life_satisfaction ~ religiousity * country, 
+satisfaction_edu_country_anova <- aov(life_satisfaction ~ education * country,
                                     data = wvs_cleaned)
-summary(satisfaction_relig_country_anova)
+summary(satisfaction_edu_country_anova)
 ```
 
 ## Interaction plot
@@ -593,22 +593,22 @@ To better see this effect, let's plot the interaction.
 #| echo: true
 #| output-location: slide
 
-wvs_cleaned |> 
-    ggplot(aes(x = religiousity, y = life_satisfaction, 
+wvs_cleaned |>
+    ggplot(aes(x = education, y = life_satisfaction,
                           group = country, color = country)) + # lines will be grouped and colored by country
-    stat_summary(fun = mean, geom = "point") + # Add points to show mean life_satisfaction for each religiosity by country
-    stat_summary(fun = mean, geom = "line") + # Connect the points with lines 
+    stat_summary(fun = mean, geom = "point") + # Add points to show mean life_satisfaction for each education level by country
+    stat_summary(fun = mean, geom = "line") + # Connect the points with lines
     theme_minimal()
-    
+
 ```
 
 ## Interpreting our interaction plot
 
 Some observations that we can make:
 
--   New Zealand's pattern is distinctly different from the other two countries; NZ hows highest life satisfaction for "Not a religious person" but drops sharply for "A religious person", while for Canada and Singapore, there is a similar patterns with peaks at "A religious person"
--   The interaction is most visible in how religious vs non-religious people differ across countries, with the largest difference between countries appears among non-religious people. 
--   The relationship between religiosity and life satisfaction clearly varies by country. We know this because the lines are not parallel with each other. 
+-   Look at whether the lines for each country run roughly parallel — if they do, there is little interaction between education and country.
+-   If the lines cross or diverge, this suggests the effect of education on life satisfaction differs across countries.
+-   Pay attention to which country shows the steepest slope — this indicates the strongest relationship between education level and life satisfaction in that country.
 
 
 
@@ -651,7 +651,7 @@ Example: get the correlation table for `political_scale`, `life_satisfaction`, a
 library(apaTables)
 
 wvs_cleaned |> 
-    select(life_satisfaction, financial_satisfaction, political_scale) |> 
+    select(life_satisfaction, financial_satisfaction, freedom_of_choice) |>
     apa.cor.table( table.number = 1, filename = "fig-output/table-cor.doc")
 ```
 
@@ -668,8 +668,8 @@ Example: get the mean differences table for `political_scale`, `life_satisfactio
 library(gtsummary)
 
 wvs_cleaned |> 
-    dplyr::select(life_satisfaction, financial_satisfaction, political_scale, sex) |> 
-    tbl_summary(by = sex) |> 
+    dplyr::select(life_satisfaction, financial_satisfaction, freedom_of_choice, sex) |>
+    tbl_summary(by = sex) |>
     add_difference()
 ```
 
@@ -767,7 +767,7 @@ oneway.test(life_satisfaction ~ country, data = wvs_cleaned, var.equal = FALSE)
 
 ## Exercise for Two-Way ANOVA
 
-Is there a significant difference in political leaning between different age groups?
+Is there a significant difference in freedom of choice between different age groups?
 
 -   Visualize the data as well
 -   Test for normality and homoskedasticity, and choose the appropriate test
@@ -778,8 +778,8 @@ Is there a significant difference in political leaning between different age gro
 #| echo: true
 #| code-summary: "Show answer"
 
-poli_age_anova <- aov(political_scale ~ age_group, data = wvs_cleaned)
-summary(poli_age_anova)
+freedom_age_anova <- aov(freedom_of_choice ~ age_group, data = wvs_cleaned)
+summary(freedom_age_anova)
 ```
 ---
 
@@ -790,5 +790,5 @@ TukeyHSD:
 #| echo: true
 #| code-summary: "Show answer"
 
-TukeyHSD(poli_age_anova)
+TukeyHSD(freedom_age_anova)
 ```

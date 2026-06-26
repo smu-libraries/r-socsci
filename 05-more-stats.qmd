@@ -57,7 +57,7 @@ library(tidyverse)
 wvs_cleaned <- read_csv("data-output/wvs_cleaned_v1.csv")
 
 # Convert categorical variables to factors
-columns_to_convert <- c("country", "religiousity", "sex", "marital_status", "employment", "age_group")
+columns_to_convert <- c("country", "sex", "marital_status", "urban_rural", "income_level", "education", "trust_people", "age_group")
 
 wvs_cleaned <- wvs_cleaned |> 
     mutate(across(all_of(columns_to_convert), as_factor))
@@ -79,7 +79,7 @@ Example: get the correlation table for `political_scale`, `life_satisfaction`, a
 library(apaTables)
 
 wvs_cleaned |> 
-    select(life_satisfaction, financial_satisfaction, political_scale) |> 
+    select(life_satisfaction, financial_satisfaction, freedom_of_choice) |>
     apa.cor.table( table.number = 1, filename = "fig-output/table-cor.doc")
 ```
 
@@ -98,8 +98,8 @@ Example: get the mean differences table for `political_scale`, `life_satisfactio
 library(gtsummary)
 
 wvs_cleaned |> 
-    dplyr::select(life_satisfaction, financial_satisfaction, political_scale, sex) |> 
-    tbl_summary(by = sex) |> 
+    dplyr::select(life_satisfaction, financial_satisfaction, freedom_of_choice, sex) |>
+    tbl_summary(by = sex) |>
     add_difference()
 ```
 
@@ -171,9 +171,9 @@ summary(life_model1) #summarize the result
 
 Here is one possible way to narrate your result:
 
-> A linear regression analysis was conducted to assess the influence of age on life satisfaction in Canada, Singapore, and New Zealand. Age is a statistically significant but weak predictor (B = 0.016, SE = 0.001, p < 0.001), indicating that for each additional year of age, the life satisfaction is increased by 0.016 units. 
+> A linear regression analysis was conducted to assess the influence of age on life satisfaction in Hong Kong SAR, Indonesia, Malaysia, and Turkey. Age is a statistically significant but weak predictor (B = [value], SE = [value], p < 0.001), indicating that for each additional year of age, life satisfaction changes by [B] units.
 
-> The model was statistically significant (F(1, 6401) = 147.7, p < 0.001) and explained approximately 2% of the variance in life satisfaction (R² = 0.022, Adjusted R² = 0.0224). 
+> The model was statistically significant (F(1, [df]) = [F-value], p < 0.001) and explained approximately [R²]% of the variance in life satisfaction.
 
 ## Present your regression result - huxtable
 
@@ -201,9 +201,9 @@ summary(life_model2)
 ```
 ## Possible way to explain the result
 
-> A multiple regression analysis was conducted to examine how financial satisfaction and age predict life satisfaction. Financial satisfaction was a strong predictor (B = 0.529, SE = 0.008, p < 0.001), indicating that for each one-unit increase in financial satisfaction, life satisfaction increased by 0.529 units. Age was also a significant but weaker predictor (B = 0.006, SE = 0.001, p < 0.001), with each additional year of age associated with a 0.006-unit increase in life satisfaction.
+> A multiple regression analysis was conducted to examine how financial satisfaction and age predict life satisfaction. Financial satisfaction was a strong predictor (B = [value], SE = [value], p < 0.001), indicating that for each one-unit increase in financial satisfaction, life satisfaction increased by [B] units. Age was also a significant but weaker predictor (B = [value], SE = [value], p < 0.001), with each additional year of age associated with a [B]-unit change in life satisfaction.
 
-> The model was statistically significant (F(2, 6400) = 2268, p < 0.001) and explained 41.5% of the variance in life satisfaction (R² = 0.415, Adjusted R² = 0.415). 
+> The model was statistically significant (F(2, [df]) = [F-value], p < 0.001) and explained [R²]% of the variance in life satisfaction.
 
 ## Present your regression result - tbl_regression() from gtsummary
 
@@ -415,12 +415,12 @@ In essence, the goal of binary logistic regression is to estimate the probabilit
 
 ## Binary Logistic Regression: One Continuous Predictor
 
-**Research Question**: Does a participant's **political alignment** affect the likelihood of being satisfied with life?
+**Research Question**: Does a participant's **sense of freedom of choice** affect the likelihood of being satisfied with life?
 
--   The outcome/DV ($Y$): `satisfied` 
+-   The outcome/DV ($Y$): `satisfied`
 
-    -   Our outcome is a continuous variable, but for the purpose of this workshop practice, let's define the outcome as "Satisfied" if the life_satisfaction score is more than 7 (inclusive), and "not Satisfied" if the score is less than 7. 
--   The predictor/IV ($X$): `political_scale`
+    -   Our outcome is a continuous variable, but for the purpose of this workshop practice, let's define the outcome as "Satisfied" if the life_satisfaction score is more than 7 (inclusive), and "not Satisfied" if the score is less than 7.
+-   The predictor/IV ($X$): `freedom_of_choice`
 
 
 
@@ -448,8 +448,8 @@ Let's conduct the analysis!
 ```{r}
 #| echo: true
 
-life_model5 <- glm(satisfied ~ political_scale,
-                family = binomial, 
+life_model5 <- glm(satisfied ~ freedom_of_choice,
+                family = binomial,
                 data = wvs_cleaned)
 
 summary(life_model5)
@@ -481,21 +481,23 @@ More on `tbl_regression()` by `gtsummary`: <https://www.danieldsjoberg.com/gtsum
 
 ## Get the χ² (chi-squared) to report model significance
 
-χ² (Chi-squared) goodness of fit tests whether your model fits the data significantly better than a null model (model with no predictors). As you can see, it is not in the `glm()` result, but we can calculate this somewhat manually using the Null and Residual deviance and df like so:
+χ² (Chi-squared) goodness of fit tests whether your model fits the data significantly better than a null model (model with no predictors). As you can see, it is not in the `glm()` result, but we can calculate this somewhat manually using the Null and Residual deviance and df from the `summary()` output like so:
 
-*   Null deviance: 7731
-*   Residual deviance: 7690
-*   Difference: 7731 - 7690 = 41 (this is the χ² value)
+*   Null deviance: [from summary output]
+*   Residual deviance: [from summary output]
+*   χ² = Null deviance − Residual deviance
 
 To get the p-value, we need the degree of freedom and the χ²:
 
-*   df = difference in degrees of freedom (6402 - 6401 = 1)
-*   χ² = 41
+*   df = difference in degrees of freedom (Null df − Residual df = 1 for one predictor)
 
 ```{r}
 #| echo: true
+#| eval: false
 
-pchisq(41, df=1, lower.tail=FALSE)  # will give p-value
+# Replace chi_sq and df with values from your summary() output
+chi_sq <- NULL_DEVIANCE - RESIDUAL_DEVIANCE
+pchisq(chi_sq, df = 1, lower.tail = FALSE)  # will give p-value
 ```
 
 
@@ -535,11 +537,11 @@ DescTools::PseudoR2(life_model5,
 
 **Possible interpretation:**
 
-*(The intercept isn't typically interpreted as an odds ratio, so we'll ignore that for now)* 
+*(The intercept isn't typically interpreted as an odds ratio, so we'll ignore that for now)*
 
-> A logistic regression was performed to ascertain the effects of political scale alignment on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ² (1, N = 6403) = 41.02, p < .001. 
+> A logistic regression was performed to ascertain the effects of freedom of choice on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ² (1, N = [N]) = [χ²], p < .001.
 
-> The model explained 0.9% (Nagelkerke R²) of the variance in life satisfaction. Political scale alignment was associated with an increased likelihood of being satisfied with life (OR = 1.09, 95% CI [1.06, 1.12], p < .001), indicating that for each one-unit increase in political scale alignment (1-10), the odds of being satisfied with life increased by 9%.
+> The model explained [Nagelkerke R²]% (Nagelkerke R²) of the variance in life satisfaction. Freedom of choice was associated with [increased/decreased] likelihood of being satisfied with life (OR = [OR], 95% CI [[lower], [upper]], p < .001), indicating that for each one-unit increase in freedom of choice (1-10), the odds of being satisfied with life changed by [OR-1 as %]%.
 
 ::: aside
 More on interpreting Odds Ratio: <https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/>
@@ -583,19 +585,19 @@ huxreg("life_satisfaction" = life_model5, statistics = c("R2" = "r.squared", "lo
 
 ## Binary Logistic Regression: One Categorical Predictor
 
-**Research Question**: Does **religiousity** affect the likelihood of being satisfied with life?
+**Research Question**: Does **education level** affect the likelihood of being satisfied with life?
 
--   The outcome/DV ($Y$): `satisfied` 
--   The predictor/IV ($X$): `religiousity` - let's set "A religious person" as the reference category!
+-   The outcome/DV ($Y$): `satisfied`
+-   The predictor/IV ($X$): `education` - let's set "Lower" as the reference category!
 
 ```{r}
 #| echo: true
 #| output-location: slide
 
-wvs_cleaned <- wvs_cleaned |> 
-    mutate(religiousity = relevel(religiousity, ref = "A religious person"))
+wvs_cleaned <- wvs_cleaned |>
+    mutate(education = relevel(education, ref = "Lower"))
 
-life_model6 <- glm(satisfied ~ religiousity,
+life_model6 <- glm(satisfied ~ education,
                       family = "binomial",
                       data = wvs_cleaned)
 
@@ -638,11 +640,11 @@ DescTools::PseudoR2(life_model6,
 
 **Possible interpretation:**
 
-*(The intercept isn't typically interpreted as an odds ratio, so we'll ignore that for now)* 
+*(The intercept isn't typically interpreted as an odds ratio, so we'll ignore that for now)*
 
-> A logistic regression was performed to ascertain the effects of religiosity on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ² (3, N = 6403) = 15.65, p < .001. 
+> A logistic regression was performed to ascertain the effects of education level on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ² (2, N = [N]) = [χ²], p < .001.
 
-> The model explained 0.3% (Nagelkerke R²) of the variance in life satisfaction. Compared to religious persons (reference group), being non-religious was associated with lower odds of life satisfaction (OR = 0.84, 95% CI [0.74, 0.95], p = .004), and being an atheist was also associated with lower odds of life satisfaction (OR = 0.76, 95% CI [0.65, 0.89], p < .001). There was no significant difference in life satisfaction for those who were unsure about their religious beliefs compared to religious persons (OR = 1.24, 95% CI [0.61, 2.52], p = .550).
+> The model explained [Nagelkerke R²]% (Nagelkerke R²) of the variance in life satisfaction. Compared to respondents with lower education (reference group), those with middle education had [higher/lower] odds of life satisfaction (OR = [OR], 95% CI [[lower], [upper]], p = [p]), and those with higher education had [higher/lower] odds of life satisfaction (OR = [OR], 95% CI [[lower], [upper]], p = [p]).
 
 ::: aside
 More on logistic regression: <https://stats.oarc.ucla.edu/r/dae/logit-regression/>

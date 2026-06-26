@@ -21,7 +21,7 @@ Teaching Assistant: Camille Ong
 
 ## Schedule
 
-**Venue** : YPHSL seminar room 3.2
+**Venue** : TBA
 
 **Time** : 3:30 - 5:30 PM (All sessions)
 
@@ -31,11 +31,11 @@ Teaching Assistant: Camille Ong
 | Session | Date | Topic | Description |
 |------------------|------------------|------------------|--------------------|
 | \~ | Before the workshop | Preparation | Complete the [Pre-workshop activities](#pre-workshop-activities) |
-| 1 | 16 Jan 2026 |[**Introduction to R and RStudio**](01-intro.html) | Learn about setting up RStudio, basic data types and structures in R, and importing data files. |
-| 2 | 23 Jan 2026 | [**Data wrangling with tidyverse**](02-tidyverse.html) | Learn about manipulating data with tidyverse, including filtering, selecting, mutating, and grouping data. |
-| 3 | 30 Jan 2026 | [**Data visualization and Descriptive Statistics**](03-visualization.html) | Learn about creating visualizations with ggplot2 and calculating descriptive statistics like mean, median, etc. |
-| 4 | 6 Feb 2026 | [**Basic Inferential Tests**](04-stats.html) | Learn about conducting t-tests, chi-square tests, ANOVA, and interpreting statistical results in R. |
-| 5 | 13 Feb 2026 | [**Regression and Presenting Your Result**](05-more-stats.html) | Learn about regression and various useful packages to generate your result table. |
+| 1 | 21 Aug 2026 |**Introduction to R and RStudio** | Learn about setting up RStudio, basic data types and structures in R, and importing data files. |
+| 2 | 28 Aug 2026 | **Data wrangling with tidyverse** | Learn about manipulating data with tidyverse, including filtering, selecting, mutating, and grouping data. |
+| 3 | 4 Sep 2026 | **Data visualization and Descriptive Statistics** | Learn about creating visualizations with ggplot2 and calculating descriptive statistics like mean, median, etc. |
+| 4 | 11 Sep 2026 | **Basic Inferential Tests** | Learn about conducting t-tests, chi-square tests, ANOVA, and interpreting statistical results in R. |
+| 5 | 18 Sep 2026 | **Regression and Presenting Your Result** | Learn about regression and various useful packages to generate your result table. |
 | \~ | After the workshop |  | [Post-workshop exercises](exercises.html) |
 :::
 
@@ -91,7 +91,7 @@ Packages can save us time and leverage expert-created tools without having to wr
 
 1.  Open RStudio
 
-2.  Copy the following code: `install.packages(c( "car", "rmarkdown", "huxtable", "gt", "apaTables", "tidyverse"))`
+2.  Copy the following code: `install.packages(c("tidyverse", "car", "huxtable", "apaTables"))`
 
 3.  Paste it in the **Console** tab (see image below)
 

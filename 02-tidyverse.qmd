@@ -30,7 +30,7 @@ Use `read_csv` from `readr` package (part of `tidyverse`) to load our World Valu
 library(tidyverse)
 
 # read the CSV and save into a dataframe called wvs_data
-wvs_data <- read_csv("data/wvs-wave7-sg-ca-nz.csv")
+wvs_data <- read_csv("data/wvs-4-countries.csv")
 
 # "peek" at the data, pay attention to the data types!
 glimpse(wvs_data)
@@ -130,11 +130,11 @@ subset_data <- data |>
 
 ## Scenario: Data wrangling activities with WVS data {.smaller}
 
-**Scenario**: We are research assistants analyzing patterns in values and satisfaction across different countries and demographic groups.
+**Scenario**: We are research assistants analyzing patterns in values, wellbeing, and demographics across four Asian countries: Hong Kong SAR, Indonesia, Malaysia, and Turkey.
 
-Our team has been assigned to explore and get insights on how specific factors (employment, work importance, marital status, political alignment, financial satisfaction, and religiosity) may relate to life satisfaction among different generations (Gen Z, Millennials, Gen X, and Baby Boomer), including how they may differ between the 3 countries.
+Our team has been assigned to prepare and explore this dataset to understand how key factors (education, income level, urban/rural context, and emancipative/secular values) relate to life satisfaction and personal freedom across different generations.
 
-To ensure the analysis quality, we were instructed to discard incomplete data.
+To ensure analysis quality, we were instructed to discard incomplete data and prepare the dataset for statistical analyses in later sessions.
 
 We can break down the steps as such:
 
@@ -143,11 +143,11 @@ We can break down the steps as such:
 
 2.  Check for duplicates
 
-3.  Select only the relevant columns: participants' `ID`, demographic columns (i.e. `age`, `country`, `sex`, `birthyear`), `work_importance`, `life_satisfaction`, `financial_satisfaction`, `religiousity`, `political_scale`, `marital_status`, and `employment`.
+3.  Select only the relevant columns: `respondent_id`, demographic columns (`age`, `country`, `sex`, `urban_rural`, `income_level`, `marital_status`, `education`), and the attitudinal columns (`life_satisfaction`, `freedom_of_choice`, `financial_satisfaction`, `trust_people`, `importance_of_god`, `emancipative_values`, `secular_values`)
 
 4.  Filter for respondents aged 18 or older. Optionally, we can then arrange the dataset by age (oldest to youngest)
 
-5.  Reverse-code `importance` variables so that higher numbers consistently represent higher levels of the measured construct. In other words, 1 = Not at all important and 4 = Very important.
+5.  Create a new column `avg_satisfaction` that averages `life_satisfaction` and `financial_satisfaction` as a combined wellbeing indicator
 
 6.  Create age groups for each generation: "18-28", "29-44", "45-60", "61+"
 :::
@@ -217,15 +217,15 @@ Check for duplicates with `distinct()`
 #| echo: true
 #| output: false
 
-wvs_data <- wvs_data |> 
-  distinct(ID, .keep_all = TRUE)
+wvs_data <- wvs_data |>
+  distinct(respondent_id, .keep_all = TRUE)
 ```
 
 (Our data has no duplicates, but this is still a good practice to do, especially if we were combining data from multipe sources)
 
 ## Step #3:
 
-Select only the relevant columns: demographic columns, `life_satisfaction`, `work_importance`, `financial_satisfaction`, `religiousity`, `political_scale`, `marital_status`, and `employment`.
+Select only the relevant columns: `respondent_id`, demographic columns, and attitudinal columns.
 
 We can achieve this with `select()`!
 
@@ -233,7 +233,10 @@ We can achieve this with `select()`!
 #| echo: true
 
 wvs_data <- wvs_data |>
-    select(ID, country, sex, birthyear, age, life_satisfaction, work_importance, financial_satisfaction, religiousity, political_scale, marital_status, employment) 
+    select(respondent_id, country, sex, age, urban_rural, income_level,
+           marital_status, education, life_satisfaction, freedom_of_choice,
+           financial_satisfaction, trust_people, importance_of_god,
+           emancipative_values, secular_values)
 ```
 
 Preview of the filtered data:
@@ -262,7 +265,7 @@ head(wvs_data)
 
 ## Step #5
 
-Reverse-code `work_importance` variables so that higher numbers consistently represent higher levels of the measured construct. In other words, 1 = Not at all important and 4 = Very important.
+Create a new column `avg_satisfaction` that averages `life_satisfaction` and `financial_satisfaction` as a combined wellbeing indicator.
 
 We can achieve this with `mutate()`! (mutate() is to change or add new columns.)
 
@@ -270,14 +273,14 @@ We can achieve this with `mutate()`! (mutate() is to change or add new columns.)
 #| echo: true
 
 wvs_data <- wvs_data |>
-    mutate(work_importance_r = 5 - work_importance)
+    mutate(avg_satisfaction = (life_satisfaction + financial_satisfaction) / 2)
 ```
 
-Preview of age groups:
+Preview of the new column alongside the original ones:
 
 ```{r}
 wvs_data |>
-    select(work_importance_r, work_importance) |>
+    select(life_satisfaction, financial_satisfaction, avg_satisfaction) |>
     print(n = 5)
 ```
 
@@ -337,7 +340,7 @@ Once we are done with the wrangling part, we can proceed with simple descriptive
 
 Let's use the `wvs_cleaned` dataframe for this task.
 
-Identify which columns can be converted to categorial data (factor). Convert the appropriate categorical variables (country, religiousity, sex, marital_status, employment) to **Factor**.
+Identify which columns can be converted to categorial data (factor). Convert the appropriate categorical variables (country, sex, marital_status, urban_rural, income_level, education, trust_people) to **Factor**.
 
 We can do this with `mutate()` and `as_factor()` from forcats, another sub-package within tidyverse.
 
@@ -346,13 +349,15 @@ We can do this with `mutate()` and `as_factor()` from forcats, another sub-packa
 #| output-location: slide
 
 wvs_cleaned <- read_csv("data-output/wvs_cleaned_v1.csv")
-wvs_cleaned <- wvs_cleaned |> 
+wvs_cleaned <- wvs_cleaned |>
     mutate(
         country = as_factor(country),
-        religiousity = as_factor(religiousity),
         sex = as_factor(sex),
         marital_status = as_factor(marital_status),
-        employment = as_factor(employment)
+        urban_rural = as_factor(urban_rural),
+        income_level = as_factor(income_level),
+        education = as_factor(education),
+        trust_people = as_factor(trust_people)
     )
 
 # check conversion result
@@ -371,7 +376,7 @@ Let's first define a character vector that contains the names of columns we plan
 ```{r}
 #| echo: true
 
-columns_to_convert <- c("country", "religiousity", "sex", "marital_status", "employment")
+columns_to_convert <- c("country", "sex", "marital_status", "urban_rural", "income_level", "education", "trust_people")
 
 ```
 
@@ -393,7 +398,7 @@ str(wvs_cleaned)
 
 ## Analysis 1 - summary stats of life_satisfaction for each country
 
-Generate summary statistics such as count (n), mean, median, and standard deviation of life_satisfaction grouped by country.
+Generate summary statistics such as count (n), mean, median, and standard deviation of `life_satisfaction` grouped by country.
 
 We can achieve this with `group_by()` and `summarise()`. It will contain one column for each grouping variable and one column for each of the summary statistics that you have specified.
 
@@ -566,7 +571,7 @@ Next session: Descriptive statistics and data visualization with `ggplot2` packa
 
 ## To try at home: Exercise 1
 
-Now that we have a new file, load this new `wvs_cleaned_v1.csv` into a new dataframe called `wvs_cleaned`. Filter to respondents from Singapore who are currently employed full time. Show only the Respondent ID, country, the employment status, and age. Use `glimpse()` or `print()` to check the result! (you can chain these functions at the end)
+Now that we have a new file, load this new `wvs_cleaned_v1.csv` into a new dataframe called `wvs_cleaned`. Filter to respondents from Indonesia who live in Urban areas. Show only the respondent_id, country, urban_rural, and age. Use `glimpse()` or `print()` to check the result! (you can chain these functions at the end)
 
 **Step 1**: Load the new file
 
@@ -592,9 +597,9 @@ wvs_cleaned <- read_csv("data-output/wvs_cleaned_v1.csv")
 library(tidyverse)
 wvs_cleaned <- read_csv("data-output/wvs_cleaned_v1.csv")
 
-wvs_cleaned |> 
-    filter(country == "SGP" & employment == "Full time") |> 
-    select(ID, country, employment, age) |> 
+wvs_cleaned |>
+    filter(country == "Indonesia" & urban_rural == "Urban") |>
+    select(respondent_id, country, urban_rural, age) |>
     glimpse()
 
 ```

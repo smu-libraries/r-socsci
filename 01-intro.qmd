@@ -231,7 +231,7 @@ The four basic data types are **characters**, **numeric**, **boolean**, and inte
 #| echo: true
 #| code-line-numbers: "|1|2|3|4"
 
-country_code <- "SGP" # Character
+country_code <- "IDN" # Character
 life_satisfaction <- 8.5 # Numeric (also sometimes called Double)
 is_religious <- TRUE # Boolean/Logical (TRUE/FALSE). case sensitive
 birth_year <- 1990L # Integer (whole numbers)
@@ -286,20 +286,20 @@ life_satisfaction <- 8.5 # assign a value of 8.5 to life_satisfaction
 life_satisfaction > 8  
 ```
 
-Is the country Singapore?
+Is the country Indonesia?
 
 ```{r}
 #| echo: true
 
-country_code == "SGP"  
+country_code == "IDN"
 ```
 
-Is the country NOT Singapore?
+Is the country NOT Indonesia?
 
 ```{r}
 #| echo: true
 
-country_code != "SGP"  
+country_code != "IDN"
 ```
 
 ## Boolean operations in R - AND operator
@@ -308,15 +308,15 @@ Sometimes, we may have multiple statements to evaluate. This is where the Boolea
 
 **AND** operations (both conditions must be TRUE). In R, it is represented by ampersand `&`
 
-Is the country New Zealand AND is the life satisfaction more than 8?
+Is the country Malaysia AND is the life satisfaction more than 8?
 
 ```{r}
 #| echo: true
 
-(country_code == "NZL") & (life_satisfaction > 8) 
+(country_code == "MYS") & (life_satisfaction > 8)
 ```
 
-`country_code == "NZL"` is FALSE while `life_satisfaction > 8` is TRUE
+`country_code == "MYS"` is FALSE while `life_satisfaction > 8` is TRUE
 
 The whole statement will return FALSE because not all conditions TRUE.
 
@@ -324,12 +324,12 @@ The whole statement will return FALSE because not all conditions TRUE.
 
 **OR** operations (at least one condition must be TRUE). In R, it is represented by pipe symbol `|`
 
-Is the country New Zealand OR is the life satisfaction more than 8?
+Is the country Malaysia OR is the life satisfaction more than 8?
 
 ```{r}
 #| echo: true
 
-(country_code == "NZL") | (life_satisfaction > 8) 
+(country_code == "MYS") | (life_satisfaction > 8)
 ```
 
 As long as one condition is met, this will be TRUE.
@@ -428,9 +428,9 @@ Think of vectors as a column in a dataset. It is the most common and basic data 
 
 ```{r}
 #| echo: true
-countries <- c("CAN", "NZL", "SGP", "CAN", "SGP")
+countries <- c("Hong Kong SAR", "Indonesia", "Malaysia", "Hong Kong SAR", "Turkey")
 satisfaction_scores <- c(8, 7, 9, 6, 8)
-employment_status <- c("Full time", "Student", "Part time", "Retired", "Full time")
+urban_rural <- c("Urban", "Rural", "Urban", "Urban", "Rural")
 ```
 
 ## Vector Manipulations: Retrieve and update items
@@ -524,9 +524,9 @@ mean(financial_satisfaction, na.rm = TRUE)
 ```{r}
 #| echo: true
 survey_data <- data.frame(
-    country = c("SGP", "CAN", "NZL", "SGP", "CAN"),
+    country = c("Indonesia", "Malaysia", "Turkey", "Indonesia", "Hong Kong SAR"),
     life_satisfaction = c(8, 7, 9, 6, 8),
-    employment = c("Full time", "Student", "Part time", "Retired", "Full time")
+    urban_rural = c("Urban", "Rural", "Urban", "Urban", "Rural")
 )
 print(survey_data)
 ```
@@ -565,7 +565,7 @@ Before use read_csv install and load package tidyverse. Install the package only
 #| output: true
 library(tidyverse)
 
-wvs_data <- read_csv("data/wvs-wave7-sg-ca-nz.csv")  
+wvs_data <- read_csv("data/wvs-4-countries.csv")
 head(wvs_data)
 ```
 
@@ -632,10 +632,10 @@ wvs_data[3, ] # <5>
 
 ## Convert dataframe columns to a Factor - Unordered
 
-In our example, `country` should be a factor! 
+In our example, `country` should be a factor!
 
 ```{r}
-#| echo: true 
+#| echo: true
 #| output: true
 
 str(wvs_data$country)
@@ -644,7 +644,7 @@ str(wvs_data$country)
 Since there is no inherent order within country names, our categories will be unordered:
 
 ```{r}
-#| echo: true 
+#| echo: true
 #| output: true
 wvs_data$country <- factor(wvs_data$country)
 
@@ -654,25 +654,25 @@ levels(wvs_data$country)
 
 If we check the structure, `country` column should be a factor instead of characters now:
 ```{r}
-#| echo: true 
+#| echo: true
 #| output: true
 
 str(wvs_data$country)
 ```
 ## Convert dataframe columns to a Factor - Ordered
 
-Technically, in our data set, there is no variables that should be ordered. But for example purposes, let's say that we want to order the categorical values in `religiousity` from non-believer to believer. 
+Some variables do have a meaningful order. For example, `education` has a clear progression from lower to higher. Let's convert it to an ordered factor.
 
 ```{r}
-#| echo: true 
+#| echo: true
 #| output: true
-wvs_data$religiousity <- factor(wvs_data$religiousity,
-                                levels = c("An atheist", "Not a religious person", "A religious person", "Don't know"),
+wvs_data$education <- factor(wvs_data$education,
+                                levels = c("Lower", "Middle", "Higher"),
                                 ordered = TRUE)
 
 # check the category levels and structure
-levels(wvs_data$religiousity)
-str(wvs_data$religiousity)
+levels(wvs_data$education)
+str(wvs_data$education)
 ```
 
 ## Trouble Shooting

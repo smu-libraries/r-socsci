@@ -41,7 +41,7 @@ library(tidyverse)
 wvs_cleaned <- read_csv("data-output/wvs_cleaned_v1.csv")
 
 # Convert categorical variables to factors
-columns_to_convert <- c("country", "religiousity", "sex", "marital_status", "employment")
+columns_to_convert <- c("country", "sex", "marital_status", "urban_rural", "income_level", "education", "trust_people")
 
 wvs_cleaned <- wvs_cleaned |> 
     mutate(across(all_of(columns_to_convert), as_factor))
@@ -613,7 +613,7 @@ Facet grids are useful when we have more than two variables to visualize. Howeve
 wvs_cleaned |> ggplot(aes(x = financial_satisfaction, y = life_satisfaction)) +
   geom_point(alpha = 0.3) +
   geom_smooth(method = "lm") +
-  facet_grid(country ~ religiousity)
+  facet_grid(country ~ education)
 
 ```
 
@@ -643,7 +643,7 @@ Next session: inferential stats in R using WVS data
 
 ## At home exercise #1
 
-Create a barchart that visualizes the frequency of `religiousity`
+Create a barchart that visualizes the frequency of `education`
 
 ```{r}
 #| echo: true
@@ -651,10 +651,10 @@ Create a barchart that visualizes the frequency of `religiousity`
 #| code-fold: true
 #| code-summary: "Show answer"
 
-wvs_cleaned |> ggplot(aes(x = religiousity, fill = religiousity)) +
+wvs_cleaned |> ggplot(aes(x = education, fill = education)) +
   geom_bar() +
-  labs(title = "Frequency of Religiosity",
-       x = "Religiosity",
+  labs(title = "Frequency of Education Level",
+       x = "Education Level",
        y = "Count") +
   theme_minimal()
 
@@ -662,7 +662,7 @@ wvs_cleaned |> ggplot(aes(x = religiousity, fill = religiousity)) +
 
 ## At home exercise #2
 
-Create a side-by-side boxplots that visualizes `political_scale` for each `sex`.
+Create a side-by-side boxplots that visualizes `freedom_of_choice` for each `sex`.
 
 ```{r}
 #| echo: true
@@ -670,10 +670,10 @@ Create a side-by-side boxplots that visualizes `political_scale` for each `sex`.
 #| code-fold: true
 #| code-summary: "Show answer"
 
-wvs_cleaned |> ggplot(aes(x = political_scale, y = sex)) +
+wvs_cleaned |> ggplot(aes(x = freedom_of_choice, y = sex)) +
   geom_violin(fill = "lightblue", alpha = 0.5) +
   geom_boxplot(width = 0.1, fill = "white") +
-  labs(title = "Political scale Distribution by Sex") +
+  labs(title = "Freedom of Choice Distribution by Sex") +
   theme_minimal()
 
 ```
@@ -691,8 +691,8 @@ Let's visualize the correlation map for these three variables.
 library(corrplot)
 
 # select all the columns for correlation calculation, save it to columns_for_corr
-columns_for_corr <- wvs_cleaned |> 
-  select(financial_satisfaction, life_satisfaction, age)
+columns_for_corr <- wvs_cleaned |>
+  select(financial_satisfaction, life_satisfaction, freedom_of_choice, age)
 
 # pass the columns_for_corr to cor() function, and save the result to cor_matrix
 cor_matrix <- cor(columns_for_corr)
@@ -717,9 +717,9 @@ We can shorten the code in the previous slide using the maggritr pipe `|>` like 
 #| echo: true
 #| output-location: slide
 
-wvs_cleaned |> 
-    select(financial_satisfaction, life_satisfaction, age) |> 
-    cor() |> 
+wvs_cleaned |>
+    select(financial_satisfaction, life_satisfaction, freedom_of_choice, age) |>
+    cor() |>
     corrplot(method = "shade", # show the correlation strength as color shades
          addCoef.col = "black", tl.col = "black")
     
