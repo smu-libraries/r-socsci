@@ -435,7 +435,7 @@ Bella Ratmelia &amp; Wei XIA
 <h2>Data Types in R</h2>
 <p>The four basic data types are <strong>characters</strong>, <strong>numeric</strong>, <strong>boolean</strong>, and integer. Let’s look at examples using our WVS survey variables:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-code-line-numbers="|1|2|3|4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>country_code <span class="ot">&lt;-</span> <span class="st">"SGP"</span> <span class="co"># Character</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" data-code-line-numbers="|1|2|3|4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>country_code <span class="ot">&lt;-</span> <span class="st">"IDN"</span> <span class="co"># Character</span></span>
 <span id="cb3-2"><a></a>life_satisfaction <span class="ot">&lt;-</span> <span class="fl">8.5</span> <span class="co"># Numeric (also sometimes called Double)</span></span>
 <span id="cb3-3"><a></a>is_religious <span class="ot">&lt;-</span> <span class="cn">TRUE</span> <span class="co"># Boolean/Logical (TRUE/FALSE). case sensitive</span></span>
 <span id="cb3-4"><a></a>birth_year <span class="ot">&lt;-</span> <span class="dv">1990</span>L <span class="co"># Integer (whole numbers)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -490,16 +490,16 @@ Bella Ratmelia &amp; Wei XIA
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
-<p>Is the country Singapore?</p>
+<p>Is the country Indonesia?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>country_code <span class="sc">==</span> <span class="st">"SGP"</span>  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>country_code <span class="sc">==</span> <span class="st">"IDN"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
-<p>Is the country NOT Singapore?</p>
+<p>Is the country NOT Indonesia?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>country_code <span class="sc">!=</span> <span class="st">"SGP"</span>  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>country_code <span class="sc">!=</span> <span class="st">"IDN"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
@@ -509,22 +509,22 @@ Bella Ratmelia &amp; Wei XIA
 <h2>Boolean operations in R - AND operator</h2>
 <p>Sometimes, we may have multiple statements to evaluate. This is where the Boolean Operators will come handy.</p>
 <p><strong>AND</strong> operations (both conditions must be TRUE). In R, it is represented by ampersand <code>&amp;</code></p>
-<p>Is the country New Zealand AND is the life satisfaction more than 8?</p>
+<p>Is the country Malaysia AND is the life satisfaction more than 8?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>(country_code <span class="sc">==</span> <span class="st">"NZL"</span>) <span class="sc">&amp;</span> (life_satisfaction <span class="sc">&gt;</span> <span class="dv">8</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>(country_code <span class="sc">==</span> <span class="st">"MYS"</span>) <span class="sc">&amp;</span> (life_satisfaction <span class="sc">&gt;</span> <span class="dv">8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
 </div>
-<p><code>country_code == "NZL"</code> is FALSE while <code>life_satisfaction &gt; 8</code> is TRUE</p>
+<p><code>country_code == "MYS"</code> is FALSE while <code>life_satisfaction &gt; 8</code> is TRUE</p>
 <p>The whole statement will return FALSE because not all conditions TRUE.</p>
 </section>
 <section id="boolean-operations-in-r---or-operator" class="slide level2">
 <h2>Boolean operations in R - OR operator</h2>
 <p><strong>OR</strong> operations (at least one condition must be TRUE). In R, it is represented by pipe symbol <code>|</code></p>
-<p>Is the country New Zealand OR is the life satisfaction more than 8?</p>
+<p>Is the country Malaysia OR is the life satisfaction more than 8?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>(country_code <span class="sc">==</span> <span class="st">"NZL"</span>) <span class="sc">|</span> (life_satisfaction <span class="sc">&gt;</span> <span class="dv">8</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>(country_code <span class="sc">==</span> <span class="st">"MYS"</span>) <span class="sc">|</span> (life_satisfaction <span class="sc">&gt;</span> <span class="dv">8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
@@ -615,9 +615,9 @@ Bella Ratmelia &amp; Wei XIA
 <li><p>Inspect vectors: typeof(), str(), length()</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>countries <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"CAN"</span>, <span class="st">"NZL"</span>, <span class="st">"SGP"</span>, <span class="st">"CAN"</span>, <span class="st">"SGP"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>countries <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Hong Kong SAR"</span>, <span class="st">"Indonesia"</span>, <span class="st">"Malaysia"</span>, <span class="st">"Hong Kong SAR"</span>, <span class="st">"Turkey"</span>)</span>
 <span id="cb28-2"><a></a>satisfaction_scores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">6</span>, <span class="dv">8</span>)</span>
-<span id="cb28-3"><a></a>employment_status <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Full time"</span>, <span class="st">"Student"</span>, <span class="st">"Part time"</span>, <span class="st">"Retired"</span>, <span class="st">"Full time"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb28-3"><a></a>urban_rural <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Urban"</span>, <span class="st">"Rural"</span>, <span class="st">"Urban"</span>, <span class="st">"Urban"</span>, <span class="st">"Rural"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="vector-manipulations-retrieve-and-update-items" class="slide level2">
@@ -626,7 +626,7 @@ Bella Ratmelia &amp; Wei XIA
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>countries[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "CAN"</code></pre>
+<pre><code>[1] "Hong Kong SAR"</code></pre>
 </div>
 </div>
 <p>Retrieves the first three satisfaction scores</p>
@@ -714,18 +714,18 @@ Bella Ratmelia &amp; Wei XIA
 </ul>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>survey_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb45-2"><a></a>    <span class="at">country =</span> <span class="fu">c</span>(<span class="st">"SGP"</span>, <span class="st">"CAN"</span>, <span class="st">"NZL"</span>, <span class="st">"SGP"</span>, <span class="st">"CAN"</span>),</span>
+<span id="cb45-2"><a></a>    <span class="at">country =</span> <span class="fu">c</span>(<span class="st">"Indonesia"</span>, <span class="st">"Malaysia"</span>, <span class="st">"Turkey"</span>, <span class="st">"Indonesia"</span>, <span class="st">"Hong Kong SAR"</span>),</span>
 <span id="cb45-3"><a></a>    <span class="at">life_satisfaction =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">6</span>, <span class="dv">8</span>),</span>
-<span id="cb45-4"><a></a>    <span class="at">employment =</span> <span class="fu">c</span>(<span class="st">"Full time"</span>, <span class="st">"Student"</span>, <span class="st">"Part time"</span>, <span class="st">"Retired"</span>, <span class="st">"Full time"</span>)</span>
+<span id="cb45-4"><a></a>    <span class="at">urban_rural =</span> <span class="fu">c</span>(<span class="st">"Urban"</span>, <span class="st">"Rural"</span>, <span class="st">"Urban"</span>, <span class="st">"Urban"</span>, <span class="st">"Rural"</span>)</span>
 <span id="cb45-5"><a></a>)</span>
 <span id="cb45-6"><a></a><span class="fu">print</span>(survey_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  country life_satisfaction employment
-1     SGP                 8  Full time
-2     CAN                 7    Student
-3     NZL                 9  Part time
-4     SGP                 6    Retired
-5     CAN                 8  Full time</code></pre>
+<pre><code>        country life_satisfaction urban_rural
+1     Indonesia                 8       Urban
+2      Malaysia                 7       Rural
+3        Turkey                 9       Urban
+4     Indonesia                 6       Urban
+5 Hong Kong SAR                 8       Rural</code></pre>
 </div>
 </div>
 </section>
@@ -757,22 +757,21 @@ Bella Ratmelia &amp; Wei XIA
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb47-2"><a></a></span>
-<span id="cb47-3"><a></a>wvs_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/wvs-wave7-sg-ca-nz.csv"</span>)  </span>
+<span id="cb47-3"><a></a>wvs_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/wvs-4-countries.csv"</span>)</span>
 <span id="cb47-4"><a></a><span class="fu">head</span>(wvs_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 16
-  country        ID family_importance friends_importance leisure_importance
-  &lt;chr&gt;       &lt;dbl&gt;             &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;
-1 CAN     124070003                 1                  1                  1
-2 CAN     124070004                 1                  1                  2
-3 CAN     124070005                 2                  2                  2
-4 CAN     124070006                 1                  2                  2
-5 CAN     124070008                 1                  2                  2
-6 CAN     124070009                 1                  2                  2
-# ℹ 11 more variables: work_importance &lt;dbl&gt;, freedom &lt;dbl&gt;,
-#   life_satisfaction &lt;dbl&gt;, financial_satisfaction &lt;dbl&gt;, religiousity &lt;chr&gt;,
-#   political_scale &lt;dbl&gt;, sex &lt;chr&gt;, birthyear &lt;dbl&gt;, age &lt;dbl&gt;,
-#   marital_status &lt;chr&gt;, employment &lt;chr&gt;</code></pre>
+<pre><code># A tibble: 6 × 15
+  country      respondent_id   age urban_rural income_level sex   marital_status
+  &lt;chr&gt;                &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt;         
+1 Hong Kong S…     344070882    62 Urban       Medium       Male  Married       
+2 Hong Kong S…     344070454    24 Urban       Medium       Male  Single        
+3 Hong Kong S…     344072005    29 Urban       Low          Fema… Single        
+4 Hong Kong S…     344071354    55 Urban       Medium       Fema… Separated     
+5 Hong Kong S…     344070282    62 Urban       Low          Male  Married       
+6 Hong Kong S…     344070942    41 Urban       Medium       Male  Single        
+# ℹ 8 more variables: education &lt;chr&gt;, life_satisfaction &lt;dbl&gt;,
+#   freedom_of_choice &lt;dbl&gt;, emancipative_values &lt;dbl&gt;, trust_people &lt;chr&gt;,
+#   importance_of_god &lt;dbl&gt;, financial_satisfaction &lt;dbl&gt;, secular_values &lt;dbl&gt;</code></pre>
 </div>
 </div>
 <p>Make sure to save the CSV file in your data folder! (No auto save)</p>
@@ -868,7 +867,7 @@ Bella Ratmelia &amp; Wei XIA
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a><span class="fu">str</span>(wvs_data<span class="sc">$</span>country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> chr [1:7087] "CAN" "CAN" "CAN" "CAN" "CAN" "CAN" "CAN" "CAN" "CAN" "CAN" ...</code></pre>
+<pre><code> chr [1:5252] "Hong Kong SAR" "Hong Kong SAR" "Hong Kong SAR" ...</code></pre>
 </div>
 </div>
 <p>Since there is no inherent order within country names, our categories will be unordered:</p>
@@ -878,34 +877,33 @@ Bella Ratmelia &amp; Wei XIA
 <span id="cb51-3"><a></a><span class="co"># check the category levels</span></span>
 <span id="cb51-4"><a></a><span class="fu">levels</span>(wvs_data<span class="sc">$</span>country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "CAN" "NZL" "SGP"</code></pre>
+<pre><code>[1] "Hong Kong SAR" "Indonesia"     "Malaysia"      "Turkey"       </code></pre>
 </div>
 </div>
 <p>If we check the structure, <code>country</code> column should be a factor instead of characters now:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a><span class="fu">str</span>(wvs_data<span class="sc">$</span>country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> Factor w/ 3 levels "CAN","NZL","SGP": 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<pre><code> Factor w/ 4 levels "Hong Kong SAR",..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
 </div>
 </div>
 </section>
 <section id="convert-dataframe-columns-to-a-factor---ordered" class="slide level2">
 <h2>Convert dataframe columns to a Factor - Ordered</h2>
-<p>Technically, in our data set, there is no variables that should be ordered. But for example purposes, let’s say that we want to order the categorical values in <code>religiousity</code> from non-believer to believer.</p>
+<p>Some variables do have a meaningful order. For example, <code>education</code> has a clear progression from lower to higher. Let’s convert it to an ordered factor.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a>wvs_data<span class="sc">$</span>religiousity <span class="ot">&lt;-</span> <span class="fu">factor</span>(wvs_data<span class="sc">$</span>religiousity,</span>
-<span id="cb55-2"><a></a>                                <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"An atheist"</span>, <span class="st">"Not a religious person"</span>, <span class="st">"A religious person"</span>, <span class="st">"Don't know"</span>),</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a>wvs_data<span class="sc">$</span>education <span class="ot">&lt;-</span> <span class="fu">factor</span>(wvs_data<span class="sc">$</span>education,</span>
+<span id="cb55-2"><a></a>                                <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Lower"</span>, <span class="st">"Middle"</span>, <span class="st">"Higher"</span>),</span>
 <span id="cb55-3"><a></a>                                <span class="at">ordered =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb55-4"><a></a></span>
 <span id="cb55-5"><a></a><span class="co"># check the category levels and structure</span></span>
-<span id="cb55-6"><a></a><span class="fu">levels</span>(wvs_data<span class="sc">$</span>religiousity)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb55-6"><a></a><span class="fu">levels</span>(wvs_data<span class="sc">$</span>education)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "An atheist"             "Not a religious person" "A religious person"    
-[4] "Don't know"            </code></pre>
+<pre><code>[1] "Lower"  "Middle" "Higher"</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a><span class="fu">str</span>(wvs_data<span class="sc">$</span>religiousity)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a><span class="fu">str</span>(wvs_data<span class="sc">$</span>education)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> Ord.factor w/ 4 levels "An atheist"&lt;"Not a religious person"&lt;..: 3 3 1 3 2 1 1 3 2 3 ...</code></pre>
+<pre><code> Ord.factor w/ 3 levels "Lower"&lt;"Middle"&lt;..: 2 3 2 3 1 2 1 3 3 1 ...</code></pre>
 </div>
 </div>
 </section>

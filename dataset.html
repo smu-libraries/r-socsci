@@ -156,8 +156,7 @@ gtag('config', 'G-G5L1RGYC4H', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#data-for-session-3-onwards" id="toc-data-for-session-3-onwards" class="nav-link active" data-scroll-target="#data-for-session-3-onwards">Data for session 3 onwards</a></li>
-  <li><a href="#data-dictionary-for-wvs-dataset" id="toc-data-dictionary-for-wvs-dataset" class="nav-link" data-scroll-target="#data-dictionary-for-wvs-dataset">Data Dictionary for WVS dataset</a></li>
+  <li><a href="#data-dictionary-for-wvs-dataset" id="toc-data-dictionary-for-wvs-dataset" class="nav-link active" data-scroll-target="#data-dictionary-for-wvs-dataset">Data Dictionary for WVS dataset</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
@@ -184,11 +183,8 @@ gtag('config', 'G-G5L1RGYC4H', { 'anonymize_ip': true});
 </header>
 
 
-<p>For this workshop, we will be using dataset stored in a CSV file called <code>wvs-wave7-sg-ca-nz.csv</code>.</p>
-<a href="https://raw.githubusercontent.com/bellaratmelia/introductory-r-socsci/refs/heads/main/data/wvs-wave7-sg-ca-nz.csv" type="button" class="btn btn-success">Click here to open wvs-wave7-sg-ca-nz.csv, and then Ctrl + S / Cmd + S to save it locally into your data folder</a>
-<section id="data-for-session-3-onwards" class="level3">
-<h3 class="anchored" data-anchor-id="data-for-session-3-onwards">Data for session 3 onwards</h3>
-<p>If you missed Session 2 where we cleaned and tidy our data, you can download the cleaned data here: <a href="https://raw.githubusercontent.com/bellaratmelia/introductory-r-socsci/refs/heads/main/data-output/wvs_cleaned_v1.csv">wvs_cleaned_v1.csv</a></p>
+<p>For this workshop, we will be using dataset stored in a CSV file called <code>wvs-4-countries.csv</code>.</p>
+<a href="https://raw.githubusercontent.com/smu-libraries/r-socsci/refs/heads/main/data/wvs-4-countries.csv" type="button" class="btn btn-success">Click here to open wvs-4-countries.csv, and then Ctrl + S / Cmd + S to save it locally into your data folder</a>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -204,80 +200,72 @@ gtag('config', 'G-G5L1RGYC4H', { 'anonymize_ip': true});
 <p>You can open CSV files in Excel, Google Sheets, or even Notepad!</p>
 </div>
 </div>
-</section>
 <section id="data-dictionary-for-wvs-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="data-dictionary-for-wvs-dataset">Data Dictionary for WVS dataset</h3>
 <p>The World Values Survey (&lt;www.worldvaluessurvey.org&gt;) is a global network of social scientists studying changing values and their impact on social and political life, led by an international team of scholars, with the WVS association and secretariat headquartered in Stockholm, Sweden.</p>
-<p>The actual questionnaire consists of over 200 questions with respondents from various countries. For the purpose of this workshop, we will only use 16 variables/questions with respondents from Canada, New Zealand, and Singapore. The 16 variables are:</p>
+<p>The actual questionnaire consists of over 200 questions with respondents from various countries. For the purpose of this workshop, we will use 15 variables/questions with respondents from four countries: Hong Kong SAR, Indonesia, Malaysia, and Turkey. Each country contributes 1,313 respondents, for a total of 5,252 rows. The 15 variables are:</p>
 <dl>
 <dt><code>country</code></dt>
 <dd>
-<p>Character variable containing three-letter country codes: <code>CAN</code>, <code>NZL</code>, and <code>SGP</code></p>
+<p>Character variable indicating the respondent’s country: <code>Hong Kong SAR</code>, <code>Indonesia</code>, <code>Malaysia</code>, or <code>Turkey</code></p>
 </dd>
-<dt><code>ID</code></dt>
+<dt><code>respondent_id</code></dt>
 <dd>
 <p>Numeric identifier unique to each survey respondent</p>
 </dd>
-<dt><code>family_importance</code></dt>
+<dt><code>age</code></dt>
 <dd>
-<p>Numeric scale from 1 to 4 measuring importance of family, where 1 indicates highest importance</p>
+<p>Numeric variable indicating respondent’s age in years</p>
 </dd>
-<dt><code>friends_importance</code></dt>
+<dt><code>urban_rural</code></dt>
 <dd>
-<p>Numeric scale from 1 to 4 measuring importance of friends, where 1 indicates highest importance</p>
+<p>Indicates the type of settlement where the respondent lives: <code>Urban</code> or <code>Rural</code></p>
 </dd>
-<dt><code>leisure_importance</code></dt>
+<dt><code>income_level</code></dt>
 <dd>
-<p>Numeric scale from 1 to 4 measuring importance of leisure time, where 1 indicates highest importance</p>
-</dd>
-<dt><code>work_importance</code></dt>
-<dd>
-<p>Numeric scale from 1 to 4 measuring importance of work, where 1 indicates highest importance</p>
-</dd>
-<dt><code>freedom</code></dt>
-<dd>
-<p>Numeric scale from 1-10 measuring perceived freedom of choice and control, where 10 indicates most freedom</p>
-</dd>
-<dt><code>life_satisfaction</code></dt>
-<dd>
-<p>Numeric scale from 1-10 measuring overall life satisfaction, where 10 indicates highest satisfaction</p>
-</dd>
-<dt><code>financial_satisfaction</code></dt>
-<dd>
-<p>Numeric scale from 1-10 measuring satisfaction with financial situation, where 10 indicates highest satisfaction</p>
-</dd>
-<dt><code>religiousity</code></dt>
-<dd>
-<p>indicates religious self-identification: <code>A religious person</code>, <code>Not a religious person</code>, <code>An atheist</code></p>
-</dd>
-<dt><code>political_scale</code></dt>
-<dd>
-<p>Numeric scale from 1-10 measuring left-right political orientation, where 1 is left and 10 is right</p>
+<p>Indicates the respondent’s household income level (recoded into three groups): <code>Low</code>, <code>Medium</code>, or <code>High</code></p>
 </dd>
 <dt><code>sex</code></dt>
 <dd>
-<p>indicates respondent’s gender: <code>male</code> or <code>female</code></p>
-</dd>
-<dt><code>birthyear</code></dt>
-<dd>
-<p>Numeric variable indicating year of birth</p>
-</dd>
-<dt><code>age</code></dt>
-<dd>
-<p>Numeric variable indicating respondent’s age</p>
+<p>Indicates respondent’s gender: <code>Male</code> or <code>Female</code></p>
 </dd>
 <dt><code>marital_status</code></dt>
 <dd>
-<p>indicates current marital status: <code>Married</code>, <code>Living together as married</code>, <code>Divorced</code>, <code>Separated</code>, <code>Widowed</code>, <code>Single</code></p>
+<p>Indicates current marital status: <code>Married</code>, <code>Single</code>, <code>Divorced</code>, <code>Separated</code>, or <code>Widowed</code></p>
 </dd>
-<dt><code>employment</code></dt>
+<dt><code>education</code></dt>
 <dd>
-<p>indicates current employment status: <code>Full time</code>, <code>Part time</code>, <code>Self employed</code>, <code>Retired/pensioned</code>, <code>Housewife not otherwise employed</code>, <code>Student</code>, <code>Unemployed</code></p>
+<p>Highest educational level attained by the respondent, recoded into three groups: <code>Lower</code>, <code>Middle</code>, or <code>Higher</code></p>
+</dd>
+<dt><code>life_satisfaction</code></dt>
+<dd>
+<p>Numeric scale from 1-10 measuring overall life satisfaction, where 1 indicates lowest satisfaction and 10 indicates highest satisfaction</p>
+</dd>
+<dt><code>freedom_of_choice</code></dt>
+<dd>
+<p>Numeric scale from 1-10 measuring perceived freedom of choice and control, where 1 indicates no freedom at all and 10 indicates a great deal</p>
+</dd>
+<dt><code>emancipative_values</code></dt>
+<dd>
+<p>Numeric index from 0-1 measuring emancipative values (Welzel), where higher values indicate stronger support for personal freedom, gender equality, and civic participation. Composed of four sub-indices: autonomy, equality, choice, and voice.</p>
+</dd>
+<dt><code>trust_people</code></dt>
+<dd>
+<p>Indicates general social trust: <code>Trusted</code> (most people can be trusted) or <code>Not trusted</code> (need to be very careful)</p>
+</dd>
+<dt><code>importance_of_god</code></dt>
+<dd>
+<p>Numeric scale from 1-10 measuring how important God is in the respondent’s life, where 1 indicates not at all important and 10 indicates very important</p>
+</dd>
+<dt><code>financial_satisfaction</code></dt>
+<dd>
+<p>Numeric scale from 1-10 measuring satisfaction with the household’s financial situation, where 1 indicates dissatisfied and 10 indicates satisfied</p>
+</dd>
+<dt><code>secular_values</code></dt>
+<dd>
+<p>Numeric index from 0-1 measuring overall secular values (Welzel), where higher values indicate more secular orientations. Composed of four sub-indices: defiance, disbelief, relativism, and scepticism.</p>
 </dd>
 </dl>
-<p>Below is the snapshot of the selected questions and how they appeared in the questionnaire:</p>
-<p><img src="images/Selected Questions for WVS-images-1.jpg" class="img-fluid"></p>
-<p><img src="images/Selected Questions for WVS-images-2.jpg" class="img-fluid"></p>
 <p>If you’d like to find out more about this data, including the original codebook and questionnaire, check out their homepage here: <a href="https://www.worldvaluessurvey.org/WVSDocumentationWV7.jsp" class="uri">https://www.worldvaluessurvey.org/WVSDocumentationWV7.jsp</a></p>
 </section>
 <section id="references" class="level3">

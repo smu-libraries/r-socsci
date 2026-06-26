@@ -261,7 +261,7 @@ Bella Ratmelia &amp; Wei Xia
 <span id="cb1-5"><a></a>wvs_cleaned <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data-output/wvs_cleaned_v1.csv"</span>)</span>
 <span id="cb1-6"><a></a></span>
 <span id="cb1-7"><a></a><span class="co"># Convert categorical variables to factors</span></span>
-<span id="cb1-8"><a></a>columns_to_convert <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"religiousity"</span>, <span class="st">"sex"</span>, <span class="st">"marital_status"</span>, <span class="st">"employment"</span>)</span>
+<span id="cb1-8"><a></a>columns_to_convert <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"sex"</span>, <span class="st">"marital_status"</span>, <span class="st">"urban_rural"</span>, <span class="st">"income_level"</span>, <span class="st">"education"</span>, <span class="st">"trust_people"</span>)</span>
 <span id="cb1-9"><a></a></span>
 <span id="cb1-10"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span> </span>
 <span id="cb1-11"><a></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(columns_to_convert), as_factor))</span>
@@ -339,64 +339,84 @@ Bella Ratmelia &amp; Wei Xia
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">CAN</td>
+<td style="text-align: left;">Turkey</td>
 <td style="text-align: left;">18-28</td>
-<td style="text-align: right;">712</td>
+<td style="text-align: right;">329</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">CAN</td>
+<td style="text-align: left;">Turkey</td>
 <td style="text-align: left;">29-44</td>
-<td style="text-align: right;">1232</td>
+<td style="text-align: right;">427</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">CAN</td>
+<td style="text-align: left;">Turkey</td>
 <td style="text-align: left;">45-60</td>
-<td style="text-align: right;">1061</td>
+<td style="text-align: right;">430</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">CAN</td>
+<td style="text-align: left;">Turkey</td>
 <td style="text-align: left;">61+</td>
-<td style="text-align: right;">1013</td>
+<td style="text-align: right;">30</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">NZL</td>
+<td style="text-align: left;">Hong Kong SAR</td>
 <td style="text-align: left;">18-28</td>
-<td style="text-align: right;">27</td>
+<td style="text-align: right;">191</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">NZL</td>
+<td style="text-align: left;">Hong Kong SAR</td>
 <td style="text-align: left;">29-44</td>
-<td style="text-align: right;">119</td>
+<td style="text-align: right;">384</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">NZL</td>
+<td style="text-align: left;">Hong Kong SAR</td>
 <td style="text-align: left;">45-60</td>
-<td style="text-align: right;">222</td>
+<td style="text-align: right;">412</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">NZL</td>
+<td style="text-align: left;">Hong Kong SAR</td>
 <td style="text-align: left;">61+</td>
-<td style="text-align: right;">292</td>
+<td style="text-align: right;">285</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">SGP</td>
+<td style="text-align: left;">Indonesia</td>
 <td style="text-align: left;">18-28</td>
-<td style="text-align: right;">246</td>
+<td style="text-align: right;">308</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">SGP</td>
+<td style="text-align: left;">Indonesia</td>
+<td style="text-align: left;">29-44</td>
+<td style="text-align: right;">529</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Indonesia</td>
+<td style="text-align: left;">45-60</td>
+<td style="text-align: right;">360</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Indonesia</td>
+<td style="text-align: left;">61+</td>
+<td style="text-align: right;">104</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Malaysia</td>
+<td style="text-align: left;">18-28</td>
+<td style="text-align: right;">379</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Malaysia</td>
 <td style="text-align: left;">29-44</td>
 <td style="text-align: right;">511</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">SGP</td>
+<td style="text-align: left;">Malaysia</td>
 <td style="text-align: left;">45-60</td>
-<td style="text-align: right;">550</td>
+<td style="text-align: right;">349</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">SGP</td>
+<td style="text-align: left;">Malaysia</td>
 <td style="text-align: left;">61+</td>
-<td style="text-align: right;">418</td>
+<td style="text-align: right;">74</td>
 </tr>
 </tbody>
 </table>
@@ -419,25 +439,32 @@ Bella Ratmelia &amp; Wei Xia
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">CAN</td>
-<td style="text-align: right;">712</td>
-<td style="text-align: right;">1232</td>
-<td style="text-align: right;">1061</td>
-<td style="text-align: right;">1013</td>
+<td style="text-align: left;">Turkey</td>
+<td style="text-align: right;">329</td>
+<td style="text-align: right;">427</td>
+<td style="text-align: right;">430</td>
+<td style="text-align: right;">30</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">NZL</td>
-<td style="text-align: right;">27</td>
-<td style="text-align: right;">119</td>
-<td style="text-align: right;">222</td>
-<td style="text-align: right;">292</td>
+<td style="text-align: left;">Hong Kong SAR</td>
+<td style="text-align: right;">191</td>
+<td style="text-align: right;">384</td>
+<td style="text-align: right;">412</td>
+<td style="text-align: right;">285</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">SGP</td>
-<td style="text-align: right;">246</td>
+<td style="text-align: left;">Indonesia</td>
+<td style="text-align: right;">308</td>
+<td style="text-align: right;">529</td>
+<td style="text-align: right;">360</td>
+<td style="text-align: right;">104</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Malaysia</td>
+<td style="text-align: right;">379</td>
 <td style="text-align: right;">511</td>
-<td style="text-align: right;">550</td>
-<td style="text-align: right;">418</td>
+<td style="text-align: right;">349</td>
+<td style="text-align: right;">74</td>
 </tr>
 </tbody>
 </table>
@@ -470,15 +497,15 @@ Bella Ratmelia &amp; Wei Xia
 <span id="cb2-10"><a></a><span class="co"># Print results</span></span>
 <span id="cb2-11"><a></a><span class="fu">cat</span>(<span class="st">"Mean age:"</span>, mean_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) <span class="co"># cat stands for concatenate</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Mean age: 47.96408 </code></pre>
+<pre><code>Mean age: 41.05292 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">cat</span>(<span class="st">"Median age:"</span>, median_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Median age: 48 </code></pre>
+<pre><code>Median age: 39 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">cat</span>(<span class="st">"Most frequently occuring age:"</span>, mode_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) <span class="co"># this is here just for demo purposes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Most frequently occuring age: 54 </code></pre>
+<pre><code>Most frequently occuring age: 55 </code></pre>
 </div>
 </div>
 </section>
@@ -497,19 +524,19 @@ Bella Ratmelia &amp; Wei Xia
 <span id="cb8-5"><a></a></span>
 <span id="cb8-6"><a></a><span class="fu">cat</span>(<span class="st">"Variance of age:"</span>, var_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Variance of age: 279.6066 </code></pre>
+<pre><code>Variance of age: 205.059 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">cat</span>(<span class="st">"Standard deviation of age:"</span>, sd_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Standard deviation of age: 16.72144 </code></pre>
+<pre><code>Standard deviation of age: 14.31988 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">cat</span>(<span class="st">"Range of age:"</span>, range_age[<span class="dv">1</span>], <span class="st">"to"</span>, range_age[<span class="dv">2</span>], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Range of age: 18 to 93 </code></pre>
+<pre><code>Range of age: 18 to 95 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">cat</span>(<span class="st">"Interquartile range of age:"</span>, iqr_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Interquartile range of age: 28 </code></pre>
+<pre><code>Interquartile range of age: 23 </code></pre>
 </div>
 </div>
 </section>
@@ -531,11 +558,11 @@ Bella Ratmelia &amp; Wei Xia
 <span id="cb16-7"><a></a></span>
 <span id="cb16-8"><a></a><span class="fu">cat</span>(<span class="st">"Skewness of age:"</span>, skew_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Skewness of age: 0.1009475 </code></pre>
+<pre><code>Skewness of age: 0.4270082 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">cat</span>(<span class="st">"Kurtosis of age:"</span>, kurtosis_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Kurtosis of age: 2.018238 </code></pre>
+<pre><code>Kurtosis of age: 2.492457 </code></pre>
 </div>
 </div>
 </section>
@@ -679,12 +706,13 @@ Bella Ratmelia &amp; Wei Xia
 <span id="cb23-5"><a></a></span>
 <span id="cb23-6"><a></a><span class="fu">print</span>(wvs_country_proportion)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 3
-  country     n proportion
-  &lt;fct&gt;   &lt;int&gt;      &lt;dbl&gt;
-1 CAN      4018      0.628
-2 NZL       660      0.103
-3 SGP      1725      0.269</code></pre>
+<pre><code># A tibble: 4 × 3
+  country           n proportion
+  &lt;fct&gt;         &lt;int&gt;      &lt;dbl&gt;
+1 Turkey         1216      0.238
+2 Hong Kong SAR  1272      0.249
+3 Indonesia      1301      0.255
+4 Malaysia       1313      0.257</code></pre>
 </div>
 </div>
 </section>
@@ -764,11 +792,11 @@ Bella Ratmelia &amp; Wei Xia
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">table</span>(wvs_cleaned<span class="sc">$</span>age_group, wvs_cleaned<span class="sc">$</span>country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       
-         CAN  NZL  SGP
-  18-28  712   27  246
-  29-44 1232  119  511
-  45-60 1061  222  550
-  61+   1013  292  418</code></pre>
+        Turkey Hong Kong SAR Indonesia Malaysia
+  18-28    329           191       308      379
+  29-44    427           384       529      511
+  45-60    430           412       360      349
+  61+       30           285       104       74</code></pre>
 </div>
 </div>
 </section>
@@ -781,22 +809,26 @@ Bella Ratmelia &amp; Wei Xia
 <span id="cb29-3"><a></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> <span class="co"># count the frequency of participants by age group and country </span></span>
 <span id="cb29-4"><a></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n<span class="sc">/</span><span class="fu">sum</span>(n)) <span class="co"># calculate proportion</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12 × 4
-# Groups:   country [3]
-   country age_group     n   prop
-   &lt;fct&gt;   &lt;chr&gt;     &lt;int&gt;  &lt;dbl&gt;
- 1 CAN     18-28       712 0.177 
- 2 CAN     29-44      1232 0.307 
- 3 CAN     45-60      1061 0.264 
- 4 CAN     61+        1013 0.252 
- 5 NZL     18-28        27 0.0409
- 6 NZL     29-44       119 0.180 
- 7 NZL     45-60       222 0.336 
- 8 NZL     61+         292 0.442 
- 9 SGP     18-28       246 0.143 
-10 SGP     29-44       511 0.296 
-11 SGP     45-60       550 0.319 
-12 SGP     61+         418 0.242 </code></pre>
+<pre><code># A tibble: 16 × 4
+# Groups:   country [4]
+   country       age_group     n   prop
+   &lt;fct&gt;         &lt;chr&gt;     &lt;int&gt;  &lt;dbl&gt;
+ 1 Turkey        18-28       329 0.271 
+ 2 Turkey        29-44       427 0.351 
+ 3 Turkey        45-60       430 0.354 
+ 4 Turkey        61+          30 0.0247
+ 5 Hong Kong SAR 18-28       191 0.150 
+ 6 Hong Kong SAR 29-44       384 0.302 
+ 7 Hong Kong SAR 45-60       412 0.324 
+ 8 Hong Kong SAR 61+         285 0.224 
+ 9 Indonesia     18-28       308 0.237 
+10 Indonesia     29-44       529 0.407 
+11 Indonesia     45-60       360 0.277 
+12 Indonesia     61+         104 0.0799
+13 Malaysia      18-28       379 0.289 
+14 Malaysia      29-44       511 0.389 
+15 Malaysia      45-60       349 0.266 
+16 Malaysia      61+          74 0.0564</code></pre>
 </div>
 </div>
 </section>
@@ -869,7 +901,7 @@ Bella Ratmelia &amp; Wei Xia
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="fu">cor</span>(wvs_cleaned<span class="sc">$</span>financial_satisfaction, wvs_cleaned<span class="sc">$</span>life_satisfaction)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.6420311</code></pre>
+<pre><code>[1] 0.5737219</code></pre>
 </div>
 </div>
 </section>
@@ -910,12 +942,13 @@ Bella Ratmelia &amp; Wei Xia
 <span id="cb37-6"><a></a>    <span class="at">sd_satisfaction =</span> <span class="fu">sd</span>(life_satisfaction, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb37-7"><a></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 4
-  country mean_satisfaction median_satisfaction sd_satisfaction
-  &lt;fct&gt;               &lt;dbl&gt;               &lt;dbl&gt;           &lt;dbl&gt;
-1 CAN                  7.04                   7            1.81
-2 NZL                  7.60                   8            1.79
-3 SGP                  7.06                   7            1.78</code></pre>
+<pre><code># A tibble: 4 × 4
+  country       mean_satisfaction median_satisfaction sd_satisfaction
+  &lt;fct&gt;                     &lt;dbl&gt;               &lt;dbl&gt;           &lt;dbl&gt;
+1 Turkey                     6.48                   7            1.85
+2 Hong Kong SAR              6.61                   7            1.80
+3 Indonesia                  7.63                   8            2.39
+4 Malaysia                   6.99                   7            1.75</code></pre>
 </div>
 </div>
 </section>
@@ -997,7 +1030,7 @@ Bella Ratmelia &amp; Wei Xia
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> financial_satisfaction, <span class="at">y =</span> life_satisfaction)) <span class="sc">+</span></span>
 <span id="cb42-2"><a></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
 <span id="cb42-3"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
-<span id="cb42-4"><a></a>  <span class="fu">facet_grid</span>(country <span class="sc">~</span> religiousity)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb42-4"><a></a>  <span class="fu">facet_grid</span>(country <span class="sc">~</span> education)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -1035,14 +1068,14 @@ Bella Ratmelia &amp; Wei Xia
 </section>
 <section id="at-home-exercise-1" class="slide level2">
 <h2>At home exercise #1</h2>
-<p>Create a barchart that visualizes the frequency of <code>religiousity</code></p>
+<p>Create a barchart that visualizes the frequency of <code>education</code></p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show answer</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> religiousity, <span class="at">fill =</span> religiousity)) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> education, <span class="at">fill =</span> education)) <span class="sc">+</span></span>
 <span id="cb43-2"><a></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb43-3"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Frequency of Religiosity"</span>,</span>
-<span id="cb43-4"><a></a>       <span class="at">x =</span> <span class="st">"Religiosity"</span>,</span>
+<span id="cb43-3"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Frequency of Education Level"</span>,</span>
+<span id="cb43-4"><a></a>       <span class="at">x =</span> <span class="st">"Education Level"</span>,</span>
 <span id="cb43-5"><a></a>       <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
 <span id="cb43-6"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
@@ -1059,14 +1092,14 @@ Bella Ratmelia &amp; Wei Xia
 </div>
 </div></section><section id="at-home-exercise-2" class="slide level2">
 <h2>At home exercise #2</h2>
-<p>Create a side-by-side boxplots that visualizes <code>political_scale</code> for each <code>sex</code>.</p>
+<p>Create a side-by-side boxplots that visualizes <code>freedom_of_choice</code> for each <code>sex</code>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show answer</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> political_scale, <span class="at">y =</span> sex)) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> freedom_of_choice, <span class="at">y =</span> sex)) <span class="sc">+</span></span>
 <span id="cb44-2"><a></a>  <span class="fu">geom_violin</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
 <span id="cb44-3"><a></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb44-4"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Political scale Distribution by Sex"</span>) <span class="sc">+</span></span>
+<span id="cb44-4"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Freedom of Choice Distribution by Sex"</span>) <span class="sc">+</span></span>
 <span id="cb44-5"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
@@ -1088,8 +1121,8 @@ Bella Ratmelia &amp; Wei Xia
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a><span class="fu">library</span>(corrplot)</span>
 <span id="cb45-2"><a></a></span>
 <span id="cb45-3"><a></a><span class="co"># select all the columns for correlation calculation, save it to columns_for_corr</span></span>
-<span id="cb45-4"><a></a>columns_for_corr <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb45-5"><a></a>  <span class="fu">select</span>(financial_satisfaction, life_satisfaction, age)</span>
+<span id="cb45-4"><a></a>columns_for_corr <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb45-5"><a></a>  <span class="fu">select</span>(financial_satisfaction, life_satisfaction, freedom_of_choice, age)</span>
 <span id="cb45-6"><a></a></span>
 <span id="cb45-7"><a></a><span class="co"># pass the columns_for_corr to cor() function, and save the result to cor_matrix</span></span>
 <span id="cb45-8"><a></a>cor_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(columns_for_corr)</span>
@@ -1116,9 +1149,9 @@ Bella Ratmelia &amp; Wei Xia
 <h2>Correlation Plot - shorter code</h2>
 <p>We can shorten the code in the previous slide using the maggritr pipe <code>|&gt;</code> like so:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb46-2"><a></a>    <span class="fu">select</span>(financial_satisfaction, life_satisfaction, age) <span class="sc">|&gt;</span> </span>
-<span id="cb46-3"><a></a>    <span class="fu">cor</span>() <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb46-2"><a></a>    <span class="fu">select</span>(financial_satisfaction, life_satisfaction, freedom_of_choice, age) <span class="sc">|&gt;</span></span>
+<span id="cb46-3"><a></a>    <span class="fu">cor</span>() <span class="sc">|&gt;</span></span>
 <span id="cb46-4"><a></a>    <span class="fu">corrplot</span>(<span class="at">method =</span> <span class="st">"shade"</span>, <span class="co"># show the correlation strength as color shades</span></span>
 <span id="cb46-5"><a></a>         <span class="at">addCoef.col =</span> <span class="st">"black"</span>, <span class="at">tl.col =</span> <span class="st">"black"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>

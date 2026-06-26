@@ -266,7 +266,7 @@ Bella Ratmelia
 <span id="cb2-2"><a></a>wvs_cleaned <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data-output/wvs_cleaned_v1.csv"</span>)</span>
 <span id="cb2-3"><a></a></span>
 <span id="cb2-4"><a></a><span class="co"># Convert categorical variables to factors</span></span>
-<span id="cb2-5"><a></a>columns_to_convert <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"religiousity"</span>, <span class="st">"sex"</span>, <span class="st">"marital_status"</span>, <span class="st">"employment"</span>, <span class="st">"age_group"</span>)</span>
+<span id="cb2-5"><a></a>columns_to_convert <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"sex"</span>, <span class="st">"marital_status"</span>, <span class="st">"urban_rural"</span>, <span class="st">"income_level"</span>, <span class="st">"education"</span>, <span class="st">"trust_people"</span>, <span class="st">"age_group"</span>)</span>
 <span id="cb2-6"><a></a></span>
 <span id="cb2-7"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span> </span>
 <span id="cb2-8"><a></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(columns_to_convert), as_factor))</span>
@@ -287,7 +287,7 @@ Bella Ratmelia
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">library</span>(apaTables)</span>
 <span id="cb3-2"><a></a></span>
 <span id="cb3-3"><a></a>wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb3-4"><a></a>    <span class="fu">select</span>(life_satisfaction, financial_satisfaction, political_scale) <span class="sc">|&gt;</span> </span>
+<span id="cb3-4"><a></a>    <span class="fu">select</span>(life_satisfaction, financial_satisfaction, freedom_of_choice) <span class="sc">|&gt;</span></span>
 <span id="cb3-5"><a></a>    <span class="fu">apa.cor.table</span>( <span class="at">table.number =</span> <span class="dv">1</span>, <span class="at">filename =</span> <span class="st">"fig-output/table-cor.doc"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This code will create a word document with the tables already formatted in APA style inside.</p>
 </section>
@@ -299,31 +299,31 @@ Bella Ratmelia
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">library</span>(gtsummary)</span>
 <span id="cb4-2"><a></a></span>
 <span id="cb4-3"><a></a>wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb4-4"><a></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(life_satisfaction, financial_satisfaction, political_scale, sex) <span class="sc">|&gt;</span> </span>
-<span id="cb4-5"><a></a>    <span class="fu">tbl_summary</span>(<span class="at">by =</span> sex) <span class="sc">|&gt;</span> </span>
+<span id="cb4-4"><a></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(life_satisfaction, financial_satisfaction, freedom_of_choice, sex) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a></a>    <span class="fu">tbl_summary</span>(<span class="at">by =</span> sex) <span class="sc">|&gt;</span></span>
 <span id="cb4-6"><a></a>    <span class="fu">add_difference</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
 <section id="gtsummary-output" class="slide level2 output-location-slide"><h2>gtsummary</h2><div class="cell output-location-slide">
 <div class="cell-output-display">
-<div id="febahzpmcx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#febahzpmcx table {
+<div id="udlbsmxisq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#udlbsmxisq table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#febahzpmcx thead, #febahzpmcx tbody, #febahzpmcx tfoot, #febahzpmcx tr, #febahzpmcx td, #febahzpmcx th {
+#udlbsmxisq thead, #udlbsmxisq tbody, #udlbsmxisq tfoot, #udlbsmxisq tr, #udlbsmxisq td, #udlbsmxisq th {
   border-style: none;
 }
 
-#febahzpmcx p {
+#udlbsmxisq p {
   margin: 0;
   padding: 0;
 }
 
-#febahzpmcx .gt_table {
+#udlbsmxisq .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -349,12 +349,12 @@ Bella Ratmelia
   border-left-color: #D3D3D3;
 }
 
-#febahzpmcx .gt_caption {
+#udlbsmxisq .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#febahzpmcx .gt_title {
+#udlbsmxisq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -366,7 +366,7 @@ Bella Ratmelia
   border-bottom-width: 0;
 }
 
-#febahzpmcx .gt_subtitle {
+#udlbsmxisq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -378,7 +378,7 @@ Bella Ratmelia
   border-top-width: 0;
 }
 
-#febahzpmcx .gt_heading {
+#udlbsmxisq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -390,13 +390,13 @@ Bella Ratmelia
   border-right-color: #D3D3D3;
 }
 
-#febahzpmcx .gt_bottom_border {
+#udlbsmxisq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#febahzpmcx .gt_col_headings {
+#udlbsmxisq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -411,7 +411,7 @@ Bella Ratmelia
   border-right-color: #D3D3D3;
 }
 
-#febahzpmcx .gt_col_heading {
+#udlbsmxisq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -431,7 +431,7 @@ Bella Ratmelia
   overflow-x: hidden;
 }
 
-#febahzpmcx .gt_column_spanner_outer {
+#udlbsmxisq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -443,15 +443,15 @@ Bella Ratmelia
   padding-right: 4px;
 }
 
-#febahzpmcx .gt_column_spanner_outer:first-child {
+#udlbsmxisq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#febahzpmcx .gt_column_spanner_outer:last-child {
+#udlbsmxisq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#febahzpmcx .gt_column_spanner {
+#udlbsmxisq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -463,11 +463,11 @@ Bella Ratmelia
   width: 100%;
 }
 
-#febahzpmcx .gt_spanner_row {
+#udlbsmxisq .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#febahzpmcx .gt_group_heading {
+#udlbsmxisq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -493,7 +493,7 @@ Bella Ratmelia
   text-align: left;
 }
 
-#febahzpmcx .gt_empty_group_heading {
+#udlbsmxisq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -508,15 +508,15 @@ Bella Ratmelia
   vertical-align: middle;
 }
 
-#febahzpmcx .gt_from_md > :first-child {
+#udlbsmxisq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#febahzpmcx .gt_from_md > :last-child {
+#udlbsmxisq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#febahzpmcx .gt_row {
+#udlbsmxisq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -535,7 +535,7 @@ Bella Ratmelia
   overflow-x: hidden;
 }
 
-#febahzpmcx .gt_stub {
+#udlbsmxisq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -548,7 +548,7 @@ Bella Ratmelia
   padding-right: 5px;
 }
 
-#febahzpmcx .gt_stub_row_group {
+#udlbsmxisq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -562,15 +562,15 @@ Bella Ratmelia
   vertical-align: top;
 }
 
-#febahzpmcx .gt_row_group_first td {
+#udlbsmxisq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#febahzpmcx .gt_row_group_first th {
+#udlbsmxisq .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#febahzpmcx .gt_summary_row {
+#udlbsmxisq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -580,16 +580,16 @@ Bella Ratmelia
   padding-right: 5px;
 }
 
-#febahzpmcx .gt_first_summary_row {
+#udlbsmxisq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#febahzpmcx .gt_first_summary_row.thick {
+#udlbsmxisq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#febahzpmcx .gt_last_summary_row {
+#udlbsmxisq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -599,7 +599,7 @@ Bella Ratmelia
   border-bottom-color: #D3D3D3;
 }
 
-#febahzpmcx .gt_grand_summary_row {
+#udlbsmxisq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -609,7 +609,7 @@ Bella Ratmelia
   padding-right: 5px;
 }
 
-#febahzpmcx .gt_first_grand_summary_row {
+#udlbsmxisq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -619,7 +619,7 @@ Bella Ratmelia
   border-top-color: #D3D3D3;
 }
 
-#febahzpmcx .gt_last_grand_summary_row_top {
+#udlbsmxisq .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -629,11 +629,11 @@ Bella Ratmelia
   border-bottom-color: #D3D3D3;
 }
 
-#febahzpmcx .gt_striped {
+#udlbsmxisq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#febahzpmcx .gt_table_body {
+#udlbsmxisq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -642,7 +642,7 @@ Bella Ratmelia
   border-bottom-color: #D3D3D3;
 }
 
-#febahzpmcx .gt_footnotes {
+#udlbsmxisq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -656,7 +656,7 @@ Bella Ratmelia
   border-right-color: #D3D3D3;
 }
 
-#febahzpmcx .gt_footnote {
+#udlbsmxisq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -665,7 +665,7 @@ Bella Ratmelia
   padding-right: 5px;
 }
 
-#febahzpmcx .gt_sourcenotes {
+#udlbsmxisq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -679,7 +679,7 @@ Bella Ratmelia
   border-right-color: #D3D3D3;
 }
 
-#febahzpmcx .gt_sourcenote {
+#udlbsmxisq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -687,72 +687,72 @@ Bella Ratmelia
   padding-right: 5px;
 }
 
-#febahzpmcx .gt_left {
+#udlbsmxisq .gt_left {
   text-align: left;
 }
 
-#febahzpmcx .gt_center {
+#udlbsmxisq .gt_center {
   text-align: center;
 }
 
-#febahzpmcx .gt_right {
+#udlbsmxisq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#febahzpmcx .gt_font_normal {
+#udlbsmxisq .gt_font_normal {
   font-weight: normal;
 }
 
-#febahzpmcx .gt_font_bold {
+#udlbsmxisq .gt_font_bold {
   font-weight: bold;
 }
 
-#febahzpmcx .gt_font_italic {
+#udlbsmxisq .gt_font_italic {
   font-style: italic;
 }
 
-#febahzpmcx .gt_super {
+#udlbsmxisq .gt_super {
   font-size: 65%;
 }
 
-#febahzpmcx .gt_footnote_marks {
+#udlbsmxisq .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#febahzpmcx .gt_asterisk {
+#udlbsmxisq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#febahzpmcx .gt_indent_1 {
+#udlbsmxisq .gt_indent_1 {
   text-indent: 5px;
 }
 
-#febahzpmcx .gt_indent_2 {
+#udlbsmxisq .gt_indent_2 {
   text-indent: 10px;
 }
 
-#febahzpmcx .gt_indent_3 {
+#udlbsmxisq .gt_indent_3 {
   text-indent: 15px;
 }
 
-#febahzpmcx .gt_indent_4 {
+#udlbsmxisq .gt_indent_4 {
   text-indent: 20px;
 }
 
-#febahzpmcx .gt_indent_5 {
+#udlbsmxisq .gt_indent_5 {
   text-indent: 25px;
 }
 
-#febahzpmcx .katex-display {
+#udlbsmxisq .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#febahzpmcx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#udlbsmxisq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -770,9 +770,9 @@ Bella Ratmelia
 <tr class="gt_col_headings header">
 <th id="label" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Characteristic</strong></th>
 <th id="stat_1" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>Male</strong><br>
-N = 3,171<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+N = 2,431<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
 <th id="stat_2" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>Female</strong><br>
-N = 3,232<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
+N = 2,671<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
 <th id="estimate" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>Difference</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span></th>
 <th id="conf.low" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>95% CI</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span></th>
 <th id="p.value" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>p-value</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span></th>
@@ -783,25 +783,25 @@ N = 3,232<span class="gt_footnote_marks" style="white-space:nowrap;font-style:it
 <td class="gt_row gt_left" headers="label">life_satisfaction</td>
 <td class="gt_row gt_center" headers="stat_1">7.00 (6.00, 8.00)</td>
 <td class="gt_row gt_center" headers="stat_2">7.00 (6.00, 8.00)</td>
-<td class="gt_row gt_center" headers="estimate">-0.02</td>
-<td class="gt_row gt_center" headers="conf.low">-0.11, 0.07</td>
-<td class="gt_row gt_center" headers="p.value">0.7</td>
+<td class="gt_row gt_center" headers="estimate">-0.22</td>
+<td class="gt_row gt_center" headers="conf.low">-0.33, -0.11</td>
+<td class="gt_row gt_center" headers="p.value">&lt;0.001</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label">financial_satisfaction</td>
-<td class="gt_row gt_center" headers="stat_1">7.00 (5.00, 8.00)</td>
+<td class="gt_row gt_center" headers="stat_1">6.00 (5.00, 8.00)</td>
 <td class="gt_row gt_center" headers="stat_2">7.00 (5.00, 8.00)</td>
-<td class="gt_row gt_center" headers="estimate">0.07</td>
-<td class="gt_row gt_center" headers="conf.low">-0.04, 0.17</td>
-<td class="gt_row gt_center" headers="p.value">0.2</td>
+<td class="gt_row gt_center" headers="estimate">-0.15</td>
+<td class="gt_row gt_center" headers="conf.low">-0.27, -0.03</td>
+<td class="gt_row gt_center" headers="p.value">0.014</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="label">political_scale</td>
-<td class="gt_row gt_center" headers="stat_1">5.00 (4.00, 7.00)</td>
-<td class="gt_row gt_center" headers="stat_2">5.00 (4.00, 6.00)</td>
-<td class="gt_row gt_center" headers="estimate">0.44</td>
-<td class="gt_row gt_center" headers="conf.low">0.34, 0.54</td>
-<td class="gt_row gt_center" headers="p.value">&lt;0.001</td>
+<td class="gt_row gt_left" headers="label">freedom_of_choice</td>
+<td class="gt_row gt_center" headers="stat_1">7.00 (6.00, 8.00)</td>
+<td class="gt_row gt_center" headers="stat_2">7.00 (6.00, 9.00)</td>
+<td class="gt_row gt_center" headers="estimate">-0.13</td>
+<td class="gt_row gt_center" headers="conf.low">-0.25, -0.01</td>
+<td class="gt_row gt_center" headers="p.value">0.033</td>
 </tr>
 </tbody><tfoot>
 <tr class="gt_footnotes odd">
@@ -874,18 +874,18 @@ lm(formula = life_satisfaction ~ age, data = wvs_cleaned)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--6.6563 -0.9265  0.2681  1.1546  3.3816 
+-5.9878 -0.9551  0.0710  1.0797  3.0884 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept) 6.326442   0.067792   93.32   &lt;2e-16 ***
-age         0.016218   0.001335   12.15   &lt;2e-16 ***
+(Intercept) 6.892024   0.085686  80.434   &lt;2e-16 ***
+age         0.001088   0.001971   0.552    0.581    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.786 on 6401 degrees of freedom
-Multiple R-squared:  0.02255,   Adjusted R-squared:  0.0224 
-F-statistic: 147.7 on 1 and 6401 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 2.016 on 5100 degrees of freedom
+Multiple R-squared:  5.976e-05, Adjusted R-squared:  -0.0001363 
+F-statistic: 0.3048 on 1 and 5100 DF,  p-value: 0.5809</code></pre>
 </div>
 </div>
 </section>
@@ -906,10 +906,10 @@ F-statistic: 147.7 on 1 and 6401 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h2>Narrating the results</h2>
 <p>Here is one possible way to narrate your result:</p>
 <blockquote>
-<p>A linear regression analysis was conducted to assess the influence of age on life satisfaction in Canada, Singapore, and New Zealand. Age is a statistically significant but weak predictor (B = 0.016, SE = 0.001, p &lt; 0.001), indicating that for each additional year of age, the life satisfaction is increased by 0.016 units.</p>
+<p>A linear regression analysis was conducted to assess the influence of age on life satisfaction in Hong Kong SAR, Indonesia, Malaysia, and Turkey. Age is a statistically significant but weak predictor (B = [value], SE = [value], p &lt; 0.001), indicating that for each additional year of age, life satisfaction changes by [B] units.</p>
 </blockquote>
 <blockquote>
-<p>The model was statistically significant (F(1, 6401) = 147.7, p &lt; 0.001) and explained approximately 2% of the variance in life satisfaction (R² = 0.022, Adjusted R² = 0.0224).</p>
+<p>The model was statistically significant (F(1, [df]) = [F-value], p &lt; 0.001) and explained approximately [R²]% of the variance in life satisfaction.</p>
 </blockquote>
 </section>
 <section id="present-your-regression-result---huxtable" class="slide level2">
@@ -924,21 +924,21 @@ F-statistic: 147.7 on 1 and 6401 DF,  p-value: &lt; 2.2e-16</code></pre>
 </thead>
 <tbody>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">(Intercept)</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">6.326 ***</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">(Intercept)</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">6.892 ***</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.068)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.086)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">age</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.016 ***</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">age</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.001&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">(0.001)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">(0.002)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">N</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">6403&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">N</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">5102&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">R2</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.023&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">R2</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.000&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">logLik</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">-12796.748&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">logLik</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">-10814.482&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;      font-weight: normal;">AIC</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">25599.496&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;      font-weight: normal;">AIC</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">21634.963&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
 <th class="huxtable-cell huxtable-header" colspan="2" style="border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;      font-weight: normal;">*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05.</th></tr>
 </tbody>
@@ -969,27 +969,27 @@ lm(formula = life_satisfaction ~ financial_satisfaction + age,
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--8.0571 -0.7459  0.1272  0.7919  5.8965 
+-7.9538 -0.8775  0.1097  1.0443  5.8493 
 
 Coefficients:
-                       Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)            3.346623   0.069441  48.194  &lt; 2e-16 ***
-financial_satisfaction 0.529454   0.008084  65.494  &lt; 2e-16 ***
-age                    0.005546   0.001046   5.305 1.17e-07 ***
+                         Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)             3.6540709  0.0954864  38.268   &lt;2e-16 ***
+financial_satisfaction  0.5310574  0.0106178  50.016   &lt;2e-16 ***
+age                    -0.0004717  0.0016147  -0.292     0.77    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.382 on 6400 degrees of freedom
-Multiple R-squared:  0.4148,    Adjusted R-squared:  0.4146 
-F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.651 on 5099 degrees of freedom
+Multiple R-squared:  0.3292,    Adjusted R-squared:  0.3289 
+F-statistic:  1251 on 2 and 5099 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div></section><section id="possible-way-to-explain-the-result" class="slide level2">
 <h2>Possible way to explain the result</h2>
 <blockquote>
-<p>A multiple regression analysis was conducted to examine how financial satisfaction and age predict life satisfaction. Financial satisfaction was a strong predictor (B = 0.529, SE = 0.008, p &lt; 0.001), indicating that for each one-unit increase in financial satisfaction, life satisfaction increased by 0.529 units. Age was also a significant but weaker predictor (B = 0.006, SE = 0.001, p &lt; 0.001), with each additional year of age associated with a 0.006-unit increase in life satisfaction.</p>
+<p>A multiple regression analysis was conducted to examine how financial satisfaction and age predict life satisfaction. Financial satisfaction was a strong predictor (B = [value], SE = [value], p &lt; 0.001), indicating that for each one-unit increase in financial satisfaction, life satisfaction increased by [B] units. Age was also a significant but weaker predictor (B = [value], SE = [value], p &lt; 0.001), with each additional year of age associated with a [B]-unit change in life satisfaction.</p>
 </blockquote>
 <blockquote>
-<p>The model was statistically significant (F(2, 6400) = 2268, p &lt; 0.001) and explained 41.5% of the variance in life satisfaction (R² = 0.415, Adjusted R² = 0.415).</p>
+<p>The model was statistically significant (F(2, [df]) = [F-value], p &lt; 0.001) and explained [R²]% of the variance in life satisfaction.</p>
 </blockquote>
 </section>
 <section id="present-your-regression-result---tbl_regression-from-gtsummary" class="slide level2">
@@ -997,23 +997,23 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>life_model2 <span class="sc">|&gt;</span> <span class="fu">tbl_regression</span>() <span class="sc">|&gt;</span> <span class="fu">bold_p</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="wmxssdkjrs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wmxssdkjrs table {
+<div id="mienzqskwx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mienzqskwx table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#wmxssdkjrs thead, #wmxssdkjrs tbody, #wmxssdkjrs tfoot, #wmxssdkjrs tr, #wmxssdkjrs td, #wmxssdkjrs th {
+#mienzqskwx thead, #mienzqskwx tbody, #mienzqskwx tfoot, #mienzqskwx tr, #mienzqskwx td, #mienzqskwx th {
   border-style: none;
 }
 
-#wmxssdkjrs p {
+#mienzqskwx p {
   margin: 0;
   padding: 0;
 }
 
-#wmxssdkjrs .gt_table {
+#mienzqskwx .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1039,12 +1039,12 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#wmxssdkjrs .gt_caption {
+#mienzqskwx .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#wmxssdkjrs .gt_title {
+#mienzqskwx .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1056,7 +1056,7 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-width: 0;
 }
 
-#wmxssdkjrs .gt_subtitle {
+#mienzqskwx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1068,7 +1068,7 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-top-width: 0;
 }
 
-#wmxssdkjrs .gt_heading {
+#mienzqskwx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1080,13 +1080,13 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#wmxssdkjrs .gt_bottom_border {
+#mienzqskwx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wmxssdkjrs .gt_col_headings {
+#mienzqskwx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1101,7 +1101,7 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#wmxssdkjrs .gt_col_heading {
+#mienzqskwx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1121,7 +1121,7 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   overflow-x: hidden;
 }
 
-#wmxssdkjrs .gt_column_spanner_outer {
+#mienzqskwx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1133,15 +1133,15 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 4px;
 }
 
-#wmxssdkjrs .gt_column_spanner_outer:first-child {
+#mienzqskwx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wmxssdkjrs .gt_column_spanner_outer:last-child {
+#mienzqskwx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wmxssdkjrs .gt_column_spanner {
+#mienzqskwx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1153,11 +1153,11 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   width: 100%;
 }
 
-#wmxssdkjrs .gt_spanner_row {
+#mienzqskwx .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#wmxssdkjrs .gt_group_heading {
+#mienzqskwx .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1183,7 +1183,7 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   text-align: left;
 }
 
-#wmxssdkjrs .gt_empty_group_heading {
+#mienzqskwx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1198,15 +1198,15 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   vertical-align: middle;
 }
 
-#wmxssdkjrs .gt_from_md > :first-child {
+#mienzqskwx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wmxssdkjrs .gt_from_md > :last-child {
+#mienzqskwx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wmxssdkjrs .gt_row {
+#mienzqskwx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1225,7 +1225,7 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   overflow-x: hidden;
 }
 
-#wmxssdkjrs .gt_stub {
+#mienzqskwx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1238,7 +1238,7 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#wmxssdkjrs .gt_stub_row_group {
+#mienzqskwx .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1252,15 +1252,15 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   vertical-align: top;
 }
 
-#wmxssdkjrs .gt_row_group_first td {
+#mienzqskwx .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wmxssdkjrs .gt_row_group_first th {
+#mienzqskwx .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#wmxssdkjrs .gt_summary_row {
+#mienzqskwx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1270,16 +1270,16 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#wmxssdkjrs .gt_first_summary_row {
+#mienzqskwx .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wmxssdkjrs .gt_first_summary_row.thick {
+#mienzqskwx .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wmxssdkjrs .gt_last_summary_row {
+#mienzqskwx .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1289,7 +1289,7 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#wmxssdkjrs .gt_grand_summary_row {
+#mienzqskwx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1299,7 +1299,7 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#wmxssdkjrs .gt_first_grand_summary_row {
+#mienzqskwx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1309,7 +1309,7 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#wmxssdkjrs .gt_last_grand_summary_row_top {
+#mienzqskwx .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1319,11 +1319,11 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#wmxssdkjrs .gt_striped {
+#mienzqskwx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wmxssdkjrs .gt_table_body {
+#mienzqskwx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1332,7 +1332,7 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#wmxssdkjrs .gt_footnotes {
+#mienzqskwx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1346,7 +1346,7 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#wmxssdkjrs .gt_footnote {
+#mienzqskwx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1355,7 +1355,7 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#wmxssdkjrs .gt_sourcenotes {
+#mienzqskwx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1369,7 +1369,7 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#wmxssdkjrs .gt_sourcenote {
+#mienzqskwx .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1377,72 +1377,72 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#wmxssdkjrs .gt_left {
+#mienzqskwx .gt_left {
   text-align: left;
 }
 
-#wmxssdkjrs .gt_center {
+#mienzqskwx .gt_center {
   text-align: center;
 }
 
-#wmxssdkjrs .gt_right {
+#mienzqskwx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wmxssdkjrs .gt_font_normal {
+#mienzqskwx .gt_font_normal {
   font-weight: normal;
 }
 
-#wmxssdkjrs .gt_font_bold {
+#mienzqskwx .gt_font_bold {
   font-weight: bold;
 }
 
-#wmxssdkjrs .gt_font_italic {
+#mienzqskwx .gt_font_italic {
   font-style: italic;
 }
 
-#wmxssdkjrs .gt_super {
+#mienzqskwx .gt_super {
   font-size: 65%;
 }
 
-#wmxssdkjrs .gt_footnote_marks {
+#mienzqskwx .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#wmxssdkjrs .gt_asterisk {
+#mienzqskwx .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wmxssdkjrs .gt_indent_1 {
+#mienzqskwx .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wmxssdkjrs .gt_indent_2 {
+#mienzqskwx .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wmxssdkjrs .gt_indent_3 {
+#mienzqskwx .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wmxssdkjrs .gt_indent_4 {
+#mienzqskwx .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wmxssdkjrs .gt_indent_5 {
+#mienzqskwx .gt_indent_5 {
   text-indent: 25px;
 }
 
-#wmxssdkjrs .katex-display {
+#mienzqskwx .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#wmxssdkjrs div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#mienzqskwx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1465,9 +1465,9 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label">age</td>
-<td class="gt_row gt_center" headers="estimate">0.01</td>
-<td class="gt_row gt_center" headers="conf.low">0.00, 0.01</td>
-<td class="gt_row gt_center" headers="p.value" style="font-weight: bold">&lt;0.001</td>
+<td class="gt_row gt_center" headers="estimate">0.00</td>
+<td class="gt_row gt_center" headers="conf.low">0.00, 0.00</td>
+<td class="gt_row gt_center" headers="p.value">0.8</td>
 </tr>
 </tbody><tfoot>
 <tr class="gt_sourcenotes odd">
@@ -1527,25 +1527,25 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
 </thead>
 <tbody>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">(Intercept)</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;      font-weight: bold;">6.3264 ***</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;      font-weight: bold;">3.3466 ***</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">(Intercept)</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;      font-weight: bold;">6.8920 ***</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;      font-weight: bold;">3.6541 ***</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.0678)&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.0694)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.0857)&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.0955)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">age</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">0.0162 ***</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">0.0055 ***</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">age</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.0011&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">-0.0005&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.0013)&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.0010)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.0020)&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.0016)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">financial_satisfaction</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">0.5295 ***</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">financial_satisfaction</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">0.5311 ***</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;      font-weight: bold;">(0.0081)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;      font-weight: bold;">(0.0106)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">R squared</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">0.0225&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">0.4148&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">R squared</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">0.0001&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">0.3292&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">N</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">6403&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">6403&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">N</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">5102&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">5102&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">F</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">147.6646&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">2268.0004&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">F</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.3048&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">1251.0045&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;      font-weight: normal;">P value</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">0.0000&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">0.0000&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;      font-weight: normal;">P value</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">0.5809&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">0.0000&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
 <th class="huxtable-cell huxtable-header" colspan="3" style="border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;      font-weight: normal;">*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05.</th></tr>
 </tbody>
@@ -1564,7 +1564,7 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>car<span class="sc">::</span><span class="fu">vif</span>(life_model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>financial_satisfaction                    age 
-              1.024893               1.024893 </code></pre>
+              1.000373               1.000373 </code></pre>
 </div>
 </div>
 </section>
@@ -1591,7 +1591,7 @@ F-statistic:  2268 on 2 and 6400 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">str</span>(wvs_cleaned<span class="sc">$</span>life_satisfaction)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> num [1:6403] 7 5 8 6 6 8 9 8 8 10 ...</code></pre>
+<pre><code> num [1:5102] 8 10 4 1 9 10 8 5 8 5 ...</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">str</span>(wvs_cleaned<span class="sc">$</span>age_group)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -1612,20 +1612,20 @@ lm(formula = life_satisfaction ~ age_group, data = wvs_cleaned)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--6.5293 -1.0131  0.3391  0.9869  3.3391 
+-6.2353 -1.0191  0.1183  1.1567  3.1567 
 
 Coefficients:
                Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)     7.52931    0.04296 175.250   &lt;2e-16 ***
-age_group45-60 -0.51622    0.05984  -8.626   &lt;2e-16 ***
-age_group29-44 -0.49386    0.05961  -8.284   &lt;2e-16 ***
-age_group18-28 -0.86840    0.07124 -12.190   &lt;2e-16 ***
+(Intercept)     7.23529    0.09064  79.823  &lt; 2e-16 ***
+age_group45-60 -0.39197    0.10406  -3.767 0.000167 ***
+age_group29-44 -0.35361    0.10200  -3.467 0.000531 ***
+age_group18-28 -0.21624    0.10757  -2.010 0.044466 *  
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.783 on 6399 degrees of freedom
-Multiple R-squared:  0.02533,   Adjusted R-squared:  0.02488 
-F-statistic: 55.44 on 3 and 6399 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 2.013 on 5098 degrees of freedom
+Multiple R-squared:  0.003439,  Adjusted R-squared:  0.002853 
+F-statistic: 5.865 on 3 and 5098 DF,  p-value: 0.0005405</code></pre>
 </div>
 </div>
 <ul>
@@ -1663,29 +1663,29 @@ F-statistic: 55.44 on 3 and 6399 DF,  p-value: &lt; 2.2e-16</code></pre>
 </thead>
 <tbody>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">(Intercept)</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;      font-weight: bold;">7.5293 ***</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">(Intercept)</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;      font-weight: bold;">7.2353 ***</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.0430)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.0906)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">age_group45-60</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">-0.5162 ***</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">age_group45-60</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">-0.3920 ***</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.0598)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.1041)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">age_group29-44</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">-0.4939 ***</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">age_group29-44</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">-0.3536 ***</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.0596)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.1020)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">age_group18-28</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">-0.8684 ***</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">age_group18-28</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">-0.2162 *&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;      font-weight: bold;">(0.0712)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;      font-weight: bold;">(0.1076)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">R squared</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">0.0253&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">R squared</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">0.0034&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">N</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">6403&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">N</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">5102&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">F</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">55.4384&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">F</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">5.8649&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;      font-weight: normal;">P value</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">0.0000&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;      font-weight: normal;">P value</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">0.0005&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
 <th class="huxtable-cell huxtable-header" colspan="2" style="border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;      font-weight: normal;">*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05.</th></tr>
 </tbody>
@@ -1718,20 +1718,20 @@ lm(formula = life_satisfaction ~ age_group, data = wvs_cleaned)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--6.5293 -1.0131  0.3391  0.9869  3.3391 
+-6.2353 -1.0191  0.1183  1.1567  3.1567 
 
 Coefficients:
                Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)     7.52931    0.04296 175.250   &lt;2e-16 ***
-age_group45-60 -0.51622    0.05984  -8.626   &lt;2e-16 ***
-age_group29-44 -0.49386    0.05961  -8.284   &lt;2e-16 ***
-age_group18-28 -0.86840    0.07124 -12.190   &lt;2e-16 ***
+(Intercept)     7.23529    0.09064  79.823  &lt; 2e-16 ***
+age_group45-60 -0.39197    0.10406  -3.767 0.000167 ***
+age_group29-44 -0.35361    0.10200  -3.467 0.000531 ***
+age_group18-28 -0.21624    0.10757  -2.010 0.044466 *  
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.783 on 6399 degrees of freedom
-Multiple R-squared:  0.02533,   Adjusted R-squared:  0.02488 
-F-statistic: 55.44 on 3 and 6399 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 2.013 on 5098 degrees of freedom
+Multiple R-squared:  0.003439,  Adjusted R-squared:  0.002853 
+F-statistic: 5.865 on 3 and 5098 DF,  p-value: 0.0005405</code></pre>
 </div>
 </div></section><section id="changing-baseline-category-for-ordered-factor" class="slide level2">
 <h2>Changing baseline category for ordered factor</h2>
@@ -1772,18 +1772,18 @@ lm(formula = life_satisfaction ~ sex, data = wvs_cleaned)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--6.1136 -1.0949 -0.0949  0.9051  2.9051 
+-6.0416 -1.0416  0.1785  1.1785  3.1785 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  7.09492    0.03207 221.211   &lt;2e-16 ***
-sexFemale    0.01863    0.04514   0.413     0.68    
+(Intercept)  6.82147    0.04082 167.110  &lt; 2e-16 ***
+sexFemale    0.22008    0.05642   3.901  9.7e-05 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.806 on 6401 degrees of freedom
-Multiple R-squared:  2.66e-05,  Adjusted R-squared:  -0.0001296 
-F-statistic: 0.1703 on 1 and 6401 DF,  p-value: 0.6799</code></pre>
+Residual standard error: 2.013 on 5100 degrees of freedom
+Multiple R-squared:  0.002975,  Adjusted R-squared:  0.00278 
+F-statistic: 15.22 on 1 and 5100 DF,  p-value: 9.701e-05</code></pre>
 </div>
 </div>
 </section></section>
@@ -1815,13 +1815,13 @@ P = \frac{1}{1 + e^{-(\beta_0 + \beta_1X)}}
 </section>
 <section id="binary-logistic-regression-one-continuous-predictor" class="slide level2">
 <h2>Binary Logistic Regression: One Continuous Predictor</h2>
-<p><strong>Research Question</strong>: Does a participant’s <strong>political alignment</strong> affect the likelihood of being satisfied with life?</p>
+<p><strong>Research Question</strong>: Does a participant’s <strong>sense of freedom of choice</strong> affect the likelihood of being satisfied with life?</p>
 <ul>
 <li><p>The outcome/DV (<span class="math inline">\(Y\)</span>): <code>satisfied</code></p>
 <ul>
 <li>Our outcome is a continuous variable, but for the purpose of this workshop practice, let’s define the outcome as “Satisfied” if the life_satisfaction score is more than 7 (inclusive), and “not Satisfied” if the score is less than 7.</li>
 </ul></li>
-<li><p>The predictor/IV (<span class="math inline">\(X\)</span>): <code>political_scale</code></p></li>
+<li><p>The predictor/IV (<span class="math inline">\(X\)</span>): <code>freedom_of_choice</code></p></li>
 </ul>
 </section>
 <section id="dummy-coding-dependent-variable" class="slide level2">
@@ -1835,15 +1835,15 @@ P = \frac{1}{1 + e^{-(\beta_0 + \beta_1X)}}
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6,403 × 2
+<pre><code># A tibble: 5,102 × 2
   life_satisfaction satisfied
               &lt;dbl&gt;     &lt;dbl&gt;
-1                 7         1
-2                 5         0
-3                 8         1
-4                 6         0
-5                 6         0
-# ℹ 6,398 more rows</code></pre>
+1                 8         1
+2                10         1
+3                 4         0
+4                 1         0
+5                 9         1
+# ℹ 5,097 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -1851,31 +1851,31 @@ P = \frac{1}{1 + e^{-(\beta_0 + \beta_1X)}}
 <h2>Conduct the analysis</h2>
 <p>Let’s conduct the analysis!</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>life_model5 <span class="ot">&lt;-</span> <span class="fu">glm</span>(satisfied <span class="sc">~</span> political_scale,</span>
-<span id="cb30-2"><a></a>                <span class="at">family =</span> binomial, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>life_model5 <span class="ot">&lt;-</span> <span class="fu">glm</span>(satisfied <span class="sc">~</span> freedom_of_choice,</span>
+<span id="cb30-2"><a></a>                <span class="at">family =</span> binomial,</span>
 <span id="cb30-3"><a></a>                <span class="at">data =</span> wvs_cleaned)</span>
 <span id="cb30-4"><a></a></span>
 <span id="cb30-5"><a></a><span class="fu">summary</span>(life_model5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-glm(formula = satisfied ~ political_scale, family = binomial, 
+glm(formula = satisfied ~ freedom_of_choice, family = binomial, 
     data = wvs_cleaned)
 
 Coefficients:
-                Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)      0.45438    0.07236   6.279 3.41e-10 ***
-political_scale  0.08448    0.01326   6.370 1.89e-10 ***
+                  Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)       -2.60780    0.12024  -21.69   &lt;2e-16 ***
+freedom_of_choice  0.45612    0.01714   26.62   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 7731  on 6402  degrees of freedom
-Residual deviance: 7690  on 6401  degrees of freedom
-AIC: 7694
+    Null deviance: 6739.0  on 5101  degrees of freedom
+Residual deviance: 5832.1  on 5100  degrees of freedom
+AIC: 5836.1
 
-Number of Fisher Scoring iterations: 4</code></pre>
+Number of Fisher Scoring iterations: 3</code></pre>
 </div>
 </div>
 </section>
@@ -1885,8 +1885,8 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="fu">exp</span>(<span class="fu">coef</span>(life_model5))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    (Intercept) political_scale 
-       1.575194        1.088155 </code></pre>
+<pre><code>      (Intercept) freedom_of_choice 
+       0.07369649        1.57793838 </code></pre>
 </div>
 </div>
 <p>We can also use <code>tbl_regression()</code> to do this for us:</p>
@@ -1895,23 +1895,23 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <span id="cb34-2"><a></a>life_model5 <span class="sc">|&gt;</span> <span class="fu">tbl_regression</span>(<span class="at">exponentiate =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb34-3"><a></a>    <span class="fu">bold_p</span>() </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="xbwfxburbd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#xbwfxburbd table {
+<div id="dekprvclek" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#dekprvclek table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#xbwfxburbd thead, #xbwfxburbd tbody, #xbwfxburbd tfoot, #xbwfxburbd tr, #xbwfxburbd td, #xbwfxburbd th {
+#dekprvclek thead, #dekprvclek tbody, #dekprvclek tfoot, #dekprvclek tr, #dekprvclek td, #dekprvclek th {
   border-style: none;
 }
 
-#xbwfxburbd p {
+#dekprvclek p {
   margin: 0;
   padding: 0;
 }
 
-#xbwfxburbd .gt_table {
+#dekprvclek .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1937,12 +1937,12 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#xbwfxburbd .gt_caption {
+#dekprvclek .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#xbwfxburbd .gt_title {
+#dekprvclek .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1954,7 +1954,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-bottom-width: 0;
 }
 
-#xbwfxburbd .gt_subtitle {
+#dekprvclek .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1966,7 +1966,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-top-width: 0;
 }
 
-#xbwfxburbd .gt_heading {
+#dekprvclek .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1978,13 +1978,13 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#xbwfxburbd .gt_bottom_border {
+#dekprvclek .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xbwfxburbd .gt_col_headings {
+#dekprvclek .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1999,7 +1999,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#xbwfxburbd .gt_col_heading {
+#dekprvclek .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2019,7 +2019,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   overflow-x: hidden;
 }
 
-#xbwfxburbd .gt_column_spanner_outer {
+#dekprvclek .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2031,15 +2031,15 @@ Number of Fisher Scoring iterations: 4</code></pre>
   padding-right: 4px;
 }
 
-#xbwfxburbd .gt_column_spanner_outer:first-child {
+#dekprvclek .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xbwfxburbd .gt_column_spanner_outer:last-child {
+#dekprvclek .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xbwfxburbd .gt_column_spanner {
+#dekprvclek .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2051,11 +2051,11 @@ Number of Fisher Scoring iterations: 4</code></pre>
   width: 100%;
 }
 
-#xbwfxburbd .gt_spanner_row {
+#dekprvclek .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#xbwfxburbd .gt_group_heading {
+#dekprvclek .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2081,7 +2081,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   text-align: left;
 }
 
-#xbwfxburbd .gt_empty_group_heading {
+#dekprvclek .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2096,15 +2096,15 @@ Number of Fisher Scoring iterations: 4</code></pre>
   vertical-align: middle;
 }
 
-#xbwfxburbd .gt_from_md > :first-child {
+#dekprvclek .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xbwfxburbd .gt_from_md > :last-child {
+#dekprvclek .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xbwfxburbd .gt_row {
+#dekprvclek .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2123,7 +2123,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   overflow-x: hidden;
 }
 
-#xbwfxburbd .gt_stub {
+#dekprvclek .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2136,7 +2136,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   padding-right: 5px;
 }
 
-#xbwfxburbd .gt_stub_row_group {
+#dekprvclek .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2150,15 +2150,15 @@ Number of Fisher Scoring iterations: 4</code></pre>
   vertical-align: top;
 }
 
-#xbwfxburbd .gt_row_group_first td {
+#dekprvclek .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xbwfxburbd .gt_row_group_first th {
+#dekprvclek .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#xbwfxburbd .gt_summary_row {
+#dekprvclek .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2168,16 +2168,16 @@ Number of Fisher Scoring iterations: 4</code></pre>
   padding-right: 5px;
 }
 
-#xbwfxburbd .gt_first_summary_row {
+#dekprvclek .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xbwfxburbd .gt_first_summary_row.thick {
+#dekprvclek .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xbwfxburbd .gt_last_summary_row {
+#dekprvclek .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2187,7 +2187,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#xbwfxburbd .gt_grand_summary_row {
+#dekprvclek .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2197,7 +2197,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   padding-right: 5px;
 }
 
-#xbwfxburbd .gt_first_grand_summary_row {
+#dekprvclek .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2207,7 +2207,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#xbwfxburbd .gt_last_grand_summary_row_top {
+#dekprvclek .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2217,11 +2217,11 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#xbwfxburbd .gt_striped {
+#dekprvclek .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xbwfxburbd .gt_table_body {
+#dekprvclek .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2230,7 +2230,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#xbwfxburbd .gt_footnotes {
+#dekprvclek .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2244,7 +2244,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#xbwfxburbd .gt_footnote {
+#dekprvclek .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2253,7 +2253,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   padding-right: 5px;
 }
 
-#xbwfxburbd .gt_sourcenotes {
+#dekprvclek .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2267,7 +2267,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#xbwfxburbd .gt_sourcenote {
+#dekprvclek .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2275,72 +2275,72 @@ Number of Fisher Scoring iterations: 4</code></pre>
   padding-right: 5px;
 }
 
-#xbwfxburbd .gt_left {
+#dekprvclek .gt_left {
   text-align: left;
 }
 
-#xbwfxburbd .gt_center {
+#dekprvclek .gt_center {
   text-align: center;
 }
 
-#xbwfxburbd .gt_right {
+#dekprvclek .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xbwfxburbd .gt_font_normal {
+#dekprvclek .gt_font_normal {
   font-weight: normal;
 }
 
-#xbwfxburbd .gt_font_bold {
+#dekprvclek .gt_font_bold {
   font-weight: bold;
 }
 
-#xbwfxburbd .gt_font_italic {
+#dekprvclek .gt_font_italic {
   font-style: italic;
 }
 
-#xbwfxburbd .gt_super {
+#dekprvclek .gt_super {
   font-size: 65%;
 }
 
-#xbwfxburbd .gt_footnote_marks {
+#dekprvclek .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#xbwfxburbd .gt_asterisk {
+#dekprvclek .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xbwfxburbd .gt_indent_1 {
+#dekprvclek .gt_indent_1 {
   text-indent: 5px;
 }
 
-#xbwfxburbd .gt_indent_2 {
+#dekprvclek .gt_indent_2 {
   text-indent: 10px;
 }
 
-#xbwfxburbd .gt_indent_3 {
+#dekprvclek .gt_indent_3 {
   text-indent: 15px;
 }
 
-#xbwfxburbd .gt_indent_4 {
+#dekprvclek .gt_indent_4 {
   text-indent: 20px;
 }
 
-#xbwfxburbd .gt_indent_5 {
+#dekprvclek .gt_indent_5 {
   text-indent: 25px;
 }
 
-#xbwfxburbd .katex-display {
+#dekprvclek .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#xbwfxburbd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#dekprvclek div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2356,9 +2356,9 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_left" headers="label">political_scale</td>
-<td class="gt_row gt_center" headers="estimate">1.09</td>
-<td class="gt_row gt_center" headers="conf.low">1.06, 1.12</td>
+<td class="gt_row gt_left" headers="label">freedom_of_choice</td>
+<td class="gt_row gt_center" headers="estimate">1.58</td>
+<td class="gt_row gt_center" headers="conf.low">1.53, 1.63</td>
 <td class="gt_row gt_center" headers="p.value" style="font-weight: bold">&lt;0.001</td>
 </tr>
 </tbody><tfoot>
@@ -2378,22 +2378,20 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </div></aside></section>
 <section id="get-the-χ²-chi-squared-to-report-model-significance" class="slide level2">
 <h2>Get the χ² (chi-squared) to report model significance</h2>
-<p>χ² (Chi-squared) goodness of fit tests whether your model fits the data significantly better than a null model (model with no predictors). As you can see, it is not in the <code>glm()</code> result, but we can calculate this somewhat manually using the Null and Residual deviance and df like so:</p>
+<p>χ² (Chi-squared) goodness of fit tests whether your model fits the data significantly better than a null model (model with no predictors). As you can see, it is not in the <code>glm()</code> result, but we can calculate this somewhat manually using the Null and Residual deviance and df from the <code>summary()</code> output like so:</p>
 <ul>
-<li>Null deviance: 7731</li>
-<li>Residual deviance: 7690</li>
-<li>Difference: 7731 - 7690 = 41 (this is the χ² value)</li>
+<li>Null deviance: [from summary output]</li>
+<li>Residual deviance: [from summary output]</li>
+<li>χ² = Null deviance − Residual deviance</li>
 </ul>
 <p>To get the p-value, we need the degree of freedom and the χ²:</p>
 <ul>
-<li>df = difference in degrees of freedom (6402 - 6401 = 1)</li>
-<li>χ² = 41</li>
+<li>df = difference in degrees of freedom (Null df − Residual df = 1 for one predictor)</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="fu">pchisq</span>(<span class="dv">41</span>, <span class="at">df=</span><span class="dv">1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)  <span class="co"># will give p-value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.522292e-10</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="co"># Replace chi_sq and df with values from your summary() output</span></span>
+<span id="cb35-2"><a></a>chi_sq <span class="ot">&lt;-</span> NULL_DEVIANCE <span class="sc">-</span> RESIDUAL_DEVIANCE</span>
+<span id="cb35-3"><a></a><span class="fu">pchisq</span>(chi_sq, <span class="at">df =</span> <span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)  <span class="co"># will give p-value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="get-the-χ²-chi-squared-and-pseudo-r-squared-for-reporting-purposes" class="slide level2">
@@ -2401,38 +2399,38 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <p>In the report, the model’s χ² (chi-squared) and R-squared (indicating the proportion of variance that can be explained by the model) should be included. However, since the resulting item does not have this info, we will call upon <code>DescTools</code>’ <code>PseudoR2()</code> function to help!</p>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a><span class="co"># by default, McFadden will be used</span></span>
-<span id="cb37-2"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model5) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="co"># by default, McFadden will be used</span></span>
+<span id="cb36-2"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model5) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <div class="cell-output cell-output-stdout">
-<pre><code>   McFadden 
-0.005306369 </code></pre>
+<pre><code> McFadden 
+0.1345762 </code></pre>
 </div>
 </div></div>
 <p>We can retrieve the R-squared value and the χ² (also known as the G2 value, which stands for Goodness-of-fit) at the same time like so:</p>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model5, </span>
-<span id="cb39-2"><a></a>                    <span class="at">which =</span> <span class="fu">c</span>(<span class="st">"G2"</span>, <span class="st">"Nagelkerke"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model5, </span>
+<span id="cb38-2"><a></a>                    <span class="at">which =</span> <span class="fu">c</span>(<span class="st">"G2"</span>, <span class="st">"Nagelkerke"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <div class="cell-output cell-output-stdout">
-<pre><code>          G2   Nagelkerke 
-41.023494851  0.009110118 </code></pre>
+<pre><code>         G2  Nagelkerke 
+906.9076503   0.2221449 </code></pre>
 </div>
 </div></div>
 </section>
 <section id="in-case-you-need-to-get-other-rsquared-methods" class="slide level2">
 <h2>In case you need to get other Rsquared methods</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model5, </span>
-<span id="cb41-2"><a></a>                    <span class="at">which =</span> <span class="st">"all"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model5, </span>
+<span id="cb40-2"><a></a>                    <span class="at">which =</span> <span class="st">"all"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       McFadden     McFaddenAdj        CoxSnell      Nagelkerke   AldrichNelson 
-   5.306369e-03    4.788971e-03    6.386437e-03    9.110118e-03    6.366131e-03 
+      0.1345762       0.1339826       0.1628528       0.2221449       0.1509272 
 VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC 
-   1.163872e-02    5.980444e-03    9.450630e-03    6.188032e-03    7.693968e+03 
+      0.2651922       0.1844291       0.2233348       0.1772867    5836.0841311 
             BIC          logLik         logLik0              G2 
-   7.707497e+03   -3.844984e+03   -3.865496e+03    4.102349e+01 </code></pre>
+   5849.1589069   -2916.0420655   -3369.4958907     906.9076503 </code></pre>
 </div>
 </div>
 </section>
@@ -2441,10 +2439,10 @@ VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC
 <p><strong>Possible interpretation:</strong></p>
 <p><em>(The intercept isn’t typically interpreted as an odds ratio, so we’ll ignore that for now)</em></p>
 <blockquote>
-<p>A logistic regression was performed to ascertain the effects of political scale alignment on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ² (1, N = 6403) = 41.02, p &lt; .001.</p>
+<p>A logistic regression was performed to ascertain the effects of freedom of choice on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ² (1, N = [N]) = [χ²], p &lt; .001.</p>
 </blockquote>
 <blockquote>
-<p>The model explained 0.9% (Nagelkerke R²) of the variance in life satisfaction. Political scale alignment was associated with an increased likelihood of being satisfied with life (OR = 1.09, 95% CI [1.06, 1.12], p &lt; .001), indicating that for each one-unit increase in political scale alignment (1-10), the odds of being satisfied with life increased by 9%.</p>
+<p>The model explained [Nagelkerke R²]% (Nagelkerke R²) of the variance in life satisfaction. Freedom of choice was associated with [increased/decreased] likelihood of being satisfied with life (OR = [OR], 95% CI [[lower], [upper]], p &lt; .001), indicating that for each one-unit increase in freedom of choice (1-10), the odds of being satisfied with life changed by [OR-1 as %]%.</p>
 </blockquote>
 
 <aside><div>
@@ -2472,7 +2470,7 @@ VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC
 <h2>Regression tables</h2>
 <p>Even with huxtable, you may need to edit the table further to include the missing stats</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="fu">huxreg</span>(<span class="st">"life_satisfaction"</span> <span class="ot">=</span> life_model5, <span class="at">statistics =</span> <span class="fu">c</span>(<span class="st">"R2"</span> <span class="ot">=</span> <span class="st">"r.squared"</span>, <span class="st">"logLik"</span>, <span class="st">"AIC"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="fu">huxreg</span>(<span class="st">"life_satisfaction"</span> <span class="ot">=</span> life_model5, <span class="at">statistics =</span> <span class="fu">c</span>(<span class="st">"R2"</span> <span class="ot">=</span> <span class="st">"r.squared"</span>, <span class="st">"logLik"</span>, <span class="st">"AIC"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="huxtable" data-quarto-disable-processing="true" style="margin-left: auto; margin-right: auto;">
 <colgroup><col><col></colgroup><thead>
@@ -2481,17 +2479,17 @@ VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC
 </thead>
 <tbody>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">(Intercept)</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">0.454 ***</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">(Intercept)</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">-2.608 ***</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.072)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.120)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">political_scale</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.084 ***</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">freedom_of_choice</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.456 ***</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">(0.013)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">(0.017)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">logLik</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">-3844.984&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">logLik</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">-2916.042&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;      font-weight: normal;">AIC</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">7693.968&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;      font-weight: normal;">AIC</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">5836.084&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
 <th class="huxtable-cell huxtable-header" colspan="2" style="border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;      font-weight: normal;">*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05.</th></tr>
 </tbody>
@@ -2501,20 +2499,20 @@ VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC
 </section>
 <section id="binary-logistic-regression-one-categorical-predictor" class="slide level2">
 <h2>Binary Logistic Regression: One Categorical Predictor</h2>
-<p><strong>Research Question</strong>: Does <strong>religiousity</strong> affect the likelihood of being satisfied with life?</p>
+<p><strong>Research Question</strong>: Does <strong>education level</strong> affect the likelihood of being satisfied with life?</p>
 <ul>
 <li>The outcome/DV (<span class="math inline">\(Y\)</span>): <code>satisfied</code></li>
-<li>The predictor/IV (<span class="math inline">\(X\)</span>): <code>religiousity</code> - let’s set “A religious person” as the reference category!</li>
+<li>The predictor/IV (<span class="math inline">\(X\)</span>): <code>education</code> - let’s set “Lower” as the reference category!</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb44-2"><a></a>    <span class="fu">mutate</span>(<span class="at">religiousity =</span> <span class="fu">relevel</span>(religiousity, <span class="at">ref =</span> <span class="st">"A religious person"</span>))</span>
-<span id="cb44-3"><a></a></span>
-<span id="cb44-4"><a></a>life_model6 <span class="ot">&lt;-</span> <span class="fu">glm</span>(satisfied <span class="sc">~</span> religiousity,</span>
-<span id="cb44-5"><a></a>                      <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
-<span id="cb44-6"><a></a>                      <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb44-7"><a></a></span>
-<span id="cb44-8"><a></a><span class="fu">summary</span>(life_model6)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb43-2"><a></a>    <span class="fu">mutate</span>(<span class="at">education =</span> <span class="fu">relevel</span>(education, <span class="at">ref =</span> <span class="st">"Lower"</span>))</span>
+<span id="cb43-3"><a></a></span>
+<span id="cb43-4"><a></a>life_model6 <span class="ot">&lt;-</span> <span class="fu">glm</span>(satisfied <span class="sc">~</span> education,</span>
+<span id="cb43-5"><a></a>                      <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
+<span id="cb43-6"><a></a>                      <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb43-7"><a></a></span>
+<span id="cb43-8"><a></a><span class="fu">summary</span>(life_model6)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -2522,58 +2520,54 @@ VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-glm(formula = satisfied ~ religiousity, family = "binomial", 
-    data = wvs_cleaned)
+glm(formula = satisfied ~ education, family = "binomial", data = wvs_cleaned)
 
 Coefficients:
-                                   Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)                         1.00703    0.04426  22.753  &lt; 2e-16 ***
-religiousityNot a religious person -0.17379    0.06111  -2.844 0.004456 ** 
-religiousityAn atheist             -0.27498    0.07845  -3.505 0.000456 ***
-religiousityDon't know              0.21675    0.36245   0.598 0.549832    
+                Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)      0.49303    0.04214  11.699   &lt;2e-16 ***
+educationMiddle  0.08011    0.06855   1.169    0.243    
+educationHigher  0.01693    0.07249   0.234    0.815    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 7731.0  on 6402  degrees of freedom
-Residual deviance: 7715.3  on 6399  degrees of freedom
-AIC: 7723.3
+    Null deviance: 6739.0  on 5101  degrees of freedom
+Residual deviance: 6737.6  on 5099  degrees of freedom
+AIC: 6743.6
 
 Number of Fisher Scoring iterations: 4</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a><span class="fu">exp</span>(<span class="fu">coef</span>(life_model6))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a><span class="fu">exp</span>(<span class="fu">coef</span>(life_model6))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                       (Intercept) religiousityNot a religious person 
-                         2.7374462                          0.8404704 
-            religiousityAn atheist             religiousityDon't know 
-                         0.7595839                          1.2420335 </code></pre>
+<pre><code>    (Intercept) educationMiddle educationHigher 
+       1.637266        1.083411        1.017072 </code></pre>
 </div>
 </div></section><section id="exponentiate-the-coefficients-1" class="slide level2">
 <h2>Exponentiate the coefficients</h2>
 <p>If you recall the formula, the results are expressed in Logit Probability. As we typically report the result in terms of Odd Ratios (OR), perform exponentiation on the coefficients.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb48-2"><a></a>life_model6 <span class="sc">|&gt;</span> <span class="fu">tbl_regression</span>(<span class="at">exponentiate =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span>  </span>
-<span id="cb48-3"><a></a>    <span class="fu">bold_p</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb47-2"><a></a>life_model6 <span class="sc">|&gt;</span> <span class="fu">tbl_regression</span>(<span class="at">exponentiate =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb47-3"><a></a>    <span class="fu">bold_p</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="mwfhyqpccb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#mwfhyqpccb table {
+<div id="nrybxvvfip" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nrybxvvfip table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#mwfhyqpccb thead, #mwfhyqpccb tbody, #mwfhyqpccb tfoot, #mwfhyqpccb tr, #mwfhyqpccb td, #mwfhyqpccb th {
+#nrybxvvfip thead, #nrybxvvfip tbody, #nrybxvvfip tfoot, #nrybxvvfip tr, #nrybxvvfip td, #nrybxvvfip th {
   border-style: none;
 }
 
-#mwfhyqpccb p {
+#nrybxvvfip p {
   margin: 0;
   padding: 0;
 }
 
-#mwfhyqpccb .gt_table {
+#nrybxvvfip .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2599,12 +2593,12 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#mwfhyqpccb .gt_caption {
+#nrybxvvfip .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#mwfhyqpccb .gt_title {
+#nrybxvvfip .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2616,7 +2610,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-bottom-width: 0;
 }
 
-#mwfhyqpccb .gt_subtitle {
+#nrybxvvfip .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2628,7 +2622,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-top-width: 0;
 }
 
-#mwfhyqpccb .gt_heading {
+#nrybxvvfip .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2640,13 +2634,13 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#mwfhyqpccb .gt_bottom_border {
+#nrybxvvfip .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mwfhyqpccb .gt_col_headings {
+#nrybxvvfip .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2661,7 +2655,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#mwfhyqpccb .gt_col_heading {
+#nrybxvvfip .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2681,7 +2675,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   overflow-x: hidden;
 }
 
-#mwfhyqpccb .gt_column_spanner_outer {
+#nrybxvvfip .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2693,15 +2687,15 @@ Number of Fisher Scoring iterations: 4</code></pre>
   padding-right: 4px;
 }
 
-#mwfhyqpccb .gt_column_spanner_outer:first-child {
+#nrybxvvfip .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mwfhyqpccb .gt_column_spanner_outer:last-child {
+#nrybxvvfip .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mwfhyqpccb .gt_column_spanner {
+#nrybxvvfip .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2713,11 +2707,11 @@ Number of Fisher Scoring iterations: 4</code></pre>
   width: 100%;
 }
 
-#mwfhyqpccb .gt_spanner_row {
+#nrybxvvfip .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#mwfhyqpccb .gt_group_heading {
+#nrybxvvfip .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2743,7 +2737,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   text-align: left;
 }
 
-#mwfhyqpccb .gt_empty_group_heading {
+#nrybxvvfip .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2758,15 +2752,15 @@ Number of Fisher Scoring iterations: 4</code></pre>
   vertical-align: middle;
 }
 
-#mwfhyqpccb .gt_from_md > :first-child {
+#nrybxvvfip .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mwfhyqpccb .gt_from_md > :last-child {
+#nrybxvvfip .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mwfhyqpccb .gt_row {
+#nrybxvvfip .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2785,7 +2779,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   overflow-x: hidden;
 }
 
-#mwfhyqpccb .gt_stub {
+#nrybxvvfip .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2798,7 +2792,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   padding-right: 5px;
 }
 
-#mwfhyqpccb .gt_stub_row_group {
+#nrybxvvfip .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2812,15 +2806,15 @@ Number of Fisher Scoring iterations: 4</code></pre>
   vertical-align: top;
 }
 
-#mwfhyqpccb .gt_row_group_first td {
+#nrybxvvfip .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mwfhyqpccb .gt_row_group_first th {
+#nrybxvvfip .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#mwfhyqpccb .gt_summary_row {
+#nrybxvvfip .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2830,16 +2824,16 @@ Number of Fisher Scoring iterations: 4</code></pre>
   padding-right: 5px;
 }
 
-#mwfhyqpccb .gt_first_summary_row {
+#nrybxvvfip .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mwfhyqpccb .gt_first_summary_row.thick {
+#nrybxvvfip .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mwfhyqpccb .gt_last_summary_row {
+#nrybxvvfip .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2849,7 +2843,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#mwfhyqpccb .gt_grand_summary_row {
+#nrybxvvfip .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2859,7 +2853,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   padding-right: 5px;
 }
 
-#mwfhyqpccb .gt_first_grand_summary_row {
+#nrybxvvfip .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2869,7 +2863,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#mwfhyqpccb .gt_last_grand_summary_row_top {
+#nrybxvvfip .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2879,11 +2873,11 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#mwfhyqpccb .gt_striped {
+#nrybxvvfip .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mwfhyqpccb .gt_table_body {
+#nrybxvvfip .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2892,7 +2886,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#mwfhyqpccb .gt_footnotes {
+#nrybxvvfip .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2906,7 +2900,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#mwfhyqpccb .gt_footnote {
+#nrybxvvfip .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2915,7 +2909,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   padding-right: 5px;
 }
 
-#mwfhyqpccb .gt_sourcenotes {
+#nrybxvvfip .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2929,7 +2923,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#mwfhyqpccb .gt_sourcenote {
+#nrybxvvfip .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2937,72 +2931,72 @@ Number of Fisher Scoring iterations: 4</code></pre>
   padding-right: 5px;
 }
 
-#mwfhyqpccb .gt_left {
+#nrybxvvfip .gt_left {
   text-align: left;
 }
 
-#mwfhyqpccb .gt_center {
+#nrybxvvfip .gt_center {
   text-align: center;
 }
 
-#mwfhyqpccb .gt_right {
+#nrybxvvfip .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mwfhyqpccb .gt_font_normal {
+#nrybxvvfip .gt_font_normal {
   font-weight: normal;
 }
 
-#mwfhyqpccb .gt_font_bold {
+#nrybxvvfip .gt_font_bold {
   font-weight: bold;
 }
 
-#mwfhyqpccb .gt_font_italic {
+#nrybxvvfip .gt_font_italic {
   font-style: italic;
 }
 
-#mwfhyqpccb .gt_super {
+#nrybxvvfip .gt_super {
   font-size: 65%;
 }
 
-#mwfhyqpccb .gt_footnote_marks {
+#nrybxvvfip .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#mwfhyqpccb .gt_asterisk {
+#nrybxvvfip .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mwfhyqpccb .gt_indent_1 {
+#nrybxvvfip .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mwfhyqpccb .gt_indent_2 {
+#nrybxvvfip .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mwfhyqpccb .gt_indent_3 {
+#nrybxvvfip .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mwfhyqpccb .gt_indent_4 {
+#nrybxvvfip .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mwfhyqpccb .gt_indent_5 {
+#nrybxvvfip .gt_indent_5 {
   text-indent: 25px;
 }
 
-#mwfhyqpccb .katex-display {
+#nrybxvvfip .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#mwfhyqpccb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#nrybxvvfip div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3024,7 +3018,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_left" headers="label">religiousity</td>
+<td class="gt_row gt_left" headers="label">education</td>
 <td class="gt_row gt_center" headers="estimate"><br>
 </td>
 <td class="gt_row gt_center" headers="conf.low"><br>
@@ -3033,29 +3027,23 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;A religious person</td>
+<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Lower</td>
 <td class="gt_row gt_center" headers="estimate">—</td>
 <td class="gt_row gt_center" headers="conf.low">—</td>
 <td class="gt_row gt_center" headers="p.value"><br>
 </td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Not a religious person</td>
-<td class="gt_row gt_center" headers="estimate">0.84</td>
-<td class="gt_row gt_center" headers="conf.low">0.75, 0.95</td>
-<td class="gt_row gt_center" headers="p.value" style="font-weight: bold">0.004</td>
+<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Middle</td>
+<td class="gt_row gt_center" headers="estimate">1.08</td>
+<td class="gt_row gt_center" headers="conf.low">0.95, 1.24</td>
+<td class="gt_row gt_center" headers="p.value">0.2</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;An atheist</td>
-<td class="gt_row gt_center" headers="estimate">0.76</td>
-<td class="gt_row gt_center" headers="conf.low">0.65, 0.89</td>
-<td class="gt_row gt_center" headers="p.value" style="font-weight: bold">&lt;0.001</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Don't know</td>
-<td class="gt_row gt_center" headers="estimate">1.24</td>
-<td class="gt_row gt_center" headers="conf.low">0.63, 2.67</td>
-<td class="gt_row gt_center" headers="p.value">0.5</td>
+<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Higher</td>
+<td class="gt_row gt_center" headers="estimate">1.02</td>
+<td class="gt_row gt_center" headers="conf.low">0.88, 1.17</td>
+<td class="gt_row gt_center" headers="p.value">0.8</td>
 </tr>
 </tbody><tfoot>
 <tr class="gt_sourcenotes odd">
@@ -3073,24 +3061,24 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <h2>Get the Rsquared</h2>
 <p>Let’s retrieve the R-squared value and the Chi-square χ² value (also known as the G2 value, which stands for Goodness-of-fit)</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model6, </span>
-<span id="cb49-2"><a></a>                    <span class="at">which =</span> <span class="fu">c</span>(<span class="st">"G2"</span>, <span class="st">"Nagelkerke"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model6, </span>
+<span id="cb48-2"><a></a>                    <span class="at">which =</span> <span class="fu">c</span>(<span class="st">"G2"</span>, <span class="st">"Nagelkerke"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          G2   Nagelkerke 
-15.652088008  0.003482759 </code></pre>
+1.4085255589 0.0003765352 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a><span class="co"># get the other R-squared if you like</span></span>
-<span id="cb51-2"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model6, </span>
-<span id="cb51-3"><a></a>                    <span class="at">which =</span> <span class="st">"all"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a><span class="co"># get the other R-squared if you like</span></span>
+<span id="cb50-2"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model6, </span>
+<span id="cb50-3"><a></a>                    <span class="at">which =</span> <span class="st">"all"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       McFadden     McFaddenAdj        CoxSnell      Nagelkerke   AldrichNelson 
-   2.024590e-03    9.897938e-04    2.441508e-03    3.482759e-03    2.438532e-03 
+   2.090113e-04   -6.813296e-04    2.760351e-04    3.765352e-04    2.759970e-04 
 VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC 
-   4.458185e-03    2.438152e-03    3.608656e-03    2.438152e-03    7.723340e+03 
+   4.849507e-04    2.754025e-04    3.605521e-04    2.754025e-04    6.743583e+03 
             BIC          logLik         logLik0              G2 
-   7.750398e+03   -3.857670e+03   -3.865496e+03    1.565209e+01 </code></pre>
+   6.763195e+03   -3.368792e+03   -3.369496e+03    1.408526e+00 </code></pre>
 </div>
 </div>
 </section>
@@ -3099,10 +3087,10 @@ VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC
 <p><strong>Possible interpretation:</strong></p>
 <p><em>(The intercept isn’t typically interpreted as an odds ratio, so we’ll ignore that for now)</em></p>
 <blockquote>
-<p>A logistic regression was performed to ascertain the effects of religiosity on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ² (3, N = 6403) = 15.65, p &lt; .001.</p>
+<p>A logistic regression was performed to ascertain the effects of education level on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ² (2, N = [N]) = [χ²], p &lt; .001.</p>
 </blockquote>
 <blockquote>
-<p>The model explained 0.3% (Nagelkerke R²) of the variance in life satisfaction. Compared to religious persons (reference group), being non-religious was associated with lower odds of life satisfaction (OR = 0.84, 95% CI [0.74, 0.95], p = .004), and being an atheist was also associated with lower odds of life satisfaction (OR = 0.76, 95% CI [0.65, 0.89], p &lt; .001). There was no significant difference in life satisfaction for those who were unsure about their religious beliefs compared to religious persons (OR = 1.24, 95% CI [0.61, 2.52], p = .550).</p>
+<p>The model explained [Nagelkerke R²]% (Nagelkerke R²) of the variance in life satisfaction. Compared to respondents with lower education (reference group), those with middle education had [higher/lower] odds of life satisfaction (OR = [OR], 95% CI [[lower], [upper]], p = [p]), and those with higher education had [higher/lower] odds of life satisfaction (OR = [OR], 95% CI [[lower], [upper]], p = [p]).</p>
 </blockquote>
 
 <aside><div>
@@ -3112,8 +3100,8 @@ VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC
 <h2>Present both models in a table</h2>
 <p>Note that the R-squared is missing here, so be sure to put that in when you paste this table to your document.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a><span class="fu">library</span>(huxtable)</span>
-<span id="cb53-2"><a></a><span class="fu">huxreg</span>(life_model5, life_model6)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a><span class="fu">library</span>(huxtable)</span>
+<span id="cb52-2"><a></a><span class="fu">huxreg</span>(life_model5, life_model6)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="huxtable" data-quarto-disable-processing="true" style="margin-left: auto; margin-right: auto;">
 <colgroup><col><col><col></colgroup><thead>
@@ -3122,31 +3110,27 @@ VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC
 </thead>
 <tbody>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">(Intercept)</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">0.454 ***</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">1.007 ***</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">(Intercept)</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">-2.608 ***</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">0.493 ***</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.072)&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.044)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.120)&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.042)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">political_scale</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.084 ***</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">freedom_of_choice</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.456 ***</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.013)&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.017)&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">religiousityNot a religious person</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">-0.174 **&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">educationMiddle</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.080&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.061)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.069)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">religiousityAn atheist</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">-0.275 ***</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">educationHigher</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.017&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.078)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">(0.072)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">religiousityDon't know</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.217&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">N</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">5102&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">5102&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">(0.362)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">logLik</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">-2916.042&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">-3368.792&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">N</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">6403&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">6403&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">logLik</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">-3844.984&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">-3857.670&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;      font-weight: normal;">AIC</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">7693.968&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">7723.340&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;      font-weight: normal;">AIC</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">5836.084&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">6743.583&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
 <th class="huxtable-cell huxtable-header" colspan="3" style="border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;      font-weight: normal;">*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05.</th></tr>
 </tbody>
@@ -3160,12 +3144,12 @@ VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a>life_model7 <span class="ot">&lt;-</span> <span class="fu">glm</span>(satisfied <span class="sc">~</span> sex,</span>
-<span id="cb54-2"><a></a>                  <span class="at">family =</span> <span class="st">"binomial"</span>, </span>
-<span id="cb54-3"><a></a>                  <span class="at">data =</span> wvs_cleaned) </span>
-<span id="cb54-4"><a></a></span>
-<span id="cb54-5"><a></a><span class="fu">summary</span>(life_model7)</span>
-<span id="cb54-6"><a></a><span class="fu">exp</span>(<span class="fu">coefficients</span>(life_model7))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a>life_model7 <span class="ot">&lt;-</span> <span class="fu">glm</span>(satisfied <span class="sc">~</span> sex,</span>
+<span id="cb53-2"><a></a>                  <span class="at">family =</span> <span class="st">"binomial"</span>, </span>
+<span id="cb53-3"><a></a>                  <span class="at">data =</span> wvs_cleaned) </span>
+<span id="cb53-4"><a></a></span>
+<span id="cb53-5"><a></a><span class="fu">summary</span>(life_model7)</span>
+<span id="cb53-6"><a></a><span class="fu">exp</span>(<span class="fu">coefficients</span>(life_model7))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section></section>

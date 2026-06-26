@@ -247,7 +247,7 @@ Bella Ratmelia &amp; Wei Xia
 <span id="cb1-2"><a></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-3"><a></a></span>
 <span id="cb1-4"><a></a><span class="co"># read the CSV and save into a dataframe called wvs_data</span></span>
-<span id="cb1-5"><a></a>wvs_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/wvs-wave7-sg-ca-nz.csv"</span>)</span>
+<span id="cb1-5"><a></a>wvs_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/wvs-4-countries.csv"</span>)</span>
 <span id="cb1-6"><a></a></span>
 <span id="cb1-7"><a></a><span class="co"># "peek" at the data, pay attention to the data types!</span></span>
 <span id="cb1-8"><a></a><span class="fu">glimpse</span>(wvs_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -333,16 +333,16 @@ Bella Ratmelia &amp; Wei Xia
 </section>
 <section id="scenario-data-wrangling-activities-with-wvs-data" class="slide level2 smaller">
 <h2>Scenario: Data wrangling activities with WVS data</h2>
-<p><strong>Scenario</strong>: We are research assistants analyzing patterns in values and satisfaction across different countries and demographic groups.</p>
-<p>Our team has been assigned to explore and get insights on how specific factors (employment, work importance, marital status, political alignment, financial satisfaction, and religiosity) may relate to life satisfaction among different generations (Gen Z, Millennials, Gen X, and Baby Boomer), including how they may differ between the 3 countries.</p>
-<p>To ensure the analysis quality, we were instructed to discard incomplete data.</p>
+<p><strong>Scenario</strong>: We are research assistants analyzing patterns in values, wellbeing, and demographics across four Asian countries: Hong Kong SAR, Indonesia, Malaysia, and Turkey.</p>
+<p>Our team has been assigned to prepare and explore this dataset to understand how key factors (education, income level, urban/rural context, and emancipative/secular values) relate to life satisfaction and personal freedom across different generations.</p>
+<p>To ensure analysis quality, we were instructed to discard incomplete data and prepare the dataset for statistical analyses in later sessions.</p>
 <p>We can break down the steps as such:</p>
 <ol type="1">
 <li class="fragment"><p>Remove all rows with missing values (NA)</p></li>
 <li class="fragment"><p>Check for duplicates</p></li>
-<li class="fragment"><p>Select only the relevant columns: participants’ <code>ID</code>, demographic columns (i.e.&nbsp;<code>age</code>, <code>country</code>, <code>sex</code>, <code>birthyear</code>), <code>work_importance</code>, <code>life_satisfaction</code>, <code>financial_satisfaction</code>, <code>religiousity</code>, <code>political_scale</code>, <code>marital_status</code>, and <code>employment</code>.</p></li>
+<li class="fragment"><p>Select only the relevant columns: <code>respondent_id</code>, demographic columns (<code>age</code>, <code>country</code>, <code>sex</code>, <code>urban_rural</code>, <code>income_level</code>, <code>marital_status</code>, <code>education</code>), and the attitudinal columns (<code>life_satisfaction</code>, <code>freedom_of_choice</code>, <code>financial_satisfaction</code>, <code>trust_people</code>, <code>importance_of_god</code>, <code>emancipative_values</code>, <code>secular_values</code>)</p></li>
 <li class="fragment"><p>Filter for respondents aged 18 or older. Optionally, we can then arrange the dataset by age (oldest to youngest)</p></li>
-<li class="fragment"><p>Reverse-code <code>importance</code> variables so that higher numbers consistently represent higher levels of the measured construct. In other words, 1 = Not at all important and 4 = Very important.</p></li>
+<li class="fragment"><p>Create a new column <code>avg_satisfaction</code> that averages <code>life_satisfaction</code> and <code>financial_satisfaction</code> as a combined wellbeing indicator</p></li>
 <li class="fragment"><p>Create age groups for each generation: “18-28”, “29-44”, “45-60”, “61+”</p></li>
 </ol>
 <p>Once we did all of the wrangling above, we can save this “wrangled” version into another CSV as a “checkpoint”.</p>
@@ -366,7 +366,7 @@ Bella Ratmelia &amp; Wei Xia
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">dim</span>(wvs_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 6403   16</code></pre>
+<pre><code>[1] 5102   15</code></pre>
 </div>
 </div>
 </section>
@@ -401,36 +401,42 @@ Bella Ratmelia &amp; Wei Xia
 <h2>Step #2</h2>
 <p>Check for duplicates with <code>distinct()</code></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>wvs_data <span class="ot">&lt;-</span> wvs_data <span class="sc">|&gt;</span> </span>
-<span id="cb8-2"><a></a>  <span class="fu">distinct</span>(ID, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>wvs_data <span class="ot">&lt;-</span> wvs_data <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a></a>  <span class="fu">distinct</span>(respondent_id, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>(Our data has no duplicates, but this is still a good practice to do, especially if we were combining data from multipe sources)</p>
 </section>
 <section id="step-3" class="slide level2">
 <h2>Step #3:</h2>
-<p>Select only the relevant columns: demographic columns, <code>life_satisfaction</code>, <code>work_importance</code>, <code>financial_satisfaction</code>, <code>religiousity</code>, <code>political_scale</code>, <code>marital_status</code>, and <code>employment</code>.</p>
+<p>Select only the relevant columns: <code>respondent_id</code>, demographic columns, and attitudinal columns.</p>
 <p>We can achieve this with <code>select()</code>!</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>wvs_data <span class="ot">&lt;-</span> wvs_data <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a></a>    <span class="fu">select</span>(ID, country, sex, birthyear, age, life_satisfaction, work_importance, financial_satisfaction, religiousity, political_scale, marital_status, employment) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-2"><a></a>    <span class="fu">select</span>(respondent_id, country, sex, age, urban_rural, income_level,</span>
+<span id="cb9-3"><a></a>           marital_status, education, life_satisfaction, freedom_of_choice,</span>
+<span id="cb9-4"><a></a>           financial_satisfaction, trust_people, importance_of_god,</span>
+<span id="cb9-5"><a></a>           emancipative_values, secular_values)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Preview of the filtered data:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 6,403
-Columns: 12
-$ ID                     &lt;dbl&gt; 124070003, 124070004, 124070005, 124070006, 124…
-$ country                &lt;chr&gt; "CAN", "CAN", "CAN", "CAN", "CAN", "CAN", "CAN"…
-$ sex                    &lt;chr&gt; "Female", "Male", "Female", "Male", "Male", "Ma…
-$ birthyear              &lt;dbl&gt; 1944, 1951, 1984, 1975, 1988, 1982, 1981, 1985,…
-$ age                    &lt;dbl&gt; 76, 69, 35, 45, 32, 38, 38, 34, 65, 31, 27, 33,…
-$ life_satisfaction      &lt;dbl&gt; 5, 8, 9, 7, 1, 7, 9, 6, 7, 6, 7, 10, 8, 10, 6, …
-$ work_importance        &lt;dbl&gt; 1, 1, 2, 2, 2, 1, 1, 2, 1, 2, 1, 2, 4, 1, 3, 3,…
-$ financial_satisfaction &lt;dbl&gt; 8, 2, 8, 8, 9, 8, 9, 5, 6, 9, 5, 7, 9, 9, 7, 8,…
-$ religiousity           &lt;chr&gt; "A religious person", "A religious person", "An…
-$ political_scale        &lt;dbl&gt; 10, 5, 2, 8, 6, 6, 7, 5, 6, 4, 5, 4, 1, 7, 2, 8…
-$ marital_status         &lt;chr&gt; "Separated", "Married", "Living together as mar…
-$ employment             &lt;chr&gt; "Retired/pensioned", "Retired/pensioned", "Part…</code></pre>
+<pre><code>Rows: 5,102
+Columns: 15
+$ respondent_id          &lt;dbl&gt; 344070882, 344072005, 344071354, 344070282, 344…
+$ country                &lt;chr&gt; "Hong Kong SAR", "Hong Kong SAR", "Hong Kong SA…
+$ sex                    &lt;chr&gt; "Male", "Female", "Female", "Male", "Male", "Fe…
+$ age                    &lt;dbl&gt; 62, 29, 55, 62, 41, 69, 25, 28, 62, 66, 57, 69,…
+$ urban_rural            &lt;chr&gt; "Urban", "Urban", "Urban", "Urban", "Urban", "U…
+$ income_level           &lt;chr&gt; "Medium", "Low", "Medium", "Low", "Medium", "Me…
+$ marital_status         &lt;chr&gt; "Married", "Single", "Separated", "Married", "S…
+$ education              &lt;chr&gt; "Middle", "Middle", "Higher", "Lower", "Middle"…
+$ life_satisfaction      &lt;dbl&gt; 8, 2, 7, 7, 7, 5, 4, 6, 10, 5, 8, 7, 5, 6, 5, 8…
+$ freedom_of_choice      &lt;dbl&gt; 7, 3, 5, 8, 6, 6, 5, 6, 10, 5, 8, 6, 5, 5, 7, 1…
+$ financial_satisfaction &lt;dbl&gt; 7, 2, 6, 9, 6, 5, 4, 5, 8, 5, 8, 7, 5, 5, 5, 8,…
+$ trust_people           &lt;chr&gt; "Trusted", "Not trusted", "Trusted", "Not trust…
+$ importance_of_god      &lt;dbl&gt; 1, 1, 6, 3, 6, 5, 3, 7, 9, 3, 8, 5, 1, 5, 3, 10…
+$ emancipative_values    &lt;dbl&gt; 0.7133333, 0.8263889, 0.6137963, 0.4725926, 0.5…
+$ secular_values         &lt;dbl&gt; 0.5250000, 0.6941667, 0.4838889, 0.6794444, 0.6…</code></pre>
 </div>
 </div>
 </section>
@@ -445,40 +451,41 @@ $ employment             &lt;chr&gt; "Retired/pensioned", "Retired/pensioned", "
 <p>Checking the structure:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 12
-         ID country sex    birthyear   age life_satisfaction work_importance
-      &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;             &lt;dbl&gt;           &lt;dbl&gt;
-1 124071434 CAN     Male        1927    93                 7               1
-2 554070524 NZL     Female      1928    91                 5               4
-3 702070265 SGP     Male        1930    90                 8               1
-4 124071321 CAN     Female      1931    89                 6               3
-5 124073566 CAN     Female      1930    89                 6               4
-6 124074356 CAN     Male        1931    89                 8               4
-# ℹ 5 more variables: financial_satisfaction &lt;dbl&gt;, religiousity &lt;chr&gt;,
-#   political_scale &lt;dbl&gt;, marital_status &lt;chr&gt;, employment &lt;chr&gt;</code></pre>
+<pre><code># A tibble: 6 × 15
+  respondent_id country      sex     age urban_rural income_level marital_status
+          &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;         
+1     792070014 Turkey       Male     95 Urban       Medium       Single        
+2     344070043 Hong Kong S… Male     91 Urban       Low          Married       
+3     344070645 Hong Kong S… Male     89 Urban       Low          Widowed       
+4     344070124 Hong Kong S… Male     88 Urban       Medium       Widowed       
+5     344070040 Hong Kong S… Male     88 Urban       Low          Married       
+6     344070082 Hong Kong S… Male     88 Urban       Low          Married       
+# ℹ 8 more variables: education &lt;chr&gt;, life_satisfaction &lt;dbl&gt;,
+#   freedom_of_choice &lt;dbl&gt;, financial_satisfaction &lt;dbl&gt;, trust_people &lt;chr&gt;,
+#   importance_of_god &lt;dbl&gt;, emancipative_values &lt;dbl&gt;, secular_values &lt;dbl&gt;</code></pre>
 </div>
 </div>
 </section>
 <section id="step-5" class="slide level2">
 <h2>Step #5</h2>
-<p>Reverse-code <code>work_importance</code> variables so that higher numbers consistently represent higher levels of the measured construct. In other words, 1 = Not at all important and 4 = Very important.</p>
+<p>Create a new column <code>avg_satisfaction</code> that averages <code>life_satisfaction</code> and <code>financial_satisfaction</code> as a combined wellbeing indicator.</p>
 <p>We can achieve this with <code>mutate()</code>! (mutate() is to change or add new columns.)</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>wvs_data <span class="ot">&lt;-</span> wvs_data <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a></a>    <span class="fu">mutate</span>(<span class="at">work_importance_r =</span> <span class="dv">5</span> <span class="sc">-</span> work_importance)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-2"><a></a>    <span class="fu">mutate</span>(<span class="at">avg_satisfaction =</span> (life_satisfaction <span class="sc">+</span> financial_satisfaction) <span class="sc">/</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Preview of age groups:</p>
+<p>Preview of the new column alongside the original ones:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6,403 × 2
-  work_importance_r work_importance
-              &lt;dbl&gt;           &lt;dbl&gt;
-1                 4               1
-2                 1               4
-3                 4               1
-4                 2               3
-5                 1               4
-# ℹ 6,398 more rows</code></pre>
+<pre><code># A tibble: 5,102 × 3
+  life_satisfaction financial_satisfaction avg_satisfaction
+              &lt;dbl&gt;                  &lt;dbl&gt;            &lt;dbl&gt;
+1                 8                      5              6.5
+2                10                      2              6  
+3                 4                      5              4.5
+4                 1                      1              1  
+5                 9                      8              8.5
+# ℹ 5,097 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -497,14 +504,14 @@ $ employment             &lt;chr&gt; "Retired/pensioned", "Retired/pensioned", "
 <p>Preview of age groups:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6,403 × 2
+<pre><code># A tibble: 5,102 × 2
     age age_group
   &lt;dbl&gt; &lt;chr&gt;    
-1    93 61+      
+1    95 61+      
 2    91 61+      
-3    90 61+      
-4    89 61+      
-# ℹ 6,399 more rows</code></pre>
+3    89 61+      
+4    88 61+      
+# ℹ 5,098 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -529,49 +536,54 @@ $ employment             &lt;chr&gt; "Retired/pensioned", "Retired/pensioned", "
 <section id="prep-before-analysis-convert-to-factors" class="slide level2">
 <h2>Prep before analysis: convert to factors</h2>
 <p>Let’s use the <code>wvs_cleaned</code> dataframe for this task.</p>
-<p>Identify which columns can be converted to categorial data (factor). Convert the appropriate categorical variables (country, religiousity, sex, marital_status, employment) to <strong>Factor</strong>.</p>
+<p>Identify which columns can be converted to categorial data (factor). Convert the appropriate categorical variables (country, sex, marital_status, urban_rural, income_level, education, trust_people) to <strong>Factor</strong>.</p>
 <p>We can do this with <code>mutate()</code> and <code>as_factor()</code> from forcats, another sub-package within tidyverse.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>wvs_cleaned <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data-output/wvs_cleaned_v1.csv"</span>)</span>
-<span id="cb18-2"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span> </span>
+<span id="cb18-2"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
 <span id="cb18-3"><a></a>    <span class="fu">mutate</span>(</span>
 <span id="cb18-4"><a></a>        <span class="at">country =</span> <span class="fu">as_factor</span>(country),</span>
-<span id="cb18-5"><a></a>        <span class="at">religiousity =</span> <span class="fu">as_factor</span>(religiousity),</span>
-<span id="cb18-6"><a></a>        <span class="at">sex =</span> <span class="fu">as_factor</span>(sex),</span>
-<span id="cb18-7"><a></a>        <span class="at">marital_status =</span> <span class="fu">as_factor</span>(marital_status),</span>
-<span id="cb18-8"><a></a>        <span class="at">employment =</span> <span class="fu">as_factor</span>(employment)</span>
-<span id="cb18-9"><a></a>    )</span>
-<span id="cb18-10"><a></a></span>
-<span id="cb18-11"><a></a><span class="co"># check conversion result</span></span>
-<span id="cb18-12"><a></a><span class="fu">str</span>(wvs_cleaned)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb18-5"><a></a>        <span class="at">sex =</span> <span class="fu">as_factor</span>(sex),</span>
+<span id="cb18-6"><a></a>        <span class="at">marital_status =</span> <span class="fu">as_factor</span>(marital_status),</span>
+<span id="cb18-7"><a></a>        <span class="at">urban_rural =</span> <span class="fu">as_factor</span>(urban_rural),</span>
+<span id="cb18-8"><a></a>        <span class="at">income_level =</span> <span class="fu">as_factor</span>(income_level),</span>
+<span id="cb18-9"><a></a>        <span class="at">education =</span> <span class="fu">as_factor</span>(education),</span>
+<span id="cb18-10"><a></a>        <span class="at">trust_people =</span> <span class="fu">as_factor</span>(trust_people)</span>
+<span id="cb18-11"><a></a>    )</span>
+<span id="cb18-12"><a></a></span>
+<span id="cb18-13"><a></a><span class="co"># check conversion result</span></span>
+<span id="cb18-14"><a></a><span class="fu">str</span>(wvs_cleaned)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 <p>Rstudio may auto-suggest <code>as.factor()</code> from base R. You can use this as well, but <code>as_factor()</code> is preferred since we are using tidyverse approach.</p>
 </section>
 <section id="prep-before-analysis-convert-to-factors-output" class="slide level2 output-location-slide"><h2>Prep before analysis: convert to factors</h2><div class="cell output-location-slide">
 <div class="cell-output cell-output-stdout">
-<pre><code>tibble [6,403 × 14] (S3: tbl_df/tbl/data.frame)
- $ ID                    : num [1:6403] 1.24e+08 5.54e+08 7.02e+08 1.24e+08 1.24e+08 ...
- $ country               : Factor w/ 3 levels "CAN","NZL","SGP": 1 2 3 1 1 1 2 1 1 2 ...
- $ sex                   : Factor w/ 2 levels "Male","Female": 1 2 1 2 2 1 2 1 2 1 ...
- $ birthyear             : num [1:6403] 1927 1928 1930 1931 1930 ...
- $ age                   : num [1:6403] 93 91 90 89 89 89 89 88 88 88 ...
- $ life_satisfaction     : num [1:6403] 7 5 8 6 6 8 9 8 8 10 ...
- $ work_importance       : num [1:6403] 1 4 1 3 4 4 2 1 4 2 ...
- $ financial_satisfaction: num [1:6403] 7 5 9 9 8 8 10 10 5 10 ...
- $ religiousity          : Factor w/ 4 levels "Not a religious person",..: 1 2 2 1 1 2 2 2 2 2 ...
- $ political_scale       : num [1:6403] 5 3 3 2 5 5 8 10 5 5 ...
- $ marital_status        : Factor w/ 6 levels "Widowed","Single",..: 1 1 1 1 2 3 1 1 1 1 ...
- $ employment            : Factor w/ 8 levels "Part time","Retired/pensioned",..: 1 2 2 2 2 2 2 2 2 2 ...
- $ work_importance_r     : num [1:6403] 4 1 4 2 1 1 3 4 1 3 ...
- $ age_group             : chr [1:6403] "61+" "61+" "61+" "61+" ...</code></pre>
+<pre><code>tibble [5,102 × 17] (S3: tbl_df/tbl/data.frame)
+ $ respondent_id         : num [1:5102] 7.92e+08 3.44e+08 3.44e+08 3.44e+08 3.44e+08 ...
+ $ country               : Factor w/ 4 levels "Turkey","Hong Kong SAR",..: 1 2 2 2 2 2 2 2 2 2 ...
+ $ sex                   : Factor w/ 2 levels "Male","Female": 1 1 1 1 1 1 1 2 1 1 ...
+ $ age                   : num [1:5102] 95 91 89 88 88 88 87 86 86 86 ...
+ $ urban_rural           : Factor w/ 2 levels "Urban","Rural": 1 1 1 1 1 1 1 1 1 1 ...
+ $ income_level          : Factor w/ 3 levels "Medium","Low",..: 1 2 2 1 2 2 2 1 1 2 ...
+ $ marital_status        : Factor w/ 6 levels "Single","Married",..: 1 2 3 3 2 2 2 3 4 2 ...
+ $ education             : Factor w/ 3 levels "Lower","Middle",..: 1 1 1 1 1 1 2 1 1 1 ...
+ $ life_satisfaction     : num [1:5102] 8 10 4 1 9 10 8 5 8 5 ...
+ $ freedom_of_choice     : num [1:5102] 1 1 5 9 10 9 5 1 8 5 ...
+ $ financial_satisfaction: num [1:5102] 5 2 5 1 8 10 6 6 6 3 ...
+ $ trust_people          : Factor w/ 2 levels "Not trusted",..: 1 1 1 1 1 1 1 1 2 1 ...
+ $ importance_of_god     : num [1:5102] 10 6 9 1 6 10 1 1 2 1 ...
+ $ emancipative_values   : num [1:5102] 0.25 0.339 0.464 0.657 0.471 ...
+ $ secular_values        : num [1:5102] 0.151 0.345 0.401 0.597 0.313 ...
+ $ avg_satisfaction      : num [1:5102] 6.5 6 4.5 1 8.5 10 7 5.5 7 4 ...
+ $ age_group             : chr [1:5102] "61+" "61+" "61+" "61+" ...</code></pre>
 </div>
 </div></section><section id="prep-before-analysis-convert-to-factors-shortcut-ver." class="slide level2">
 <h2>Prep before analysis: convert to factors (shortcut ver.)</h2>
 <p>If we have a lot of columns to convert, that might be troublesome to type! This is where <code>across()</code> can come in handy. across(column selection, function) is to apply the same function or a set of functions to multiple columns in a single mutate () or summarize () function.</p>
 <p>Let’s first define a character vector that contains the names of columns we plan to convert.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>columns_to_convert <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"religiousity"</span>, <span class="st">"sex"</span>, <span class="st">"marital_status"</span>, <span class="st">"employment"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>columns_to_convert <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"sex"</span>, <span class="st">"marital_status"</span>, <span class="st">"urban_rural"</span>, <span class="st">"income_level"</span>, <span class="st">"education"</span>, <span class="st">"trust_people"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We will use this vector with <code>mutate()</code> and <code>across()</code>. We tell tidyverse to convert all of the columns with the help of <code>all_of()</code></p>
 <div class="cell">
@@ -586,25 +598,28 @@ $ employment             &lt;chr&gt; "Retired/pensioned", "Retired/pensioned", "
 </section>
 <section id="prep-before-analysis-convert-to-factors-shortcut-ver.-output" class="slide level2 output-location-slide"><h2>Prep before analysis: convert to factors (shortcut ver.)</h2><div class="cell output-location-slide">
 <div class="cell-output cell-output-stdout">
-<pre><code>tibble [6,403 × 14] (S3: tbl_df/tbl/data.frame)
- $ ID                    : num [1:6403] 1.24e+08 5.54e+08 7.02e+08 1.24e+08 1.24e+08 ...
- $ country               : Factor w/ 3 levels "CAN","NZL","SGP": 1 2 3 1 1 1 2 1 1 2 ...
- $ sex                   : Factor w/ 2 levels "Male","Female": 1 2 1 2 2 1 2 1 2 1 ...
- $ birthyear             : num [1:6403] 1927 1928 1930 1931 1930 ...
- $ age                   : num [1:6403] 93 91 90 89 89 89 89 88 88 88 ...
- $ life_satisfaction     : num [1:6403] 7 5 8 6 6 8 9 8 8 10 ...
- $ work_importance       : num [1:6403] 1 4 1 3 4 4 2 1 4 2 ...
- $ financial_satisfaction: num [1:6403] 7 5 9 9 8 8 10 10 5 10 ...
- $ religiousity          : Factor w/ 4 levels "Not a religious person",..: 1 2 2 1 1 2 2 2 2 2 ...
- $ political_scale       : num [1:6403] 5 3 3 2 5 5 8 10 5 5 ...
- $ marital_status        : Factor w/ 6 levels "Widowed","Single",..: 1 1 1 1 2 3 1 1 1 1 ...
- $ employment            : Factor w/ 8 levels "Part time","Retired/pensioned",..: 1 2 2 2 2 2 2 2 2 2 ...
- $ work_importance_r     : num [1:6403] 4 1 4 2 1 1 3 4 1 3 ...
- $ age_group             : chr [1:6403] "61+" "61+" "61+" "61+" ...</code></pre>
+<pre><code>tibble [5,102 × 17] (S3: tbl_df/tbl/data.frame)
+ $ respondent_id         : num [1:5102] 7.92e+08 3.44e+08 3.44e+08 3.44e+08 3.44e+08 ...
+ $ country               : Factor w/ 4 levels "Turkey","Hong Kong SAR",..: 1 2 2 2 2 2 2 2 2 2 ...
+ $ sex                   : Factor w/ 2 levels "Male","Female": 1 1 1 1 1 1 1 2 1 1 ...
+ $ age                   : num [1:5102] 95 91 89 88 88 88 87 86 86 86 ...
+ $ urban_rural           : Factor w/ 2 levels "Urban","Rural": 1 1 1 1 1 1 1 1 1 1 ...
+ $ income_level          : Factor w/ 3 levels "Medium","Low",..: 1 2 2 1 2 2 2 1 1 2 ...
+ $ marital_status        : Factor w/ 6 levels "Single","Married",..: 1 2 3 3 2 2 2 3 4 2 ...
+ $ education             : Factor w/ 3 levels "Lower","Middle",..: 1 1 1 1 1 1 2 1 1 1 ...
+ $ life_satisfaction     : num [1:5102] 8 10 4 1 9 10 8 5 8 5 ...
+ $ freedom_of_choice     : num [1:5102] 1 1 5 9 10 9 5 1 8 5 ...
+ $ financial_satisfaction: num [1:5102] 5 2 5 1 8 10 6 6 6 3 ...
+ $ trust_people          : Factor w/ 2 levels "Not trusted",..: 1 1 1 1 1 1 1 1 2 1 ...
+ $ importance_of_god     : num [1:5102] 10 6 9 1 6 10 1 1 2 1 ...
+ $ emancipative_values   : num [1:5102] 0.25 0.339 0.464 0.657 0.471 ...
+ $ secular_values        : num [1:5102] 0.151 0.345 0.401 0.597 0.313 ...
+ $ avg_satisfaction      : num [1:5102] 6.5 6 4.5 1 8.5 10 7 5.5 7 4 ...
+ $ age_group             : chr [1:5102] "61+" "61+" "61+" "61+" ...</code></pre>
 </div>
 </div></section><section id="analysis-1---summary-stats-of-life_satisfaction-for-each-country" class="slide level2">
 <h2>Analysis 1 - summary stats of life_satisfaction for each country</h2>
-<p>Generate summary statistics such as count (n), mean, median, and standard deviation of life_satisfaction grouped by country.</p>
+<p>Generate summary statistics such as count (n), mean, median, and standard deviation of <code>life_satisfaction</code> grouped by country.</p>
 <p>We can achieve this with <code>group_by()</code> and <code>summarise()</code>. It will contain one column for each grouping variable and one column for each of the summary statistics that you have specified.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>wvs_data <span class="sc">|&gt;</span></span>
@@ -622,22 +637,26 @@ $ employment             &lt;chr&gt; "Retired/pensioned", "Retired/pensioned", "
 </section>
 <section id="analysis-1---summary-stats-of-life_satisfaction-for-each-country-output" class="slide level2 output-location-slide"><h2>Analysis 1 - summary stats of life_satisfaction for each country</h2><div class="cell output-location-slide">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12 × 6
-# Groups:   country [3]
+<pre><code># A tibble: 16 × 6
+# Groups:   country [4]
    country age_group     n mean_satisfaction median_satisfaction sd_satisfaction
    &lt;chr&gt;   &lt;chr&gt;     &lt;int&gt;             &lt;dbl&gt;               &lt;dbl&gt;           &lt;dbl&gt;
- 1 CAN     61+        1013              7.55                   8            1.59
- 2 CAN     29-44      1232              6.99                   7            1.80
- 3 CAN     45-60      1061              6.92                   7            1.87
- 4 CAN     18-28       712              6.60                   7            1.86
- 5 NZL     61+         292              7.96                   8            1.66
- 6 NZL     45-60       222              7.38                   8            1.90
- 7 NZL     29-44       119              7.32                   8            1.69
- 8 NZL     18-28        27              6.70                   7            1.98
- 9 SGP     61+         418              7.17                   7            1.84
-10 SGP     29-44       511              7.09                   7            1.70
-11 SGP     45-60       550              7.05                   7            1.83
-12 SGP     18-28       246              6.85                   7            1.68</code></pre>
+ 1 Hong K… 61+         285              7.26                 8              1.89
+ 2 Hong K… 45-60       412              6.57                 7              1.80
+ 3 Hong K… 29-44       384              6.33                 7              1.72
+ 4 Hong K… 18-28       191              6.31                 6              1.59
+ 5 Indone… 18-28       308              7.90                 8              2.09
+ 6 Indone… 45-60       360              7.57                 8              2.58
+ 7 Indone… 61+         104              7.55                 8              2.45
+ 8 Indone… 29-44       529              7.53                 8              2.39
+ 9 Malays… 61+          74              7.14                 7.5            1.69
+10 Malays… 18-28       379              7.05                 7              1.78
+11 Malays… 45-60       349              7.01                 7              1.77
+12 Malays… 29-44       511              6.91                 7              1.72
+13 Turkey  18-28       329              6.57                 7              1.84
+14 Turkey  29-44       427              6.54                 7              1.90
+15 Turkey  45-60       430              6.36                 6              1.80
+16 Turkey  61+          30              6.2                  6              1.92</code></pre>
 </div>
 </div></section><section id="analysis-2---how-many-has-below-and-average-life_satisfaction" class="slide level2">
 <h2>Analysis 2 - How many has below and average life_satisfaction?</h2>
@@ -656,23 +675,24 @@ $ employment             &lt;chr&gt; "Retired/pensioned", "Retired/pensioned", "
 </section>
 <section id="analysis-2---how-many-has-below-and-average-life_satisfaction-output" class="slide level2 output-location-slide"><h2>Analysis 2 - How many has below and average life_satisfaction?</h2><div class="cell output-location-slide">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6,403 × 15
-          ID country sex    birthyear   age life_satisfaction work_importance
-       &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;             &lt;dbl&gt;           &lt;dbl&gt;
- 1 124071434 CAN     Male        1927    93                 7               1
- 2 554070524 NZL     Female      1928    91                 5               4
- 3 702070265 SGP     Male        1930    90                 8               1
- 4 124071321 CAN     Female      1931    89                 6               3
- 5 124073566 CAN     Female      1930    89                 6               4
- 6 124074356 CAN     Male        1931    89                 8               4
- 7 554070216 NZL     Female      1930    89                 9               2
- 8 124070295 CAN     Male        1932    88                 8               1
- 9 124072193 CAN     Female      1958    88                 8               4
-10 554070038 NZL     Male        1931    88                10               2
-# ℹ 6,393 more rows
-# ℹ 8 more variables: financial_satisfaction &lt;dbl&gt;, religiousity &lt;chr&gt;,
-#   political_scale &lt;dbl&gt;, marital_status &lt;chr&gt;, employment &lt;chr&gt;,
-#   work_importance_r &lt;dbl&gt;, age_group &lt;chr&gt;, satisfaction_group &lt;chr&gt;</code></pre>
+<pre><code># A tibble: 5,102 × 18
+   respondent_id country     sex     age urban_rural income_level marital_status
+           &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;         
+ 1     792070014 Turkey      Male     95 Urban       Medium       Single        
+ 2     344070043 Hong Kong … Male     91 Urban       Low          Married       
+ 3     344070645 Hong Kong … Male     89 Urban       Low          Widowed       
+ 4     344070124 Hong Kong … Male     88 Urban       Medium       Widowed       
+ 5     344070040 Hong Kong … Male     88 Urban       Low          Married       
+ 6     344070082 Hong Kong … Male     88 Urban       Low          Married       
+ 7     344070833 Hong Kong … Male     87 Urban       Low          Married       
+ 8     344070437 Hong Kong … Fema…    86 Urban       Medium       Widowed       
+ 9     344070274 Hong Kong … Male     86 Urban       Medium       Separated     
+10     344070159 Hong Kong … Male     86 Urban       Low          Married       
+# ℹ 5,092 more rows
+# ℹ 11 more variables: education &lt;chr&gt;, life_satisfaction &lt;dbl&gt;,
+#   freedom_of_choice &lt;dbl&gt;, financial_satisfaction &lt;dbl&gt;, trust_people &lt;chr&gt;,
+#   importance_of_god &lt;dbl&gt;, emancipative_values &lt;dbl&gt;, secular_values &lt;dbl&gt;,
+#   avg_satisfaction &lt;dbl&gt;, age_group &lt;chr&gt;, satisfaction_group &lt;chr&gt;</code></pre>
 </div>
 </div></section><section id="analysis-3---whats-the-average-satisfaction-scores-for-each-country-and-age-group" class="slide level2">
 <h2>Analysis 3 - What’s the average satisfaction scores for each country and age group?</h2>
@@ -688,13 +708,14 @@ $ employment             &lt;chr&gt; "Retired/pensioned", "Retired/pensioned", "
 <span id="cb27-8"><a></a>        <span class="at">values_from =</span> avg_satisfaction</span>
 <span id="cb27-9"><a></a>    ) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 5
-# Groups:   country [3]
-  country `18-28` `29-44` `45-60` `61+`
-  &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
-1 CAN        6.60    6.99    6.92  7.55
-2 NZL        6.70    7.32    7.38  7.96
-3 SGP        6.85    7.09    7.05  7.17</code></pre>
+<pre><code># A tibble: 4 × 5
+# Groups:   country [4]
+  country       `18-28` `29-44` `45-60` `61+`
+  &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+1 Hong Kong SAR    6.31    6.33    6.57  7.26
+2 Indonesia        7.90    7.53    7.57  7.55
+3 Malaysia         7.05    6.91    7.01  7.14
+4 Turkey           6.57    6.54    6.36  6.2 </code></pre>
 </div>
 </div>
 </section>
@@ -736,64 +757,84 @@ $ employment             &lt;chr&gt; "Retired/pensioned", "Retired/pensioned", "
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">CAN</td>
+<td style="text-align: left;">Hong Kong SAR</td>
 <td style="text-align: left;">18-28</td>
-<td style="text-align: right;">712</td>
+<td style="text-align: right;">191</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">CAN</td>
+<td style="text-align: left;">Hong Kong SAR</td>
 <td style="text-align: left;">29-44</td>
-<td style="text-align: right;">1232</td>
+<td style="text-align: right;">384</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">CAN</td>
+<td style="text-align: left;">Hong Kong SAR</td>
 <td style="text-align: left;">45-60</td>
-<td style="text-align: right;">1061</td>
+<td style="text-align: right;">412</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">CAN</td>
+<td style="text-align: left;">Hong Kong SAR</td>
 <td style="text-align: left;">61+</td>
-<td style="text-align: right;">1013</td>
+<td style="text-align: right;">285</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">NZL</td>
+<td style="text-align: left;">Indonesia</td>
 <td style="text-align: left;">18-28</td>
-<td style="text-align: right;">27</td>
+<td style="text-align: right;">308</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">NZL</td>
+<td style="text-align: left;">Indonesia</td>
 <td style="text-align: left;">29-44</td>
-<td style="text-align: right;">119</td>
+<td style="text-align: right;">529</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">NZL</td>
+<td style="text-align: left;">Indonesia</td>
 <td style="text-align: left;">45-60</td>
-<td style="text-align: right;">222</td>
+<td style="text-align: right;">360</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">NZL</td>
+<td style="text-align: left;">Indonesia</td>
 <td style="text-align: left;">61+</td>
-<td style="text-align: right;">292</td>
+<td style="text-align: right;">104</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">SGP</td>
+<td style="text-align: left;">Malaysia</td>
 <td style="text-align: left;">18-28</td>
-<td style="text-align: right;">246</td>
+<td style="text-align: right;">379</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">SGP</td>
+<td style="text-align: left;">Malaysia</td>
 <td style="text-align: left;">29-44</td>
 <td style="text-align: right;">511</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">SGP</td>
+<td style="text-align: left;">Malaysia</td>
 <td style="text-align: left;">45-60</td>
-<td style="text-align: right;">550</td>
+<td style="text-align: right;">349</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">SGP</td>
+<td style="text-align: left;">Malaysia</td>
 <td style="text-align: left;">61+</td>
-<td style="text-align: right;">418</td>
+<td style="text-align: right;">74</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Turkey</td>
+<td style="text-align: left;">18-28</td>
+<td style="text-align: right;">329</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Turkey</td>
+<td style="text-align: left;">29-44</td>
+<td style="text-align: right;">427</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Turkey</td>
+<td style="text-align: left;">45-60</td>
+<td style="text-align: right;">430</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Turkey</td>
+<td style="text-align: left;">61+</td>
+<td style="text-align: right;">30</td>
 </tr>
 </tbody>
 </table>
@@ -816,25 +857,32 @@ $ employment             &lt;chr&gt; "Retired/pensioned", "Retired/pensioned", "
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">CAN</td>
-<td style="text-align: right;">712</td>
-<td style="text-align: right;">1232</td>
-<td style="text-align: right;">1061</td>
-<td style="text-align: right;">1013</td>
+<td style="text-align: left;">Hong Kong SAR</td>
+<td style="text-align: right;">191</td>
+<td style="text-align: right;">384</td>
+<td style="text-align: right;">412</td>
+<td style="text-align: right;">285</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">NZL</td>
-<td style="text-align: right;">27</td>
-<td style="text-align: right;">119</td>
-<td style="text-align: right;">222</td>
-<td style="text-align: right;">292</td>
+<td style="text-align: left;">Indonesia</td>
+<td style="text-align: right;">308</td>
+<td style="text-align: right;">529</td>
+<td style="text-align: right;">360</td>
+<td style="text-align: right;">104</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">SGP</td>
-<td style="text-align: right;">246</td>
+<td style="text-align: left;">Malaysia</td>
+<td style="text-align: right;">379</td>
 <td style="text-align: right;">511</td>
-<td style="text-align: right;">550</td>
-<td style="text-align: right;">418</td>
+<td style="text-align: right;">349</td>
+<td style="text-align: right;">74</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Turkey</td>
+<td style="text-align: right;">329</td>
+<td style="text-align: right;">427</td>
+<td style="text-align: right;">430</td>
+<td style="text-align: right;">30</td>
 </tr>
 </tbody>
 </table>
@@ -849,13 +897,13 @@ $ employment             &lt;chr&gt; "Retired/pensioned", "Retired/pensioned", "
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>wvs_data <span class="ot">&lt;-</span> wvs_data <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">wrong_column =</span> <span class="st">"random values"</span>)</span>
 <span id="cb29-2"><a></a>wvs_data <span class="sc">|&gt;</span> <span class="fu">select</span>(country, wrong_column) <span class="sc">|&gt;</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6,403 × 2
-  country wrong_column 
-  &lt;chr&gt;   &lt;chr&gt;        
-1 CAN     random values
-2 NZL     random values
-3 SGP     random values
-# ℹ 6,400 more rows</code></pre>
+<pre><code># A tibble: 5,102 × 2
+  country       wrong_column 
+  &lt;chr&gt;         &lt;chr&gt;        
+1 Turkey        random values
+2 Hong Kong SAR random values
+3 Hong Kong SAR random values
+# ℹ 5,099 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -867,13 +915,13 @@ $ employment             &lt;chr&gt; "Retired/pensioned", "Retired/pensioned", "
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6,403 × 1
-  country
-  &lt;chr&gt;  
-1 CAN    
-2 NZL    
-3 SGP    
-# ℹ 6,400 more rows</code></pre>
+<pre><code># A tibble: 5,102 × 1
+  country      
+  &lt;chr&gt;        
+1 Turkey       
+2 Hong Kong SAR
+3 Hong Kong SAR
+# ℹ 5,099 more rows</code></pre>
 </div>
 </div>
 </section></section>
@@ -897,7 +945,7 @@ $ employment             &lt;chr&gt; "Retired/pensioned", "Retired/pensioned", "
 </section>
 <section id="to-try-at-home-exercise-1" class="slide level2">
 <h2>To try at home: Exercise 1</h2>
-<p>Now that we have a new file, load this new <code>wvs_cleaned_v1.csv</code> into a new dataframe called <code>wvs_cleaned</code>. Filter to respondents from Singapore who are currently employed full time. Show only the Respondent ID, country, the employment status, and age. Use <code>glimpse()</code> or <code>print()</code> to check the result! (you can chain these functions at the end)</p>
+<p>Now that we have a new file, load this new <code>wvs_cleaned_v1.csv</code> into a new dataframe called <code>wvs_cleaned</code>. Filter to respondents from Indonesia who live in Urban areas. Show only the respondent_id, country, urban_rural, and age. Use <code>glimpse()</code> or <code>print()</code> to check the result! (you can chain these functions at the end)</p>
 <p><strong>Step 1</strong>: Load the new file</p>
 <div class="cell">
 <details class="code-fold">
@@ -916,18 +964,18 @@ $ employment             &lt;chr&gt; "Retired/pensioned", "Retired/pensioned", "
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb34-2"><a></a>wvs_cleaned <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data-output/wvs_cleaned_v1.csv"</span>)</span>
 <span id="cb34-3"><a></a></span>
-<span id="cb34-4"><a></a>wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb34-5"><a></a>    <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"SGP"</span> <span class="sc">&amp;</span> employment <span class="sc">==</span> <span class="st">"Full time"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb34-6"><a></a>    <span class="fu">select</span>(ID, country, employment, age) <span class="sc">|&gt;</span> </span>
+<span id="cb34-4"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb34-5"><a></a>    <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"Indonesia"</span> <span class="sc">&amp;</span> urban_rural <span class="sc">==</span> <span class="st">"Urban"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb34-6"><a></a>    <span class="fu">select</span>(respondent_id, country, urban_rural, age) <span class="sc">|&gt;</span></span>
 <span id="cb34-7"><a></a>    <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 857
+<pre><code>Rows: 326
 Columns: 4
-$ ID         &lt;dbl&gt; 702071000, 702070773, 702070363, 702070746, 702070026, 7020…
-$ country    &lt;chr&gt; "SGP", "SGP", "SGP", "SGP", "SGP", "SGP", "SGP", "SGP", "SG…
-$ employment &lt;chr&gt; "Full time", "Full time", "Full time", "Full time", "Full t…
-$ age        &lt;dbl&gt; 81, 79, 73, 70, 69, 68, 68, 68, 68, 68, 68, 67, 67, 67, 67,…</code></pre>
+$ respondent_id &lt;dbl&gt; 360070522, 360070490, 360072309, 360070795, 360071345, 3…
+$ country       &lt;chr&gt; "Indonesia", "Indonesia", "Indonesia", "Indonesia", "Ind…
+$ urban_rural   &lt;chr&gt; "Urban", "Urban", "Urban", "Urban", "Urban", "Urban", "U…
+$ age           &lt;dbl&gt; 76, 74, 71, 70, 68, 68, 67, 66, 66, 65, 65, 65, 65, 64, …</code></pre>
 </div>
 </div>
 </section>
@@ -950,16 +998,18 @@ $ age        &lt;dbl&gt; 81, 79, 73, 70, 69, 68, 68, 68, 68, 68, 68, 67, 67, 67,
 
 </section><section id="to-try-at-home-exercise-2-output" class="slide level2 output-location-slide"><h2>To try at home: Exercise 2</h2><div class="cell output-location-slide">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 8
-# Groups:   country [3]
-  country sex    observation mean_age median_age oldest youngest std_dev
-  &lt;chr&gt;   &lt;chr&gt;        &lt;int&gt;    &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
-1 CAN     Female        1959     44.2         42     89       18    17.0
-2 CAN     Male          2059     48.8         49     93       18    16.4
-3 NZL     Female         354     56.6         58     91       19    15.5
-4 NZL     Male           306     57.3         59     88       20    15.4
-5 SGP     Female         919     47.7         47     87       21    15.3
-6 SGP     Male           806     47.9         48     90       21    16.2</code></pre>
+<pre><code># A tibble: 8 × 8
+# Groups:   country [4]
+  country       sex    observation mean_age median_age oldest youngest std_dev
+  &lt;chr&gt;         &lt;chr&gt;        &lt;int&gt;    &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+1 Hong Kong SAR Female         687     46.8         46     86       18    15.2
+2 Hong Kong SAR Male           585     47.3         47     91       18    16.9
+3 Indonesia     Female         713     38.3         37     78       18    12.8
+4 Indonesia     Male           588     41.4         41     80       18    13.9
+5 Malaysia      Female         656     37.7         35     80       18    12.8
+6 Malaysia      Male           657     39.0         36     79       18    13.6
+7 Turkey        Female         615     40.1         38     80       18    12.5
+8 Turkey        Male           601     38.2         36     95       18    12.8</code></pre>
 </div>
 </div></section></section>
 <section>
