@@ -12,20 +12,20 @@ website:
         text: Dataset
       - href: coc.qmd
         text: Code of conduct
-      - href: resources.qmd
-        text: Resources
-      - href: exercises.qmd
-        text: Exercises
-      - sidebar:archive
+      - sidebar:resources
         
   sidebar:
-    - id: archive
-      title: "Past workshops"
+    - id: resources
+      title: "Resources"
       contents:
+        - href: resources.qmd
+          text: "Further Readings"
+        - href: exercises.qmd
+          text: "Exercises for your own practice"
         - href: "https://bellaratmelia.github.io/2024-08-Rworkshop/"
-          text: "AY 24/25 Term 1 (Aug - Sep)"
+          text: "Past workshop - AY 24/25 Term 1 (Aug - Sep)"
         - href: "https://bellaratmelia.github.io/2025-01-Rworkshop/"
-          text: "AY 24/25 Term 2 (Jan - Feb)"
+          text: "Past workshop - AY 24/25 Term 2 (Jan - Feb)"
         
   google-analytics:
     tracking-id: "G-G5L1RGYC4H"
@@ -44,7 +44,7 @@ format:
     width: 1600
     height: 900
     slide-number: true
-    footer: "[Introductory R for Social Science](https://bellaratmelia.github.io/introductory-r-socsci/)"
+    footer: "[Introductory R for Social Science](https://smu-libraries.github.io/r-socsci/)"
     logo: "images/smu logo.png"
     fig-height: 7
     fig-width: 14

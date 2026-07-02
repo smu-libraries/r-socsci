@@ -221,7 +221,7 @@ country_name <- "Singapore"
 
     -   **Ratio**: Numerical data that can take any value within a range. [it has a "true zero".]{.underline}
 
-        -   Example: Annual income. annual income of 0 represents no income.
+        -   Example: Annual income. Annual income of 0 represents no income.
 
 ## Data Types in R
 
