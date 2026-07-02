@@ -2244,160 +2244,229 @@
     "href": "exercises.html",
     "title": "Post-workshop exercises",
     "section": "",
-    "text": "Have the dplyr, tidyr, and ggplot cheatsheets ready open and ready.\n\n\nthe code below will load the packages you need:\n\nlibrary(tidyverse)\nlibrary(car)\n\n\n\n\nThe code below will load and print the first few rows of the Duncan dataset. To find out more about this dataset, type ?Duncan in your RStudio console to open the vignette.\n\nduncan &lt;- as_tibble(Duncan)\nprint(duncan)\n\n# A tibble: 45 × 4\n   type  income education prestige\n   &lt;fct&gt;  &lt;int&gt;     &lt;int&gt;    &lt;int&gt;\n 1 prof      62        86       82\n 2 prof      72        76       83\n 3 prof      75        92       90\n 4 prof      55        90       76\n 5 prof      64        86       90\n 6 prof      21        84       87\n 7 prof      64        93       93\n 8 prof      80       100       90\n 9 wc        67        87       52\n10 prof      72        86       88\n# ℹ 35 more rows\n\n\nThe code below will load and print the first few rows of the WVS dataset. To find out more about this dataset, type ?WVS in your RStudio console to open the vignette.\n\nwvs &lt;- as_tibble(WVS)\nprint(wvs)\n\n# A tibble: 5,381 × 6\n   poverty     religion degree country   age gender\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt; \n 1 Too Little  yes      no     USA        44 male  \n 2 About Right yes      no     USA        40 female\n 3 Too Little  yes      no     USA        36 female\n 4 Too Much    yes      yes    USA        25 female\n 5 Too Little  yes      yes    USA        39 male  \n 6 About Right yes      no     USA        80 female\n 7 Too Much    yes      no     USA        48 female\n 8 Too Little  yes      no     USA        32 male  \n 9 Too Little  yes      no     USA        74 female\n10 Too Little  yes      no     USA        30 male  \n# ℹ 5,371 more rows"
+    "text": "Have the dplyr, tidyr, and ggplot cheatsheets ready open and ready.\n\n\nthe code below will load the packages you need:\n\nlibrary(tidyverse)\nlibrary(car)\n\n\n\n\nThe code below will load and print the first few rows of the Duncan dataset. To find out more about this dataset, type ?Duncan in your RStudio console to open the vignette.\n\nduncan &lt;- as_tibble(Duncan)\nprint(duncan)\n\n# A tibble: 45 × 4\n   type  income education prestige\n   &lt;fct&gt;  &lt;int&gt;     &lt;int&gt;    &lt;int&gt;\n 1 prof      62        86       82\n 2 prof      72        76       83\n 3 prof      75        92       90\n 4 prof      55        90       76\n 5 prof      64        86       90\n 6 prof      21        84       87\n 7 prof      64        93       93\n 8 prof      80       100       90\n 9 wc        67        87       52\n10 prof      72        86       88\n# ℹ 35 more rows\n\n\nThe code below will load and print the first few rows of the WVS dataset. To find out more about this dataset, type ?WVS in your RStudio console to open the vignette.\n\nwvs &lt;- as_tibble(WVS)\nprint(wvs)\n\n# A tibble: 5,381 × 6\n   poverty     religion degree country   age gender\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt; \n 1 Too Little  yes      no     USA        44 male  \n 2 About Right yes      no     USA        40 female\n 3 Too Little  yes      no     USA        36 female\n 4 Too Much    yes      yes    USA        25 female\n 5 Too Little  yes      yes    USA        39 male  \n 6 About Right yes      no     USA        80 female\n 7 Too Much    yes      no     USA        48 female\n 8 Too Little  yes      no     USA        32 male  \n 9 Too Little  yes      no     USA        74 female\n10 Too Little  yes      no     USA        30 male  \n# ℹ 5,371 more rows",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#prep",
     "href": "exercises.html#prep",
     "title": "Post-workshop exercises",
     "section": "",
-    "text": "Have the dplyr, tidyr, and ggplot cheatsheets ready open and ready.\n\n\nthe code below will load the packages you need:\n\nlibrary(tidyverse)\nlibrary(car)\n\n\n\n\nThe code below will load and print the first few rows of the Duncan dataset. To find out more about this dataset, type ?Duncan in your RStudio console to open the vignette.\n\nduncan &lt;- as_tibble(Duncan)\nprint(duncan)\n\n# A tibble: 45 × 4\n   type  income education prestige\n   &lt;fct&gt;  &lt;int&gt;     &lt;int&gt;    &lt;int&gt;\n 1 prof      62        86       82\n 2 prof      72        76       83\n 3 prof      75        92       90\n 4 prof      55        90       76\n 5 prof      64        86       90\n 6 prof      21        84       87\n 7 prof      64        93       93\n 8 prof      80       100       90\n 9 wc        67        87       52\n10 prof      72        86       88\n# ℹ 35 more rows\n\n\nThe code below will load and print the first few rows of the WVS dataset. To find out more about this dataset, type ?WVS in your RStudio console to open the vignette.\n\nwvs &lt;- as_tibble(WVS)\nprint(wvs)\n\n# A tibble: 5,381 × 6\n   poverty     religion degree country   age gender\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt; \n 1 Too Little  yes      no     USA        44 male  \n 2 About Right yes      no     USA        40 female\n 3 Too Little  yes      no     USA        36 female\n 4 Too Much    yes      yes    USA        25 female\n 5 Too Little  yes      yes    USA        39 male  \n 6 About Right yes      no     USA        80 female\n 7 Too Much    yes      no     USA        48 female\n 8 Too Little  yes      no     USA        32 male  \n 9 Too Little  yes      no     USA        74 female\n10 Too Little  yes      no     USA        30 male  \n# ℹ 5,371 more rows"
+    "text": "Have the dplyr, tidyr, and ggplot cheatsheets ready open and ready.\n\n\nthe code below will load the packages you need:\n\nlibrary(tidyverse)\nlibrary(car)\n\n\n\n\nThe code below will load and print the first few rows of the Duncan dataset. To find out more about this dataset, type ?Duncan in your RStudio console to open the vignette.\n\nduncan &lt;- as_tibble(Duncan)\nprint(duncan)\n\n# A tibble: 45 × 4\n   type  income education prestige\n   &lt;fct&gt;  &lt;int&gt;     &lt;int&gt;    &lt;int&gt;\n 1 prof      62        86       82\n 2 prof      72        76       83\n 3 prof      75        92       90\n 4 prof      55        90       76\n 5 prof      64        86       90\n 6 prof      21        84       87\n 7 prof      64        93       93\n 8 prof      80       100       90\n 9 wc        67        87       52\n10 prof      72        86       88\n# ℹ 35 more rows\n\n\nThe code below will load and print the first few rows of the WVS dataset. To find out more about this dataset, type ?WVS in your RStudio console to open the vignette.\n\nwvs &lt;- as_tibble(WVS)\nprint(wvs)\n\n# A tibble: 5,381 × 6\n   poverty     religion degree country   age gender\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt; \n 1 Too Little  yes      no     USA        44 male  \n 2 About Right yes      no     USA        40 female\n 3 Too Little  yes      no     USA        36 female\n 4 Too Much    yes      yes    USA        25 female\n 5 Too Little  yes      yes    USA        39 male  \n 6 About Right yes      no     USA        80 female\n 7 Too Much    yes      no     USA        48 female\n 8 Too Little  yes      no     USA        32 male  \n 9 Too Little  yes      no     USA        74 female\n10 Too Little  yes      no     USA        30 male  \n# ℹ 5,371 more rows",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-1",
     "href": "exercises.html#question-1",
     "title": "Post-workshop exercises",
     "section": "Question 1",
-    "text": "Question 1\nUsing wvs dataset, filter the age column to include values that is more than 29. Then, select the columns age, degree, religion and poverty. Save the result to a new dataframe called wvs_filtered.\n\n\nShow Answer\nwvs_filtered &lt;- wvs |&gt; \n    filter(age &gt; 29) |&gt; \n    select(age, degree, religion, poverty) \n\nprint(wvs_filtered)\n\n\n# A tibble: 4,228 × 4\n     age degree religion poverty    \n   &lt;int&gt; &lt;fct&gt;  &lt;fct&gt;    &lt;ord&gt;      \n 1    44 no     yes      Too Little \n 2    40 no     yes      About Right\n 3    36 no     yes      Too Little \n 4    39 yes    yes      Too Little \n 5    80 no     yes      About Right\n 6    48 no     yes      Too Much   \n 7    32 no     yes      Too Little \n 8    74 no     yes      Too Little \n 9    30 no     yes      Too Little \n10    32 yes    yes      Too Little \n# ℹ 4,218 more rows"
+    "text": "Question 1\nUsing wvs dataset, filter the age column to include values that is more than 29. Then, select the columns age, degree, religion and poverty. Save the result to a new dataframe called wvs_filtered.\n\n\nShow Answer\nwvs_filtered &lt;- wvs |&gt; \n    filter(age &gt; 29) |&gt; \n    select(age, degree, religion, poverty) \n\nprint(wvs_filtered)\n\n\n# A tibble: 4,228 × 4\n     age degree religion poverty    \n   &lt;int&gt; &lt;fct&gt;  &lt;fct&gt;    &lt;ord&gt;      \n 1    44 no     yes      Too Little \n 2    40 no     yes      About Right\n 3    36 no     yes      Too Little \n 4    39 yes    yes      Too Little \n 5    80 no     yes      About Right\n 6    48 no     yes      Too Much   \n 7    32 no     yes      Too Little \n 8    74 no     yes      Too Little \n 9    30 no     yes      Too Little \n10    32 yes    yes      Too Little \n# ℹ 4,218 more rows",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-2",
     "href": "exercises.html#question-2",
     "title": "Post-workshop exercises",
     "section": "Question 2",
-    "text": "Question 2\nUpdate the wvs dataset by creating a dummy-coded version of the gender variable, where male = 0 and female = 1. Save the results in a new column named gender_coded.\n\n\nShow Answer\nwvs &lt;- wvs |&gt; \n    mutate(gender_coded = if_else(gender == \"male\", 0, 1)) \n\nprint(wvs)\n\n\n# A tibble: 5,381 × 7\n   poverty     religion degree country   age gender gender_coded\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt;         &lt;dbl&gt;\n 1 Too Little  yes      no     USA        44 male              0\n 2 About Right yes      no     USA        40 female            1\n 3 Too Little  yes      no     USA        36 female            1\n 4 Too Much    yes      yes    USA        25 female            1\n 5 Too Little  yes      yes    USA        39 male              0\n 6 About Right yes      no     USA        80 female            1\n 7 Too Much    yes      no     USA        48 female            1\n 8 Too Little  yes      no     USA        32 male              0\n 9 Too Little  yes      no     USA        74 female            1\n10 Too Little  yes      no     USA        30 male              0\n# ℹ 5,371 more rows"
+    "text": "Question 2\nUpdate the wvs dataset by creating a dummy-coded version of the gender variable, where male = 0 and female = 1. Save the results in a new column named gender_coded.\n\n\nShow Answer\nwvs &lt;- wvs |&gt; \n    mutate(gender_coded = if_else(gender == \"male\", 0, 1)) \n\nprint(wvs)\n\n\n# A tibble: 5,381 × 7\n   poverty     religion degree country   age gender gender_coded\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt;         &lt;dbl&gt;\n 1 Too Little  yes      no     USA        44 male              0\n 2 About Right yes      no     USA        40 female            1\n 3 Too Little  yes      no     USA        36 female            1\n 4 Too Much    yes      yes    USA        25 female            1\n 5 Too Little  yes      yes    USA        39 male              0\n 6 About Right yes      no     USA        80 female            1\n 7 Too Much    yes      no     USA        48 female            1\n 8 Too Little  yes      no     USA        32 male              0\n 9 Too Little  yes      no     USA        74 female            1\n10 Too Little  yes      no     USA        30 male              0\n# ℹ 5,371 more rows",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-3",
     "href": "exercises.html#question-3",
     "title": "Post-workshop exercises",
     "section": "Question 3",
-    "text": "Question 3\nCreate a summary of the wvs dataset showing the number of observations for each country.\n\n\nShow Answer\nwvs |&gt; \n    count(country) \n\n\n# A tibble: 4 × 2\n  country       n\n  &lt;fct&gt;     &lt;int&gt;\n1 Australia  1874\n2 Norway     1127\n3 Sweden     1003\n4 USA        1377"
+    "text": "Question 3\nCreate a summary of the wvs dataset showing the number of observations for each country.\n\n\nShow Answer\nwvs |&gt; \n    count(country) \n\n\n# A tibble: 4 × 2\n  country       n\n  &lt;fct&gt;     &lt;int&gt;\n1 Australia  1874\n2 Norway     1127\n3 Sweden     1003\n4 USA        1377",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-4",
     "href": "exercises.html#question-4",
     "title": "Post-workshop exercises",
     "section": "Question 4",
-    "text": "Question 4\nUsing wvs dataset, calculate the average age for each combination of gender and degree status.\n\n\nShow Answer\nwvs |&gt; \n    group_by(gender, degree) |&gt; \n    summarise(avg_age = mean(age, na.rm = TRUE))\n\n\n`summarise()` has grouped output by 'gender'. You can override using the\n`.groups` argument.\n\n\n# A tibble: 4 × 3\n# Groups:   gender [2]\n  gender degree avg_age\n  &lt;fct&gt;  &lt;fct&gt;    &lt;dbl&gt;\n1 female no        45.6\n2 female yes       41.0\n3 male   no        46.0\n4 male   yes       43.3"
+    "text": "Question 4\nUsing wvs dataset, calculate the average age for each combination of gender and degree status.\n\n\nShow Answer\nwvs |&gt; \n    group_by(gender, degree) |&gt; \n    summarise(avg_age = mean(age, na.rm = TRUE))\n\n\n`summarise()` has grouped output by 'gender'. You can override using the\n`.groups` argument.\n\n\n# A tibble: 4 × 3\n# Groups:   gender [2]\n  gender degree avg_age\n  &lt;fct&gt;  &lt;fct&gt;    &lt;dbl&gt;\n1 female no        45.6\n2 female yes       41.0\n3 male   no        46.0\n4 male   yes       43.3",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-5",
     "href": "exercises.html#question-5",
     "title": "Post-workshop exercises",
     "section": "Question 5",
-    "text": "Question 5\nUsing the wvs dataset, create a summary statistics for each country and religion (yes/no). Calculate the age mean, age median, number of observation.\n\n\nShow Answer\nwvs |&gt; \n    group_by(country, religion) %&gt;%\n    summarise(\n        avg_age = mean(age, na.rm = TRUE),\n        median_age = median(age, na.rm = TRUE),\n        n_observations = n()\n    ) \n\n\n`summarise()` has grouped output by 'country'. You can override using the\n`.groups` argument.\n\n\n# A tibble: 8 × 5\n# Groups:   country [4]\n  country   religion avg_age median_age n_observations\n  &lt;fct&gt;     &lt;fct&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;int&gt;\n1 Australia no          39.9         37            375\n2 Australia yes         45.7         43           1499\n3 Norway    no          40.6         38            109\n4 Norway    yes         43.6         42           1018\n5 Sweden    no          43.7         42             15\n6 Sweden    yes         43.9         43            988\n7 USA       no          44.6         42            287\n8 USA       yes         48.9         46           1090"
+    "text": "Question 5\nUsing the wvs dataset, create a summary statistics for each country and religion (yes/no). Calculate the age mean, age median, number of observation.\n\n\nShow Answer\nwvs |&gt; \n    group_by(country, religion) %&gt;%\n    summarise(\n        avg_age = mean(age, na.rm = TRUE),\n        median_age = median(age, na.rm = TRUE),\n        n_observations = n()\n    ) \n\n\n`summarise()` has grouped output by 'country'. You can override using the\n`.groups` argument.\n\n\n# A tibble: 8 × 5\n# Groups:   country [4]\n  country   religion avg_age median_age n_observations\n  &lt;fct&gt;     &lt;fct&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;int&gt;\n1 Australia no          39.9         37            375\n2 Australia yes         45.7         43           1499\n3 Norway    no          40.6         38            109\n4 Norway    yes         43.6         42           1018\n5 Sweden    no          43.7         42             15\n6 Sweden    yes         43.9         43            988\n7 USA       no          44.6         42            287\n8 USA       yes         48.9         46           1090",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-6",
     "href": "exercises.html#question-6",
     "title": "Post-workshop exercises",
     "section": "Question 6",
-    "text": "Question 6\nUsing the wvs dataset, select the 10 oldest respondents from the USA. (hint: arrange() and slice())\n\n\nShow Answer\nwvs |&gt; \n    filter(country == \"USA\", age &gt; 50) |&gt; \n    arrange(desc(age)) |&gt; \n    slice(1:10)\n\n\n# A tibble: 10 × 7\n   poverty     religion degree country   age gender gender_coded\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt;         &lt;dbl&gt;\n 1 Too Much    no       no     USA        91 male              0\n 2 Too Little  yes      no     USA        91 male              0\n 3 Too Much    yes      no     USA        88 female            1\n 4 About Right yes      no     USA        88 male              0\n 5 Too Little  yes      yes    USA        87 female            1\n 6 Too Much    yes      no     USA        87 female            1\n 7 Too Little  yes      no     USA        87 male              0\n 8 About Right yes      no     USA        87 male              0\n 9 About Right yes      no     USA        86 female            1\n10 Too Much    yes      no     USA        86 female            1"
+    "text": "Question 6\nUsing the wvs dataset, select the 10 oldest respondents from the USA. (hint: arrange() and slice())\n\n\nShow Answer\nwvs |&gt; \n    filter(country == \"USA\", age &gt; 50) |&gt; \n    arrange(desc(age)) |&gt; \n    slice(1:10)\n\n\n# A tibble: 10 × 7\n   poverty     religion degree country   age gender gender_coded\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt;         &lt;dbl&gt;\n 1 Too Much    no       no     USA        91 male              0\n 2 Too Little  yes      no     USA        91 male              0\n 3 Too Much    yes      no     USA        88 female            1\n 4 About Right yes      no     USA        88 male              0\n 5 Too Little  yes      yes    USA        87 female            1\n 6 Too Much    yes      no     USA        87 female            1\n 7 Too Little  yes      no     USA        87 male              0\n 8 About Right yes      no     USA        87 male              0\n 9 About Right yes      no     USA        86 female            1\n10 Too Much    yes      no     USA        86 female            1",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-7",
     "href": "exercises.html#question-7",
     "title": "Post-workshop exercises",
     "section": "Question 7",
-    "text": "Question 7\nUpdate the wvs dataset by adding a new column called age_category that categorises each respondents based on the following criteria:\n\nbelow 18 = “youth” category\nbetween 18 to 34 = “young adult” category\nbetween 35 to 49 = “adult” category\nbetween 50 to 69 = “senior” category\nmore than 70 = “elderly” category\n\n\n\nShow Answer\nwvs &lt;- wvs |&gt; \n    mutate(age_category = case_when(\n        age &lt; 18 ~ \"youth\",\n        age &gt;= 18 & age &lt; 35 ~ \"young adult\",\n        age &gt;= 35 & age &lt; 50 ~ \"adult\",\n        age &gt;= 50 & age &lt; 70 ~ \"senior\",\n        age &gt;= 70 ~ \"elderly\"\n    )) \n\nprint(wvs)\n\n\n# A tibble: 5,381 × 8\n   poverty     religion degree country   age gender gender_coded age_category\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt;         &lt;dbl&gt; &lt;chr&gt;       \n 1 Too Little  yes      no     USA        44 male              0 adult       \n 2 About Right yes      no     USA        40 female            1 adult       \n 3 Too Little  yes      no     USA        36 female            1 adult       \n 4 Too Much    yes      yes    USA        25 female            1 young adult \n 5 Too Little  yes      yes    USA        39 male              0 adult       \n 6 About Right yes      no     USA        80 female            1 elderly     \n 7 Too Much    yes      no     USA        48 female            1 adult       \n 8 Too Little  yes      no     USA        32 male              0 young adult \n 9 Too Little  yes      no     USA        74 female            1 elderly     \n10 Too Little  yes      no     USA        30 male              0 young adult \n# ℹ 5,371 more rows"
+    "text": "Question 7\nUpdate the wvs dataset by adding a new column called age_category that categorises each respondents based on the following criteria:\n\nbelow 18 = “youth” category\nbetween 18 to 34 = “young adult” category\nbetween 35 to 49 = “adult” category\nbetween 50 to 69 = “senior” category\nmore than 70 = “elderly” category\n\n\n\nShow Answer\nwvs &lt;- wvs |&gt; \n    mutate(age_category = case_when(\n        age &lt; 18 ~ \"youth\",\n        age &gt;= 18 & age &lt; 35 ~ \"young adult\",\n        age &gt;= 35 & age &lt; 50 ~ \"adult\",\n        age &gt;= 50 & age &lt; 70 ~ \"senior\",\n        age &gt;= 70 ~ \"elderly\"\n    )) \n\nprint(wvs)\n\n\n# A tibble: 5,381 × 8\n   poverty     religion degree country   age gender gender_coded age_category\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt;         &lt;dbl&gt; &lt;chr&gt;       \n 1 Too Little  yes      no     USA        44 male              0 adult       \n 2 About Right yes      no     USA        40 female            1 adult       \n 3 Too Little  yes      no     USA        36 female            1 adult       \n 4 Too Much    yes      yes    USA        25 female            1 young adult \n 5 Too Little  yes      yes    USA        39 male              0 adult       \n 6 About Right yes      no     USA        80 female            1 elderly     \n 7 Too Much    yes      no     USA        48 female            1 adult       \n 8 Too Little  yes      no     USA        32 male              0 young adult \n 9 Too Little  yes      no     USA        74 female            1 elderly     \n10 Too Little  yes      no     USA        30 male              0 young adult \n# ℹ 5,371 more rows",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-8",
     "href": "exercises.html#question-8",
     "title": "Post-workshop exercises",
     "section": "Question 8",
-    "text": "Question 8\nRecreate the following visualization:\n\n\nShow Answer\nwvs |&gt; ggplot(aes(x = country, fill = poverty)) +\n    geom_bar(position = \"dodge\") +\n    labs(title = \"Distribution of Poverty Opinions Across Countries\",\n       x = \"Country\", \n       y = \"Count\", \n       fill = \"Poverty Opinion\") +\n    theme_minimal()"
+    "text": "Question 8\nRecreate the following visualization:\n\n\nShow Answer\nwvs |&gt; ggplot(aes(x = country, fill = poverty)) +\n    geom_bar(position = \"dodge\") +\n    labs(title = \"Distribution of Poverty Opinions Across Countries\",\n       x = \"Country\", \n       y = \"Count\", \n       fill = \"Poverty Opinion\") +\n    theme_minimal()",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-9",
     "href": "exercises.html#question-9",
     "title": "Post-workshop exercises",
     "section": "Question 9",
-    "text": "Question 9\nRecreate the following visualization:\n\n\nShow Answer\nwvs |&gt; \n    ggplot(aes(x = country, fill = degree)) +\n    geom_bar(position = \"fill\") +\n    labs(title = \"Proportion of Degree Status by Country\", \n       x = \"Country\", y = \"Count\", fill = \"Degree Status\") +\n    theme_minimal()"
+    "text": "Question 9\nRecreate the following visualization:\n\n\nShow Answer\nwvs |&gt; \n    ggplot(aes(x = country, fill = degree)) +\n    geom_bar(position = \"fill\") +\n    labs(title = \"Proportion of Degree Status by Country\", \n       x = \"Country\", y = \"Count\", fill = \"Degree Status\") +\n    theme_minimal()",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-10",
     "href": "exercises.html#question-10",
     "title": "Post-workshop exercises",
     "section": "Question 10",
-    "text": "Question 10\nRecreate the following visualization:\n\n\nShow Answer\nwvs |&gt; ggplot(aes(x = country, y = age)) +\n    geom_boxplot() +\n    labs(title = \"Age Distribution by Country\", x = \"Country\", y = \"Age\") +\n    theme_minimal() +\n    theme(legend.position = \"none\")"
+    "text": "Question 10\nRecreate the following visualization:\n\n\nShow Answer\nwvs |&gt; ggplot(aes(x = country, y = age)) +\n    geom_boxplot() +\n    labs(title = \"Age Distribution by Country\", x = \"Country\", y = \"Age\") +\n    theme_minimal() +\n    theme(legend.position = \"none\")",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-11",
     "href": "exercises.html#question-11",
     "title": "Post-workshop exercises",
     "section": "Question 11",
-    "text": "Question 11\nRecreate the following visualization:\n\n\nShow Answer\nwvs |&gt; \n    ggplot(aes(x = country, y = age)) +\n    geom_boxplot() +\n    facet_wrap(~ religion) +\n    labs(title = \"Age Distribution by Country and Religion\",\n       x = \"Country\", y = \"Age\") +\n    theme_minimal()"
+    "text": "Question 11\nRecreate the following visualization:\n\n\nShow Answer\nwvs |&gt; \n    ggplot(aes(x = country, y = age)) +\n    geom_boxplot() +\n    facet_wrap(~ religion) +\n    labs(title = \"Age Distribution by Country and Religion\",\n       x = \"Country\", y = \"Age\") +\n    theme_minimal()",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-12",
     "href": "exercises.html#question-12",
     "title": "Post-workshop exercises",
     "section": "Question 12",
-    "text": "Question 12\nRecreate the following visualization using duncan dataset:\n\n\nShow Answer\nduncan |&gt; \n    ggplot(aes(x = income, y = prestige, color = type)) +\n    geom_jitter() +\n    labs(title = \"Occupation Prestige vs. Income\",\n       x = \"Income\", \n       y = \"Prestige Score\",\n       color = \"Occupation Type\") +\n    theme_minimal()"
+    "text": "Question 12\nRecreate the following visualization using duncan dataset:\n\n\nShow Answer\nduncan |&gt; \n    ggplot(aes(x = income, y = prestige, color = type)) +\n    geom_jitter() +\n    labs(title = \"Occupation Prestige vs. Income\",\n       x = \"Income\", \n       y = \"Prestige Score\",\n       color = \"Occupation Type\") +\n    theme_minimal()",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-13",
     "href": "exercises.html#question-13",
     "title": "Post-workshop exercises",
     "section": "Question 13",
-    "text": "Question 13\nRecreate the following visualization using duncan dataset:\n\n\nShow Answer\nduncan |&gt; \n    ggplot(aes(x = type, y = income)) +\n    geom_boxplot() +\n    labs(title = \"Income Distribution by Occupation Type\",\n        x = \"Occupation Type\",\n        y = \"Income\") +\n    theme_minimal()"
+    "text": "Question 13\nRecreate the following visualization using duncan dataset:\n\n\nShow Answer\nduncan |&gt; \n    ggplot(aes(x = type, y = income)) +\n    geom_boxplot() +\n    labs(title = \"Income Distribution by Occupation Type\",\n        x = \"Occupation Type\",\n        y = \"Income\") +\n    theme_minimal()",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-14",
     "href": "exercises.html#question-14",
     "title": "Post-workshop exercises",
     "section": "Question 14",
-    "text": "Question 14\nRecreate the following visualization using duncan dataset:\n\n\nShow Answer\nduncan |&gt; \n    ggplot(aes(x = prestige, y = income, color = type)) +\n    geom_jitter() +\n    geom_smooth(method = \"lm\") +\n    labs(\n        title = \"Relationship between Prestige and Income\",\n        subtitle = \"Grouped by Occupation Type\",\n        x = \"Prestige Score\",\n        y = \"Income\",\n        color = \"Occupation Type\"\n    ) + \n    theme_minimal()\n\n\n`geom_smooth()` using formula = 'y ~ x'"
+    "text": "Question 14\nRecreate the following visualization using duncan dataset:\n\n\nShow Answer\nduncan |&gt; \n    ggplot(aes(x = prestige, y = income, color = type)) +\n    geom_jitter() +\n    geom_smooth(method = \"lm\") +\n    labs(\n        title = \"Relationship between Prestige and Income\",\n        subtitle = \"Grouped by Occupation Type\",\n        x = \"Prestige Score\",\n        y = \"Income\",\n        color = \"Occupation Type\"\n    ) + \n    theme_minimal()\n\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-15",
     "href": "exercises.html#question-15",
     "title": "Post-workshop exercises",
     "section": "Question 15",
-    "text": "Question 15\nUsing duncan dataset:\n\nExamine the correlation between prestige scores and education.\nAnalyze the relationship between income and prestige scores.\n\n\n\nShow Answer\ncor.test(duncan$prestige, duncan$education)\n\n\n\n    Pearson's product-moment correlation\n\ndata:  duncan$prestige and duncan$education\nt = 10.668, df = 43, p-value = 1.171e-13\nalternative hypothesis: true correlation is not equal to 0\n95 percent confidence interval:\n 0.7445746 0.9163112\nsample estimates:\n      cor \n0.8519156 \n\n\nShow Answer\ncor.test(duncan$prestige, duncan$income)\n\n\n\n    Pearson's product-moment correlation\n\ndata:  duncan$prestige and duncan$income\nt = 10.062, df = 43, p-value = 7.144e-13\nalternative hypothesis: true correlation is not equal to 0\n95 percent confidence interval:\n 0.7217665 0.9080298\nsample estimates:\n      cor \n0.8378014"
+    "text": "Question 15\nUsing duncan dataset:\n\nExamine the correlation between prestige scores and education.\nAnalyze the relationship between income and prestige scores.\n\n\n\nShow Answer\ncor.test(duncan$prestige, duncan$education)\n\n\n\n    Pearson's product-moment correlation\n\ndata:  duncan$prestige and duncan$education\nt = 10.668, df = 43, p-value = 1.171e-13\nalternative hypothesis: true correlation is not equal to 0\n95 percent confidence interval:\n 0.7445746 0.9163112\nsample estimates:\n      cor \n0.8519156 \n\n\nShow Answer\ncor.test(duncan$prestige, duncan$income)\n\n\n\n    Pearson's product-moment correlation\n\ndata:  duncan$prestige and duncan$income\nt = 10.062, df = 43, p-value = 7.144e-13\nalternative hypothesis: true correlation is not equal to 0\n95 percent confidence interval:\n 0.7217665 0.9080298\nsample estimates:\n      cor \n0.8378014",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-16",
     "href": "exercises.html#question-16",
     "title": "Post-workshop exercises",
     "section": "Question 16",
-    "text": "Question 16\nUsing duncan dataset, compare prestige scores across different occupational categories using ANOVA.\n\n\nShow Answer\nduncan_anova &lt;- aov(prestige ~ type, data=duncan)\nsummary(duncan_anova)\n\n\n            Df Sum Sq Mean Sq F value   Pr(&gt;F)    \ntype         2  33090   16545   65.57 1.21e-13 ***\nResiduals   42  10598     252                     \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+    "text": "Question 16\nUsing duncan dataset, compare prestige scores across different occupational categories using ANOVA.\n\n\nShow Answer\nduncan_anova &lt;- aov(prestige ~ type, data=duncan)\nsummary(duncan_anova)\n\n\n            Df Sum Sq Mean Sq F value   Pr(&gt;F)    \ntype         2  33090   16545   65.57 1.21e-13 ***\nResiduals   42  10598     252                     \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-17",
     "href": "exercises.html#question-17",
     "title": "Post-workshop exercises",
     "section": "Question 17",
-    "text": "Question 17\nUsing duncan dataset, create a regression model that predicts income based on occupational prestige and education scores.\n\nlibrary(huxtable)\n\n\n\nShow Answer\nduncan_model &lt;- lm(income ~ prestige + education, data = duncan)\nhuxreg(\"income\" = duncan_model)\n\n\n\n\n\nincome\n\n\n\n(Intercept)10.426 *  \n\n(4.164)   \n\nprestige0.624 ***\n\n(0.125)   \n\neducation0.032    \n\n(0.132)   \n\nN45        \n\nR20.702    \n\nlogLik-179.902    \n\nAIC367.805    \n\n*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05."
+    "text": "Question 17\nUsing duncan dataset, create a regression model that predicts income based on occupational prestige and education scores.\n\nlibrary(huxtable)\n\n\n\nShow Answer\nduncan_model &lt;- lm(income ~ prestige + education, data = duncan)\nhuxreg(\"income\" = duncan_model)\n\n\n\n\n\nincome\n\n\n\n(Intercept)10.426 *  \n\n(4.164)   \n\nprestige0.624 ***\n\n(0.125)   \n\neducation0.032    \n\n(0.132)   \n\nN45        \n\nR20.702    \n\nlogLik-179.902    \n\nAIC367.805    \n\n*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05.",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-18",
     "href": "exercises.html#question-18",
     "title": "Post-workshop exercises",
     "section": "Question 18",
-    "text": "Question 18\nUsing the wvs dataset, examine the relationship between religion and poverty perception.\n\n\nShow Answer\nwvs_chisq &lt;- chisq.test(table(wvs$religion, wvs$poverty))\nprint(wvs_chisq)\n\n\n\n    Pearson's Chi-squared test\n\ndata:  table(wvs$religion, wvs$poverty)\nX-squared = 0.083005, df = 2, p-value = 0.9593"
+    "text": "Question 18\nUsing the wvs dataset, examine the relationship between religion and poverty perception.\n\n\nShow Answer\nwvs_chisq &lt;- chisq.test(table(wvs$religion, wvs$poverty))\nprint(wvs_chisq)\n\n\n\n    Pearson's Chi-squared test\n\ndata:  table(wvs$religion, wvs$poverty)\nX-squared = 0.083005, df = 2, p-value = 0.9593",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-19",
     "href": "exercises.html#question-19",
     "title": "Post-workshop exercises",
     "section": "Question 19",
-    "text": "Question 19\nUsing the wvs dataset, examine whether there is a significant difference in the average age between individuals with and without a university degree.\n\n\nShow Answer\nwvs_ttest &lt;- t.test(age ~ degree, data = wvs)\nprint(wvs_ttest)\n\n\n\n    Welch Two Sample t-test\n\ndata:  age by degree\nt = 7.0571, df = 2029, p-value = 2.325e-12\nalternative hypothesis: true difference in means between group no and group yes is not equal to 0\n95 percent confidence interval:\n 2.674321 4.732708\nsample estimates:\n mean in group no mean in group yes \n         45.82775          42.12423"
+    "text": "Question 19\nUsing the wvs dataset, examine whether there is a significant difference in the average age between individuals with and without a university degree.\n\n\nShow Answer\nwvs_ttest &lt;- t.test(age ~ degree, data = wvs)\nprint(wvs_ttest)\n\n\n\n    Welch Two Sample t-test\n\ndata:  age by degree\nt = 7.0571, df = 2029, p-value = 2.325e-12\nalternative hypothesis: true difference in means between group no and group yes is not equal to 0\n95 percent confidence interval:\n 2.674321 4.732708\nsample estimates:\n mean in group no mean in group yes \n         45.82775          42.12423",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "exercises.html#question-20",
     "href": "exercises.html#question-20",
     "title": "Post-workshop exercises",
     "section": "Question 20",
-    "text": "Question 20\nUsing wvs dataset, compare the mean of age across different countries and age categories (see Question 7 to create age_category), and investigate if there is any significant difference. Conduct the post-hoc test if needed.\n\n\nShow Answer\nwvs_anova &lt;- aov(age ~ country + age_category, data = wvs)\nsummary(wvs_anova)\n\n\n               Df  Sum Sq Mean Sq F value Pr(&gt;F)    \ncountry         3   17399    5800   235.9 &lt;2e-16 ***\nage_category    3 1424858  474953 19319.9 &lt;2e-16 ***\nResiduals    5374  132113      25                   \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+    "text": "Question 20\nUsing wvs dataset, compare the mean of age across different countries and age categories (see Question 7 to create age_category), and investigate if there is any significant difference. Conduct the post-hoc test if needed.\n\n\nShow Answer\nwvs_anova &lt;- aov(age ~ country + age_category, data = wvs)\nsummary(wvs_anova)\n\n\n               Df  Sum Sq Mean Sq F value Pr(&gt;F)    \ncountry         3   17399    5800   235.9 &lt;2e-16 ***\nage_category    3 1424858  474953 19319.9 &lt;2e-16 ***\nResiduals    5374  132113      25                   \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
   },
   {
     "objectID": "resources.html",
     "href": "resources.html",
     "title": "Resources",
     "section": "",
-    "text": "Further readings if you’d like to deepen your knowledge and skill after the workshop:\n\n\nIsmay, C., & Kim, A. Y. (2024). Statistical inference via data science. https://moderndive.com/This book offers a gentle introduction to R, while also covering foundational research methods such as sampling, hypothesis testing, and making inferences. I really like how it combines both programming and research basics; very suitable for beginners!\n\n\nWickham, H., Çetinkaya-Rundel, M., & Garrett Grolemund. (2024). R for data science (2e) (2nd ed.). https://r4ds.hadley.nz/A great book for R beginners! It introduces the popular tidyverse package and explains how to make the most of it. It also offers useful tips for managing projects and outlines recommended steps for transforming raw data into meaningful insights and discoveries.\n\n\nWilke, C. O. (2024). Fundamentals of data visualization. https://clauswilke.com/dataviz/I noticed that some of you are particularly interested in visualizations. While I couldn’t cover more of this topic during the workshops, if you’re eager to dive deeper, this book does a great job of covering foundational theories that I believe are both important and helpful."
+    "text": "Further readings if you’d like to deepen your knowledge and skill after the workshop:\n\n\nIsmay, C., & Kim, A. Y. (2024). Statistical inference via data science. https://moderndive.com/This book offers a gentle introduction to R, while also covering foundational research methods such as sampling, hypothesis testing, and making inferences. I really like how it combines both programming and research basics; very suitable for beginners!\n\n\nWickham, H., Çetinkaya-Rundel, M., & Garrett Grolemund. (2024). R for data science (2e) (2nd ed.). https://r4ds.hadley.nz/A great book for R beginners! It introduces the popular tidyverse package and explains how to make the most of it. It also offers useful tips for managing projects and outlines recommended steps for transforming raw data into meaningful insights and discoveries.\n\n\nWilke, C. O. (2024). Fundamentals of data visualization. https://clauswilke.com/dataviz/I noticed that some of you are particularly interested in visualizations. While I couldn’t cover more of this topic during the workshops, if you’re eager to dive deeper, this book does a great job of covering foundational theories that I believe are both important and helpful.",
+    "crumbs": [
+      "Further Readings"
+    ]
   }
 ]
