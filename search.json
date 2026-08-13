@@ -130,7 +130,7 @@
     "href": "05-more-stats.html#simple-linear-regression-what-is-it",
     "title": "Session 5: Regression and Presenting Your Result",
     "section": "Simple Linear Regression: what is it?",
-    "text": "Simple Linear Regression: what is it?\nLinear regression is a statistical method used to model the relationship between a dependent variable (outcome) and one or more independent variables (predictors) by fitting a linear equation to the observed data. The math formula looks like this:\n\n\n\\[\nY = \\beta_0 + \\beta_1X + \\varepsilon\n\\]\n\n\n\\(Y\\) - the dependent variable; must be continuous\n\\(X\\) - the independent variable (if there are more than one, there will be \\(X_1\\) , \\(X_2\\) , and so on. This can be ordinal, nominal, or continuous\n\\(\\beta_0\\) - the y-intercept. Represents the expected value of independent variable \\(Y\\) when independent variable(s) \\(X\\) are set to zero.\n\\(\\beta_1\\) - the slope / coefficient for independent variable\n\\(\\varepsilon\\) - the error term. (In some examples you might see this omitted from the formula).\n\n\nExamples:\n\nDoes a person’s secular values affect their life satisfaction?\nDo a person’s secular values and financial satisfaction affect their life satisfaction?"
+    "text": "Simple Linear Regression: what is it?\nLinear regression is a statistical method used to model the relationship between a dependent variable (outcome) and one or more independent variables (predictors) by fitting a linear equation to the observed data. The math formula looks like this:\n\n\n\\[Y = \\beta_0 + \\beta_1X + \\varepsilon\\]\n\n\n\\(Y\\) - the dependent variable; must be continuous\n\\(X\\) - the independent variable (if there are more than one, there will be \\(X_1\\) , \\(X_2\\) , and so on. This can be ordinal, nominal, or continuous\n\\(\\beta_0\\) - the y-intercept. Represents the expected value of independent variable \\(Y\\) when independent variable(s) \\(X\\) are set to zero.\n\\(\\beta_1\\) - the slope / coefficient for independent variable\n\\(\\varepsilon\\) - the error term. (In some examples you might see this omitted from the formula).\n\n\nExamples:\n\nDoes a person’s secular values affect their life satisfaction?\nDo a person’s secular values and financial satisfaction affect their life satisfaction?"
   },
   {
     "objectID": "05-more-stats.html#linear-regression-one-continuous-predictor",
@@ -277,7 +277,7 @@
     "href": "05-more-stats.html#binary-logistic-regression---what-is-it",
     "title": "Session 5: Regression and Presenting Your Result",
     "section": "Binary Logistic Regression - what is it?",
-    "text": "Binary Logistic Regression - what is it?\nAlso known as simply logistic regression, it is used to model the relationship between a set of independent variables and a binary outcome.\nThese independent variables can be either categorical or continuous.\nBinary Logistics Regression formula:\n\\[\nlogit(P) = \\beta_0 + \\beta_1X_1 + \\beta_2X_2 + … + \\beta_nX_n\n\\]\nIt can also be written like below, in which the \\(logit(P)\\) part is expanded:\n\\[\nP = \\frac{1}{1 + e^{-(\\beta_0 + \\beta_1X)}}\n\\]"
+    "text": "Binary Logistic Regression - what is it?\nAlso known as simply logistic regression, it is used to model the relationship between a set of independent variables and a binary outcome.\nThese independent variables can be either categorical or continuous.\nBinary Logistics Regression formula:\n\\[logit(P) = \\beta_0 + \\beta_1X_1 + \\beta_2X_2 + … + \\beta_nX_n\\]\nIt can also be written like below, in which the \\(logit(P)\\) part is expanded:\n\\[P = \\frac{1}{1 + e^{-(\\beta_0 + \\beta_1X)}}\\]"
   },
   {
     "objectID": "05-more-stats.html#binary-logistic-regression-examples",
@@ -474,6 +474,13 @@
     "title": "Session 5: Regression and Presenting Your Result",
     "section": "References for APA Guidelines on Reporting statistics",
     "text": "References for APA Guidelines on Reporting statistics\nDo check with your professor on how closely you should follow the guidelines, or if there is any specific format required.\n\nAPA Style 7th Edition Numbers and Statistics Guide\nUniversity of Washington - Reporting Results of Common Statistical Tests in APA Format\nIllinois State University - A Short Guide to Handling Numbers and Statistics in APA Format (in 6th Edition)\nStatistic Tables in APA recommended format"
+  },
+  {
+    "objectID": "05-more-stats.html#quiz-time-compulsory",
+    "href": "05-more-stats.html#quiz-time-compulsory",
+    "title": "Session 5: Regression and Presenting Your Result",
+    "section": "Quiz Time! (compulsory)",
+    "text": "Quiz Time! (compulsory)\nScan the QR Code below to assess your understanding of regression analysis and reporting results using R in social sciences. All questions are required and each is worth 1 mark.\n\n\n\n\n\n\n\nQuiz QR Code: &lt;https://forms.cloud.microsoft/r/re0mfH7Y3r&gt;"
   },
   {
     "objectID": "05-more-stats.html#post-workshop-survey",
@@ -805,6 +812,13 @@
     "text": "Is fancier = better?\nFancier, more complicated visualization does not necessarily mean better!\nTake a look at this award-winning visualization by Simon Scarr"
   },
   {
+    "objectID": "03-visualization.html#quiz-time-compulsory",
+    "href": "03-visualization.html#quiz-time-compulsory",
+    "title": "Session 3: Data Visualization and Descriptive Stats",
+    "section": "Quiz Time! (compulsory)",
+    "text": "Quiz Time! (compulsory)\nScan the QR Code below to assess your understanding of basic R functions for data visualization and descriptive statistics, including summary statistics, ggplot2 syntax, and data plotting techniques. All questions are required and each is worth 1 mark.\n\n\n\n\n\n\n\nQuiz QR Code: &lt;https://forms.cloud.microsoft/r/MmfFcLZwXT&gt;"
+  },
+  {
     "objectID": "03-visualization.html#at-home-exercise-1",
     "href": "03-visualization.html#at-home-exercise-1",
     "title": "Session 3: Data Visualization and Descriptive Stats",
@@ -865,7 +879,7 @@
     "href": "01-intro.html#preamble",
     "title": "Session 1: Introduction to R and RStudio",
     "section": "Preamble",
-    "text": "Preamble\n\nAbout Bella:\n\nSenior Librarian, Research & Data Services team, SMU Libraries.\nBachelor in Info Tech (IT), MSc in Info Studies from NTU.\nHave been with SMU since the pandemic era (2021).\nHave been doing this workshop since Aug 2023.\n\nAbout Wei:\n\nPrincipal Librarian, Instruction and Learning Services, SMU Libraries.\nHave been with SMU over 17 years. This is my 2nd run of R workshops!\n\nAbout this workshop:\n\nLive-coding format; code along with me!\nGoal of workshop: to give you enough fundamentals (at least to the point that ChatGPT can’t bluff you so easily) and confidence to explore R on your own.\nDon’t be afraid to ask for help! We are all here to learn."
+    "text": "Preamble\n\nAbout Bella:\n\nSenior Librarian, Research & Data Services team, SMU Libraries.\nBachelor in Info Tech (IT), MSc in Info Studies from NTU.\nHave been with SMU since the pandemic era (2021).\nHave been doing this workshop since Aug 2023.\n\nAbout Wei:\n\nPrincipal Librarian, Instruction and Learning Services, SMU Libraries.\nHave been with SMU over 17 years. This is my 3rd run of R workshops!\n\nAbout this workshop:\n\nLive-coding format; code along with me!\nGoal of workshop: to give you enough fundamentals (at least to the point that ChatGPT can’t bluff you so easily) and confidence to explore R on your own.\nDon’t be afraid to ask for help! We are all here to learn."
   },
   {
     "objectID": "01-intro.html#the-outline-for-these-workshops",
@@ -1120,6 +1134,13 @@
     "text": "Recap\n\nR & RStudio: R is a programming language for statistical computing and graphics, while RStudio is an environment that makes it easier to write, run, and manage R code.\nWorking Directory: A folder on your computer where R reads and saves files.\nData Type: Types of value an object can hold, such as numeric, character, and Boolean.\nData Structure: Data structures organize and store data in R, such as vectors, factors, and data frames.\nFunctions: Reusable codes that perform specific tasks. Can call functions with arguments.\nPackages: Collections of functions and data to perform tasks. Need to install and load packages."
   },
   {
+    "objectID": "01-intro.html#quiz-time-compulsory",
+    "href": "01-intro.html#quiz-time-compulsory",
+    "title": "Session 1: Introduction to R and RStudio",
+    "section": "Quiz Time! (compulsory)",
+    "text": "Quiz Time! (compulsory)\nScan the QR Code below to assess your understanding of the basics of R and RStudio, including their purpose, key concepts, and fundamental commands. All questions are required and each is worth 1 mark.\n\n\n\n\n\n\n\nQuiz QR Code: &lt;https://forms.cloud.microsoft/r/pvCRpgbQeT&gt;"
+  },
+  {
     "objectID": "01-intro.html#appendix-on-vector-manipulations-add-items",
     "href": "01-intro.html#appendix-on-vector-manipulations-add-items",
     "title": "Session 1: Introduction to R and RStudio",
@@ -1194,7 +1215,7 @@
     "href": "02-tidyverse.html#why-are-we-using-tidyverse-is-it-a-must",
     "title": "Session 2: Data Wrangling with Tidyverse",
     "section": "Why are we using tidyverse? Is it a must?",
-    "text": "Why are we using tidyverse? Is it a must?\nIt’s not a must, but it’ll be make our job much easier! Key advantages:\n\nMore ‘English’ looking code and thus more intuitive for beginners\nTidyverse follow consistent syntax patterns - first argument is always the data to work on, followed by the function name i.e the things that we want to do on to the data.\nTidyverse gives clearer, more helpful error messages\n\nExample:\n# Base R\nsubset_data &lt;- data[data$age &gt; 18 & data$income &gt; 50000, c(\"name\", \"age\", \"salary\")]\n\n# Tidyverse  \nsubset_data &lt;- data |&gt; \n  filter(age &gt; 18, income &gt; 50000)  |&gt; \n  select(name, age, salary)"
+    "text": "Why are we using tidyverse? Is it a must?\nIt’s not a must, but it’ll be make our job much easier! Key advantages:\n\nMore ‘English’ looking code and thus more intuitive for beginners\nTidyverse follow consistent syntax patterns - first argument is always the data to work on, followed by the function name i.e the things that we want to do on to the data.\nTidyverse gives clearer, more helpful error messages\n\nExample:\n# Base R\nsubset_data &lt;- data[data$age &gt; 18 & data$income &gt; 50000, c(\"name\", \"age\", \"salary\")]\n\n# Tidyverse  \nsubset_data &lt;- data |&gt; \n  filter(age &gt; 18 & income &gt; 50000)  |&gt; \n  select(name, age, salary)"
   },
   {
     "objectID": "02-tidyverse.html#scenario-data-wrangling-activities-with-wvs-data",
@@ -1356,6 +1377,13 @@
     "title": "Session 2: Data Wrangling with Tidyverse",
     "section": "Remove the wrong column with subset -:",
     "text": "Remove the wrong column with subset -:\n\nwvs_data &lt;- wvs_data |&gt; \n    select(-wrong_column)\n\n\n\n# A tibble: 5,102 × 1\n  country      \n  &lt;chr&gt;        \n1 Turkey       \n2 Hong Kong SAR\n3 Hong Kong SAR\n# ℹ 5,099 more rows"
+  },
+  {
+    "objectID": "02-tidyverse.html#quiz-time-compulsory",
+    "href": "02-tidyverse.html#quiz-time-compulsory",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Quiz Time! (compulsory)",
+    "text": "Quiz Time! (compulsory)\nScan the QR Code below to assess your understanding of data wrangling in R using the tidyverse package. All questions are required and each is worth 1 mark.\n\n\n\n\n\n\n\nQuiz QR Code: &lt;https://forms.cloud.microsoft/r/0Vhn9mfWur&gt;"
   },
   {
     "objectID": "02-tidyverse.html#to-try-at-home-exercise-1",
@@ -1734,6 +1762,13 @@
     "title": "Session 4: Basic Inferential Stats in R: Correlation, T-Tests, and ANOVA",
     "section": "Interpreting our interaction plot",
     "text": "Interpreting our interaction plot\nSome observations that we can make:\n\nLook at whether the lines for each country run roughly parallel — if they do, there is little interaction between education and country.\nIf the lines cross or diverge, this suggests the effect of education on emancipative values differs across countries.\nPay attention to which country shows the steepest slope — this indicates the strongest relationship between education level and emancipative values in that country."
+  },
+  {
+    "objectID": "04-stats.html#quiz-time-compulsory",
+    "href": "04-stats.html#quiz-time-compulsory",
+    "title": "Session 4: Basic Inferential Stats in R: Correlation, T-Tests, and ANOVA",
+    "section": "Quiz Time! (compulsory)",
+    "text": "Quiz Time! (compulsory)\nScan the QR Code below to assess your understanding of basic inferential statistics concepts in R, including variable types and common statistical tests. All questions are required and each is worth 1 mark.\n\n\n\n\n\n\n\nQuiz QR Code: &lt;https://forms.cloud.microsoft/r/CSiySf1jmL&gt;"
   },
   {
     "objectID": "04-stats.html#reporting-with-apatables",

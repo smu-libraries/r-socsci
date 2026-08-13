@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-8f15fc24f5625196146fe17eaf0df3d7.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-f7f167d6ea343e07a5764538c046f1ad.css">
   <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G5L1RGYC4H"></script>
 
   <script type="text/javascript">
@@ -335,7 +335,7 @@ Bella Ratmelia &amp; Wei Xia
 <span id="cb2-3"><a></a></span>
 <span id="cb2-4"><a></a><span class="co"># Tidyverse  </span></span>
 <span id="cb2-5"><a></a>subset_data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> </span>
-<span id="cb2-6"><a></a>  <span class="fu">filter</span>(age <span class="sc">&gt;</span> <span class="dv">18</span>, income <span class="sc">&gt;</span> <span class="dv">50000</span>)  <span class="sc">|&gt;</span> </span>
+<span id="cb2-6"><a></a>  <span class="fu">filter</span>(age <span class="sc">&gt;</span> <span class="dv">18</span> <span class="sc">&amp;</span> income <span class="sc">&gt;</span> <span class="dv">50000</span>)  <span class="sc">|&gt;</span> </span>
 <span id="cb2-7"><a></a>  <span class="fu">select</span>(name, age, salary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="scenario-data-wrangling-activities-with-wvs-data" class="slide level2 smaller">
@@ -939,6 +939,20 @@ $ secular_values         &lt;dbl&gt; 0.5250000, 0.6941667, 0.4838889, 0.6794444,
 <section id="end-of-session-2" class="title-slide slide level1 center">
 <h1>End of Session 2!</h1>
 <p>Next session: Descriptive statistics and data visualization with <code>ggplot2</code> package - we’ll create visualizations to explore patterns in life satisfaction, values, and demographics across countries!</p>
+</section>
+<section id="quiz-time-compulsory" class="slide level2">
+<h2>Quiz Time! (compulsory)</h2>
+<p>Scan the QR Code below to assess your understanding of data wrangling in R using the tidyverse package. All questions are required and each is worth 1 mark.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="https://forms.cloud.microsoft/r/0Vhn9mfWur"><img data-src="images/DataWranglingWithTidyverseQRCode.png" class="quarto-figure quarto-figure-center" alt="Quiz QR Code: https://forms.cloud.microsoft/r/0Vhn9mfWur" width="400"></a></p>
+</figure>
+</div>
+<figcaption>Quiz QR Code: &lt;https://forms.cloud.microsoft/r/0Vhn9mfWur&gt;</figcaption>
+</figure>
+</div>
 </section>
 <section id="to-try-at-home-exercise-1" class="slide level2">
 <h2>To try at home: Exercise 1</h2>
