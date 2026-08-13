@@ -11,7 +11,7 @@ format: revealjs
 3.  Binary Logistic Regression in R
 4.  Show and tell - Using Quarto to generate slides or report in R!
 
-## Open your project 
+## Open your project
 
 1.  Go to the folder where you put your project for this workshop
 
@@ -19,19 +19,20 @@ format: revealjs
 
 ![](images/locate-rproj-file.jpg)
 
-3.  Double click on the file. Rstudio should launch with your project loaded! 
+3.  Double click on the file. Rstudio should launch with your project loaded!
 
 ## Install and load extra packages we need today
 
-1. Type the following line in your R console (bottom left section). Type them one by one.
-    -   `install.packages("apaTables")`
-    -   `install.packages("huxtable")`
-    -   `install.packages("gtsummary")`
-    -   `install.packages("car")`
+1.  Type the following line in your R console (bottom left section). Type them one by one.
 
-2. Create a new R script called `session-5.R`
+    - `install.packages("apaTables")`
+    - `install.packages("huxtable")`
+    - `install.packages("gtsummary")`
+    - `install.packages("car")`
 
-3. Paste the following lines into the script:
+2.  Create a new R script called `session-5.R`
+
+3.  Paste the following lines into the script:
 
 ```{r}
 #| echo: true
@@ -44,7 +45,6 @@ library(car)
 library(tidyverse)
 
 ```
-
 
 ## Load our data for today!
 
@@ -73,10 +73,9 @@ glimpse(wvs_cleaned)
 
 `apaTables` is a package that will generate APA-formatted report table for correlation, ANOVA, and regression. It has limited customisations and few varity of tables. The documentation online is for the "development" version which is not what we will get if we install normally with `install.packages()`, so we need to rely on the vignette more. [**View the documentation here**](https://dstanley4.github.io/apaTables/index.html)
 
-
 Example: get the correlation table for `political_scale`, `life_satisfaction`, and `financial_satisfaction`
 
-```r
+``` r
 library(apaTables)
 
 wvs_cleaned |> 
@@ -110,32 +109,30 @@ wvs_cleaned |>
 2.  Select the entire tables, and then copy it with Ctrl + C (or Cmd + C on Macbook)
 3.  Paste the table with Ctrl + V (or Cmd + V on Macbook) to your word document or Google doc.
 
-# Simple Linear Regression 
+# Simple Linear Regression
 
 ## Simple Linear Regression: what is it?
 
 **Linear regression** is a statistical method used to model the relationship between a dependent variable (outcome) and one or more independent variables (predictors) by fitting a linear equation to the observed data. The math formula looks like this:
 
-::: columns
+::::: columns
 ::: {.column width="30%"}
-$$
-Y = \beta_0 + \beta_1X + \varepsilon
-$$
+$$Y = \beta_0 + \beta_1X + \varepsilon$$
 :::
 
 ::: {.column style="font-size: 75%; width: 70%;"}
--   $Y$ - the dependent variable; **must be continuous**
--   $X$ - the independent variable (if there are more than one, there will be $X_1$ , $X_2$ , and so on. This can be ordinal, nominal, or continuous
--   $\beta_0$ - the y-intercept. Represents the expected value of independent variable $Y$ when independent variable(s) $X$ are set to zero.
--   $\beta_1$ - the slope / coefficient for independent variable
--   $\varepsilon$ - the error term. (In some examples you might see this omitted from the formula).
+- $Y$ - the dependent variable; **must be continuous**
+- $X$ - the independent variable (if there are more than one, there will be $X_1$ , $X_2$ , and so on. This can be ordinal, nominal, or continuous
+- $\beta_0$ - the y-intercept. Represents the expected value of independent variable $Y$ when independent variable(s) $X$ are set to zero.
+- $\beta_1$ - the slope / coefficient for independent variable
+- $\varepsilon$ - the error term. (In some examples you might see this omitted from the formula).
 :::
-:::
+:::::
 
 Examples:
 
--   Does a person's **secular values** affect their **life satisfaction**?
--   Do a person's **secular values** and **financial satisfaction** affect their **life satisfaction**?
+- Does a person's **secular values** affect their **life satisfaction**?
+- Do a person's **secular values** and **financial satisfaction** affect their **life satisfaction**?
 
 ## Linear Regression: One continuous predictor
 
@@ -155,32 +152,31 @@ life_model1 <- lm(life_satisfaction ~ secular_values, data = wvs_cleaned)
 summary(life_model1) #summarize the result
 ```
 
---- 
+------------------------------------------------------------------------
 
 ::: {style="font-size: 80%"}
+- **Call**: the formula
 
--   **Call**: the formula
+- **Residuals**: overview on the distribution of residuals (expected value minus observed value) -- we can plot this to check for homoscedasticity
 
--   **Residuals**: overview on the distribution of residuals (expected value minus observed value) -- we can plot this to check for homoscedasticity
+- **Coefficients**: shows the intercept, the regression coefficients for the predictor variables, and their statistical significance
 
--   **Coefficients**: shows the intercept, the regression coefficients for the predictor variables, and their statistical significance
+- **Residual standard error**: the average difference between observed and expected outcome by the model. Generally the lower, the better.
 
--   **Residual standard error**: the average difference between observed and expected outcome by the model. Generally the lower, the better.
+- **R-squared & Adjusted R-squared**: indicates the proportion of variation in the outcome that can be explained by the model (i.e. goodness of fit).
 
--   **R-squared & Adjusted R-squared**: indicates the proportion of variation in the outcome that can be explained by the model (i.e. goodness of fit).
-
--   **F-statistics**: indicates whether the model as a whole is statistically significant and whether it explains more variance than just the baseline (intercept-only) model.
+- **F-statistics**: indicates whether the model as a whole is statistically significant and whether it explains more variance than just the baseline (intercept-only) model.
 :::
 
 ## Narrating the results
 
 Here is one possible way to narrate your result:
 
-> A linear regression analysis was conducted to assess the influence of secular values on life satisfaction in Hong Kong SAR, Indonesia, Malaysia, and Turkey. Secular values were a statistically significant, negative predictor of life satisfaction (B = -2.44, SE = 0.15, p < 0.001).
+> A linear regression analysis was conducted to assess the influence of secular values on life satisfaction in Hong Kong SAR, Indonesia, Malaysia, and Turkey. Secular values were a statistically significant, negative predictor of life satisfaction (B = -2.44, SE = 0.15, p \< 0.001).
 
 > Because `secular_values` ranges from 0 to 1, the raw coefficient describes the change across the *entire* scale. It is easier to interpret in smaller steps: for each **0.1 increase** in secular values, life satisfaction decreases by about **0.24 units** (−2.44 × 0.1) — that is, more secular respondents reported slightly lower life satisfaction.
 
-> The model was statistically significant (F(1, 5100) = 256.13, p < 0.001) but explained only about 4.8% of the variance in life satisfaction (R² = 0.048).
+> The model was statistically significant (F(1, 5100) = 256.13, p \< 0.001) but explained only about 4.8% of the variance in life satisfaction (R² = 0.048).
 
 ## Present your regression result - huxtable
 
@@ -206,11 +202,12 @@ life_model2 <- lm(life_satisfaction ~ financial_satisfaction + secular_values,
                   data = wvs_cleaned)
 summary(life_model2)
 ```
+
 ## Possible way to explain the result
 
-> A multiple regression analysis was conducted to examine how financial satisfaction and secular values predict life satisfaction. Financial satisfaction was a strong positive predictor (B = 0.52, SE = 0.01, p < 0.001): for each one-unit increase in financial satisfaction (on the 1–10 scale), life satisfaction increased by about 0.52 units. Secular values were a significant negative predictor (B = -1.81, SE = 0.13, p < 0.001); since this variable ranges 0–1, a 0.1 increase in secular values corresponds to about a 0.18-unit decrease in life satisfaction.
+> A multiple regression analysis was conducted to examine how financial satisfaction and secular values predict life satisfaction. Financial satisfaction was a strong positive predictor (B = 0.52, SE = 0.01, p \< 0.001): for each one-unit increase in financial satisfaction (on the 1–10 scale), life satisfaction increased by about 0.52 units. Secular values were a significant negative predictor (B = -1.81, SE = 0.13, p \< 0.001); since this variable ranges 0–1, a 0.1 increase in secular values corresponds to about a 0.18-unit decrease in life satisfaction.
 
-> The model was statistically significant (F(2, 5099) = 1405.49, p < 0.001) and explained about 35.5% of the variance in life satisfaction (R² = 0.355).
+> The model was statistically significant (F(2, 5099) = 1405.49, p \< 0.001) and explained about 35.5% of the variance in life satisfaction (R² = 0.355).
 
 ## Present your regression result - tbl_regression() from gtsummary
 
@@ -226,26 +223,21 @@ More on `tbl_regression()` by `gtsummary`: <https://www.danieldsjoberg.com/gtsum
 
 ## Reporting result: A sample regression table
 
-:::: {.columns}
-
+::::: columns
 ::: {.column width="60%"}
 ![](images/regression-table.jpg)
 :::
 
 ::: {.column width="40%"}
-You might encounter different table formats when reporting regression results, but there are some key elements that should generally be included. 
+You might encounter different table formats when reporting regression results, but there are some key elements that should generally be included.
 
-These are: the number of observations ($N$), the coefficients (B = unstandardized, raw coeff in original unit of measurements; $\beta$ = standardized, converted to standard deviation units), standard errors (SE), confidence intervals (95% CI), and p-values. Other metrics to include are the $R^2$ and $F$ statistics. 
+These are: the number of observations ($N$), the coefficients (B = unstandardized, raw coeff in original unit of measurements; $\beta$ = standardized, converted to standard deviation units), standard errors (SE), confidence intervals (95% CI), and p-values. Other metrics to include are the $R^2$ and $F$ statistics.
 :::
-
-::::
-
+:::::
 
 ::: aside
-
 - The above screenshot is taken from <https://www.ncfr.org/system/files/2017-01/regression_0.pdf>
 - [APA recommended format](https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-tables#regression)
-
 :::
 
 ## Presenting your models {.scrollable}
@@ -270,8 +262,6 @@ huxreg("life_satisfaction (model1)" = life_model1,
       "P value" = "p.value"))
 ```
 
-
-
 ## FYI: Multicollinearity
 
 Caution! When doing regression-type of tests, watch out for multicollinearity.
@@ -280,9 +270,9 @@ Multicollinearity is a situation in which two or more predictor variables are hi
 
 One way to check for it:
 
--   Assess the correlation between your predictor variables in your model using Variance Inflation Factor (VIF)
+- Assess the correlation between your predictor variables in your model using Variance Inflation Factor (VIF)
 
--   If they seem to be highly correlated (\> 5 or so), one of the easiest (and somewhat acceptable) way is to simply remove the less significant predictor from your model :D
+- If they seem to be highly correlated (\> 5 or so), one of the easiest (and somewhat acceptable) way is to simply remove the less significant predictor from your model :D
 
 ```{r}
 #| echo: true
@@ -323,9 +313,9 @@ life_model3 <- lm(life_satisfaction ~ age_group, data = wvs_cleaned)
 summary(life_model3)
 ```
 
--   When interpreting a categorical predictor in regression, one category is treated as the reference category, which serves as the baseline for comparison. In this case, the reference category corresponds to the intercept.
+- When interpreting a categorical predictor in regression, one category is treated as the reference category, which serves as the baseline for comparison. In this case, the reference category corresponds to the intercept.
 
--   By default, the first category in the data is used as the reference category, unless specified.
+- By default, the first category in the data is used as the reference category, unless specified.
 
 ## Narrating the result
 
@@ -333,7 +323,7 @@ Here is one possible way to narrate your result:
 
 > A linear regression analysis was conducted to examine how age groups predict life satisfaction. With the youngest age group (18-28) as the reference group (intercept = 7.02, SE = 0.06), the pattern was mixed. The 29-44 age group scored 0.14 units lower, though this difference was not statistically significant (SE = 0.07, p = 0.065). The 45-60 age group scored 0.18 units lower (SE = 0.08, p = 0.023), while the oldest 61+ age group scored 0.22 units higher (SE = 0.11, p = 0.044) than the reference group.
 
-> The model was statistically significant (F(3, 5098) = 5.86, p < 0.001) but explained less than 1% of the variance in life satisfaction (R² = 0.003, Adjusted R² = 0.003).
+> The model was statistically significant (F(3, 5098) = 5.86, p \< 0.001) but explained less than 1% of the variance in life satisfaction (R² = 0.003, Adjusted R² = 0.003).
 
 ## Presenting the regression table {.scrollable}
 
@@ -369,7 +359,6 @@ Re-run the analysis with the new reference category
 life_model3a<- lm(life_satisfaction ~ age_group, data = wvs_cleaned)
 summary(life_model3a)
 ```
-
 
 ## Changing baseline category for ordered factor
 
@@ -409,20 +398,16 @@ These independent variables can be either categorical or continuous.
 
 Binary Logistics Regression formula:
 
-$$
-logit(P) = \beta_0 + \beta_1X_1 + \beta_2X_2 + … + \beta_nX_n
-$$
+$$logit(P) = \beta_0 + \beta_1X_1 + \beta_2X_2 + … + \beta_nX_n$$
 
 It can also be written like below, in which the $logit(P)$ part is expanded:
 
-$$
-P = \frac{1}{1 + e^{-(\beta_0 + \beta_1X)}}
-$$
+$$P = \frac{1}{1 + e^{-(\beta_0 + \beta_1X)}}$$
 
 ## Binary Logistic Regression Examples
 
--   Does a person’s **age** and **education level** influence whether they will vote Democrat or Republican in the US election?
--   Does the number of **hours spent studying** impact a student’s likelihood of passing a module? (pass/fail outcome)
+- Does a person’s **age** and **education level** influence whether they will vote Democrat or Republican in the US election?
+- Does the number of **hours spent studying** impact a student’s likelihood of passing a module? (pass/fail outcome)
 
 In essence, the goal of binary logistic regression is to estimate the probability of a specific event happening when there are only two possible outcomes (hence the term "binary").
 
@@ -430,12 +415,11 @@ In essence, the goal of binary logistic regression is to estimate the probabilit
 
 **Research Question**: Does a participant's **sense of freedom of choice** affect the likelihood of being satisfied with life?
 
--   The outcome/DV ($Y$): `satisfied`
+- The outcome/DV ($Y$): `satisfied`
 
-    -   Our outcome is a continuous variable, but for the purpose of this workshop practice, let's define the outcome as "Satisfied" if the life_satisfaction score is more than 7 (inclusive), and "not Satisfied" if the score is less than 7.
--   The predictor/IV ($X$): `freedom_of_choice`
+  - Our outcome is a continuous variable, but for the purpose of this workshop practice, let's define the outcome as "Satisfied" if the life_satisfaction score is more than 7 (inclusive), and "not Satisfied" if the score is less than 7.
 
-
+- The predictor/IV ($X$): `freedom_of_choice`
 
 ## Dummy-coding dependent variable
 
@@ -478,6 +462,7 @@ If you recall the formula, the results are expressed in Logit Probability. As we
 exp(coef(life_model5))
 
 ```
+
 We can also use `tbl_regression()` to do this for us:
 
 ```{r}
@@ -487,7 +472,6 @@ life_model5 |> tbl_regression(exponentiate = TRUE) |>
     bold_p() 
 ```
 
-
 ::: aside
 More on `tbl_regression()` by `gtsummary`: <https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html>
 :::
@@ -496,13 +480,13 @@ More on `tbl_regression()` by `gtsummary`: <https://www.danieldsjoberg.com/gtsum
 
 χ² (Chi-squared) goodness of fit tests whether your model fits the data significantly better than a null model (model with no predictors). As you can see, it is not in the `glm()` result, but we can calculate this somewhat manually using the Null and Residual deviance and df from the `summary()` output like so:
 
-*   Null deviance: [from summary output]
-*   Residual deviance: [from summary output]
-*   χ² = Null deviance − Residual deviance
+- Null deviance: \[from summary output\]
+- Residual deviance: \[from summary output\]
+- χ² = Null deviance − Residual deviance
 
 To get the p-value, we need the degree of freedom and the χ²:
 
-*   df = difference in degrees of freedom (Null df − Residual df = 1 for one predictor)
+- df = difference in degrees of freedom (Null df − Residual df = 1 for one predictor)
 
 ```{r}
 #| echo: true
@@ -512,7 +496,6 @@ To get the p-value, we need the degree of freedom and the χ²:
 chi_sq <- NULL_DEVIANCE - RESIDUAL_DEVIANCE
 pchisq(chi_sq, df = 1, lower.tail = FALSE)  # will give p-value
 ```
-
 
 ## Get the χ² (chi-squared) and Pseudo R-squared (for reporting purposes)
 
@@ -536,7 +519,6 @@ DescTools::PseudoR2(life_model5,
                     which = c("G2", "Nagelkerke"))
 ```
 
-
 ## In case you need to get other Rsquared methods
 
 ```{r}
@@ -552,25 +534,23 @@ DescTools::PseudoR2(life_model5,
 
 *(The intercept isn't typically interpreted as an odds ratio, so we'll ignore that for now)*
 
-> A logistic regression was performed to ascertain the effects of freedom of choice on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ² (1, N = [N]) = [χ²], p < .001.
+> A logistic regression was performed to ascertain the effects of freedom of choice on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ² (1, N = \[N\]) = \[χ²\], p \< .001.
 
-> The model explained [Nagelkerke R²]% (Nagelkerke R²) of the variance in life satisfaction. Freedom of choice was associated with [increased/decreased] likelihood of being satisfied with life (OR = [OR], 95% CI [[lower], [upper]], p < .001), indicating that for each one-unit increase in freedom of choice (1-10), the odds of being satisfied with life changed by [OR-1 as %]%.
+> The model explained \[Nagelkerke R²\]% (Nagelkerke R²) of the variance in life satisfaction. Freedom of choice was associated with \[increased/decreased\] likelihood of being satisfied with life (OR = \[OR\], 95% CI \[\[lower\], \[upper\]\], p \< .001), indicating that for each one-unit increase in freedom of choice (1-10), the odds of being satisfied with life changed by \[OR-1 as %\]%.
 
 ::: aside
 More on interpreting Odds Ratio: <https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/>
 :::
 
-
 ## Recap - why do I need to report these?
 
-* χ² (Chi-squared) goodness of fit tests whether your model fits the data significantly better than a null model (model with no predictors). 
+- χ² (Chi-squared) goodness of fit tests whether your model fits the data significantly better than a null model (model with no predictors).
 
-* "Standard" R-squared isn't typically reported for logistic regression because it's not as meaningful as it is in linear regression. But we do still want to see how much of the variance in the data can be explained by the model. 
+- "Standard" R-squared isn't typically reported for logistic regression because it's not as meaningful as it is in linear regression. But we do still want to see how much of the variance in the data can be explained by the model.
 
-* Pseudo R-squared tries to mimic traditional R-squared by showing how much of the variation in the outcome your model explains, but it's adjusted to work with binary outcomes. It's sort of answering the question of "How well does my model explain the data?"
+- Pseudo R-squared tries to mimic traditional R-squared by showing how much of the variation in the outcome your model explains, but it's adjusted to work with binary outcomes. It's sort of answering the question of "How well does my model explain the data?"
 
-* It is possible to have a significant χ² (meaning your model is statistically significant and better than nothing) but a low Pseudo R-squared (showing it still doesn't explain much variation). This isn't contradictory - it just means your model is better than random guessing but there's still a lot of unexplained variation. (Pretty common in social sciences; after all, human behaviours are complex!)
-
+- It is possible to have a significant χ² (meaning your model is statistically significant and better than nothing) but a low Pseudo R-squared (showing it still doesn't explain much variation). This isn't contradictory - it just means your model is better than random guessing but there's still a lot of unexplained variation. (Pretty common in social sciences; after all, human behaviours are complex!)
 
 ## FYI - IRL sample of reporting Logistic Regression
 
@@ -578,17 +558,15 @@ Below is a sample of how you may want to narrate your result. Note the resulting
 
 ![](images/logreg-reporting.jpg)
 
-In a nutshell, you will most likely have to mention the p-value, the coefficients (for linear regressions), the Odd Ratios (for logistic regression) with the confidence intervals, the chi-squared (χ²), and the R-squared. You should also include these information in your regression table. 
+In a nutshell, you will most likely have to mention the p-value, the coefficients (for linear regressions), the Odd Ratios (for logistic regression) with the confidence intervals, the chi-squared (χ²), and the R-squared. You should also include these information in your regression table.
 
 ::: aside
 The screenshot is retrieved from <https://statistics.laerd.com/spss-tutorials/binomial-logistic-regression-using-spss-statistics.php>
-
 :::
-
 
 ## Regression tables
 
-Even with huxtable, you may need to edit the table further to include the missing stats 
+Even with huxtable, you may need to edit the table further to include the missing stats
 
 ```{r}
 #| echo: true
@@ -600,8 +578,8 @@ huxreg("life_satisfaction" = life_model5, statistics = c("R2" = "r.squared", "lo
 
 **Research Question**: Does **education level** affect the likelihood of being satisfied with life?
 
--   The outcome/DV ($Y$): `satisfied`
--   The predictor/IV ($X$): `education` - let's set "Lower" as the reference category!
+- The outcome/DV ($Y$): `satisfied`
+- The predictor/IV ($X$): `education` - let's set "Lower" as the reference category!
 
 ```{r}
 #| echo: true
@@ -630,11 +608,9 @@ life_model6 |> tbl_regression(exponentiate = TRUE) |>
     bold_p()
 ```
 
-
 ## Get the Rsquared
 
 Let's retrieve the R-squared value and the Chi-square χ² value (also known as the G2 value, which stands for Goodness-of-fit)
-
 
 ```{r}
 #| echo: true
@@ -655,9 +631,9 @@ DescTools::PseudoR2(life_model6,
 
 *(The intercept isn't typically interpreted as an odds ratio, so we'll ignore that for now)*
 
-> A logistic regression was performed to ascertain the effects of education level on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ² (2, N = [N]) = [χ²], p < .001.
+> A logistic regression was performed to ascertain the effects of education level on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ² (2, N = \[N\]) = \[χ²\], p \< .001.
 
-> The model explained [Nagelkerke R²]% (Nagelkerke R²) of the variance in life satisfaction. Compared to respondents with lower education (reference group), those with middle education had [higher/lower] odds of life satisfaction (OR = [OR], 95% CI [[lower], [upper]], p = [p]), and those with higher education had [higher/lower] odds of life satisfaction (OR = [OR], 95% CI [[lower], [upper]], p = [p]).
+> The model explained \[Nagelkerke R²\]% (Nagelkerke R²) of the variance in life satisfaction. Compared to respondents with lower education (reference group), those with middle education had \[higher/lower\] odds of life satisfaction (OR = \[OR\], 95% CI \[\[lower\], \[upper\]\], p = \[p\]), and those with higher education had \[higher/lower\] odds of life satisfaction (OR = \[OR\], 95% CI \[\[lower\], \[upper\]\], p = \[p\]).
 
 ::: aside
 More on logistic regression: <https://stats.oarc.ucla.edu/r/dae/logit-regression/>
@@ -665,7 +641,7 @@ More on logistic regression: <https://stats.oarc.ucla.edu/r/dae/logit-regression
 
 ## Present both models in a table {.scrollable}
 
-Note that the R-squared is missing here, so be sure to put that in when you paste this table to your document. 
+Note that the R-squared is missing here, so be sure to put that in when you paste this table to your document.
 
 ```{r}
 #| echo: true
@@ -673,10 +649,9 @@ library(huxtable)
 huxreg(life_model5, life_model6)
 ```
 
-
 ## Let's try this Logistic Regression exercise! (5 mins)
 
-Create a regression model called `life_model7` that predicts the likelihood of being satisfied with life based on `sex`. 
+Create a regression model called `life_model7` that predicts the likelihood of being satisfied with life based on `sex`.
 
 ```{r}
 #| echo: true
@@ -695,14 +670,14 @@ exp(coefficients(life_model7))
 
 ## **Markdown (Specifically, R Markdown)** {.incremental}
 
--   **Markdown** is a lightweight markup language that provides a simple and readable way to write formatted text without using complex HTML or LaTeX. It is designed to make authoring content easy for everyone!
+- **Markdown** is a lightweight markup language that provides a simple and readable way to write formatted text without using complex HTML or LaTeX. It is designed to make authoring content easy for everyone!
 
-    -   Markdown files can be converted into HTML or other formats.
-    -   Generic Markdown file will have `.md` extension.
+  - Markdown files can be converted into HTML or other formats.
+  - Generic Markdown file will have `.md` extension.
 
--   **R Markdown** is an extension of Markdown that incorporates R code chunks and allows you to create dynamic documents that integrate text, code, and output (such as tables and plots).
+- **R Markdown** is an extension of Markdown that incorporates R code chunks and allows you to create dynamic documents that integrate text, code, and output (such as tables and plots).
 
-    -   RMarkdown file will have `.Rmd` extension.
+  - RMarkdown file will have `.Rmd` extension.
 
 ## RMarkdown in action
 
@@ -714,7 +689,7 @@ exp(coefficients(life_model7))
 
 ## Quarto
 
--   **Quarto** is a [multi-language]{.underline}, [next-generation]{.underline} version of R Markdown from Posit and includes dozens of new features and capabilities while at the same being able to render most existing Rmd files without modification.
+- **Quarto** is a [multi-language]{.underline}, [next-generation]{.underline} version of R Markdown from Posit and includes dozens of new features and capabilities while at the same being able to render most existing Rmd files without modification.
 
 ![Illustration by Allison Horst (www.allisonhorst.com)](images/quarto-rendering.png){fig-align="center"}
 
@@ -724,67 +699,66 @@ exp(coefficients(life_model7))
 
 ## R Scripts vs Quarto
 
-::: columns
+::::: columns
 ::: {.column width="50%"}
 **R Scripts**
 
--   Great for quick debugging, experiment
+- Great for quick debugging, experiment
 
--   Preferred format if you are archiving your code to GitHub or data repository
+- Preferred format if you are archiving your code to GitHub or data repository
 
--   More suitable for "production" tasks e.g. automating your data cleaning and processing, custom functions, etc.
+- More suitable for "production" tasks e.g. automating your data cleaning and processing, custom functions, etc.
 :::
 
 ::: {.column width="50%"}
 **Quarto**
 
--   Great for report and presentation to showcase your research insights/process as it integrates code, narrative text, visualizations, and results.
+- Great for report and presentation to showcase your research insights/process as it integrates code, narrative text, visualizations, and results.
 
--   Very handy when you need your report in multiple format, e.g. in Word and PPT.
+- Very handy when you need your report in multiple format, e.g. in Word and PPT.
 
--   Fun fact: the course website and slides are all made in Quarto
+- Fun fact: the course website and slides are all made in Quarto
 :::
-:::
+:::::
 
 ## If you are interested to learn more about this...
 
-SMU Libraries regularly host Quarto workshops every semester from week 2 to week 6, taught by Prof Kam Tin Seong. 
+SMU Libraries regularly host Quarto workshops every semester from week 2 to week 6, taught by Prof Kam Tin Seong.
 
 Keep a lookout for these titles:
 
--   R Ep.1: Making Your Research Reproducible with Quarto in RStudio
--   R Ep.7: Creating Awesome Web Slides in Quarto with Revealjs
--   R Ep.9: Building Website and Blog with Quarto
+- R Ep.1: Making Your Research Reproducible with Quarto in RStudio
+- R Ep.7: Creating Awesome Web Slides in Quarto with Revealjs
+- R Ep.9: Building Website and Blog with Quarto
 
 # Best Practices + More Resources
 
 ## R Best Practices
 
--   Use `<-` for assigning values to objects.
+- Use `<-` for assigning values to objects.
 
-    -   Only use `=` when passing values to a function parameter.
+  - Only use `=` when passing values to a function parameter.
 
--   [**Do not alter your raw data**]{.underline}; save your wrangled/cleaned data into a new file and keep it separate from the raw data.
+- [**Do not alter your raw data**]{.underline}; save your wrangled/cleaned data into a new file and keep it separate from the raw data.
 
--   Make use of R projects to organize your data and make it easier to send over to your collaborators.
+- Make use of R projects to organize your data and make it easier to send over to your collaborators.
 
-    -   Having said that, when it comes to coding project, the best way to collaborate is using GitHub or similar platforms.
+  - Having said that, when it comes to coding project, the best way to collaborate is using GitHub or similar platforms.
 
--   Whenever possible and makes sense for your project, follow the common convention when naming your objects, scripts, and functions. One guide that you can follow is [Hadley Wickham's tidyverse style guide](https://style.tidyverse.org/).
+- Whenever possible and makes sense for your project, follow the common convention when naming your objects, scripts, and functions. One guide that you can follow is [Hadley Wickham's tidyverse style guide](https://style.tidyverse.org/).
 
 ## References for APA Guidelines on Reporting statistics
 
 Do check with your professor on how closely you should follow the guidelines, or if there is any specific format required.
 
--   [APA Style 7th Edition Numbers and Statistics Guide](https://apastyle.apa.org/instructional-aids/numbers-statistics-guide.pdf)
--   [University of Washington - Reporting Results of Common Statistical Tests in APA Format](https://psych.uw.edu/storage/writing_center/stats.pdf)
--   [Illinois State University - A Short Guide to Handling Numbers and Statistics in APA Format (in 6th Edition)](https://about.illinoisstate.edu/mshesso-test2/reporting-statistics-in-apa-style/)
--   [Statistic Tables in APA recommended format](https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-tables#regression)
+- [APA Style 7th Edition Numbers and Statistics Guide](https://apastyle.apa.org/instructional-aids/numbers-statistics-guide.pdf)
+- [University of Washington - Reporting Results of Common Statistical Tests in APA Format](https://psych.uw.edu/storage/writing_center/stats.pdf)
+- [Illinois State University - A Short Guide to Handling Numbers and Statistics in APA Format (in 6th Edition)](https://about.illinoisstate.edu/mshesso-test2/reporting-statistics-in-apa-style/)
+- [Statistic Tables in APA recommended format](https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-tables#regression)
 
 # Thank you for your participation 😄
 
-:::: {.columns}
-
+::::: columns
 ::: {.column width="35%"}
 ![](images/wedidit.webp)
 :::
@@ -792,11 +766,15 @@ Do check with your professor on how closely you should follow the guidelines, or
 ::: {.column width="65%"}
 All the best for your studies and academic journey! *(manifesting excellent grades + internship for everyone who attended the workshop)*
 
-Need help with R or Quarto? Please don't hesitate to contact us at [bellar@smu.edu.sg](mailto:bellar@smu.edu.sg) or [weixia@smu.edu.sg](mailto:weixia@smu.edu.sg)
+Need help with R or Quarto? Please don't hesitate to contact us at [bellar\@smu.edu.sg](mailto:bellar@smu.edu.sg) or [weixia\@smu.edu.sg](mailto:weixia@smu.edu.sg)
 :::
+:::::
 
-::::
+## Quiz Time! (compulsory)
 
+Scan the QR Code below to assess your understanding of regression analysis and reporting results using R in social sciences. All questions are required and each is worth 1 mark.
+
+[![Quiz QR Code: \<https://forms.cloud.microsoft/r/re0mfH7Y3r\>](images/RegressionandPresentingYourResultQRCode.png){fig-alt="Quiz QR Code: https://forms.cloud.microsoft/r/re0mfH7Y3r" fig-align="center" width="400"}](https://forms.cloud.microsoft/r/re0mfH7Y3r)
 
 ## Post-workshop survey
 

@@ -23,8 +23,8 @@ format: revealjs
 
 Optional (Though best practice):
 
--   Make sure that `Environment` panel is empty (click on broom icon to clean it up).
--   Clear the `Console` and `Plots` too.
+- Make sure that `Environment` panel is empty (click on broom icon to clean it up).
+- Clear the `Console` and `Plots` too.
 
 ## Refresher: Loading from CSV into a dataframe
 
@@ -48,85 +48,81 @@ glimpse(wvs_data)
 ## Why do we need to clean our data?
 
 ::: incremental
--   Researchers spend 60-80% of their time on data preparation - investing in proper wrangling upfront saves hours of debugging and rework later.
--   Poor data quality costs projects or organizations millions annually(!), and even one misclassified data point can skew entire analyses.
--   Clean data improves the workflow for statistical tests and can reveal hidden patterns that aren't visible in messy datasets
--   Well-documented data cleaning makes research transparent and reproducible, benefiting both future-you and collaborators.
-
+- Researchers spend 60-80% of their time on data preparation - investing in proper wrangling upfront saves hours of debugging and rework later.
+- Poor data quality costs projects or organizations millions annually(!), and even one misclassified data point can skew entire analyses.
+- Clean data improves the workflow for statistical tests and can reveal hidden patterns that aren't visible in messy datasets
+- Well-documented data cleaning makes research transparent and reproducible, benefiting both future-you and collaborators.
 :::
 
 ## Why do it in R? Can't I do this on excel?
 
 ::: incremental
--   R code creates a permanent record of exactly what you did - Excel clicks and manual edits are hard to track and reproduce (unless you note down what you did).
--   R handles dates, times, text, and mixed data types much more reliably than Excel.
--   Excel can automatically "correct" your data in unwanted ways (like converting your dates from DDMMYY to MMDDYY)
--   Write the cleaning code once, apply it to multiple datasets or when data updates. Whereas Excel requires manual repetition of the same steps each time.
--   Complex joins, reshaping, and conditional operations that would take many Excel steps can be done in a few lines of R code.
--   R scripts can be easily shared, version controlled, and integrated into reproducible workflows
-
+- R code creates a permanent record of exactly what you did - Excel clicks and manual edits are hard to track and reproduce (unless you note down what you did).
+- R handles dates, times, text, and mixed data types much more reliably than Excel.
+- Excel can automatically "correct" your data in unwanted ways (like converting your dates from DDMMYY to MMDDYY)
+- Write the cleaning code once, apply it to multiple datasets or when data updates. Whereas Excel requires manual repetition of the same steps each time.
+- Complex joins, reshaping, and conditional operations that would take many Excel steps can be done in a few lines of R code.
+- R scripts can be easily shared, version controlled, and integrated into reproducible workflows
 :::
 
 ## What do I need to know before we begin?
 
 ::: incremental
--   Always examine your data first (`glimpse()`, `summary()`, `str()`) before cleaning.
--   **Never overwrite your raw data files** 
--   Budget extra time for data cleaning - it almost always takes longer than expected!
--   Having a clear understanding of the desired data shape is essential as real data often differs from what you imagine! **Refer to codebook, actual questionnaire, appendix for guidance.**
--   Look out for outliers!
--   Remember: Data cleaning techniques differ based on the problems, data type, and the research questions you are trying to answer. Various methods are available, each with its own trade-offs.
-
+- Always examine your data first (`glimpse()`, `summary()`, `str()`) before cleaning.
+- **Never overwrite your raw data files**
+- Budget extra time for data cleaning - it almost always takes longer than expected!
+- Having a clear understanding of the desired data shape is essential as real data often differs from what you imagine! **Refer to codebook, actual questionnaire, appendix for guidance.**
+- Look out for outliers!
+- Remember: Data cleaning techniques differ based on the problems, data type, and the research questions you are trying to answer. Various methods are available, each with its own trade-offs.
 :::
-
 
 ## The tools we're going to use: dplyr and tidyr from tidyverse
 
--   Packages from `tidyverse`. ([click here to go to the tidyverse homepage](https://www.tidyverse.org/))
+- Packages from `tidyverse`. ([click here to go to the tidyverse homepage](https://www.tidyverse.org/))
 
--   Posit have created cheatsheets here! (you can have this open in another tab for reference for this session!)
+- Posit have created cheatsheets here! (you can have this open in another tab for reference for this session!)
 
-    -   [dplyr cheatsheet](https://rstudio.github.io/cheatsheets/html/data-transformation.html) \| [pdf version](https://rstudio.github.io/cheatsheets/data-transformation.pdf) (I personally prefer this PDF version since it's more visual)
+  - [dplyr cheatsheet](https://rstudio.github.io/cheatsheets/html/data-transformation.html) \| [pdf version](https://rstudio.github.io/cheatsheets/data-transformation.pdf) (I personally prefer this PDF version since it's more visual)
 
-    -   [tidyr cheatsheet](https://rstudio.github.io/cheatsheets/html/tidyr.html) \| [pdf version](https://rstudio.github.io/cheatsheets/tidyr.pdf)
+  - [tidyr cheatsheet](https://rstudio.github.io/cheatsheets/html/tidyr.html) \| [pdf version](https://rstudio.github.io/cheatsheets/tidyr.pdf)
 
--   Most of the time, these are the ones that you will use quite often:
+- Most of the time, these are the ones that you will use quite often:
 
-    -   `drop_na()` - remove rows with null values
+  - `drop_na()` - remove rows with null values
 
-    -   `select()` - to select column(s) from a dataframe
+  - `select()` - to select column(s) from a dataframe
 
-    -   `filter()` - to filter rows based on criteria
+  - `filter()` - to filter rows based on criteria
 
-    -   `mutate()` - to compute new columns or edit existing ones
+  - `mutate()` - to compute new columns or edit existing ones
 
-    -   `if_else()` and `case_when()` - to be used with mutate when we want to compute/edit columns based on multiple criteria
+  - `if_else()` and `case_when()` - to be used with mutate when we want to compute/edit columns based on multiple criteria
 
-    -   `group_by()` and `summarize()` - group data and summarize each group
-    
+  - `group_by()` and `summarize()` - group data and summarize each group
+
 ## More advanced ones which is not covered in the workshop (see appendix for examples)
 
--   Joining multiple dataframes' columns: `left_join()`, `right_join()`, `inner_join()`, `full_join()`
-    
--   Joining multiple dataframes' rows: `bind_rows()`
-    
--   Splitting or combining cells: `unite()`, `separate_wider_delim()`, `separate_long_delim()`
-    
+- Joining multiple dataframes' columns: `left_join()`, `right_join()`, `inner_join()`, `full_join()`
+
+- Joining multiple dataframes' rows: `bind_rows()`
+
+- Splitting or combining cells: `unite()`, `separate_wider_delim()`, `separate_long_delim()`
+
 Additionally: you may need the [forcats](https://forcats.tidyverse.org/articles/forcats.html) cheatsheet here: <https://raw.githubusercontent.com/rstudio/cheatsheets/main/factors.pdf>
 
-forcats is also part of tidyverse, specifically used to handle factor data. 
-
+forcats is also part of tidyverse, specifically used to handle factor data.
 
 ## Why are we using tidyverse? Is it a must?
 
 It's not a must, but it'll be make our job much easier! Key advantages:
 
--   More 'English' looking code and thus more intuitive for beginners
--   Tidyverse follow consistent syntax patterns - first argument is always the data to work on, followed by the function name i.e the things that we want to do on to the data. 
--   Tidyverse gives clearer, more helpful error messages
+- More 'English' looking code and thus more intuitive for beginners
+- Tidyverse follow consistent syntax patterns - first argument is always the data to work on, followed by the function name i.e the things that we want to do on to the data.
+- Tidyverse gives clearer, more helpful error messages
 
 Example:
-```r
+
+``` r
 # Base R
 subset_data <- data[data$age > 18 & data$income > 50000, c("name", "age", "salary")]
 
@@ -134,7 +130,6 @@ subset_data <- data[data$age > 18 & data$income > 50000, c("name", "age", "salar
 subset_data <- data |> 
   filter(age > 18 & income > 50000)  |> 
   select(name, age, salary)
-
 ```
 
 ## Scenario: Data wrangling activities with WVS data {.smaller}
@@ -152,9 +147,9 @@ We can break down the steps as such:
 
 2.  Check for duplicates
 
-3.  Select only the relevant columns. 
+3.  Select only the relevant columns.
 
-    * Though in our example, the columns in the sample dataset is 'relevant', i.e. will be used. To recap, the columns are `respondent_id`, demographic columns (`age`, `country`, `sex`, `urban_rural`, `income_level`, `marital_status`, `education`), and the attitudinal columns (`life_satisfaction`, `freedom_of_choice`, `financial_satisfaction`, `trust_people`, `importance_of_god`, `emancipative_values`, `secular_values`)
+    - Though in our example, the columns in the sample dataset is 'relevant', i.e. will be used. To recap, the columns are `respondent_id`, demographic columns (`age`, `country`, `sex`, `urban_rural`, `income_level`, `marital_status`, `education`), and the attitudinal columns (`life_satisfaction`, `freedom_of_choice`, `financial_satisfaction`, `trust_people`, `importance_of_god`, `emancipative_values`, `secular_values`)
 
 4.  Filter for respondents aged 18 or older. Optionally, we can then arrange the dataset by age (oldest to youngest)
 
@@ -189,13 +184,13 @@ dim(wvs_data)
 
 ## Interlude: Pipe Operator ( \|\> )
 
--   The pipe operator (\|\>) allows us to chain multiple operations without creating intermediate / temporary dataframes.
+- The pipe operator (\|\>) allows us to chain multiple operations without creating intermediate / temporary dataframes.
 
--   Super handy when we perform several data wrangling tasks using tidyverse in sequence.
+- Super handy when we perform several data wrangling tasks using tidyverse in sequence.
 
--   Helps with readability, especially for complex operations.
+- Helps with readability, especially for complex operations.
 
--   Keyboard shortcut: `Ctrl`+`Shift`+`M` on Windows, `Cmd`+`Shift`+`M` on Mac
+- Keyboard shortcut: `Ctrl`+`Shift`+`M` on Windows, `Cmd`+`Shift`+`M` on Mac
 
 ::: panel-tabset
 ### Without pipe operator
@@ -332,19 +327,18 @@ wvs_data |> write_csv("data-output/wvs_cleaned_v1.csv")
 
 Check the data output folder to make sure the CSV is created!
 
-
 ## Simple descriptive analysis
 
 Once we are done with the wrangling part, we can proceed with simple descriptive analysis!
 
 ::: incremental
--   Prep: Before we proceed further, convert the appropriate categorical variables (country, sex, marital_status, urban_rural, income_level, education, trust_people) to **Factor**
+- Prep: Before we proceed further, convert the appropriate categorical variables (country, sex, marital_status, urban_rural, income_level, education, trust_people) to **Factor**
 
--   Analysis 1: Generate summary statistics of life_satisfaction grouped by country
+- Analysis 1: Generate summary statistics of life_satisfaction grouped by country
 
--   Analysis 2: Create a new column called `satisfaction_group` that indicate whether each respondent has higher or lower than average `life_satisfaction`
+- Analysis 2: Create a new column called `satisfaction_group` that indicate whether each respondent has higher or lower than average `life_satisfaction`
 
--   Analysis 3: Reshape the data to show average satisfaction scores by country and age group
+- Analysis 3: Reshape the data to show average satisfaction scores by country and age group
 :::
 
 ## Prep before analysis: convert to factors
@@ -380,7 +374,6 @@ Rstudio may auto-suggest `as.factor()` from base R. You can use this as well, bu
 ## Prep before analysis: convert to factors (shortcut ver.)
 
 If we have a lot of columns to convert, that might be troublesome to type! This is where `across()` can come in handy. across(column selection, function) is to apply the same function or a set of functions to multiple columns in a single mutate () or summarize () function.
-
 
 Let's first define a character vector that contains the names of columns we plan to convert.
 
@@ -472,26 +465,23 @@ wvs_data |>
 ::: {.column width="50%"}
 **Long data:**
 
--   Each row is a unique observation --\> for a single observational unit, there might be multiple rows.
+- Each row is a unique observation --\> for a single observational unit, there might be multiple rows.
 
--   There is a separate column indicating the variable or type of measurements.
+- There is a separate column indicating the variable or type of measurements.
 
--   This format is more "understandable" by R, more suitable for visualizations, especially those involving grouping, summarizing, or visualizing data over time or across different categories.
- (which we'll explore more next week!)
- 
+- This format is more "understandable" by R, more suitable for visualizations, especially those involving grouping, summarizing, or visualizing data over time or across different categories. (which we'll explore more next week!)
 :::
 
 ::: {.column width="50%"}
 **Wide data:**
 
--   Each row contains values from variables.
+- Each row contains values from variables.
 
--   Each column is a value in a variable --\> the more values you have, the "wider" is the data.
+- Each column is a value in a variable --\> the more values you have, the "wider" is the data.
 
--   Quick comparisons of different variables for a single entity.
+- Quick comparisons of different variables for a single entity.
 
-
--   This format is more intuitive for humans!
+- This format is more intuitive for humans!
 :::
 :::::
 
@@ -532,7 +522,6 @@ long_data |>
 :::
 :::::
 
-
 ## Bonus: Deleting columns from dataframe
 
 Let's say I have this column called `wrong_column` that I want to remove:
@@ -559,26 +548,30 @@ wvs_data |> select(country) |> print(n = 3)
 # Recap
 
 ::: incremental
+- Import and read data into RStudio: Load external data files (like CSV or Excel) into R using functions such as `read_csv()` to make the data available for analysis.
 
--   Import and read data into RStudio: Load external data files (like CSV or Excel) into R using functions such as `read_csv()` to make the data available for analysis.
+- Data wrangling with dplyr and tidyr (part of the tidyverse package): Use tidyverse functions to tidy and reshape datasets and perform tasks like selecting, filtering, and summarizing data.
 
--   Data wrangling with dplyr and tidyr (part of the tidyverse package): Use tidyverse functions to tidy and reshape datasets and perform tasks like selecting, filtering, and summarizing data.
+- Remove all rows with missing values (NA) and check for duplicates: Delete rows containing missing data using `drop_na()` and identify or remove duplicate rows with functions like `distinct()`.
 
--   Remove all rows with missing values (NA) and check for duplicates: Delete rows containing missing data using `drop_na()` and identify or remove duplicate rows with functions like `distinct()`.
+- Select only the relevant columns: Use `select()` to keep only the columns needed for the analysis, focusing on important variables.
 
--   Select only the relevant columns: Use `select()` to keep only the columns needed for the analysis, focusing on important variables.
+- Filter data based on criterion and arrange data: Apply `filter()` to keep rows meeting specific conditions and use `arrange()` to sort data by one or more columns.
 
--   Filter data based on criterion and arrange data: Apply `filter()` to keep rows meeting specific conditions and use `arrange()` to sort data by one or more columns.
+- Convert categorical variables to Factor data: Use `mutate()` and `as_factor`.
 
--   Convert categorical variables to Factor data: Use `mutate()` and `as_factor`.
-
--   Create new columns: Generate or modify columns using `mutate()`, often by transforming or combining existing columns.
-
+- Create new columns: Generate or modify columns using `mutate()`, often by transforming or combining existing columns.
 :::
 
 # End of Session 2!
 
 Next session: Descriptive statistics and data visualization with `ggplot2` package - we'll create visualizations to explore patterns in life satisfaction, values, and demographics across countries!
+
+## Quiz Time! (compulsory)
+
+Scan the QR Code below to assess your understanding of data wrangling in R using the tidyverse package. All questions are required and each is worth 1 mark.
+
+[![Quiz QR Code: \<https://forms.cloud.microsoft/r/0Vhn9mfWur\>](images/DataWranglingWithTidyverseQRCode.png){fig-alt="Quiz QR Code: https://forms.cloud.microsoft/r/0Vhn9mfWur" fig-align="center" width="400"}](https://forms.cloud.microsoft/r/0Vhn9mfWur)
 
 ## To try at home: Exercise 1
 
@@ -615,7 +608,6 @@ wvs_cleaned |>
 
 ```
 
-
 ## To try at home: Exercise 2
 
 Generate a summary stats of `age` grouped by `country` and `sex`. The summary stats should include mean, median, max, min, std, and n (number of observations). It should look something like this:
@@ -637,18 +629,19 @@ wvs_data |>
 ```
 
 # Appendix
-Advanced tidyr and dplyr features you may need in the future. 
+
+Advanced tidyr and dplyr features you may need in the future.
 
 ## Joining DataFrames by column
 
 Let's assume we have two DataFrames `customers` and `orders`
 
-:::: {.columns}
-
+::::: columns
 ::: {.column width="50%"}
 `customers` dataframe:
 
 (Notice that the ID is 1, 2, and 3)
+
 ```{r}
 
 customers <- data.frame(id = 1:3, name = c("Alice", "Bob", "Carol"))
@@ -660,6 +653,7 @@ print(customers)
 `orders` dataframe
 
 (Notice that the ID is 1, 2, and 4)
+
 ```{r}
 
 orders <- data.frame(id = c(1,2,4), amount = c(100, 200, 150))
@@ -667,11 +661,10 @@ print(orders)
 
 ```
 :::
-
-::::
-
+:::::
 
 ## left_join() to keep all rows from the left table i.e. customers
+
 ```{r}
 #| echo: true
 
@@ -680,6 +673,7 @@ customers |> left_join(orders, by = "id")
 ```
 
 ## right_join() to keep all rows from the right table i.e. orders
+
 ```{r}
 #| echo: true
 
@@ -687,8 +681,8 @@ customers |> right_join(orders, by = "id")
 
 ```
 
-
 ## inner_join() to keep only matching rows
+
 ```{r}
 #| echo: true
 
@@ -697,20 +691,22 @@ customers |> inner_join(orders, by = "id")
 ```
 
 ## full_join() to keep all rows from both tables
+
 ```{r}
 #| echo: true
 
 customers |> full_join(orders, by = "id")
 ```
 
-
 ## bind_rows() to stack rows from two different dataframes
 
 Let's say we have the following dataframes
+
 ```{r}
 df1 <- data.frame(name = "Alice", age = 25)
 df2 <- data.frame(name = "Bob", age = 30)
 ```
+
 ```{r}
 #| echo: true
 print(df1)
@@ -722,6 +718,7 @@ print(df2)
 ```
 
 Stack them together:
+
 ```{r}
 #| echo: true
 
@@ -744,8 +741,8 @@ df <- data.frame(
 print(df)
 ```
 
-
 ## Combine first and last name columns into one
+
 ```{r}
 #| echo: true
 
@@ -754,6 +751,7 @@ print(df)
 ```
 
 ## Split the full name column into multiple (by delimiter)
+
 ```{r}
 #| echo: true
 
@@ -762,6 +760,7 @@ print(df)
 ```
 
 ## Split one column into multiple rows (long format)
+
 ```{r}
 #| echo: true
 
@@ -769,5 +768,3 @@ df |> separate_longer_delim(full_address, delim = ", ")
 
 
 ```
-
-

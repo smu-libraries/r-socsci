@@ -9,7 +9,7 @@ format: revealjs
 1.  Refreshers on data distribution and research variables
 2.  Both categorical: chi-square
 3.  Both continuous: correlations
-3.  Categorical X and Continuous Y (comparing means): T-tests and ANOVA
+4.  Categorical X and Continuous Y (comparing means): T-tests and ANOVA
 
 ## Refresher: Data Distribution
 
@@ -46,14 +46,14 @@ curve(dbeta(x, 2, 5), add = TRUE, col = "darkred", lwd = 2)
 
 ## Refresher: Research Variables
 
-::: columns
+::::: columns
 ::: {.column width="50%"}
 [**Dependent Variable (DV)**]{.underline}
 
 The variables that will be affected as a result of manipulation/changes in the IVs
 
--   Other names for it: Outcome, Response, Output, etc.
--   Often denoted as $y$
+- Other names for it: Outcome, Response, Output, etc.
+- Often denoted as $y$
 :::
 
 ::: {.column width="50%"}
@@ -61,10 +61,10 @@ The variables that will be affected as a result of manipulation/changes in the I
 
 The variables that researchers will manipulate.
 
--   Other names for it: Predictor, Covariate, Treatment, Regressor, Input, etc.
--   Often denoted as $x$
+- Other names for it: Predictor, Covariate, Treatment, Regressor, Input, etc.
+- Often denoted as $x$
 :::
-:::
+:::::
 
 ## Checklist when you start RStudio
 
@@ -76,12 +76,10 @@ The variables that researchers will manipulate.
 
 3.  Double click on the file. Rstudio should launch with your project loaded!
 
-
 Optional (Though best practice):
 
--   Make sure that `Environment` panel is empty (click on broom icon to clean it up).
--   Clear the `Console` and `Plots` too.
-
+- Make sure that `Environment` panel is empty (click on broom icon to clean it up).
+- Clear the `Console` and `Plots` too.
 
 ## Load our data for today!
 
@@ -112,6 +110,7 @@ wvs_cleaned <- wvs_cleaned |>
 # peek at the data, pay attention to the data types!
 glimpse(wvs_cleaned)
 ```
+
 # Both Categorical variables - The $X^2$ test
 
 ## Chi-square test of independence
@@ -128,7 +127,6 @@ Typically, we can start with the contigency table first, and then the visualizat
 #| echo: true
 table(wvs_cleaned$education, wvs_cleaned$income_level)
 ```
-
 
 ## Chi-square test of independence - visualizing data
 
@@ -155,9 +153,9 @@ chisq.test(table(wvs_cleaned$education, wvs_cleaned$income_level))
 ```
 
 ::: {style="font-size: 75%; width: 75%"}
--   **X-squared** = the coefficient
--   **df** = degree of freedom
--   **p-value** = the probability of getting more extreme results than what was observed. Generally, if this value is less than the pre-determined significance level (also called alpha), the result would be considered "statistically significant"
+- **X-squared** = the coefficient
+- **df** = degree of freedom
+- **p-value** = the probability of getting more extreme results than what was observed. Generally, if this value is less than the pre-determined significance level (also called alpha), the result would be considered "statistically significant"
 :::
 
 *What if there is a hypothesis? How would you write this in the report?*
@@ -168,32 +166,32 @@ chisq.test(table(wvs_cleaned$education, wvs_cleaned$income_level))
 
 A correlation test evaluates the strength and direction of a linear relationship between two variables. The coefficient is expressed in value between -1 to 1, with 0 being no correlation at all.
 
-::: columns
+:::::: columns
 ::: {.column width="33%"}
 **Pearson's** $r$ (r)
 
--   Measure the association between two continuous numerical variables
--   Sensitive to outliers
--   Assumes normality and/or linearity
--   (*most likely the one that you learned in class)*
+- Measure the association between two continuous numerical variables
+- Sensitive to outliers
+- Assumes normality and/or linearity
+- (*most likely the one that you learned in class)*
 :::
 
 ::: {.column width="33%"}
 **Kendall's** $\tau$ (tau)
 
--   Measure the association between two variables (ordinal-ordinal or ordinal-continuous)
--   less sensitive/more robust to outliers
--   non-parametric, does not assume normality and/or linearity
+- Measure the association between two variables (ordinal-ordinal or ordinal-continuous)
+- less sensitive/more robust to outliers
+- non-parametric, does not assume normality and/or linearity
 :::
 
 ::: {.column width="33%"}
 **Spearman's** $\rho$ (rho)
 
--   Measure the association between two variables (ordinal-ordinal or ordinal-continuous)
--   less sensitive/more robust to outliers
--   non-parametric, does not assume normality and/or linearity
+- Measure the association between two variables (ordinal-ordinal or ordinal-continuous)
+- less sensitive/more robust to outliers
+- non-parametric, does not assume normality and/or linearity
 :::
-:::
+::::::
 
 For more info, you can refer to this reading: [Measures of Association - How to Choose? (Harry Khamis, PhD)](https://journals.sagepub.com/doi/pdf/10.1177/8756479308317006){target="_blank"}
 
@@ -226,18 +224,17 @@ cor.test(wvs_cleaned$emancipative_values,
 ```
 
 ::: {style="font-size: 75%; width: 75%"}
--   **cor** is the **correlation coefficient** - this is the number that you want to report.
--   **t** is the **t-test statistic**
--   **df** is the degrees of freedom
--   **p-value** is the significance level of the **t-test**
--   **conf.int** is the **confidence interval** of the coefficient at 95%
--   **sample estimates** is the correlation coefficient
+- **cor** is the **correlation coefficient** - this is the number that you want to report.
+- **t** is the **t-test statistic**
+- **df** is the degrees of freedom
+- **p-value** is the significance level of the **t-test**
+- **conf.int** is the **confidence interval** of the coefficient at 95%
+- **sample estimates** is the correlation coefficient
 :::
 
 ## Learning Check #1
 
 Is there a relationship between where someone lives (`urban_rural`) and whether they trust others (`trust_people`)? Is the result aligned with what you expected?
-
 
 ```{r}
 #| echo: true
@@ -252,13 +249,11 @@ chisq.test(table(wvs_cleaned$urban_rural, wvs_cleaned$trust_people))
 
 A **t-test** is a statistical test used to compare the means of two groups/samples of continuous data type and determine if the differences are statistically significant.
 
--   The Student's *t*-test is widely used when the sample size is reasonably small (less than approximately 30) **or** when the population standard deviation is unknown.
+- The Student's *t*-test is widely used when the sample size is reasonably small (less than approximately 30) **or** when the population standard deviation is unknown.
 
 ## 3 types of t-test
 
-::: columns
-
-
+:::::: columns
 ::: {.column width="40%"}
 **Two-samples / Independent Samples T-test**
 
@@ -280,8 +275,7 @@ Examples: Before workshop vs After workshop.
 
 Test if a specific sample mean (X̄) is statistically different from a known or hypothesized population mean (μ or mu)
 :::
-:::
-
+::::::
 
 ## T-Test: Independent Samples T-Test
 
@@ -319,7 +313,7 @@ wvs_cleaned |>
 
 Remember, the hypotheses are:
 
-::: columns
+::::: columns
 ::: {.column width="50%"}
 $H_0$: There is **no** significant difference in mean secular values between urban and rural residents.
 :::
@@ -327,7 +321,7 @@ $H_0$: There is **no** significant difference in mean secular values between urb
 ::: {.column width="50%"}
 $H_1$: There is a significant difference in mean secular values between urban and rural residents.
 :::
-:::
+:::::
 
 ```{r}
 #| echo: true
@@ -337,14 +331,12 @@ t.test(secular_values ~ urban_rural,
        data = wvs_cleaned,
        var.equal = FALSE)
 ```
-::: {.callout-tip appearance="simple"}
 
+::: {.callout-tip appearance="simple"}
 ### Notice that we are using Welch's t-test instead of Students' t-test
 
-Welch's t-test (also known as **unequal variances t-test**, is a more robust alternative to Student's t-test. It is often used when two samples have unequal variances and possibly unequal sample sizes. 
-
+Welch's t-test (also known as **unequal variances t-test**, is a more robust alternative to Student's t-test. It is often used when two samples have unequal variances and possibly unequal sample sizes.
 :::
-
 
 ## T-Test: Paired Sample T-Test
 
@@ -352,9 +344,9 @@ Unfortunately, our data is not suitable for paired T-Test. For demo purposes, we
 
 The dataset is already loaded, so you can use it right away!
 
--   type `View(sleep)` in your R console (bottom left), and then press enter. RStudio will open up the preview of the dataset.
--   type `?sleep` in your R console to view the help page (a.k.a vignette) about this dataset.
--   type `data()` in your console to see what are the available datasets that you can use for practice!
+- type `View(sleep)` in your R console (bottom left), and then press enter. RStudio will open up the preview of the dataset.
+- type `?sleep` in your R console to view the help page (a.k.a vignette) about this dataset.
+- type `data()` in your console to see what are the available datasets that you can use for practice!
 
 ```{r}
 #| echo: true
@@ -375,8 +367,7 @@ sleep |>
     summarise(n = n(), mean = mean(extra), sd = sd(extra), variance = var(extra))
 ```
 
-
-Visualization: 
+Visualization:
 
 ```{r}
 #| echo: true
@@ -407,7 +398,7 @@ print(sleep_wide)
 
 Remember, the hypotheses are:
 
-::: columns
+::::: columns
 ::: {.column width="50%"}
 $H_0$: There is no significant difference in the increase in hours of sleep.
 :::
@@ -415,7 +406,7 @@ $H_0$: There is no significant difference in the increase in hours of sleep.
 ::: {.column width="50%"}
 $H_1$: There is a significant difference in the increase in hours of sleep.
 :::
-:::
+:::::
 
 ```{r}
 #| echo: true
@@ -457,13 +448,14 @@ t.test(wvs_cleaned$life_satisfaction,
 
 ## Learning Check #2
 
-Look at the following data from `CO2`, which T-test to use if we want to compare difference in the carbon dioxide `uptake` between the two treatments? 
+Look at the following data from `CO2`, which T-test to use if we want to compare difference in the carbon dioxide `uptake` between the two treatments?
 
 ```{r}
 
 summary(CO2)
 
 ```
+
 Visualize the data:
 
 ```{r}
@@ -477,9 +469,9 @@ ANOVA (Analysis of Variance) is a statistical test used to compare the means of 
 There are two 'mainstream' ANOVA:
 
 ::: incremental
--   **One-Way ANOVA**: comparing means across two or more independent groups (levels) of a [**single**]{.underline} independent variable.
--   **Two-Way ANOVA**: comparing means across two or more independent groups (levels) of [**two**]{.underline} independent variable. ()
--   Other types of ANOVA that you may encounter: Repeated measures ANOVA, Multivariate ANOVA (MANOVA), ANCOVA, etc.
+- **One-Way ANOVA**: comparing means across two or more independent groups (levels) of a [**single**]{.underline} independent variable.
+- **Two-Way ANOVA**: comparing means across two or more independent groups (levels) of [**two**]{.underline} independent variable. ()
+- Other types of ANOVA that you may encounter: Repeated measures ANOVA, Multivariate ANOVA (MANOVA), ANCOVA, etc.
 :::
 
 ## One-Way ANOVA: Sample problem and result
@@ -510,18 +502,18 @@ summary(emanc_country_anova)
 ```
 
 ::: {style="font-size: 75%; width: 75%"}
--   **F-value**: the coefficient value
--   **Pr(\>F)**: the p-value
--   **Sum Sq**: Sum of Squares
--   **Mean Sq** : Mean Squares
--   **Df**: Degrees of Freedom
+- **F-value**: the coefficient value
+- **Pr(\>F)**: the p-value
+- **Sum Sq**: Sum of Squares
+- **Mean Sq** : Mean Squares
+- **Df**: Degrees of Freedom
 :::
 
 ## Post-hoc test (only when result is significant)
 
 If your ANOVA test indicates significant result, the next step is to figure out which category pairings are yielding the significant result.
 
-Tukey's Honest Significant Difference (HSD) can help us figure that out! 
+Tukey's Honest Significant Difference (HSD) can help us figure that out!
 
 ```{r}
 #| echo: true
@@ -539,11 +531,11 @@ TukeyHSD(emanc_country_anova)
 
 4.  The Dependent Variable distribution should be approximately normal -- even more crucial if sample size is small.
 
-    -   You can verify this by visualizing your data in histogram, or use Shapiro-Wilk Test, among other things
+    - You can verify this by visualizing your data in histogram, or use Shapiro-Wilk Test, among other things
 
 5.  The variance for each combination of groups should be approximately equal -- also referred to as "homogeneity of variances" or [**homoskedasticity**]{.underline}.
 
-    -   One way to verify this is using Levene's Test
+    - One way to verify this is using Levene's Test
 
 6.  No significant outliers
 
@@ -617,34 +609,35 @@ wvs_cleaned |>
 
 Some observations that we can make:
 
--   Look at whether the lines for each country run roughly parallel — if they do, there is little interaction between education and country.
--   If the lines cross or diverge, this suggests the effect of education on emancipative values differs across countries.
--   Pay attention to which country shows the steepest slope — this indicates the strongest relationship between education level and emancipative values in that country.
-
-
+- Look at whether the lines for each country run roughly parallel — if they do, there is little interaction between education and country.
+- If the lines cross or diverge, this suggests the effect of education on emancipative values differs across countries.
+- Pay attention to which country shows the steepest slope — this indicates the strongest relationship between education level and emancipative values in that country.
 
 # Recap
 
 ::: incremental
+- Data distribution, normal distribution and skewed distribution.
 
-- Data distribution, normal distribution and skewed distribution. 
+- Use X2 test of independence, chisq.test(), to evaluate whether there is a statistically significant relationship between two categorical variables.
 
-- Use X2  test of independence, chisq.test(), to evaluate whether there is a statistically significant relationship between two categorical variables. 
+- Use a correlation test, cor.test(), to evaluate the strength and direction of a linear relationship between two variables. The coefficient is expressed in value between -1 to 1, with 0 being no correlation at all.
 
-- Use a correlation test, cor.test(), to evaluate the strength and direction of a linear relationship between two variables. The coefficient is expressed in value between -1 to 1, with 0 being no correlation at all. 
+- Use t-test() to compare the means of two groups of continuous data and determine if the differences are statistically significant.
 
-- Use t-test() to compare the means of two groups of continuous data and determine if the differences are statistically significant.  
+- Three types of t-tests i.e., one-sample t-test, independent samples t-test, and paired samples t-test.
 
-- Three types of t-tests i.e., one-sample t-test, independent samples t-test, and paired samples t-test. 
-
-- Use ANOVA (Analysis of Variance) to compare the means of three or more groups or samples and determine if the differences are statistically significant.  
-
-
+- Use ANOVA (Analysis of Variance) to compare the means of three or more groups or samples and determine if the differences are statistically significant.
 :::
 
 # End of Session 4!
 
 Next session: Linear and Logistic Regressions
+
+## Quiz Time! (compulsory)
+
+Scan the QR Code below to assess your understanding of basic inferential statistics concepts in R, including variable types and common statistical tests. All questions are required and each is worth 1 mark.
+
+[![Quiz QR Code: \<https://forms.cloud.microsoft/r/CSiySf1jmL\>](images/BasicInferentialStatsinRQRCode.png){fig-alt="Quiz QR Code: https://forms.cloud.microsoft/r/CSiySf1jmL" fig-align="center" width="400"}](https://forms.cloud.microsoft/r/CSiySf1jmL)
 
 # Appendix
 
@@ -655,10 +648,9 @@ Next session: Linear and Logistic Regressions
 
 `apaTables` is a package that will generate APA-formatted report table for correlation, ANOVA, and regression. It has limited customisations and few varity of tables. The documentation online is for the "development" version which is not what we will get if we install normally with `install.packages()`, so we need to rely on the vignette more. [**View the documentation here**](https://dstanley4.github.io/apaTables/index.html)
 
-
 Example: get the correlation table for `political_scale`, `life_satisfaction`, and `financial_satisfaction`
 
-```r
+``` r
 library(apaTables)
 
 wvs_cleaned |> 
@@ -694,11 +686,11 @@ wvs_cleaned |>
 
 4.  The Dependent Variable distribution should be approximately normal -- even more crucial if sample size is small.
 
-    -   You can verify this by visualizing your data in histogram, or use Shapiro-Wilk Test, among other things
+    - You can verify this by visualizing your data in histogram, or use Shapiro-Wilk Test, among other things
 
 5.  The variance for each combination of groups should be approximately equal -- also referred to as "homogeneity of variances" or [**homoskedasticity**]{.underline}.
 
-    -   One way to verify this is using Levene's Test
+    - One way to verify this is using Levene's Test
 
 6.  No significant outliers
 
@@ -746,7 +738,7 @@ shapiro.test(sample(residuals(emanc_country_anova), 5000))
 
 The p-value from the Shapiro-Wilk test is less than the significance level of 0.05, indicating that the data significantly deviates from normality. Therefore, the assumption of normality is NOT satisfied.
 
-## Plotting Residuals: Q-Q Plot 
+## Plotting Residuals: Q-Q Plot
 
 We can see this better from when we plot the residuals:
 
@@ -780,9 +772,8 @@ oneway.test(emancipative_values ~ country, data = wvs_cleaned, var.equal = FALSE
 
 Is there a significant difference in freedom of choice between different age groups?
 
--   Visualize the data as well
--   Test for normality and homoskedasticity, and choose the appropriate test
-
+- Visualize the data as well
+- Test for normality and homoskedasticity, and choose the appropriate test
 
 ```{r}
 #| code-fold: true
@@ -792,7 +783,8 @@ Is there a significant difference in freedom of choice between different age gro
 freedom_age_anova <- aov(freedom_of_choice ~ age_group, data = wvs_cleaned)
 summary(freedom_age_anova)
 ```
----
+
+------------------------------------------------------------------------
 
 TukeyHSD:
 

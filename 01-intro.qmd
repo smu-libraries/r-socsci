@@ -15,29 +15,29 @@ library(tidyverse)
 
 ## Preamble
 
--   About Bella:
+- About Bella:
 
-    -   Senior Librarian, Research & Data Services team, SMU Libraries.
+  - Senior Librarian, Research & Data Services team, SMU Libraries.
 
-    -   Bachelor in Info Tech (IT), MSc in Info Studies from NTU.
+  - Bachelor in Info Tech (IT), MSc in Info Studies from NTU.
 
-    -   Have been with SMU since the pandemic era (2021).
+  - Have been with SMU since the pandemic era (2021).
 
-    -   Have been doing this workshop since Aug 2023.
+  - Have been doing this workshop since Aug 2023.
 
--   About Wei:
+- About Wei:
 
-    -   Principal Librarian, Instruction and Learning Services, SMU Libraries.
+  - Principal Librarian, Instruction and Learning Services, SMU Libraries.
 
-    -   Have been with SMU over 17 years. This is my 3rd run of R workshops!
+  - Have been with SMU over 17 years. This is my 3rd run of R workshops!
 
--   About this workshop:
+- About this workshop:
 
-    -   Live-coding format; code along with me!
+  - Live-coding format; code along with me!
 
-    -   Goal of workshop: to give you enough fundamentals (at least to the point that ChatGPT can't bluff you so easily) and confidence to explore R on your own.
+  - Goal of workshop: to give you enough fundamentals (at least to the point that ChatGPT can't bluff you so easily) and confidence to explore R on your own.
 
-    -   Don't be afraid to ask for help! We are all here to learn.
+  - Don't be afraid to ask for help! We are all here to learn.
 
 ## The outline for these workshops
 
@@ -52,27 +52,27 @@ Image is taken from [R for Data Science (2e)](https://r4ds.hadley.nz/intro) by H
 ::: incremental
 1.  **Import** data into R, which means take data (stored in a file, via API, etc) and load it into a dataframe in R
 2.  **Tidy** the imported data.
-    -   Tidy = storing it in a consistent form that matches the semantics of the dataset.
-    -   Tidy data = each column is a variable, each row is an observation
+    - Tidy = storing it in a consistent form that matches the semantics of the dataset.
+    - Tidy data = each column is a variable, each row is an observation
 3.  Once a data is tidy, we can **transform** it. Transformation includes:
-    -   narrowing in on observations of interest (like all people in one city or all data from the last year)
-    -   creating new variables that are functions of existing variables (like computing speed from distance and time)
-    -   calculating a set of summary statistics (like counts or means).
+    - narrowing in on observations of interest (like all people in one city or all data from the last year)
+    - creating new variables that are functions of existing variables (like computing speed from distance and time)
+    - calculating a set of summary statistics (like counts or means).
 4.  Once we have tidy data with the info we need, we can **visualize** it and **model** it.
 5.  **Communicate** the result. It doesn’t matter how well your models and visualization have led you to understand the data unless you can also communicate your results to others.
 :::
 
 ## Today's plan
 
--   R and Rstudio
--   Before coding
--   R Objects and Values
--   Data **types**
--   Functions and packages
--   Data **structures**
--   Exploring datasets
--   Trouble shooting tips
--   Recap & feedback
+- R and Rstudio
+- Before coding
+- R Objects and Values
+- Data **types**
+- Functions and packages
+- Data **structures**
+- Exploring datasets
+- Trouble shooting tips
+- Recap & feedback
 
 ## What is R? What is R Studio?
 
@@ -94,21 +94,21 @@ Firstly, we need to be comfortable with the RStudio interface. We will use the R
 
 ## Before Coding
 
--   Setting up working directory
--   Creating projects
--   Creating folders and files
+- Setting up working directory
+- Creating projects
+- Creating folders and files
 
 ------------------------------------------------------------------------
 
 ### Setting Up Working Directory
 
--   Working directory -\> where R will look for files (scripts, data, etc). Stay organized with all files and folders related to a project stored in one place.
+- Working directory -\> where R will look for files (scripts, data, etc). Stay organized with all files and folders related to a project stored in one place.
 
-    -   By default, it will be on your Desktop.
+  - By default, it will be on your Desktop.
 
-    -   Best practice is to use **R Project** to organize your files and data into projects.
+  - Best practice is to use **R Project** to organize your files and data into projects.
 
-    -   When using R Project, the working directory = project folder.
+  - When using R Project, the working directory = project folder.
 
 ### Creating the project for this workshop
 
@@ -120,23 +120,23 @@ Firstly, we need to be comfortable with the RStudio interface. We will use the R
 
 ### Creating folders inside our working directory
 
--   `data` - we will save our raw data here. **It's best practice to keep the data here untouched.**
+- `data` - we will save our raw data here. **It's best practice to keep the data here untouched.**
 
--   `data-output` - if we need to modify raw data, store the modified version here.
+- `data-output` - if we need to modify raw data, store the modified version here.
 
--   `fig-output` - we will save all the graphics we created here!
+- `fig-output` - we will save all the graphics we created here!
 
 ### Notes
 
 Don't:
 
--   Don't put your R projects inside your OneDrive folder as that may cause issues sometimes.
+- Don't put your R projects inside your OneDrive folder as that may cause issues sometimes.
 
--   Folder/file names should avoid spaces, symbols, and special characters. Prefer folder/file names that are all in lower case.
+- Folder/file names should avoid spaces, symbols, and special characters. Prefer folder/file names that are all in lower case.
 
 Do:
 
--   If for some reason your working directory is not what it should be change the working directory in the RStudio interface by navigating in the file browser to where your working directory should be, clicking on the blue gear icon “More”, and selecting “Set As Working Directory”.
+- If for some reason your working directory is not what it should be change the working directory in the RStudio interface by navigating in the file browser to where your working directory should be, clicking on the blue gear icon “More”, and selecting “Set As Working Directory”.
 
 # Let's Code!
 
@@ -157,56 +157,56 @@ In this line of code:
 country_name <- "Singapore"
 ```
 
--   `"Singapore"` is a **value**. This can be either a character, numeric, or boolean data type. (more on this soon)
+- `"Singapore"` is a **value**. This can be either a character, numeric, or boolean data type. (more on this soon)
 
--   `country_name` is the **object** where we store this value. This is so that we can keep this value to be used later.
+- `country_name` is the **object** where we store this value. This is so that we can keep this value to be used later.
 
--   `<-` is the assignment operator to assign the value to the object.
+- `<-` is the assignment operator to assign the value to the object.
 
-    -   You can also use `=`, but generally in R, `<-` is the convention.
-    -   Keyboard shortcut: `Alt` + `-` in Windows (`Option` + `-` in Mac)
+  - You can also use `=`, but generally in R, `<-` is the convention.
+  - Keyboard shortcut: `Alt` + `-` in Windows (`Option` + `-` in Mac)
 
--   Object name rules:
+- Object name rules:
 
-    -   Can’t start with numbers
+  - Can’t start with numbers
 
-    -   Case sensitive
+  - Case sensitive
 
-    -   No spaces
+  - No spaces
 
-    -   Some reserved words (like some function names in R)
+  - Some reserved words (like some function names in R)
 
 ## Refresher: Data Types
 
--   [**Non-Continuous Data**]{.underline}
+- [**Non-Continuous Data**]{.underline}
 
-    -   **Nominal/Categorical**: Non-ordered, non-numerical data, used to represent qualitative attribute.
+  - **Nominal/Categorical**: Non-ordered, non-numerical data, used to represent qualitative attribute.
 
-        -   Example: nationality, neighborhood, employment status
+    - Example: nationality, neighborhood, employment status
 
-    -   **Ordinal**: Ordered non-numerical data.
+  - **Ordinal**: Ordered non-numerical data.
 
-        -   Example: Nutri-grade ratings, frequency of exercise (daily, weekly, bi-weekly)
+    - Example: Nutri-grade ratings, frequency of exercise (daily, weekly, bi-weekly)
 
-    -   **Discrete**: Numerical data that can only take specific value (usually integers)
+  - **Discrete**: Numerical data that can only take specific value (usually integers)
 
-        -   Example: Shoe size, clothing size
+    - Example: Shoe size, clothing size
 
-    -   **Binary**: Nominal data with only two possible outcome
+  - **Binary**: Nominal data with only two possible outcome
 
-        -   Example: pass/fail, yes/no, survive/not survive
+    - Example: pass/fail, yes/no, survive/not survive
 
 ------------------------------------------------------------------------
 
--   [**Continuous Data**]{.underline}
+- [**Continuous Data**]{.underline}
 
-    -   **Interval**: Numerical data that can take any value within a range. [It does not have a "true zero".]{.underline}
+  - **Interval**: Numerical data that can take any value within a range. [It does not have a "true zero".]{.underline}
 
-        -   Example: Celsius scale. Temperature of 0 C does not represent absence of heat.
+    - Example: Celsius scale. Temperature of 0 C does not represent absence of heat.
 
-    -   **Ratio**: Numerical data that can take any value within a range. [it has a "true zero".]{.underline}
+  - **Ratio**: Numerical data that can take any value within a range. [it has a "true zero".]{.underline}
 
-        -   Example: Annual income. Annual income of 0 represents no income.
+    - Example: Annual income. Annual income of 0 represents no income.
 
 ## Data Types in R
 
@@ -222,11 +222,11 @@ is_religious <- TRUE # Boolean/Logical (TRUE/FALSE). case sensitive
 birth_year <- 1990L # Integer (whole numbers)
 ```
 
--   To include comments in the code, use the \# character.
+- To include comments in the code, use the \# character.
 
--   Anything to the right of the \# sign and up to the end of the line is treated as a comment and is ignored by R when executing.
+- Anything to the right of the \# sign and up to the end of the line is treated as a comment and is ignored by R when executing.
 
--   Good practice to make notes and explain the codes.
+- Good practice to make notes and explain the codes.
 
 ## Checking data type of a variable
 
@@ -321,11 +321,11 @@ As long as one condition is met, this will be TRUE.
 
 ## Functions in R
 
--   A function is like a recipe in cooking.
+- A function is like a recipe in cooking.
 
--   It takes some ingredients (inputs) and uses a set of instructions to produce a result (output).
+- It takes some ingredients (inputs) and uses a set of instructions to produce a result (output).
 
--   In R, a function is a pre-written set of recipes/instructions that performs a specific task. Function name will always be followed by round brackets `()`
+- In R, a function is a pre-written set of recipes/instructions that performs a specific task. Function name will always be followed by round brackets `()`
 
 Example: `round()` function in R will round up numbers.
 
@@ -334,7 +334,7 @@ Example: `round()` function in R will round up numbers.
 round(3.1415926)
 ```
 
--   `round()` is the "recipe", while `3.1415926` is the "ingredients"
+- `round()` is the "recipe", while `3.1415926` is the "ingredients"
 
 Saving the result to an object:
 
@@ -346,19 +346,19 @@ print(rounded_pi)
 
 ## Functions with Arguments in R
 
--   Following the recipe analogy, arguments are the ingredients you provide to a function. function_name(arguments/parameters)
+- Following the recipe analogy, arguments are the ingredients you provide to a function. function_name(arguments/parameters)
 
--   Some arguments are required, while others are optional (they have default values).
+- Some arguments are required, while others are optional (they have default values).
 
--   Each argument tells the function what to use or how to perform the task.
+- Each argument tells the function what to use or how to perform the task.
 
--   Example: Think of a bubble tea order as a function. The possible arguments/ingredients here are:
+- Example: Think of a bubble tea order as a function. The possible arguments/ingredients here are:
 
-    -   Tea - required ingredient
+  - Tea - required ingredient
 
-    -   Milk - optional, the default is to include
+  - Milk - optional, the default is to include
 
-    -   Toppings - optional, the default choice is "pearls"
+  - Toppings - optional, the default choice is "pearls"
 
 In R:
 
@@ -367,16 +367,15 @@ In R:
 round(3.1415926, digits = 2)
 ```
 
--   `3.1415926` is the required argument (if this is not provided, the function will not run)
+- `3.1415926` is the required argument (if this is not provided, the function will not run)
 
--   `digits` is an optional argument specifying how many decimal places to round to (the default is 0)
+- `digits` is an optional argument specifying how many decimal places to round to (the default is 0)
 
 ## How do I find out more about a particular function?
 
 You can call the help page / vignette in R by prepending `?` to the function name.
 
 E.g. if you want to find out more about the `round` function, you can run `?round` in your R console (bottom left panel)
-
 
 ## Data Structures in R
 
@@ -390,26 +389,25 @@ We will start with exploring 3 basic types of data **structures** in R:
 
 Other types (but we will not be covering these in this workshop):
 
--   Lists: A type of recursive vector
+- Lists: A type of recursive vector
 
--   Matrices: A collection of elements of the same type in rows and columns
-
+- Matrices: A collection of elements of the same type in rows and columns
 
 ## Data Structures in R - visualized
 
-![](images/data-structures.svg){width=100% height=100%}
+![](images/data-structures.svg){width="100%" height="100%"}
 
 ## Data Structures in R: Vectors
 
 Think of vectors as a column in a dataset. It is the most common and basic data structure in R. (pretty much the workhorse of R!)
 
--   A vector can only contain 1 data type.
+- A vector can only contain 1 data type.
 
--   **Vector can be created with c() function**.
+- **Vector can be created with c() function**.
 
--   Can add, remove, or change values in a vector.
+- Can add, remove, or change values in a vector.
 
--   Inspect vectors: typeof(), str(), length()
+- Inspect vectors: typeof(), str(), length()
 
 ```{r}
 #| echo: true
@@ -460,9 +458,9 @@ Square brackets `[]` are for accessing specific parts of your data, where we pas
 
 Let's find high satisfaction scores (above 7)!
 
--   The code below will create a boolean vector called `criteria` that basically keep tracks on whether each items inside `satisfaction_scores` fulfil our condition.
+- The code below will create a boolean vector called `criteria` that basically keep tracks on whether each items inside `satisfaction_scores` fulfil our condition.
 
--   The condition is "value must be \> 7". e.g. if item 1 fulfils our condition, then item 1 is 'marked' as `TRUE`. Otherwise, it will be `FALSE`
+- The condition is "value must be \> 7". e.g. if item 1 fulfils our condition, then item 1 is 'marked' as `TRUE`. Otherwise, it will be `FALSE`
 
 ```{r}
 #| echo: true
@@ -471,7 +469,7 @@ criteria <- satisfaction_scores > 7
 print(criteria)
 ```
 
--   This line of code applies the boolean vector `criteria` to `satisfaction_scores`, and only retrieve items that fulfils the condition. i.e. only return TRUE value `criteria` vector
+- This line of code applies the boolean vector `criteria` to `satisfaction_scores`, and only retrieve items that fulfils the condition. i.e. only return TRUE value `criteria` vector
 
 ```{r}
 #| echo: true
@@ -481,9 +479,9 @@ satisfaction_scores[criteria]
 
 ## Vector Manipulations: Handle NA values
 
--   NA values indicate null values, or the absence of a value (0 is still a value!)
+- NA values indicate null values, or the absence of a value (0 is still a value!)
 
--   Summary functions like `mean` needs you to include argument called `na.rm` on how you want it to be handled.
+- Summary functions like `mean` needs you to include argument called `na.rm` on how you want it to be handled.
 
 Survey data often contains missing values (NA):
 
@@ -500,11 +498,11 @@ mean(financial_satisfaction, na.rm = TRUE)
 
 ## Data Structures in R: Dataframe
 
--   De facto data structure for tabular data in R, and what we use for data processing, plotting, and statistics.
+- De facto data structure for tabular data in R, and what we use for data processing, plotting, and statistics.
 
--   Similar to spreadsheets - a rectangular collection of variables (columns) and observations (rows)!
+- Similar to spreadsheets - a rectangular collection of variables (columns) and observations (rows)!
 
--   You can create it by hand like so: (though more commonly you will use this to load data from external source)
+- You can create it by hand like so: (though more commonly you will use this to load data from external source)
 
 ```{r}
 #| echo: true
@@ -516,7 +514,6 @@ survey_data <- data.frame(
 print(survey_data)
 ```
 
-
 ## Downloading the World Values Survey (WVS) Dataset
 
 For this workshop, we will try loading a dataset from a file into a dataframe!
@@ -527,17 +524,17 @@ Download this CSV and save it under your `data` folder in your R project!
 
 ## Packages in R (for additional functionalities)
 
--   Packages are a collections of R functions, datasets, etc. Packages extend the functionality of R.
+- Packages are a collections of R functions, datasets, etc. Packages extend the functionality of R.
 
-    -   (Closest analogy I can think of is that they're equivalent of browser add-ons, in a way)
+  - (Closest analogy I can think of is that they're equivalent of browser add-ons, in a way)
 
--   Popular packages: `tidyverse`, `caret`, `shiny`, etc.
+- Popular packages: `tidyverse`, `caret`, `shiny`, etc.
 
--   Installation (**you only need to do this once**): `install.packages("package name")`
+- Installation (**you only need to do this once**): `install.packages("package name")`
 
--   Loading packages (*you need to run this everytime you restart RStudio*): `library(package name)` - let's try to load `tidyverse` as we will use this to load our CSV into a dataframe!
+- Loading packages (*you need to run this everytime you restart RStudio*): `library(package name)` - let's try to load `tidyverse` as we will use this to load our CSV into a dataframe!
 
-    -   Tidyverse is a well-known collection of packages that facilitates data science projects. It includes packages for data manipulation, visualization, importing, and tidying.
+  - Tidyverse is a well-known collection of packages that facilitates data science projects. It includes packages for data manipulation, visualization, importing, and tidying.
 
 ## Loading the WVS Dataset
 
@@ -578,7 +575,6 @@ tail(wvs_data, n=5) # <6>
 5.  view the first 5 rows
 6.  view the last 5 rows
 
-
 ## Basic dataframe manipulations: Retrieving values
 
 Some basic dataframe functions before we move on to data wrangling next week:
@@ -603,17 +599,17 @@ wvs_data[3, ] # <5>
 
 ## Data Structures in R: Factors
 
--   Special data structure in R to deal with categorical data.
+- Special data structure in R to deal with categorical data.
 
--   Look (and often behave) like character vectors but are actually treated as integer vectors.
+- Look (and often behave) like character vectors but are actually treated as integer vectors.
 
--   Can only contain a predefined set of values, known as `levels`. By default, R sorts levels in alphabetical order (but we can specify a custom order, as we'll see shortly)
+- Can only contain a predefined set of values, known as `levels`. By default, R sorts levels in alphabetical order (but we can specify a custom order, as we'll see shortly)
 
--   Can be ordered (ordinal) or unordered (nominal).
+- Can be ordered (ordinal) or unordered (nominal).
 
--   May look like a normal vector at first glance, so use `str()` to check.
+- May look like a normal vector at first glance, so use `str()` to check.
 
--   Most common application: when we want to specify a column in our dataframe as a column of categories
+- Most common application: when we want to specify a column in our dataframe as a column of categories
 
 ## Convert dataframe columns to a Factor - Unordered
 
@@ -638,12 +634,14 @@ levels(wvs_data$country)
 ```
 
 If we check the structure, `country` column should be a factor instead of characters now:
+
 ```{r}
 #| echo: true
 #| output: true
 
 str(wvs_data$country)
 ```
+
 ## Convert dataframe columns to a Factor - Ordered
 
 Some variables do have a meaningful order. For example, `education` has a clear progression from lower to higher. Let's convert it to an ordered factor.
@@ -664,57 +662,63 @@ str(wvs_data$education)
 
 Types of messages
 
--   Error: Fatal error in your code that prevented it from being run through successfully. Need to fix it for the code to run.
+- Error: Fatal error in your code that prevented it from being run through successfully. Need to fix it for the code to run.
 
--   Warning: Non-fatal errors (don’t stop the code from running, but this is a potential problem that you should know about).
+- Warning: Non-fatal errors (don’t stop the code from running, but this is a potential problem that you should know about).
 
--   Message: Helpful information about the code you just ran(can usually ignore these messages)
+- Message: Helpful information about the code you just ran(can usually ignore these messages)
 
 ## Trouble Shooting
 
 Check. Did you...
 
--   Set your working directory?
+- Set your working directory?
 
--   Check for missing commas (,), parentheses ()?
+- Check for missing commas (,), parentheses ()?
 
--   Check your spelling?
+- Check your spelling?
 
-    -   Spelling : Punctuation \<- mea**a**n(c(1, 2, 3, 4)) or print(Punctuati**o**on)
+  - Spelling : Punctuation \<- mea**a**n(c(1, 2, 3, 4)) or print(Punctuati**o**on)
 
-    -   Punctuation : sum(10?20) or Punctuation \<- sum(c(10, 20))**)**
+  - Punctuation : sum(10?20) or Punctuation \<- sum(c(10, 20))**)**
 
-    -   Capitalization : s**U**m(c(5, 10, 15))
+  - Capitalization : s**U**m(c(5, 10, 15))
 
-    -   In text indicators : X **+** Y or **\#**taking notes or “name” vs name
+  - In text indicators : X **+** Y or **\#**taking notes or “name” vs name
 
 ## Recap
 
--   R & RStudio: R is a programming language for statistical computing and graphics, while RStudio is an environment that makes it easier to write, run, and manage R code.
+- R & RStudio: R is a programming language for statistical computing and graphics, while RStudio is an environment that makes it easier to write, run, and manage R code.
 
--   Working Directory: A folder on your computer where R reads and saves files.
+- Working Directory: A folder on your computer where R reads and saves files.
 
--   Data Type: Types of value an object can hold, such as numeric, character, and Boolean.
+- Data Type: Types of value an object can hold, such as numeric, character, and Boolean.
 
--   Data Structure: Data structures organize and store data in R, such as vectors, factors, and data frames.
+- Data Structure: Data structures organize and store data in R, such as vectors, factors, and data frames.
 
--   Functions: Reusable codes that perform specific tasks. Can call functions with arguments.
+- Functions: Reusable codes that perform specific tasks. Can call functions with arguments.
 
--   Packages: Collections of functions and data to perform tasks. Need to install and load packages.
+- Packages: Collections of functions and data to perform tasks. Need to install and load packages.
 
 # End of Session 1!
 
 Next Session: Data wrangling with `dplyr` and `tidyr` packages - we'll learn how to:
 
--   Filter survey responses by country
+- Filter survey responses by country
 
--   Calculate average satisfaction scores by demographic groups
+- Calculate average satisfaction scores by demographic groups
 
--   Create new variables from existing ones
+- Create new variables from existing ones
 
--   Handle missing values in survey data
+- Handle missing values in survey data
 
--   And much more!
+- And much more!
+
+## Quiz Time! (compulsory)
+
+Scan the QR Code below to assess your understanding of the basics of R and RStudio, including their purpose, key concepts, and fundamental commands. All questions are required and each is worth 1 mark.
+
+[![Quiz QR Code: <https://forms.cloud.microsoft/r/pvCRpgbQeT>](images/IntroductionToRandRStudioQRCode.png){fig-alt="Quiz QR Code: https://forms.cloud.microsoft/r/pvCRpgbQeT" fig-align="center" width="400"}](https://forms.cloud.microsoft/r/pvCRpgbQeT)
 
 ## Appendix on Vector Manipulations: Add items
 

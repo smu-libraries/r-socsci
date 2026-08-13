@@ -27,11 +27,10 @@ format: revealjs
 
 3.  Double click on the file. Rstudio should launch with your project loaded!
 
-
 Optional (Though best practice):
 
--   Make sure that `Environment` panel is empty (click on broom icon to clean it up).
--   Clear the `Console` and `Plots` too.
+- Make sure that `Environment` panel is empty (click on broom icon to clean it up).
+- Clear the `Console` and `Plots` too.
 
 ## Refresher: Loading from CSV into a dataframe
 
@@ -62,35 +61,34 @@ glimpse(wvs_cleaned)
 ## Recap: Descriptive Statistics
 
 ::: incremental
--   Univariate (i.e. single variable) Descriptive Stats
+- Univariate (i.e. single variable) Descriptive Stats
 
-    -   Measures of central tendency: `mean()`, `median()`, `Mode()`
-    -   Measures of Variability: `min()`, `max()`, `range()`, `IQR()`, `sd()` (standard deviation), `var()` (variance)
-    -   Distribution shape: `skewness()` and `kurtosis()` from `moments` library. This is easier to see with histogram
+  - Measures of central tendency: `mean()`, `median()`, `Mode()`
+  - Measures of Variability: `min()`, `max()`, `range()`, `IQR()`, `sd()` (standard deviation), `var()` (variance)
+  - Distribution shape: `skewness()` and `kurtosis()` from `moments` library. This is easier to see with histogram
 
--   Bivariate (i.e. two variables) Descriptive Stats
+- Bivariate (i.e. two variables) Descriptive Stats
 
-    -   Contingency table / cross tab (for categorical data)
-    -   Covariance - describe how two variables vary together
-    -   Correlation - describe relationship strength and direction **in a sample**. (If we want to use this to infer about a population from a sample, it would fall under inferential stats)
-    -   Visualizations e.g. Scatterplots, side-by-side boxplots, stacked bar charts, etc.
+  - Contingency table / cross tab (for categorical data)
+  - Covariance - describe how two variables vary together
+  - Correlation - describe relationship strength and direction **in a sample**. (If we want to use this to infer about a population from a sample, it would fall under inferential stats)
+  - Visualizations e.g. Scatterplots, side-by-side boxplots, stacked bar charts, etc.
 :::
 
 ## Recap: Basic R Functions for Descriptive Stats
 
 Last week, we explored some basic R functions for descriptive statistics.
 
--   `mean()`: arithmetic average
--   `median()`: middle value
--   `sd()`: standard deviation
--   `var()`: variance
--   `range()`: range of values
--   `IQR()`: interquartile range
--   `summary()`: provides a summary of descriptive statistics
--   `Mode()` function from `DescTools` package: the most frequently occuring value [^1]
+- `mean()`: arithmetic average
+- `median()`: middle value
+- `sd()`: standard deviation
+- `var()`: variance
+- `range()`: range of values
+- `IQR()`: interquartile range
+- `summary()`: provides a summary of descriptive statistics
+- `Mode()` function from `DescTools` package: the most frequently occuring value [^1]
 
 [^1]: R doesn't have built-in functions for mode, so we need `DescTools` package to get this function
-
 
 ## Recap: Long vs Wide Data
 
@@ -98,21 +96,21 @@ Last week, we explored some basic R functions for descriptive statistics.
 ::: {.column width="50%"}
 **Long data:**
 
--   Each row is a unique observation.
+- Each row is a unique observation.
 
--   There is a separate column indicating the variable or type of measurements
+- There is a separate column indicating the variable or type of measurements
 
--   This format is more "understandable" by R, more suitable for visualizations (which we'll explore more next week!)
+- This format is more "understandable" by R, more suitable for visualizations (which we'll explore more next week!)
 :::
 
 ::: {.column width="50%"}
 **Wide data:**
 
--   Each row is a value in variables.
+- Each row is a value in variables.
 
--   Each column is a value in variables --\> the more values you have, the "wider" is the data
+- Each column is a value in variables --\> the more values you have, the "wider" is the data
 
--   This format is more intuitive for humans!
+- This format is more intuitive for humans!
 :::
 :::::
 
@@ -155,9 +153,7 @@ long_data |>
 
 ## Long vs Wide Data: One way to spot
 
-Pay attention to the columns of the data. 
-![](images/wide-vs-long-data.jpg)
-
+Pay attention to the columns of the data. ![](images/wide-vs-long-data.jpg)
 
 # Univariate Descriptive Stats + Visualization
 
@@ -243,11 +239,11 @@ How we can interpret / report this:
 
 ## Visualizing with ggplot - Histogram
 
--   Describing the spread and shape of distribution with just words is not very productive, so typically it is accompanied with visualization.
+- Describing the spread and shape of distribution with just words is not very productive, so typically it is accompanied with visualization.
 
--   `ggplot` is plotting package that is included inside `tidyverse` package
+- `ggplot` is plotting package that is included inside `tidyverse` package
 
--   works best with data in the long format, i.e., a column for all the dimensions/measures and another column for the value for each dimension/measure.
+- works best with data in the long format, i.e., a column for all the dimensions/measures and another column for the value for each dimension/measure.
 
 ```{r}
 #| echo: true
@@ -316,11 +312,11 @@ wvs_cleaned |>
 
 ## Categorical Data - Bar chart for frequency distribution
 
--   The `age` variable is a numerical / continuous data. We can't apply `mean()`, `median()` and other central tendency measures to categorical data such as `age_group` or `employment_status`. We can, however, visualize them.
+- The `age` variable is a numerical / continuous data. We can't apply `mean()`, `median()` and other central tendency measures to categorical data such as `age_group` or `employment_status`. We can, however, visualize them.
 
--   When dealing with categorical data, first take note on whether you want to visualize the **proportion** or the **frequency distribution**. 
+- When dealing with categorical data, first take note on whether you want to visualize the **proportion** or the **frequency distribution**.
 
--   Let's visualize the frequency distribution of survey participants by `country`:
+- Let's visualize the frequency distribution of survey participants by `country`:
 
 ```{r}
 #| echo: true
@@ -352,8 +348,6 @@ wvs_country_proportion <- wvs_cleaned |>
 print(wvs_country_proportion)
 
 ```
-
-
 
 ## Categorical Data - Pie chart for proportion
 
@@ -396,7 +390,6 @@ wvs_cleaned |> ggplot(aes(x = financial_satisfaction)) +
 
 ```
 
-
 # Bivariate Descriptive Stats + Visualization
 
 ## Three Combinations in Bivariate Descriptive Stats
@@ -413,11 +406,11 @@ Since data can be continuous or categorical, there can be three combinations whe
 
 ## Both categorical
 
--   Examine relationships between categorical variables
+- Examine relationships between categorical variables
 
--   Look at joint distributions and proportions
+- Look at joint distributions and proportions
 
--   Compare group compositions
+- Compare group compositions
 
 First, let's create a contingency table of `age_group` and `country`!
 
@@ -429,6 +422,7 @@ table(wvs_cleaned$age_group, wvs_cleaned$country)
 ```
 
 ## Both categorical - Proportion table
+
 We can also create a proportion table just like we did earlier
 
 ```{r}
@@ -455,6 +449,7 @@ wvs_cleaned |> ggplot(aes(x = country, fill = age_group)) +
   theme_minimal()
 
 ```
+
 ## Both categorical - Stacked bar chart
 
 Change `position = "dodge"` to `position = "stack"` to stack the bar chart
@@ -469,7 +464,6 @@ wvs_cleaned |> ggplot(aes(x = country, fill = age_group)) +
   theme_minimal()
 
 ```
-
 
 ## Both categorical - Percent-stacked bar chart
 
@@ -490,11 +484,11 @@ wvs_cleaned |> ggplot(aes(x = country, fill = age_group)) +
 
 ## Both continuous
 
--   Examine linear relationships
+- Examine linear relationships
 
--   Look for patterns and trends
+- Look for patterns and trends
 
--   Identify potential outliers
+- Identify potential outliers
 
 Let's first examine the correlation between `emancipative_values` and `secular_values`
 
@@ -504,6 +498,7 @@ Let's first examine the correlation between `emancipative_values` and `secular_v
 cor(wvs_cleaned$emancipative_values, wvs_cleaned$secular_values)
 
 ```
+
 ## Both continuous - Jitter / scatterplot
 
 Let's visualize the two variables together with a jitter / scatterplot!
@@ -520,14 +515,13 @@ wvs_cleaned |> ggplot(aes(x = emancipative_values, y = secular_values)) +
 
 ```
 
-
 ## One continuous, one categorical - Summary table
 
--   Compare distributions across groups
+- Compare distributions across groups
 
--   Identify group differences
+- Identify group differences
 
--   Examine spread within groups
+- Examine spread within groups
 
 Let's do a recap from last week and get the summary stats for `secular_values` for each `country`
 
@@ -561,7 +555,7 @@ wvs_cleaned |> ggplot(aes(x = country, y = secular_values)) +
 
 ## One continuous, one categorical (cont'd) - Layered boxplots and violin plots
 
-We could also layer our boxplots with violin plots to get a better sense of the distribution of each group. 
+We could also layer our boxplots with violin plots to get a better sense of the distribution of each group.
 
 ```{r}
 #| echo: true
@@ -585,7 +579,7 @@ There are two ways to do this:
 
 Below is the `ggsave` way:
 
-```r
+``` r
 # save the chart into an object instead of viewing it like we have been doing
 boxplot_obj <- wvs_cleaned |> 
     ggplot(aes(x = age)) +
@@ -596,23 +590,21 @@ boxplot_obj <- wvs_cleaned |>
 
 # pass the saved chart into ggsave and give it a filename
 ggsave("fig-output/boxplot_1.jpg", boxplot_obj) 
-
 ```
 
 ## How to save your images - point-and-click
 
 1.  Go to `plots` tab at the right pane
-2.  Click on `Export` button. You can export the plot as image file, or as PDF. 
-3.  Important: to keep your files organized, keep your exported images into the `fig-output` folder that you've created in Session 1. 
-
+2.  Click on `Export` button. You can export the plot as image file, or as PDF.
+3.  Important: to keep your files organized, keep your exported images into the `fig-output` folder that you've created in Session 1.
 
 ## Using Facets for more complex visualization
 
--   Compare patterns across multiple subgroups
+- Compare patterns across multiple subgroups
 
--   Identify interaction effects
+- Identify interaction effects
 
--   Maintain visual clarity with complex relationships
+- Maintain visual clarity with complex relationships
 
 Facet grids are useful when we have more than two variables to visualize. However, if used excessively they may become too complex
 
@@ -635,7 +627,6 @@ Take a look at this award-winning visualization by [Simon Scarr](http://www.simo
 
 ![](https://images.squarespace-cdn.com/content/v1/54b5070de4b01c9a0176b5fd/1428238676197-BAJMDLGPHID08CCOHVDN/image-asset.png?format=1000w)
 
-
 # End of Session 3!
 
 Remember the strategy:
@@ -648,6 +639,12 @@ Remember the strategy:
 Check out the [R Graph gallery](https://r-graph-gallery.com/) for inspiration and code samples!
 
 Next session: inferential stats in R using WVS data
+
+## Quiz Time! (compulsory)
+
+Scan the QR Code below to assess your understanding of basic R functions for data visualization and descriptive statistics, including summary statistics, ggplot2 syntax, and data plotting techniques. All questions are required and each is worth 1 mark.
+
+[![Quiz QR Code: \<https://forms.cloud.microsoft/r/MmfFcLZwXT\>](images/DataVisualizationandDescriptiveStatsQRCode.png){fig-alt="Quiz QR Code: https://forms.cloud.microsoft/r/MmfFcLZwXT" fig-align="center" width="400"}](https://forms.cloud.microsoft/r/MmfFcLZwXT)
 
 # Appendix
 
@@ -714,9 +711,8 @@ corrplot(cor_matrix,
 
 ```
 
-:::aside
+::: aside
 if you get an error saying "corrplot function not found" or something along that line, that means you need to install the corrplot package first! Run this line in your RStudio Console (bottom left area): `install.packages("corrplot")`
-
 :::
 
 ## Correlation Plot - shorter code
