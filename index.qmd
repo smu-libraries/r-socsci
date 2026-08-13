@@ -16,16 +16,17 @@ This site serves as a repository for the slides and codes developed for the 'Int
 * Bella Ratmelia, Research & Data Services, SMU Libraries
 
 
-Teaching Assistant: 
-* Camille Ong
-* Lain Shae Goh
+Teaching Assistants: 
+
+* Camille Ong, Instruction and Learning Services, SMU Libraries
+* Lain Shae Goh, School of Social Sciences
 
 
 ## Schedule
 
-**Venue** : TBA
+**Venue** : YPHSL Seminar Room 3.2
 
-**Time** : 3:30 - 5:30 PM (All sessions)
+**Time** : Fridays, 3:30 - 5:30 PM (All sessions)
 
 *Click on the link under "Topic" to access the slides. Slides will be progressively made available throughout the sessions.*
 
@@ -103,4 +104,4 @@ Packages can save us time and leverage expert-created tools without having to wr
 
 ### Step 4: Complete the pre-workshop survey
 
-[**Please complete the pre-workshop survey here**](https://smusg.asia.qualtrics.com/jfe/form/SV_6opr7O9gABSLwQS) to share your goals and current knowledge. Your input will help to tailor the workshop contents and pace.
+[**Please complete the pre-workshop survey here**](https://smusg.asia.qualtrics.com/jfe/form/SV_blTI4QJAwGLDfsG) to share your goals and current knowledge. Your input will help to tailor the workshop contents and pace.

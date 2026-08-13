@@ -1,12 +1,140 @@
 /*-- scss:defaults --*/
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+// ---------------------------------------------------------------------------
+// SMU Brand fonts
+// Libre Franklin = main brand font (used for headings/titles)
+// Open Sans      = recommended for body copy
+// Oswald         = approved digital typeface (used for navbar/brand accents)
+// ---------------------------------------------------------------------------
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&display=swap');
 
-$font-family-sans-serif: "Inter", sans-serif;
-$presentation-font-size-root: 36px;
+// ---------------------------------------------------------------------------
+// SMU Brand colours
+// ---------------------------------------------------------------------------
+$smu-blue:        #141C52; // Pantone 2766 C
+$smu-gold:        #8A704C; // Pantone 873 C
+$smu-blue-light:  #2a3575; // lighter blue for hovers/accents
+$smu-blue-dark:   #0d1338; // darker blue for depth
+$smu-blue-pale:   #eef0f6; // highly desaturated SMU blue, near-white (navbar bg)
+$smu-gold-light:  #a68a5f; // lighter gold for hovers/accents
+
+// ---------------------------------------------------------------------------
+// Bootstrap / Quarto theme variables
+// ---------------------------------------------------------------------------
+$primary:     $smu-blue;
+$secondary:   $smu-gold;
+$body-color:  #222222;
+$link-color:  $smu-blue;
+$link-hover-color: $smu-gold;
+
+// Fonts
+$font-family-sans-serif: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+$headings-font-family:   "Libre Franklin", "Open Sans", sans-serif;
+$headings-font-weight:   600;
+$headings-color:         $smu-blue;
+
+// Code
+$code-color:            $smu-gold;
+$code-block-bg:         #f6f6f8;
+
+// ---------------------------------------------------------------------------
+// revealjs presentation variables
+// ---------------------------------------------------------------------------
+$presentation-font-size-root:  36px;
+$presentation-heading-font:    "Libre Franklin", "Open Sans", sans-serif;
+$presentation-heading-color:   $smu-blue;
+$presentation-selection-background-color: $smu-gold;
 
 /*-- scss:rules --*/
 
+// ---------------------------------------------------------------------------
+// Website: navbar (SMU blue with gold accents)
+// ---------------------------------------------------------------------------
+.navbar {
+  background-color: $smu-blue-pale !important;
+}
+
+.navbar-title {
+  font-family: "Oswald", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: $smu-blue;
+}
+
+// Brand/title link + toggler icon on the pale background
+.navbar .navbar-brand,
+.navbar .navbar-brand:hover {
+  color: $smu-blue;
+}
+
+.navbar .navbar-nav .nav-link {
+  color: $smu-blue !important;
+
+  &:hover,
+  &:focus {
+    color: $smu-gold !important;
+  }
+}
+
+.navbar .navbar-nav .nav-link.active {
+  color: $smu-blue !important;
+  font-weight: 600;
+  border-bottom: 2px solid $smu-gold;
+}
+
+// ---------------------------------------------------------------------------
+// Website: headings, links, accents
+// ---------------------------------------------------------------------------
+h1, h2, h3, h4, h5, h6 {
+  color: $smu-blue;
+}
+
+h1, h2 {
+  border-bottom: 1px solid rgba($smu-gold, 0.35);
+  padding-bottom: 0.25rem;
+}
+
+a {
+  color: $smu-blue;
+
+  &:hover {
+    color: $smu-gold;
+  }
+}
+
+// Title block on the front / chapter pages
+.quarto-title-block .quarto-title .title {
+  color: $smu-blue;
+}
+
+// Sidebar (table of contents + resources)
+.sidebar-item .sidebar-item-container .active,
+.sidebar nav[role="doc-toc"] ul > li > a.active,
+#TOC a.active {
+  color: $smu-gold !important;
+  border-left-color: $smu-gold !important;
+}
+
+// Callouts / blockquotes get a gold accent bar
+blockquote {
+  border-left: 4px solid $smu-gold;
+}
+
+// Buttons
+.btn-primary {
+  background-color: $smu-blue;
+  border-color: $smu-blue;
+
+  &:hover,
+  &:focus {
+    background-color: $smu-blue-light;
+    border-color: $smu-blue-light;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// revealjs slides (existing rules preserved + SMU touches)
+// ---------------------------------------------------------------------------
 .reveal code.sourceCode {
     font-size: 1.5em;
 }
@@ -28,6 +156,30 @@ $presentation-font-size-root: 36px;
   height: 200px;
 }
 
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+  color: $smu-blue;
+}
+
+// Gold underline accent on slide titles
+.reveal .slide h1,
+.reveal .slide h2 {
+  border-bottom: 2px solid $smu-gold;
+  padding-bottom: 0.2em;
+}
+
+.reveal a {
+  color: $smu-gold;
+}
+
+.reveal .footer {
+  color: $smu-blue;
+}
+
+// ---------------------------------------------------------------------------
+// Citations / references
+// ---------------------------------------------------------------------------
 div.csl-entry {
     clear: both;
     margin-bottom: 1em;
@@ -39,5 +191,5 @@ div.csl-block {
 }
 
 details>summary {
-    color: darkorange;
+    color: $smu-gold;
 }
