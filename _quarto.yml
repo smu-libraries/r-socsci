@@ -26,12 +26,7 @@ website:
           text: "Past workshop - AY 24/25 Term 1 (Aug - Sep)"
         - href: "https://bellaratmelia.github.io/2025-01-Rworkshop/"
           text: "Past workshop - AY 24/25 Term 2 (Jan - Feb)"
-        
-  google-analytics:
-    tracking-id: "G-G5L1RGYC4H"
-    anonymize-ip: true
-    storage: none
-
+          
 format:
   html:
     theme: 

@@ -117,11 +117,11 @@ glimpse(wvs_cleaned)
 
 The $X^2$ test of independence evaluates whether there is a statistically significant relationship between two categorical variables.
 
-This is done by analyzing the frequency table (i.e., contingency table) formed by two categorical variables.
+This is done by analyzing the frequency table (i.e., contingency table) formed by two categorical variables.
 
 **Example**: Is there a relationship between `education` level and `income_level` in our WVS data?
 
-Typically, we can start with the contigency table first, and then the visualization
+Typically, we can start with the contingency table first, and then the visualization
 
 ```{r}
 #| echo: true
@@ -130,7 +130,7 @@ table(wvs_cleaned$education, wvs_cleaned$income_level)
 
 ## Chi-square test of independence - visualizing data
 
-We can use percent-stacked barchart to visualize this (remember from last week!)
+We can use percent-stacked bar chart to visualize this (remember from last week!)
 
 ```{r}
 #| echo: true
