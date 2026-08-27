@@ -35,7 +35,7 @@ Teaching Assistants:
 |------------------|------------------|------------------|--------------------|
 | \~ | Before the workshop | Preparation | Complete the [Pre-workshop activities](#pre-workshop-activities) |
 | 1 | 21 Aug 2026 |[**Introduction to R and RStudio**](01-intro.html) | Learn about setting up RStudio, basic data types and structures in R, and importing data files. |
-| 2 | 28 Aug 2026 | **Data wrangling with tidyverse** | Learn about manipulating data with tidyverse, including filtering, selecting, mutating, and grouping data. |
+| 2 | 28 Aug 2026 | [**Data wrangling with tidyverse**](02-tidyverse.html) | Learn about manipulating data with tidyverse, including filtering, selecting, mutating, and grouping data. |
 | 3 | 4 Sep 2026 | **Data visualization and Descriptive Statistics** | Learn about creating visualizations with ggplot2 and calculating descriptive statistics like mean, median, etc. |
 | 4 | 11 Sep 2026 | **Basic Inferential Tests** | Learn about conducting t-tests, chi-square tests, ANOVA, and interpreting statistical results in R. |
 | 5 | 18 Sep 2026 | **Regression and Presenting Your Result** | Learn about regression and various useful packages to generate your result table. |
