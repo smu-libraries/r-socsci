@@ -9,7 +9,12 @@ format: revealjs
 Today extends Session 4's map: now the **type of your outcome** picks your model.
 
 1.  Linear regression — for **continuous** outcomes
+    * one continuous predictor
+    * multiple continuous predictor
+    * one categorical predictor
 2.  Logistic regression — for **binary** (yes/no) outcomes
+    * one continuous predictor
+    * one categorical predictor
 3.  Presenting & reporting your results
 4.  *(bonus)* Quarto show-and-tell
 
@@ -23,30 +28,24 @@ Today extends Session 4's map: now the **type of your outcome** picks your model
 
 3.  Double click on the file. Rstudio should launch with your project loaded!
 
-## Install and load extra packages we need today
+## Set up for today
 
-1.  Type the following line in your R console (bottom left section). Type them one by one.
+Today's main flow runs on **tidyverse + huxtable** (for result tables). `car` and `DescTools` (from Session 1) are each used once via the `car::` / `DescTools::` prefix.
 
-    - `install.packages("apaTables")`
-    - `install.packages("huxtable")`
-    - `install.packages("gtsummary")`
-    - `install.packages("car")`
-
-2.  Create a new R script called `session-5.R`
-
-3.  Paste the following lines into the script:
+1.  Create a new R script called `session-5.R`
+2.  Paste this in:
 
 ```{r}
 #| echo: true
+#| message: false
 
-# loading the packages
-library(apaTables)
-library(huxtable)
-library(gtsummary)
-library(car)
 library(tidyverse)
-
+library(huxtable)   # for presenting regression tables
 ```
+
+::: {.callout-note appearance="simple"}
+`gtsummary` and `apaTables` produce prettier tables but have heavier dependencies — they're **optional**, with examples in the appendix. `huxtable` is lighter, and it's all we need today.
+:::
 
 ## Load our data for today!
 
@@ -68,8 +67,6 @@ wvs_cleaned <- wvs_cleaned |>
 # peek at the data, pay attention to the data types!
 glimpse(wvs_cleaned)
 ```
-
-# The map, extended
 
 ## From tests to models
 
@@ -159,15 +156,6 @@ Here is one possible way to narrate your result:
 
 > The model was statistically significant (F(1, 5100) = 256.13, p \< 0.001) but explained only about 4.8% of the variance in life satisfaction (R² = 0.048).
 
-## Present your regression result - huxtable
-
-```{r}
-#| echo: true
-
-huxreg("life satisfaction" = life_model1)
-
-```
-
 ## Linear Regression: Multiple continuous predictors
 
 **Research Question:** Do a person's **financial satisfaction** and **secular values** affect their **life satisfaction**?
@@ -190,22 +178,6 @@ summary(life_model2)
 
 > The model was statistically significant (F(2, 5099) = 1405.49, p \< 0.001) and explained about 35.5% of the variance in life satisfaction (R² = 0.355).
 
-## Present your regression result - tbl_regression() from gtsummary
-
-```{r}
-#| echo: true
-
-life_model2 |> tbl_regression() |> bold_p()
-```
-
-::: {.callout-tip appearance="simple" title="Saving a gtsummary / gt table"}
-These tables render in RStudio's **Viewer** pane (lower-right). Select the table, copy (Ctrl/Cmd + C), and paste straight into Word or Google Docs.
-:::
-
-::: aside
-More on `tbl_regression()` by `gtsummary`: <https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html>
-:::
-
 ## Reporting result: A sample regression table
 
 ::::: columns
@@ -225,27 +197,23 @@ These are: the number of observations ($N$), the coefficients (B = unstandardize
 - [APA recommended format](https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-tables#regression)
 :::
 
-## Presenting your models {.scrollable}
+## Presenting your results with huxtable {.scrollable}
 
-If you get an error saying "huxreg not found", you may need to:
-
-1.  Install the library by running this line in your terminal: `install.packages("huxtable")`
-
-2.  And then load them to your script with this line: `library(huxtable)`
-
-For more info about huxreg, go here: <https://cran.r-project.org/web/packages/huxtable/vignettes/huxreg.html>
+`huxreg()` turns one or more models into a clean, copy-pasteable table — put several side by side to compare them:
 
 ```{r}
 #| echo: true
 #| output-location: slide
 
-huxreg("life_satisfaction (model1)" = life_model1, 
-       "life_satisfaction (model2)" = life_model2,
-       number_format = 4,
+huxreg("model 1" = life_model1, "model 2" = life_model2,
        bold_signif = 0.05,
-       statistics = c( "R squared" = "r.squared", "N" = "nobs", "F" = "statistic",
-      "P value" = "p.value"))
+       statistics = c("R squared" = "r.squared", "N" = "nobs",
+                      "F" = "statistic", "P value" = "p.value"))
 ```
+
+::: {.callout-tip appearance="simple"}
+For a single model, just `huxreg(life_model1)`. The table appears in RStudio's **Viewer** pane — select it, copy (Ctrl/Cmd + C), and paste into Word or Google Docs.
+:::
 
 ## FYI: Multicollinearity
 
@@ -266,26 +234,22 @@ car::vif(life_model2)
 
 ## Linear Regression: One categorical predictor
 
-**Research Question**: Explore the difference in life satisfaction between age groups
+**Research Question**: Explore the difference in life satisfaction between countries
 
 - The outcome/DV ($Y$): `life_satisfaction`
-- The predictor/IV ($X$): `age_group`
+- The predictor/IV ($X$): `country` — an **unordered** categorical variable (the countries have no inherent order)
 
 ::: callout-note
-Before proceeding with analysis, ensure that all the categorical variables involved are cast as factors!
+Before proceeding with analysis, ensure that all the categorical variables involved are cast as factors! (We already did this in the load-data step.)
 :::
 
 ```{r}
 #| echo: true
 
-# put the age groups in ascending order so the youngest group (18-28)
-# becomes the reference category
-wvs_cleaned <- wvs_cleaned |>
-    mutate(age_group = factor(age_group,
-                              levels = c("18-28", "29-44", "45-60", "61+")))
-
+# country is already a factor from our load-data step — no ordering needed,
+# since it's a nominal (unordered) variable
 str(wvs_cleaned$life_satisfaction)
-str(wvs_cleaned$age_group)
+str(wvs_cleaned$country)
 ```
 
 ## Continuing the analysis
@@ -294,46 +258,37 @@ The analysis summary should look like this:
 
 ```{r}
 #| echo: true
-life_model3 <- lm(life_satisfaction ~ age_group, data = wvs_cleaned)
+life_model3 <- lm(life_satisfaction ~ country, data = wvs_cleaned)
 summary(life_model3)
 ```
 
 - When interpreting a categorical predictor in regression, one category is treated as the reference category, which serves as the baseline for comparison. In this case, the reference category corresponds to the intercept.
 
-- By default, the first category in the data is used as the reference category, unless specified.
+- By default, the first category in the data is used as the reference — here that's **Turkey**, so each coefficient is a country's difference from Turkey.
+
+::: {.callout-tip appearance="simple"}
+Sound familiar? This is the same comparison a **one-way ANOVA** makes (Session 4) — a one-way ANOVA *is* a linear regression with a single categorical predictor.
+:::
 
 ## Narrating the result
 
 Here is one possible way to narrate your result:
 
-> A linear regression analysis was conducted to examine how age groups predict life satisfaction. With the youngest age group (18-28) as the reference group (intercept = 7.02, SE = 0.06), the pattern was mixed. The 29-44 age group scored 0.14 units lower, though this difference was not statistically significant (SE = 0.07, p = 0.065). The 45-60 age group scored 0.18 units lower (SE = 0.08, p = 0.023), while the oldest 61+ age group scored 0.22 units higher (SE = 0.11, p = 0.044) than the reference group.
+> A linear regression analysis was conducted to examine how country predicts life satisfaction, with **Turkey as the reference group** (intercept = 6.48, SE = 0.06). Compared to Turkey, respondents in Indonesia reported significantly higher life satisfaction (B = 1.15, SE = 0.08, p \< 0.001), as did those in Malaysia (B = 0.51, SE = 0.08, p \< 0.001). Hong Kong SAR scored slightly higher, but the difference was not statistically significant (B = 0.14, SE = 0.08, p = 0.084).
 
-> The model was statistically significant (F(3, 5098) = 5.86, p \< 0.001) but explained less than 1% of the variance in life satisfaction (R² = 0.003, Adjusted R² = 0.003).
-
-## Presenting the regression table {.scrollable}
-
-```{r}
-#| echo: true
-#| output-location: slide
-
-huxreg("life satisfaction (model3)" = life_model3,
-       number_format = 4,
-       bold_signif = 0.05,
-       statistics = c( "R squared" = "r.squared", "N" = "nobs", "F" = "statistic",
-      "P value" = "p.value"))
-```
+> The model was statistically significant (F(3, 5098) = 88.22, p \< 0.001) but explained only about 4.9% of the variance in life satisfaction (R² = 0.049).
 
 ## Categorical predictor: changing the reference
 
-Let's change the reference category for `age_group` variable to "61+".
+Let's change the reference category for `country` to "Malaysia" (our neighbour!).
 
 ```{r}
 #| echo: true
 
-wvs_cleaned <- wvs_cleaned |> 
-    mutate(age_group = relevel(age_group, ref = "61+"))
+wvs_cleaned <- wvs_cleaned |>
+    mutate(country = relevel(country, ref = "Malaysia"))
 
-str(wvs_cleaned$age_group)
+str(wvs_cleaned$country)
 ```
 
 Re-run the analysis with the new reference category
@@ -341,23 +296,23 @@ Re-run the analysis with the new reference category
 ```{r}
 #| echo: true
 #| output-location: slide
-life_model3a<- lm(life_satisfaction ~ age_group, data = wvs_cleaned)
+life_model3a <- lm(life_satisfaction ~ country, data = wvs_cleaned)
 summary(life_model3a)
 ```
 
 ## Changing baseline category for ordered factor
 
-Assuming we have a column with ordered factor in our data called `education` with the level of `Primary`, `Secondary`, and `Tertiary`. This is how we can change the order, if we want to put `Secondary` before `Primary`.
+`income_level` is naturally **ordered**: `Low` < `Medium` < `High`. This is how we set (or change) that ordering explicitly as an ordered factor — put the levels in the sequence you want:
 
 ``` r
-wvs_cleaned <- wvs_cleaned |> 
-    mutate(education = factor(education, 
-                         levels = c("Secondary", "Primary", "Tertiary"), 
+wvs_cleaned <- wvs_cleaned |>
+    mutate(income_level = factor(income_level,
+                         levels = c("Low", "Medium", "High"),
                          ordered = TRUE))
 ```
 
-::: {.callout-note appearance="simple" title="Releveling ordered factor"}
-Previously, we could use the `relevel()` function to change the reference category for ordered factors. However, in recent R versions, this no longer works for ordered factors, so we now use the method shown in the code above. The `relevel()` function still works for unordered factors.
+::: {.callout-important appearance="simple" title="Ordered factors behave differently in regression"}
+This slide is about **reordering the levels** of an ordered factor. But be careful: an **ordered** factor doesn't have a "reference category" the way an unordered one does. In a regression, R codes it with **polynomial contrasts** (you'll see coefficients labelled `.L`, `.Q`, `.C` — linear/quadratic/cubic trends), *not* "difference from a baseline group". So if you want the **"difference from a reference group"** interpretation we've been using, keep the factor **unordered** and just `relevel()` it (as we did for `country`).
 :::
 
 ## Let's try this Linear Regression exercise! (5 mins)
@@ -372,6 +327,38 @@ Create a regression model called `life_model4` that predicts the `life_satisfact
 life_model4 <- lm(life_satisfaction ~ sex, data = wvs_cleaned)
 summary(life_model4)
 ```
+
+## Wait — how is this different from t-tests and ANOVA? 
+
+*In case anyone's been wondering the same thing!* You don't need this to run any analysis today — it's just the "why" for the curious. Here's the intuition:
+
+- **t-tests & ANOVA** are framed around **comparing** group means — *"are these groups different?"*
+- **Correlation** is framed around the **strength & direction of a relationship** — *"do these two move together, and how tightly?"* (symmetric — no outcome vs. predictor)
+- **Regression** is framed around **predicting** an outcome from predictors — *"what's the relationship, and how big is it?"*
+
+They all belong to the **general linear model** family; they differ mainly in the *types of variables* they take and the *question they're framed around*. In fact, **t-tests and ANOVA are special cases of linear regression**
+
+## How they're all equivalent to regression
+
+| Traditional test | Equivalent regression | Gives the... |
+|---|---|---|
+| Two-group t-test | `lm(y ~ binary_group)` | same **p-value** |
+| One-way ANOVA | `lm(y ~ multi_level_group)` | same **F-statistic & p-value** |
+| Correlation | `lm(y ~ continuous_x)` | same **p-value** |
+
+::: {.callout-tip appearance="simple"}
+A traditional ANOVA runs an *omnibus* test — *"does **any** group differ?"* — so you need a post-hoc test (Tukey's, from Session 4) to find out *which*. Regression instead hands you **specific coefficients**: each one is a group's difference from the **reference** category, directly. The underlying math is roughly the same!
+:::
+
+::: aside
+Want to dig deeper? [This StackExchange thread](https://stats.stackexchange.com/questions/403517/t-test-anova-or-regression-whats-the-difference){target="_blank"} and StatQuest's [*General Linear Models Pt. 2: t-tests and ANOVA*](https://www.youtube.com/watch?v=NF5_btOaCig){target="_blank"} both explain why these are the same model.
+:::
+
+## So which one should I use?
+
+- **Any of them** — pick the framing that fits your **question** and what your **reader** expects (many fields/professors expect a "t-test" or "ANOVA" for a group comparison).
+- **Regression** is the most general, flexible member of the family: many predictors, continuous + categorical mixed, and interactions.
+- And **logistic regression** extends the very same idea to *binary* outcomes — which is exactly where we're headed next.
 
 # Binary Logistic Regression
 
@@ -452,17 +439,8 @@ exp(coef(life_model5))
 
 ```
 
-We can also use `tbl_regression()` to do this for us:
-
-```{r}
-#| echo: true
-library(gtsummary)
-life_model5 |> tbl_regression(exponentiate = TRUE) |> 
-    bold_p() 
-```
-
-::: aside
-More on `tbl_regression()` by `gtsummary`: <https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html>
+::: {.callout-tip appearance="simple"}
+`exp(coef(model))` is all you need to turn the log-odds into **odds ratios** — the numbers you actually report. (A formatted table version using `tbl_regression()` is in the appendix.)
 :::
 
 ## Model significance (χ²) and R² for logistic
@@ -497,6 +475,7 @@ More on interpreting Odds Ratio: <https://stats.oarc.ucla.edu/other/mult-pkg/faq
 
 ## Recap - why do I need to report these?
 
+::: incremental
 - χ² (Chi-squared) goodness of fit tests whether your model fits the data significantly better than a null model (model with no predictors).
 
 - "Standard" R-squared isn't typically reported for logistic regression because it's not as meaningful as it is in linear regression. But we do still want to see how much of the variance in the data can be explained by the model.
@@ -504,6 +483,8 @@ More on interpreting Odds Ratio: <https://stats.oarc.ucla.edu/other/mult-pkg/faq
 - Pseudo R-squared tries to mimic traditional R-squared by showing how much of the variation in the outcome your model explains, but it's adjusted to work with binary outcomes. It's sort of answering the question of "How well does my model explain the data?"
 
 - It is possible to have a significant χ² (meaning your model is statistically significant and better than nothing) but a low Pseudo R-squared (showing it still doesn't explain much variation). This isn't contradictory - it just means your model is better than random guessing but there's still a lot of unexplained variation. (Pretty common in social sciences; after all, human behaviours are complex!)
+
+:::
 
 ## FYI - IRL sample of reporting Logistic Regression
 
@@ -517,48 +498,26 @@ In a nutshell, you will most likely have to mention the p-value, the coefficient
 The screenshot is retrieved from <https://statistics.laerd.com/spss-tutorials/binomial-logistic-regression-using-spss-statistics.php>
 :::
 
-## Regression tables
-
-Even with huxtable, you may need to edit the table further to include the missing stats
-
-```{r}
-#| echo: true
-
-huxreg("life_satisfaction" = life_model5, statistics = c("R2" = "r.squared", "logLik", "AIC"))
-```
-
 ## Binary Logistic Regression: One Categorical Predictor
 
-**Research Question**: Does **education level** affect the likelihood of being satisfied with life?
+**Research Question**: Does **marital status** affect the likelihood of being satisfied with life?
 
 - The outcome/DV ($Y$): `satisfied`
-- The predictor/IV ($X$): `education` - let's set "Lower" as the reference category!
+- The predictor/IV ($X$): `marital_status` - let's set "Single" as the reference category!
 
 ```{r}
 #| echo: true
 #| output-location: slide
 
 wvs_cleaned <- wvs_cleaned |>
-    mutate(education = relevel(education, ref = "Lower"))
+    mutate(marital_status = relevel(marital_status, ref = "Single"))
 
-life_model6 <- glm(satisfied ~ education,
+life_model6 <- glm(satisfied ~ marital_status,
                       family = "binomial",
                       data = wvs_cleaned)
 
 summary(life_model6)
 exp(coef(life_model6))
-```
-
-## Exponentiate the coefficients
-
-If you recall the formula, the results are expressed in Logit Probability. As we typically report the result in terms of Odd Ratios (OR), perform exponentiation on the coefficients.
-
-```{r}
-#| echo: true
-
-library(gtsummary)
-life_model6 |> tbl_regression(exponentiate = TRUE) |>  
-    bold_p()
 ```
 
 ## Get the χ² and R²
@@ -577,23 +536,28 @@ DescTools::PseudoR2(life_model6,
 
 *(The intercept isn't typically interpreted as an odds ratio, so we'll ignore that for now)*
 
-> A logistic regression was performed to ascertain the effects of education level on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ² (2, N = \[N\]) = \[χ²\], p \< .001.
+> A logistic regression was performed to ascertain the effects of marital status on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ²(5, N = 5102) = 43.9, p \< .001.
 
-> The model explained \[Nagelkerke R²\]% (Nagelkerke R²) of the variance in life satisfaction. Compared to respondents with lower education (reference group), those with middle education had \[higher/lower\] odds of life satisfaction (OR = \[OR\], 95% CI \[\[lower\], \[upper\]\], p = \[p\]), and those with higher education had \[higher/lower\] odds of life satisfaction (OR = \[OR\], 95% CI \[\[lower\], \[upper\]\], p = \[p\]).
+> The model explained about 1.2% of the variance in life satisfaction (Nagelkerke R² ≈ 0.012 — read it off the `PseudoR2()` output). Compared to **single** respondents (the reference group), **married** respondents had significantly higher odds of being satisfied with life (OR = 1.47, 95% CI \[1.29, 1.67\], p \< .001) — roughly 47% higher odds. None of the other categories (widowed, divorced, separated, or living together) differed significantly from single respondents (all p \> .05).
 
 ::: aside
 More on logistic regression: <https://stats.oarc.ucla.edu/r/dae/logit-regression/>
 :::
 
-## Present both models in a table {.scrollable}
+## Presenting logistic results with huxtable {.scrollable}
 
-Note that the R-squared is missing here, so be sure to put that in when you paste this table to your document.
+`huxreg()` works for `glm()` models too — here comparing both logistic models:
 
 ```{r}
 #| echo: true
-library(huxtable)
-huxreg(life_model5, life_model6)
+#| output-location: slide
+
+huxreg("freedom of choice" = life_model5, "marital status" = life_model6)
 ```
+
+::: {.callout-note appearance="simple"}
+Heads-up: `huxreg()` shows the **raw log-odds** coefficients for a `glm`, *not* odds ratios — remember `exp(coef(model))` for the ORs you report. It also omits pseudo-R², so note that separately from `PseudoR2()`.
+:::
 
 ## Let's try this Logistic Regression exercise! (5 mins)
 
@@ -674,25 +638,14 @@ Over five sessions you've learned to import, wrangle, visualize, and run real in
 So what's *your* job now? The parts the AI **can't be accountable for**:
 
 ::: incremental
-- **Choosing** the right test for your variables — and being able to say *why* (remember the map!).
-- **Checking** whether the result can be trusted — assumptions, sample size, plain common sense.
-- **Interpreting** the output honestly — a significant p-value isn't proof, and a non-significant one isn't "no effect".
+- **Define** the research questions and thus test for your variables — and being able to say *why*.
+- **Checking** whether the result can be reasonably trusted — assumptions, sample size, plain common sense.
+- **Interpreting** the output honestly.
 - **Disclosing** the limitations plainly, even when they're inconvenient.
 :::
 
 When your professor, a reviewer, or a future employer asks *"why did you run this analysis, and can I trust it?"* — **"Claude/ChatGPT told me to"** is not a defensible answer. **You** are accountable for the work that carries your name.
 
-## The tools change; the thinking is yours
-
-::: incremental
-- Let AI handle the **syntax** — that's the cheap, replaceable part now.
-- *You* own the **judgement**: the choices, the checks, the honest interpretation and reporting.
-- That judgement is exactly what we've been building this whole workshop — and it's what will still matter long after today's tools have been replaced by something newer.
-:::
-
-::: {.callout-tip appearance="simple"}
-Treat AI as a **capable assistant you supervise**, not an oracle you obey. Always verify what it hands you against what you now know how to check yourself. That habit is what separates an analyst from someone who just runs code.
-:::
 
 # Thank you for your participation 😄
 
@@ -718,16 +671,41 @@ Scan the QR Code below to assess your understanding of regression analysis and r
 
 Please scan this QR code or click on the link below to fill in the post-workshop survey. It should not take more than 2-3 minutes.
 
-Survey link: <https://smusg.asia.qualtrics.com/jfe/form/SV_862Si6NAqkbWbPM>
+Survey link: <https://smusg.asia.qualtrics.com/jfe/form/SV_9Xhn2NY4vkA4GaO>
 
 ![](images/post-workshop-qrcode.png){width="500"}
 
 # Appendix
 
-- More table packages (apaTables, gtsummary summary tables)
+- Prettier tables with gtsummary & apaTables
+- gtsummary summary tables
 - Computing the logistic χ² by hand
 - Other pseudo-R² methods
 - R Scripts vs Quarto
+
+::: {.callout-note appearance="simple"}
+We used **huxtable** in the main session. These `gtsummary` / `apaTables` alternatives produce nicer output but have heavier dependencies — the code here is shown **for reference, not executed** — run it live in RStudio (after `install.packages()` + `library()`) to see the tables.
+:::
+
+## Presenting regression tables: gtsummary (`tbl_regression`)
+
+`tbl_regression()` makes clean, publication-style tables. For logistic models, `exponentiate = TRUE` reports **odds ratios**:
+
+```{r}
+#| echo: true
+#| eval: false
+library(gtsummary)
+
+# linear model
+life_model2 |> tbl_regression() |> bold_p()
+
+# logistic model — odds ratios
+life_model5 |> tbl_regression(exponentiate = TRUE) |> bold_p()
+```
+
+::: {.callout-tip appearance="simple"}
+These render in RStudio's **Viewer** pane — select the table, copy (Ctrl/Cmd + C), and paste into Word or Google Docs.
+:::
 
 ## Table packages: apaTables
 
@@ -753,7 +731,7 @@ Example: mean-differences table grouped by `sex`
 
 ```{r}
 #| echo: true
-#| output-location: slide
+#| eval: false
 
 library(gtsummary)
 
