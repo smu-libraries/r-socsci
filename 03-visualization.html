@@ -6,8 +6,8 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.25">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Bella Ratmelia &amp; Wei Xia">
   <title>Introductory R for Social Sciences – Session 3: Data Visualization and Descriptive Stats</title>
@@ -17,10 +17,16 @@
   <link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -95,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-49bde94825fa39fb910dd92406f11d8e.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-db9fb2c476e95c10b06df965ef225302.css">
   <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -188,9 +194,7 @@
     }
   </style>
   <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
-
   <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -202,7 +206,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Bella Ratmelia &amp; Wei Xia 
+Bella Ratmelia &amp; Wei Xia
 </div>
 </div>
 </div>
@@ -247,20 +251,20 @@ Bella Ratmelia &amp; Wei Xia
 <h2>Refresher: Loading from CSV into a dataframe</h2>
 <p>Use <code>read_csv</code> from <code>readr</code> package (part of <code>tidyverse</code>) to load our data into a dataframe</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="co"># import tidyverse library</span></span>
-<span id="cb1-2"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-3"><a></a></span>
-<span id="cb1-4"><a></a><span class="co"># read the CSV with WVS data</span></span>
-<span id="cb1-5"><a></a>wvs_cleaned <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data-output/wvs_cleaned_v1.csv"</span>)</span>
-<span id="cb1-6"><a></a></span>
-<span id="cb1-7"><a></a><span class="co"># Convert categorical variables to factors</span></span>
-<span id="cb1-8"><a></a>columns_to_convert <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"sex"</span>, <span class="st">"marital_status"</span>, <span class="st">"urban_rural"</span>, <span class="st">"income_level"</span>, <span class="st">"education"</span>, <span class="st">"trust_people"</span>)</span>
-<span id="cb1-9"><a></a></span>
-<span id="cb1-10"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb1-11"><a></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(columns_to_convert), as_factor))</span>
-<span id="cb1-12"><a></a></span>
-<span id="cb1-13"><a></a><span class="co"># peek at the data, pay attention to the data types!</span></span>
-<span id="cb1-14"><a></a><span class="fu">glimpse</span>(wvs_cleaned)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="co"># import tidyverse library</span></span>
+<span id="cb1-2"><a aria-label="2"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a aria-label="3"></a></span>
+<span id="cb1-4"><a aria-label="4"></a><span class="co"># read the CSV with WVS data</span></span>
+<span id="cb1-5"><a aria-label="5"></a>wvs_cleaned <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data-output/wvs_cleaned_v1.csv"</span>)</span>
+<span id="cb1-6"><a aria-label="6"></a></span>
+<span id="cb1-7"><a aria-label="7"></a><span class="co"># Convert categorical variables to factors</span></span>
+<span id="cb1-8"><a aria-label="8"></a>columns_to_convert <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"sex"</span>, <span class="st">"marital_status"</span>, <span class="st">"urban_rural"</span>, <span class="st">"income_level"</span>, <span class="st">"education"</span>, <span class="st">"trust_people"</span>)</span>
+<span id="cb1-9"><a aria-label="9"></a></span>
+<span id="cb1-10"><a aria-label="10"></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span> </span>
+<span id="cb1-11"><a aria-label="11"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(columns_to_convert), as_factor))</span>
+<span id="cb1-12"><a aria-label="12"></a></span>
+<span id="cb1-13"><a aria-label="13"></a><span class="co"># peek at the data, pay attention to the data types!</span></span>
+<span id="cb1-14"><a aria-label="14"></a><span class="fu">glimpse</span>(wvs_cleaned)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="recap-descriptive-statistics" class="slide level2">
@@ -320,6 +324,23 @@ Bella Ratmelia &amp; Wei Xia
 <div class="column" style="width:50%;">
 <p><strong>Long data:</strong></p>
 <div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'kableExtra'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    group_rows</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by country and age_group.
+ℹ Output is grouped by country.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(country, age_group))` for per-operation grouping
+  (`?dplyr::dplyr_by`) instead.</code></pre>
+</div>
 <div class="cell-output-display">
 <table class="table table-striped table-bordered caption-top" style="font-size: 85%; margin-left: auto; margin-right: auto;">
 <caption>Observations (Long)</caption>
@@ -478,25 +499,25 @@ Bella Ratmelia &amp; Wei Xia
 <h2>Measures of Central Tendency</h2>
 <p>Let’s start by examining the <code>age</code> variable in our dataset.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">library</span>(DescTools)</span>
-<span id="cb2-2"><a></a><span class="co"># if you get an error, install the library first with this code:</span></span>
-<span id="cb2-3"><a></a><span class="co"># install.packages("DescTools")</span></span>
-<span id="cb2-4"><a></a></span>
-<span id="cb2-5"><a></a><span class="co"># Basic statistics</span></span>
-<span id="cb2-6"><a></a>mean_age <span class="ot">&lt;-</span> <span class="fu">mean</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-7"><a></a>median_age <span class="ot">&lt;-</span> <span class="fu">median</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-8"><a></a>mode_age <span class="ot">&lt;-</span> DescTools<span class="sc">::</span><span class="fu">Mode</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-9"><a></a></span>
-<span id="cb2-10"><a></a><span class="co"># Print results</span></span>
-<span id="cb2-11"><a></a><span class="fu">cat</span>(<span class="st">"Mean age:"</span>, mean_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) <span class="co"># cat stands for concatenate</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="fu">library</span>(DescTools)</span>
+<span id="cb5-2"><a aria-label="2"></a><span class="co"># if you get an error, install the library first with this code:</span></span>
+<span id="cb5-3"><a aria-label="3"></a><span class="co"># install.packages("DescTools")</span></span>
+<span id="cb5-4"><a aria-label="4"></a></span>
+<span id="cb5-5"><a aria-label="5"></a><span class="co"># Basic statistics</span></span>
+<span id="cb5-6"><a aria-label="6"></a>mean_age <span class="ot">&lt;-</span> <span class="fu">mean</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-7"><a aria-label="7"></a>median_age <span class="ot">&lt;-</span> <span class="fu">median</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-8"><a aria-label="8"></a>mode_age <span class="ot">&lt;-</span> DescTools<span class="sc">::</span><span class="fu">Mode</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-9"><a aria-label="9"></a></span>
+<span id="cb5-10"><a aria-label="10"></a><span class="co"># Print results</span></span>
+<span id="cb5-11"><a aria-label="11"></a><span class="fu">cat</span>(<span class="st">"Mean age:"</span>, mean_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) <span class="co"># cat stands for concatenate</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Mean age: 41.05292 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">cat</span>(<span class="st">"Median age:"</span>, median_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="fu">cat</span>(<span class="st">"Median age:"</span>, median_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Median age: 39 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">cat</span>(<span class="st">"Most frequently occuring age:"</span>, mode_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) <span class="co"># this is here just for demo purposes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a><span class="fu">cat</span>(<span class="st">"Most frequently occuring age:"</span>, mode_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) <span class="co"># this is here just for demo purposes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Most frequently occuring age: 55 </code></pre>
 </div>
@@ -510,28 +531,28 @@ Bella Ratmelia &amp; Wei Xia
 <section id="measures-of-variability-or-dispersion" class="slide level2">
 <h2>Measures of Variability or Dispersion</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>var_age <span class="ot">&lt;-</span> <span class="fu">var</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb8-2"><a></a>sd_age <span class="ot">&lt;-</span> <span class="fu">sd</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb8-3"><a></a>range_age <span class="ot">&lt;-</span> <span class="fu">range</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb8-4"><a></a>iqr_age <span class="ot">&lt;-</span> <span class="fu">IQR</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb8-5"><a></a></span>
-<span id="cb8-6"><a></a><span class="fu">cat</span>(<span class="st">"Variance of age:"</span>, var_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a>var_age <span class="ot">&lt;-</span> <span class="fu">var</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-2"><a aria-label="2"></a>sd_age <span class="ot">&lt;-</span> <span class="fu">sd</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-3"><a aria-label="3"></a>range_age <span class="ot">&lt;-</span> <span class="fu">range</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-4"><a aria-label="4"></a>iqr_age <span class="ot">&lt;-</span> <span class="fu">IQR</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-5"><a aria-label="5"></a></span>
+<span id="cb11-6"><a aria-label="6"></a><span class="fu">cat</span>(<span class="st">"Variance of age:"</span>, var_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Variance of age: 205.059 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">cat</span>(<span class="st">"Standard deviation of age:"</span>, sd_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a><span class="fu">cat</span>(<span class="st">"Standard deviation of age:"</span>, sd_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Standard deviation of age: 14.31988 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">cat</span>(<span class="st">"Range of age:"</span>, range_age[<span class="dv">1</span>], <span class="st">"to"</span>, range_age[<span class="dv">2</span>], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a><span class="fu">cat</span>(<span class="st">"Range of age:"</span>, range_age[<span class="dv">1</span>], <span class="st">"to"</span>, range_age[<span class="dv">2</span>], <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Range of age: 18 to 95 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">cat</span>(<span class="st">"Interquartile range of age:"</span>, iqr_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a><span class="fu">cat</span>(<span class="st">"Interquartile range of age:"</span>, iqr_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Interquartile range of age: 23 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">cat</span>(<span class="st">"between: "</span>, <span class="fu">quantile</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-label="1"></a><span class="fu">cat</span>(<span class="st">"between: "</span>, <span class="fu">quantile</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>between:  29 52</code></pre>
 </div>
@@ -546,18 +567,18 @@ Bella Ratmelia &amp; Wei Xia
 <h2>Distribution Shape</h2>
 <p>The function <code>skewness()</code> and <code>kurtosis()</code> is available through R package called <code>moments</code>. You may need to install it first before calling the library and its functions like in this code below.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">library</span>(moments)</span>
-<span id="cb18-2"><a></a><span class="co"># if you get an error, install the library first with this code:</span></span>
-<span id="cb18-3"><a></a><span class="co"># install.packages("moments")</span></span>
-<span id="cb18-4"><a></a></span>
-<span id="cb18-5"><a></a>skew_age <span class="ot">&lt;-</span> <span class="fu">skewness</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb18-6"><a></a>kurtosis_age <span class="ot">&lt;-</span> <span class="fu">kurtosis</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb18-7"><a></a></span>
-<span id="cb18-8"><a></a><span class="fu">cat</span>(<span class="st">"Skewness of age:"</span>, skew_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a><span class="fu">library</span>(moments)</span>
+<span id="cb21-2"><a aria-label="2"></a><span class="co"># if you get an error, install the library first with this code:</span></span>
+<span id="cb21-3"><a aria-label="3"></a><span class="co"># install.packages("moments")</span></span>
+<span id="cb21-4"><a aria-label="4"></a></span>
+<span id="cb21-5"><a aria-label="5"></a>skew_age <span class="ot">&lt;-</span> <span class="fu">skewness</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb21-6"><a aria-label="6"></a>kurtosis_age <span class="ot">&lt;-</span> <span class="fu">kurtosis</span>(wvs_cleaned<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb21-7"><a aria-label="7"></a></span>
+<span id="cb21-8"><a aria-label="8"></a><span class="fu">cat</span>(<span class="st">"Skewness of age:"</span>, skew_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Skewness of age: 0.4270082 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">cat</span>(<span class="st">"Kurtosis of age:"</span>, kurtosis_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a><span class="fu">cat</span>(<span class="st">"Kurtosis of age:"</span>, kurtosis_age, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Kurtosis of age: 2.492457 </code></pre>
 </div>
@@ -576,13 +597,13 @@ Bella Ratmelia &amp; Wei Xia
 <li><p>works best with data in the long format, i.e., a column for all the dimensions/measures and another column for the value for each dimension/measure.</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb22-2"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age)) <span class="sc">+</span></span>
-<span id="cb22-3"><a></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
-<span id="cb22-4"><a></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Age distribution of respondents"</span>,</span>
-<span id="cb22-5"><a></a>         <span class="at">x =</span> <span class="st">"Age"</span>,</span>
-<span id="cb22-6"><a></a>         <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
-<span id="cb22-7"><a></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-label="1"></a>wvs_cleaned <span class="sc">|&gt;</span> </span>
+<span id="cb25-2"><a aria-label="2"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age)) <span class="sc">+</span></span>
+<span id="cb25-3"><a aria-label="3"></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
+<span id="cb25-4"><a aria-label="4"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Age distribution of respondents"</span>,</span>
+<span id="cb25-5"><a aria-label="5"></a>         <span class="at">x =</span> <span class="st">"Age"</span>,</span>
+<span id="cb25-6"><a aria-label="6"></a>         <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb25-7"><a aria-label="7"></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -590,20 +611,20 @@ Bella Ratmelia &amp; Wei Xia
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="03-visualization_files/figure-revealjs/unnamed-chunk-6-1.png" width="1344"></p>
+<p><img data-src="03-visualization_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
 </figure>
 </div>
 </div>
 </div></section><section id="anatomy-of-ggplot-code" class="slide level2">
 <h2>Anatomy of ggplot code</h2>
 <p>Charts built with ggplot must include the following:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-13" data-code-line-numbers="|1|2|3|4-6|7"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-13-1" class="code-annotation-target"><a href="#annotated-cell-13-1"></a>wvs_cleaned <span class="sc">|&gt;</span></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-13-2" class="code-annotation-target"><a href="#annotated-cell-13-2"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age)) <span class="sc">+</span></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-13-3" class="code-annotation-target"><a href="#annotated-cell-13-3"></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-13-4" class="code-annotation-target"><a href="#annotated-cell-13-4"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Age distribution of respondents"</span>,</span>
-<span id="annotated-cell-13-5"><a href="#annotated-cell-13-5"></a>         <span class="at">x =</span> <span class="st">"Age"</span>,</span>
-<span id="annotated-cell-13-6"><a href="#annotated-cell-13-6"></a>         <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-13-7" class="code-annotation-target"><a href="#annotated-cell-13-7"></a>    <span class="fu">theme_minimal</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-13" data-code-line-numbers="|1|2|3|4-6|7"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-13-1" class="code-annotation-target"><a href="#annotated-cell-13-1" aria-label="1"></a>wvs_cleaned <span class="sc">|&gt;</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-13-2" class="code-annotation-target"><a href="#annotated-cell-13-2" aria-label="2"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age)) <span class="sc">+</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-13-3" class="code-annotation-target"><a href="#annotated-cell-13-3" aria-label="3"></a>    <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-13-4" class="code-annotation-target"><a href="#annotated-cell-13-4" aria-label="4"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Age distribution of respondents"</span>,</span>
+<span id="annotated-cell-13-5"><a href="#annotated-cell-13-5" aria-label="5"></a>         <span class="at">x =</span> <span class="st">"Age"</span>,</span>
+<span id="annotated-cell-13-6"><a href="#annotated-cell-13-6" aria-label="6"></a>         <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-13-7" class="code-annotation-target"><a href="#annotated-cell-13-7" aria-label="7"></a>    <span class="fu">theme_minimal</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-13" data-target-annotation="1">1</dt>
 <dd>
@@ -649,12 +670,12 @@ Bella Ratmelia &amp; Wei Xia
 <h2>Continuous Data - Boxplot</h2>
 <p>Let’s visualize the variability with boxplot to get a better sense of the spread.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb23-2"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age)) <span class="sc">+</span></span>
-<span id="cb23-3"><a></a>    <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
-<span id="cb23-4"><a></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Age distribution of respondents"</span>,</span>
-<span id="cb23-5"><a></a>         <span class="at">x =</span> <span class="st">"Age"</span>) <span class="sc">+</span></span>
-<span id="cb23-6"><a></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-label="1"></a>wvs_cleaned <span class="sc">|&gt;</span> </span>
+<span id="cb26-2"><a aria-label="2"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age)) <span class="sc">+</span></span>
+<span id="cb26-3"><a aria-label="3"></a>    <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
+<span id="cb26-4"><a aria-label="4"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Age distribution of respondents"</span>,</span>
+<span id="cb26-5"><a aria-label="5"></a>         <span class="at">x =</span> <span class="st">"Age"</span>) <span class="sc">+</span></span>
+<span id="cb26-6"><a aria-label="6"></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -662,7 +683,7 @@ Bella Ratmelia &amp; Wei Xia
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="03-visualization_files/figure-revealjs/unnamed-chunk-7-1.png" width="1344"></p>
+<p><img data-src="03-visualization_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -674,12 +695,12 @@ Bella Ratmelia &amp; Wei Xia
 <li><p>Let’s visualize the frequency distribution of survey participants by <code>country</code>:</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">fill =</span> country)) <span class="sc">+</span></span>
-<span id="cb24-2"><a></a>    <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb24-3"><a></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Participants by Country"</span>,</span>
-<span id="cb24-4"><a></a>       <span class="at">x =</span> <span class="st">"Country"</span>,</span>
-<span id="cb24-5"><a></a>       <span class="at">y =</span> <span class="st">"Participants"</span>) <span class="sc">+</span></span>
-<span id="cb24-6"><a></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-label="1"></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">fill =</span> country)) <span class="sc">+</span></span>
+<span id="cb27-2"><a aria-label="2"></a>    <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb27-3"><a aria-label="3"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Participants by Country"</span>,</span>
+<span id="cb27-4"><a aria-label="4"></a>       <span class="at">x =</span> <span class="st">"Country"</span>,</span>
+<span id="cb27-5"><a aria-label="5"></a>       <span class="at">y =</span> <span class="st">"Participants"</span>) <span class="sc">+</span></span>
+<span id="cb27-6"><a aria-label="6"></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -687,7 +708,7 @@ Bella Ratmelia &amp; Wei Xia
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="03-visualization_files/figure-revealjs/unnamed-chunk-8-1.png" width="1344"></p>
+<p><img data-src="03-visualization_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -696,12 +717,12 @@ Bella Ratmelia &amp; Wei Xia
 <p>When we want to show proportion (i.e.&nbsp;in terms of “parts of whole”), we must first quickly calculate the proportion with <code>count()</code></p>
 <p>Let’s create a new dataframe called <code>wvs_country_proportion</code> to hold this data.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>wvs_country_proportion <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb25-2"><a></a>    <span class="fu">group_by</span>(country) <span class="sc">|&gt;</span></span>
-<span id="cb25-3"><a></a>    <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> <span class="co"># count the number of participants each country</span></span>
-<span id="cb25-4"><a></a>    <span class="fu">mutate</span>(<span class="at">proportion =</span> n<span class="sc">/</span><span class="fu">sum</span>(n)) <span class="co"># calculate proportion</span></span>
-<span id="cb25-5"><a></a></span>
-<span id="cb25-6"><a></a><span class="fu">print</span>(wvs_country_proportion)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-label="1"></a>wvs_country_proportion <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span> </span>
+<span id="cb28-2"><a aria-label="2"></a>    <span class="fu">group_by</span>(country) <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a aria-label="3"></a>    <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> <span class="co"># count the number of participants each country</span></span>
+<span id="cb28-4"><a aria-label="4"></a>    <span class="fu">mutate</span>(<span class="at">proportion =</span> n<span class="sc">/</span><span class="fu">sum</span>(n)) <span class="co"># calculate proportion</span></span>
+<span id="cb28-5"><a aria-label="5"></a></span>
+<span id="cb28-6"><a aria-label="6"></a><span class="fu">print</span>(wvs_country_proportion)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
   country           n proportion
@@ -717,11 +738,11 @@ Bella Ratmelia &amp; Wei Xia
 <h2>Categorical Data - Pie chart for proportion</h2>
 <p>And then, we use this proportion table to create a pie chart by adding <code>coord_polar()</code> layer after <code>geom_bar()</code> and some changes in <code>aes()</code> and <code>geom_bar()</code></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>wvs_country_proportion <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> proportion, <span class="at">fill =</span> country)) <span class="sc">+</span></span>
-<span id="cb27-2"><a></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">width =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb27-3"><a></a>    <span class="fu">coord_polar</span>(<span class="st">"y"</span>, <span class="at">start =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb27-4"><a></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Proportion of Participants by Country"</span>) <span class="sc">+</span></span>
-<span id="cb27-5"><a></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-label="1"></a>wvs_country_proportion <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> proportion, <span class="at">fill =</span> country)) <span class="sc">+</span></span>
+<span id="cb30-2"><a aria-label="2"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">width =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb30-3"><a aria-label="3"></a>    <span class="fu">coord_polar</span>(<span class="st">"y"</span>, <span class="at">start =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb30-4"><a aria-label="4"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Proportion of Participants by Country"</span>) <span class="sc">+</span></span>
+<span id="cb30-5"><a aria-label="5"></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 
@@ -732,7 +753,7 @@ Bella Ratmelia &amp; Wei Xia
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="03-visualization_files/figure-revealjs/unnamed-chunk-10-1.png" width="1344"></p>
+<p><img data-src="03-visualization_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -743,12 +764,12 @@ Bella Ratmelia &amp; Wei Xia
 <div class="cell">
 <details class="code-fold">
 <summary>Show answer</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> financial_satisfaction)) <span class="sc">+</span></span>
-<span id="cb28-2"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">binwidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb28-3"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Financial Satisfaction"</span>,</span>
-<span id="cb28-4"><a></a>       <span class="at">x =</span> <span class="st">"Financial Satisfaction"</span>,</span>
-<span id="cb28-5"><a></a>       <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
-<span id="cb28-6"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-label="1"></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> financial_satisfaction)) <span class="sc">+</span></span>
+<span id="cb31-2"><a aria-label="2"></a>  <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">binwidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb31-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Financial Satisfaction"</span>,</span>
+<span id="cb31-4"><a aria-label="4"></a>       <span class="at">x =</span> <span class="st">"Financial Satisfaction"</span>,</span>
+<span id="cb31-5"><a aria-label="5"></a>       <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb31-6"><a aria-label="6"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 
@@ -756,7 +777,7 @@ Bella Ratmelia &amp; Wei Xia
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="03-visualization_files/figure-revealjs/unnamed-chunk-11-1.png" width="1344"></p>
+<p><img data-src="03-visualization_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -786,7 +807,7 @@ Bella Ratmelia &amp; Wei Xia
 </ul>
 <p>First, let’s create a contingency table of <code>age_group</code> and <code>country</code>!</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">table</span>(wvs_cleaned<span class="sc">$</span>age_group, wvs_cleaned<span class="sc">$</span>country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-label="1"></a><span class="fu">table</span>(wvs_cleaned<span class="sc">$</span>age_group, wvs_cleaned<span class="sc">$</span>country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       
         Turkey Hong Kong SAR Indonesia Malaysia
@@ -801,10 +822,18 @@ Bella Ratmelia &amp; Wei Xia
 <h2>Both categorical - Proportion table</h2>
 <p>We can also create a proportion table just like we did earlier</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb31-2"><a></a>  <span class="fu">group_by</span>(country, age_group) <span class="sc">|&gt;</span> </span>
-<span id="cb31-3"><a></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> <span class="co"># count the frequency of participants by age group and country </span></span>
-<span id="cb31-4"><a></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n<span class="sc">/</span><span class="fu">sum</span>(n)) <span class="co"># calculate proportion</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a aria-label="1"></a>wvs_cleaned <span class="sc">|&gt;</span> </span>
+<span id="cb34-2"><a aria-label="2"></a>  <span class="fu">group_by</span>(country, age_group) <span class="sc">|&gt;</span> </span>
+<span id="cb34-3"><a aria-label="3"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> <span class="co"># count the frequency of participants by age group and country </span></span>
+<span id="cb34-4"><a aria-label="4"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n<span class="sc">/</span><span class="fu">sum</span>(n)) <span class="co"># calculate proportion</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by country and age_group.
+ℹ Output is grouped by country.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(country, age_group))` for per-operation grouping
+  (`?dplyr::dplyr_by`) instead.</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 16 × 4
 # Groups:   country [4]
@@ -833,10 +862,10 @@ Bella Ratmelia &amp; Wei Xia
 <h2>Both categorical - Bar chart</h2>
 <p>For categorical data like this, we can use barchart to visualize the frequency distribution. Stacked bar chart can be used to visualize proportion.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">fill =</span> age_group)) <span class="sc">+</span></span>
-<span id="cb33-2"><a></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span> </span>
-<span id="cb33-3"><a></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">title =</span> <span class="st">"Age Groups by Country"</span>) <span class="sc">+</span></span>
-<span id="cb33-4"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a aria-label="1"></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">fill =</span> age_group)) <span class="sc">+</span></span>
+<span id="cb37-2"><a aria-label="2"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span> </span>
+<span id="cb37-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">title =</span> <span class="st">"Age Groups by Country"</span>) <span class="sc">+</span></span>
+<span id="cb37-4"><a aria-label="4"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -844,7 +873,7 @@ Bella Ratmelia &amp; Wei Xia
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="03-visualization_files/figure-revealjs/unnamed-chunk-14-1.png" width="1344"></p>
+<p><img data-src="03-visualization_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -852,10 +881,10 @@ Bella Ratmelia &amp; Wei Xia
 <h2>Both categorical - Stacked bar chart</h2>
 <p>Change <code>position = "dodge"</code> to <code>position = "stack"</code> to stack the bar chart</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">fill =</span> age_group)) <span class="sc">+</span></span>
-<span id="cb34-2"><a></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"stack"</span>) <span class="sc">+</span> </span>
-<span id="cb34-3"><a></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">title =</span> <span class="st">"Age Groups by Country"</span>) <span class="sc">+</span></span>
-<span id="cb34-4"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a aria-label="1"></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">fill =</span> age_group)) <span class="sc">+</span></span>
+<span id="cb38-2"><a aria-label="2"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"stack"</span>) <span class="sc">+</span> </span>
+<span id="cb38-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">title =</span> <span class="st">"Age Groups by Country"</span>) <span class="sc">+</span></span>
+<span id="cb38-4"><a aria-label="4"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -863,7 +892,7 @@ Bella Ratmelia &amp; Wei Xia
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="03-visualization_files/figure-revealjs/unnamed-chunk-15-1.png" width="1344"></p>
+<p><img data-src="03-visualization_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -872,10 +901,10 @@ Bella Ratmelia &amp; Wei Xia
 <p>To get a better sense of the proportion for each country, we can use percent stacked bar chart.</p>
 <p>The code is similar to previous bar charts; we just have to change the <code>position</code> argument to <code>position = "fill"</code></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">fill =</span> age_group)) <span class="sc">+</span></span>
-<span id="cb35-2"><a></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span> </span>
-<span id="cb35-3"><a></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Proportion"</span>, <span class="at">title =</span> <span class="st">"Age Groups by Country (in percentage)"</span>) <span class="sc">+</span></span>
-<span id="cb35-4"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a aria-label="1"></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">fill =</span> age_group)) <span class="sc">+</span></span>
+<span id="cb39-2"><a aria-label="2"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span> </span>
+<span id="cb39-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Proportion"</span>, <span class="at">title =</span> <span class="st">"Age Groups by Country (in percentage)"</span>) <span class="sc">+</span></span>
+<span id="cb39-4"><a aria-label="4"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -883,7 +912,7 @@ Bella Ratmelia &amp; Wei Xia
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="03-visualization_files/figure-revealjs/unnamed-chunk-16-1.png" width="1344"></p>
+<p><img data-src="03-visualization_files/figure-html/unnamed-chunk-16-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -896,7 +925,7 @@ Bella Ratmelia &amp; Wei Xia
 </ul>
 <p>Let’s first examine the correlation between <code>emancipative_values</code> and <code>secular_values</code></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="fu">cor</span>(wvs_cleaned<span class="sc">$</span>emancipative_values, wvs_cleaned<span class="sc">$</span>secular_values)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a aria-label="1"></a><span class="fu">cor</span>(wvs_cleaned<span class="sc">$</span>emancipative_values, wvs_cleaned<span class="sc">$</span>secular_values)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.4577163</code></pre>
 </div>
@@ -906,19 +935,22 @@ Bella Ratmelia &amp; Wei Xia
 <h2>Both continuous - Jitter / scatterplot</h2>
 <p>Let’s visualize the two variables together with a jitter / scatterplot!</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> emancipative_values, <span class="at">y =</span> secular_values)) <span class="sc">+</span></span>
-<span id="cb38-2"><a></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb38-3"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> <span class="co"># layer with geom_smooth</span></span>
-<span id="cb38-4"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Emancipative vs Secular Values"</span>) <span class="sc">+</span></span>
-<span id="cb38-5"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-label="1"></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> emancipative_values, <span class="at">y =</span> secular_values)) <span class="sc">+</span></span>
+<span id="cb42-2"><a aria-label="2"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb42-3"><a aria-label="3"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span> <span class="co"># layer with geom_smooth</span></span>
+<span id="cb42-4"><a aria-label="4"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Emancipative vs Secular Values"</span>) <span class="sc">+</span></span>
+<span id="cb42-5"><a aria-label="5"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
 <section id="both-continuous---jitter-scatterplot-output" class="slide level2 output-location-slide"><h2>Both continuous - Jitter / scatterplot</h2><div class="cell output-location-slide">
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="03-visualization_files/figure-revealjs/unnamed-chunk-18-1.png" width="1344"></p>
+<p><img data-src="03-visualization_files/figure-html/unnamed-chunk-18-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -931,13 +963,13 @@ Bella Ratmelia &amp; Wei Xia
 </ul>
 <p>Let’s do a recap from last week and get the summary stats for <code>secular_values</code> for each <code>country</code></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb39-2"><a></a>  <span class="fu">group_by</span>(country) <span class="sc">|&gt;</span> </span>
-<span id="cb39-3"><a></a>  <span class="fu">summarise</span>(</span>
-<span id="cb39-4"><a></a>    <span class="at">mean_secular =</span> <span class="fu">mean</span>(secular_values, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb39-5"><a></a>    <span class="at">median_secular =</span> <span class="fu">median</span>(secular_values, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb39-6"><a></a>    <span class="at">sd_secular =</span> <span class="fu">sd</span>(secular_values, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb39-7"><a></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a aria-label="1"></a>wvs_cleaned <span class="sc">|&gt;</span> </span>
+<span id="cb44-2"><a aria-label="2"></a>  <span class="fu">group_by</span>(country) <span class="sc">|&gt;</span> </span>
+<span id="cb44-3"><a aria-label="3"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb44-4"><a aria-label="4"></a>    <span class="at">mean_secular =</span> <span class="fu">mean</span>(secular_values, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb44-5"><a aria-label="5"></a>    <span class="at">median_secular =</span> <span class="fu">median</span>(secular_values, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb44-6"><a aria-label="6"></a>    <span class="at">sd_secular =</span> <span class="fu">sd</span>(secular_values, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb44-7"><a aria-label="7"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 4
   country       mean_secular median_secular sd_secular
@@ -953,10 +985,10 @@ Bella Ratmelia &amp; Wei Xia
 <h2>One continuous, one categorical - Boxplots</h2>
 <p>To get a better sense of how the data is varied and spread, let’s visualize them with a side-by-side boxplot</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">y =</span> secular_values)) <span class="sc">+</span></span>
-<span id="cb41-2"><a></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb41-3"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Secular Values by Country"</span>) <span class="sc">+</span></span>
-<span id="cb41-4"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a aria-label="1"></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">y =</span> secular_values)) <span class="sc">+</span></span>
+<span id="cb46-2"><a aria-label="2"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb46-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Secular Values by Country"</span>) <span class="sc">+</span></span>
+<span id="cb46-4"><a aria-label="4"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -964,7 +996,7 @@ Bella Ratmelia &amp; Wei Xia
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="03-visualization_files/figure-revealjs/unnamed-chunk-20-1.png" width="1344"></p>
+<p><img data-src="03-visualization_files/figure-html/unnamed-chunk-20-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -972,11 +1004,11 @@ Bella Ratmelia &amp; Wei Xia
 <h2>One continuous, one categorical (cont’d) - Layered boxplots and violin plots</h2>
 <p>We could also layer our boxplots with violin plots to get a better sense of the distribution of each group.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">y =</span> secular_values)) <span class="sc">+</span></span>
-<span id="cb42-2"><a></a>  <span class="fu">geom_violin</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb42-3"><a></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb42-4"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Secular Values Distribution by Country"</span>) <span class="sc">+</span></span>
-<span id="cb42-5"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a aria-label="1"></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">y =</span> secular_values)) <span class="sc">+</span></span>
+<span id="cb47-2"><a aria-label="2"></a>  <span class="fu">geom_violin</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb47-3"><a aria-label="3"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb47-4"><a aria-label="4"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Secular Values Distribution by Country"</span>) <span class="sc">+</span></span>
+<span id="cb47-5"><a aria-label="5"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -984,7 +1016,7 @@ Bella Ratmelia &amp; Wei Xia
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="03-visualization_files/figure-revealjs/unnamed-chunk-21-1.png" width="1344"></p>
+<p><img data-src="03-visualization_files/figure-html/unnamed-chunk-21-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -996,16 +1028,16 @@ Bella Ratmelia &amp; Wei Xia
 <li><p>The point-and-click way in RStudio</p></li>
 </ol>
 <p>Below is the <code>ggsave</code> way:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="co"># save the chart into an object instead of viewing it like we have been doing</span></span>
-<span id="cb43-2"><a></a>boxplot_obj <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb43-3"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age)) <span class="sc">+</span></span>
-<span id="cb43-4"><a></a>    <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
-<span id="cb43-5"><a></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Age distribution of respondents"</span>,</span>
-<span id="cb43-6"><a></a>         <span class="at">x =</span> <span class="st">"Age"</span>) <span class="sc">+</span></span>
-<span id="cb43-7"><a></a>    <span class="fu">theme_minimal</span>()</span>
-<span id="cb43-8"><a></a></span>
-<span id="cb43-9"><a></a><span class="co"># pass the saved chart into ggsave and give it a filename</span></span>
-<span id="cb43-10"><a></a><span class="fu">ggsave</span>(<span class="st">"fig-output/boxplot_1.jpg"</span>, boxplot_obj) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a aria-label="1"></a><span class="co"># save the chart into an object instead of viewing it like we have been doing</span></span>
+<span id="cb48-2"><a aria-label="2"></a>boxplot_obj <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span> </span>
+<span id="cb48-3"><a aria-label="3"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age)) <span class="sc">+</span></span>
+<span id="cb48-4"><a aria-label="4"></a>    <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"navy"</span>) <span class="sc">+</span></span>
+<span id="cb48-5"><a aria-label="5"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Age distribution of respondents"</span>,</span>
+<span id="cb48-6"><a aria-label="6"></a>         <span class="at">x =</span> <span class="st">"Age"</span>) <span class="sc">+</span></span>
+<span id="cb48-7"><a aria-label="7"></a>    <span class="fu">theme_minimal</span>()</span>
+<span id="cb48-8"><a aria-label="8"></a></span>
+<span id="cb48-9"><a aria-label="9"></a><span class="co"># pass the saved chart into ggsave and give it a filename</span></span>
+<span id="cb48-10"><a aria-label="10"></a><span class="fu">ggsave</span>(<span class="st">"fig-output/boxplot_1.jpg"</span>, boxplot_obj) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="how-to-save-your-images---point-and-click" class="slide level2">
 <h2>How to save your images - point-and-click</h2>
@@ -1024,18 +1056,21 @@ Bella Ratmelia &amp; Wei Xia
 </ul>
 <p>Facet grids are useful when we have more than two variables to visualize. However, if used excessively they may become too complex</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> emancipative_values, <span class="at">y =</span> secular_values)) <span class="sc">+</span></span>
-<span id="cb44-2"><a></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb44-3"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
-<span id="cb44-4"><a></a>  <span class="fu">facet_grid</span>(country <span class="sc">~</span> sex)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a aria-label="1"></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> emancipative_values, <span class="at">y =</span> secular_values)) <span class="sc">+</span></span>
+<span id="cb49-2"><a aria-label="2"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb49-3"><a aria-label="3"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb49-4"><a aria-label="4"></a>  <span class="fu">facet_grid</span>(country <span class="sc">~</span> sex)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
 <section id="using-facets-for-more-complex-visualization-output" class="slide level2 output-location-slide"><h2>Using Facets for more complex visualization</h2><div class="cell output-location-slide">
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="03-visualization_files/figure-revealjs/unnamed-chunk-22-1.png" width="1344"></p>
+<p><img data-src="03-visualization_files/figure-html/unnamed-chunk-22-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1083,12 +1118,12 @@ Bella Ratmelia &amp; Wei Xia
 <div class="cell">
 <details class="code-fold">
 <summary>Show answer</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> education, <span class="at">fill =</span> education)) <span class="sc">+</span></span>
-<span id="cb45-2"><a></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb45-3"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Education Level"</span>,</span>
-<span id="cb45-4"><a></a>       <span class="at">x =</span> <span class="st">"Education Level"</span>,</span>
-<span id="cb45-5"><a></a>       <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
-<span id="cb45-6"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a aria-label="1"></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> education, <span class="at">fill =</span> education)) <span class="sc">+</span></span>
+<span id="cb51-2"><a aria-label="2"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb51-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Education Level"</span>,</span>
+<span id="cb51-4"><a aria-label="4"></a>       <span class="at">x =</span> <span class="st">"Education Level"</span>,</span>
+<span id="cb51-5"><a aria-label="5"></a>       <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb51-6"><a aria-label="6"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 
@@ -1097,7 +1132,7 @@ Bella Ratmelia &amp; Wei Xia
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="03-visualization_files/figure-revealjs/unnamed-chunk-23-1.png" width="1344"></p>
+<p><img data-src="03-visualization_files/figure-html/unnamed-chunk-23-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1107,11 +1142,11 @@ Bella Ratmelia &amp; Wei Xia
 <div class="cell">
 <details class="code-fold">
 <summary>Show answer</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> freedom_of_choice, <span class="at">y =</span> sex)) <span class="sc">+</span></span>
-<span id="cb46-2"><a></a>  <span class="fu">geom_violin</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb46-3"><a></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb46-4"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Freedom of Choice Distribution by Sex"</span>) <span class="sc">+</span></span>
-<span id="cb46-5"><a></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a aria-label="1"></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> freedom_of_choice, <span class="at">y =</span> sex)) <span class="sc">+</span></span>
+<span id="cb52-2"><a aria-label="2"></a>  <span class="fu">geom_violin</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb52-3"><a aria-label="3"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb52-4"><a aria-label="4"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Freedom of Choice Distribution by Sex"</span>) <span class="sc">+</span></span>
+<span id="cb52-5"><a aria-label="5"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 
@@ -1120,7 +1155,7 @@ Bella Ratmelia &amp; Wei Xia
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="03-visualization_files/figure-revealjs/unnamed-chunk-24-1.png" width="1344"></p>
+<p><img data-src="03-visualization_files/figure-html/unnamed-chunk-24-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1129,19 +1164,7 @@ Bella Ratmelia &amp; Wei Xia
 <p>When there are more than two continuous variables to explore, correlation map is sometimes used. We can achieve this with ggplot, but it’s much easier to use the <code>corrplot()</code> function from the <code>corrplot</code> package.</p>
 <p>Let’s visualize the correlation map for these five variables. Notice the mix of positive (red) and negative (blue) correlations — for example, <code>importance_of_god</code> and <code>secular_values</code> are strongly negatively correlated.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a><span class="fu">library</span>(corrplot)</span>
-<span id="cb47-2"><a></a></span>
-<span id="cb47-3"><a></a><span class="co"># select all the columns for correlation calculation, save it to columns_for_corr</span></span>
-<span id="cb47-4"><a></a>columns_for_corr <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb47-5"><a></a>  <span class="fu">select</span>(financial_satisfaction, life_satisfaction, freedom_of_choice, importance_of_god, secular_values)</span>
-<span id="cb47-6"><a></a></span>
-<span id="cb47-7"><a></a><span class="co"># pass the columns_for_corr to cor() function, and save the result to cor_matrix</span></span>
-<span id="cb47-8"><a></a>cor_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(columns_for_corr)</span>
-<span id="cb47-9"><a></a></span>
-<span id="cb47-10"><a></a><span class="co"># visualize the cor_matrix with corrplot()!</span></span>
-<span id="cb47-11"><a></a><span class="fu">corrplot</span>(cor_matrix,</span>
-<span id="cb47-12"><a></a>         <span class="at">method =</span> <span class="st">"shade"</span>, <span class="co"># show the correlation strength as color shades</span></span>
-<span id="cb47-13"><a></a>         <span class="at">addCoef.col =</span> <span class="st">"black"</span>, <span class="at">tl.col =</span> <span class="st">"black"</span>) <span class="co"># label the coefficients</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a aria-label="1"></a><span class="fu">library</span>(corrplot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 
@@ -1149,10 +1172,24 @@ Bella Ratmelia &amp; Wei Xia
 <p>if you get an error saying “corrplot function not found” or something along that line, that means you need to install the corrplot package first! Run this line in your RStudio Console (bottom left area): <code>install.packages("corrplot")</code></p>
 </div></aside></section>
 <section id="correlation-plot-output" class="slide level2 output-location-slide"><h2>Correlation Plot</h2><div class="cell output-location-slide">
+<div class="cell-output cell-output-stderr">
+<pre><code>corrplot 0.95 loaded</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a aria-label="1"></a><span class="co"># select all the columns for correlation calculation, save it to columns_for_corr</span></span>
+<span id="cb55-2"><a aria-label="2"></a>columns_for_corr <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb55-3"><a aria-label="3"></a>  <span class="fu">select</span>(financial_satisfaction, life_satisfaction, freedom_of_choice, importance_of_god, secular_values)</span>
+<span id="cb55-4"><a aria-label="4"></a></span>
+<span id="cb55-5"><a aria-label="5"></a><span class="co"># pass the columns_for_corr to cor() function, and save the result to cor_matrix</span></span>
+<span id="cb55-6"><a aria-label="6"></a>cor_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(columns_for_corr)</span>
+<span id="cb55-7"><a aria-label="7"></a></span>
+<span id="cb55-8"><a aria-label="8"></a><span class="co"># visualize the cor_matrix with corrplot()!</span></span>
+<span id="cb55-9"><a aria-label="9"></a><span class="fu">corrplot</span>(cor_matrix,</span>
+<span id="cb55-10"><a aria-label="10"></a>         <span class="at">method =</span> <span class="st">"shade"</span>, <span class="co"># show the correlation strength as color shades</span></span>
+<span id="cb55-11"><a aria-label="11"></a>         <span class="at">addCoef.col =</span> <span class="st">"black"</span>, <span class="at">tl.col =</span> <span class="st">"black"</span>) <span class="co"># label the coefficients</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="03-visualization_files/figure-revealjs/unnamed-chunk-25-1.png" width="1344"></p>
+<p><img data-src="03-visualization_files/figure-html/unnamed-chunk-25-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1160,11 +1197,11 @@ Bella Ratmelia &amp; Wei Xia
 <h2>Correlation Plot - shorter code</h2>
 <p>We can shorten the code in the previous slide using the maggritr pipe <code>|&gt;</code> like so:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb48-2"><a></a>    <span class="fu">select</span>(financial_satisfaction, life_satisfaction, freedom_of_choice, importance_of_god, secular_values) <span class="sc">|&gt;</span></span>
-<span id="cb48-3"><a></a>    <span class="fu">cor</span>() <span class="sc">|&gt;</span></span>
-<span id="cb48-4"><a></a>    <span class="fu">corrplot</span>(<span class="at">method =</span> <span class="st">"shade"</span>, <span class="co"># show the correlation strength as color shades</span></span>
-<span id="cb48-5"><a></a>         <span class="at">addCoef.col =</span> <span class="st">"black"</span>, <span class="at">tl.col =</span> <span class="st">"black"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a aria-label="1"></a>wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb56-2"><a aria-label="2"></a>    <span class="fu">select</span>(financial_satisfaction, life_satisfaction, freedom_of_choice, importance_of_god, secular_values) <span class="sc">|&gt;</span></span>
+<span id="cb56-3"><a aria-label="3"></a>    <span class="fu">cor</span>() <span class="sc">|&gt;</span></span>
+<span id="cb56-4"><a aria-label="4"></a>    <span class="fu">corrplot</span>(<span class="at">method =</span> <span class="st">"shade"</span>, <span class="co"># show the correlation strength as color shades</span></span>
+<span id="cb56-5"><a aria-label="5"></a>         <span class="at">addCoef.col =</span> <span class="st">"black"</span>, <span class="at">tl.col =</span> <span class="st">"black"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 <p><strong>Refresher:</strong></p>
@@ -1175,7 +1212,7 @@ Bella Ratmelia &amp; Wei Xia
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="03-visualization_files/figure-revealjs/unnamed-chunk-26-1.png" width="1344"></p>
+<p><img data-src="03-visualization_files/figure-html/unnamed-chunk-26-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1397,82 +1434,6 @@ Bella Ratmelia &amp; Wei Xia
         ]
       });
     </script>
-    
-
-    <script>
-
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
-      // slide changes (different for each slide format).
-
-      (function () {
-
-        // dispatch for htmlwidgets
-
-        function fireSlideEnter() {
-
-          const event = window.document.createEvent("Event");
-
-          event.initEvent("slideenter", true, true);
-
-          window.document.dispatchEvent(event);
-
-        }
-
-    
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-
-          fireSlideEnter();
-
-    
-
-          // dispatch for shiny
-
-          if (window.jQuery) {
-
-            if (previousSlide) {
-
-              window.jQuery(previousSlide).trigger("hidden");
-
-            }
-
-            if (currentSlide) {
-
-              window.jQuery(currentSlide).trigger("shown");
-
-            }
-
-          }
-
-        }
-
-    
-
-        // hookup for slidy
-
-        if (window.w3c_slidy) {
-
-          window.w3c_slidy.add_observer(function (slide_num) {
-
-            // slide_num starts at position 1
-
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
-          });
-
-        }
-
-    
-
-      })();
-
-    </script>
-
-    
-
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")

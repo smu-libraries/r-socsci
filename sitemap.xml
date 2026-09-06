@@ -1,47 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://smu-libraries.github.io/r-socsci/supp-files/resources.html</loc>
+    <lastmod>2026-09-06T08:25:36.178Z</lastmod>
+  </url>
+  <url>
     <loc>https://smu-libraries.github.io/r-socsci/supp-files/sample-quarto.html</loc>
-    <lastmod>2026-09-06T08:15:38.379Z</lastmod>
-  </url>
-  <url>
-    <loc>https://smu-libraries.github.io/r-socsci/supp-files/exercises.html</loc>
-    <lastmod>2026-06-18T05:40:53.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://smu-libraries.github.io/r-socsci/index.html</loc>
-    <lastmod>2026-09-06T06:24:35.293Z</lastmod>
-  </url>
-  <url>
-    <loc>https://smu-libraries.github.io/r-socsci/05-more-stats.html</loc>
-    <lastmod>2026-09-06T10:46:39.770Z</lastmod>
-  </url>
-  <url>
-    <loc>https://smu-libraries.github.io/r-socsci/03-visualization.html</loc>
-    <lastmod>2026-08-13T06:26:38.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://smu-libraries.github.io/r-socsci/01-intro.html</loc>
-    <lastmod>2026-08-13T06:26:38.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://smu-libraries.github.io/r-socsci/02-tidyverse.html</loc>
-    <lastmod>2026-08-13T06:26:38.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://smu-libraries.github.io/r-socsci/04-stats.html</loc>
-    <lastmod>2026-09-06T08:08:45.876Z</lastmod>
-  </url>
-  <url>
-    <loc>https://smu-libraries.github.io/r-socsci/dataset.html</loc>
-    <lastmod>2026-07-07T09:05:57.000Z</lastmod>
+    <lastmod>2026-09-06T08:25:36.178Z</lastmod>
   </url>
   <url>
     <loc>https://smu-libraries.github.io/r-socsci/supp-files/coc.html</loc>
-    <lastmod>2026-06-18T05:40:53.000Z</lastmod>
+    <lastmod>2026-09-06T08:25:36.178Z</lastmod>
   </url>
   <url>
-    <loc>https://smu-libraries.github.io/r-socsci/supp-files/resources.html</loc>
-    <lastmod>2026-09-06T08:15:37.271Z</lastmod>
+    <loc>https://smu-libraries.github.io/r-socsci/05-more-stats.html</loc>
+    <lastmod>2026-09-06T12:35:34.232Z</lastmod>
+  </url>
+  <url>
+    <loc>https://smu-libraries.github.io/r-socsci/index.html</loc>
+    <lastmod>2026-09-06T08:25:36.177Z</lastmod>
+  </url>
+  <url>
+    <loc>https://smu-libraries.github.io/r-socsci/dataset.html</loc>
+    <lastmod>2026-09-06T08:25:36.165Z</lastmod>
+  </url>
+  <url>
+    <loc>https://smu-libraries.github.io/r-socsci/03-visualization.html</loc>
+    <lastmod>2026-09-06T08:25:36.163Z</lastmod>
+  </url>
+  <url>
+    <loc>https://smu-libraries.github.io/r-socsci/01-intro.html</loc>
+    <lastmod>2026-09-06T08:25:36.162Z</lastmod>
+  </url>
+  <url>
+    <loc>https://smu-libraries.github.io/r-socsci/04-stats.html</loc>
+    <lastmod>2026-09-06T08:25:36.163Z</lastmod>
+  </url>
+  <url>
+    <loc>https://smu-libraries.github.io/r-socsci/02-tidyverse.html</loc>
+    <lastmod>2026-09-06T08:25:36.163Z</lastmod>
+  </url>
+  <url>
+    <loc>https://smu-libraries.github.io/r-socsci/supp-files/concept-explainers.html</loc>
+    <lastmod>2026-09-06T13:37:18.020Z</lastmod>
+  </url>
+  <url>
+    <loc>https://smu-libraries.github.io/r-socsci/supp-files/exercises.html</loc>
+    <lastmod>2026-09-06T08:25:36.178Z</lastmod>
   </url>
 </urlset>

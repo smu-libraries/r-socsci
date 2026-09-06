@@ -6,8 +6,8 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.25">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Bella Ratmelia &amp; Wei Xia">
   <title>Introductory R for Social Sciences – Session 1: Introduction to R and RStudio</title>
@@ -17,10 +17,16 @@
   <link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -95,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-49bde94825fa39fb910dd92406f11d8e.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-db9fb2c476e95c10b06df965ef225302.css">
   <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -198,7 +204,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Bella Ratmelia &amp; Wei Xia 
+Bella Ratmelia &amp; Wei Xia
 </div>
 </div>
 </div>
@@ -342,7 +348,7 @@ Bella Ratmelia &amp; Wei Xia
 <h2>R Objects and Values</h2>
 <p>In this line of code:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>country_name <span class="ot">&lt;-</span> <span class="st">"Singapore"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>country_name <span class="ot">&lt;-</span> <span class="st">"Singapore"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li><p><code>"Singapore"</code> is a <strong>value</strong>. This can be either a character, numeric, or boolean data type. (more on this soon)</p></li>
@@ -405,10 +411,10 @@ Bella Ratmelia &amp; Wei Xia
 <h2>Data Types in R</h2>
 <p>The four basic data types are <strong>characters</strong>, <strong>numeric</strong>, <strong>boolean</strong>, and integer. Let’s look at examples using our WVS survey variables:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-code-line-numbers="|1|2|3|4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>country_code <span class="ot">&lt;-</span> <span class="st">"IDN"</span> <span class="co"># Character</span></span>
-<span id="cb2-2"><a></a>life_satisfaction <span class="ot">&lt;-</span> <span class="fl">8.5</span> <span class="co"># Numeric (also sometimes called Double)</span></span>
-<span id="cb2-3"><a></a>is_religious <span class="ot">&lt;-</span> <span class="cn">TRUE</span> <span class="co"># Boolean/Logical (TRUE/FALSE). case sensitive</span></span>
-<span id="cb2-4"><a></a>birth_year <span class="ot">&lt;-</span> <span class="dv">1990</span>L <span class="co"># Integer (whole numbers)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" data-code-line-numbers="|1|2|3|4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a>country_code <span class="ot">&lt;-</span> <span class="st">"IDN"</span> <span class="co"># Character</span></span>
+<span id="cb2-2"><a aria-label="2"></a>life_satisfaction <span class="ot">&lt;-</span> <span class="fl">8.5</span> <span class="co"># Numeric (also sometimes called Double)</span></span>
+<span id="cb2-3"><a aria-label="3"></a>is_religious <span class="ot">&lt;-</span> <span class="cn">TRUE</span> <span class="co"># Boolean/Logical (TRUE/FALSE). case sensitive</span></span>
+<span id="cb2-4"><a aria-label="4"></a>birth_year <span class="ot">&lt;-</span> <span class="dv">1990</span>L <span class="co"># Integer (whole numbers)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li><p>To include comments in the code, use the # character.</p></li>
@@ -420,13 +426,13 @@ Bella Ratmelia &amp; Wei Xia
 <h2>Checking data type of a variable</h2>
 <p>You can use <code>str</code> or <code>typeof</code> to check the data type of an R object.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">typeof</span>(country_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a><span class="fu">typeof</span>(country_code)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "character"</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">str</span>(is_religious) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="fu">str</span>(is_religious) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> logi TRUE</code></pre>
 </div>
@@ -437,13 +443,13 @@ Bella Ratmelia &amp; Wei Xia
 <h2>Arithmetic operations in R</h2>
 <p>You can do arithmetic operations in R. For example, let’s calculate average satisfaction scores:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>(<span class="dv">8</span> <span class="sc">+</span> <span class="dv">7</span> <span class="sc">+</span> <span class="dv">9</span>) <span class="sc">/</span> <span class="dv">3</span>  <span class="co"># Average of three satisfaction scores</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>(<span class="dv">8</span> <span class="sc">+</span> <span class="dv">7</span> <span class="sc">+</span> <span class="dv">9</span>) <span class="sc">/</span> <span class="dv">3</span>  <span class="co"># Average of three satisfaction scores</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 8</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="dv">2025</span> <span class="sc">-</span> <span class="dv">1990</span>  <span class="co"># Calculate age from birth year</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a><span class="dv">2025</span> <span class="sc">-</span> <span class="dv">1990</span>  <span class="co"># Calculate age from birth year</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 35</code></pre>
 </div>
@@ -454,22 +460,22 @@ Bella Ratmelia &amp; Wei Xia
 <p>Boolean operations in R are useful for filtering survey data. Before that, let’s look at how R evaluates simple TRUE/FALSE statements</p>
 <p>Is life_satisfaction greater than 8?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>life_satisfaction <span class="ot">&lt;-</span> <span class="fl">8.5</span> <span class="co"># assign a value of 8.5 to life_satisfaction</span></span>
-<span id="cb11-2"><a></a>life_satisfaction <span class="sc">&gt;</span> <span class="dv">8</span>  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a>life_satisfaction <span class="ot">&lt;-</span> <span class="fl">8.5</span> <span class="co"># assign a value of 8.5 to life_satisfaction</span></span>
+<span id="cb11-2"><a aria-label="2"></a>life_satisfaction <span class="sc">&gt;</span> <span class="dv">8</span>  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 <p>Is the country Indonesia?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>country_code <span class="sc">==</span> <span class="st">"IDN"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a>country_code <span class="sc">==</span> <span class="st">"IDN"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 <p>Is the country NOT Indonesia?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>country_code <span class="sc">!=</span> <span class="st">"IDN"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a>country_code <span class="sc">!=</span> <span class="st">"IDN"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
@@ -481,7 +487,7 @@ Bella Ratmelia &amp; Wei Xia
 <p><strong>AND</strong> operations (both conditions must be TRUE). In R, it is represented by ampersand <code>&amp;</code></p>
 <p>Is the country Malaysia AND is the life satisfaction more than 8?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>(country_code <span class="sc">==</span> <span class="st">"MYS"</span>) <span class="sc">&amp;</span> (life_satisfaction <span class="sc">&gt;</span> <span class="dv">8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a>(country_code <span class="sc">==</span> <span class="st">"MYS"</span>) <span class="sc">&amp;</span> (life_satisfaction <span class="sc">&gt;</span> <span class="dv">8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
@@ -494,7 +500,7 @@ Bella Ratmelia &amp; Wei Xia
 <p><strong>OR</strong> operations (at least one condition must be TRUE). In R, it is represented by pipe symbol <code>|</code></p>
 <p>Is the country Malaysia OR is the life satisfaction more than 8?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>(country_code <span class="sc">==</span> <span class="st">"MYS"</span>) <span class="sc">|</span> (life_satisfaction <span class="sc">&gt;</span> <span class="dv">8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-label="1"></a>(country_code <span class="sc">==</span> <span class="st">"MYS"</span>) <span class="sc">|</span> (life_satisfaction <span class="sc">&gt;</span> <span class="dv">8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
@@ -510,7 +516,7 @@ Bella Ratmelia &amp; Wei Xia
 </ul>
 <p>Example: <code>round()</code> function in R will round up numbers.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">round</span>(<span class="fl">3.1415926</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a><span class="fu">round</span>(<span class="fl">3.1415926</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
 </div>
@@ -520,8 +526,8 @@ Bella Ratmelia &amp; Wei Xia
 </ul>
 <p>Saving the result to an object:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>rounded_pi <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fl">3.1415926</span>)</span>
-<span id="cb23-2"><a></a><span class="fu">print</span>(rounded_pi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a>rounded_pi <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fl">3.1415926</span>)</span>
+<span id="cb23-2"><a aria-label="2"></a><span class="fu">print</span>(rounded_pi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
 </div>
@@ -542,7 +548,7 @@ Bella Ratmelia &amp; Wei Xia
 </ul>
 <p>In R:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">round</span>(<span class="fl">3.1415926</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-label="1"></a><span class="fu">round</span>(<span class="fl">3.1415926</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.14</code></pre>
 </div>
@@ -585,38 +591,38 @@ Bella Ratmelia &amp; Wei Xia
 <li><p>Inspect vectors: typeof(), str(), length()</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>countries <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Hong Kong SAR"</span>, <span class="st">"Indonesia"</span>, <span class="st">"Malaysia"</span>, <span class="st">"Hong Kong SAR"</span>, <span class="st">"Turkey"</span>)</span>
-<span id="cb27-2"><a></a>satisfaction_scores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">6</span>, <span class="dv">8</span>)</span>
-<span id="cb27-3"><a></a>urban_rural <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Urban"</span>, <span class="st">"Rural"</span>, <span class="st">"Urban"</span>, <span class="st">"Urban"</span>, <span class="st">"Rural"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-label="1"></a>countries <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Hong Kong SAR"</span>, <span class="st">"Indonesia"</span>, <span class="st">"Malaysia"</span>, <span class="st">"Hong Kong SAR"</span>, <span class="st">"Turkey"</span>)</span>
+<span id="cb27-2"><a aria-label="2"></a>satisfaction_scores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">6</span>, <span class="dv">8</span>)</span>
+<span id="cb27-3"><a aria-label="3"></a>urban_rural <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Urban"</span>, <span class="st">"Rural"</span>, <span class="st">"Urban"</span>, <span class="st">"Urban"</span>, <span class="st">"Rural"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="vector-manipulations-retrieve-and-update-items" class="slide level2">
 <h2>Vector Manipulations: Retrieve and update items</h2>
 <p>Retrieve the first country in the vector</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>countries[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-label="1"></a>countries[<span class="dv">1</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Hong Kong SAR"</code></pre>
 </div>
 </div>
 <p>Retrieves the first three satisfaction scores</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>satisfaction_scores[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-label="1"></a>satisfaction_scores[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 8 7 9</code></pre>
 </div>
 </div>
 <p>Retrieves the first and the third satisfaction scores</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>satisfaction_scores[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-label="1"></a>satisfaction_scores[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 8 9</code></pre>
 </div>
 </div>
 <p>Update the first satisfaction score</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>satisfaction_scores[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">7</span></span>
-<span id="cb34-2"><a></a><span class="fu">print</span>(satisfaction_scores)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a aria-label="1"></a>satisfaction_scores[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">7</span></span>
+<span id="cb34-2"><a aria-label="2"></a><span class="fu">print</span>(satisfaction_scores)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7 7 9 6 8</code></pre>
 </div>
@@ -635,9 +641,9 @@ Bella Ratmelia &amp; Wei Xia
 <li><p>The condition is “value must be &gt; 7”. e.g.&nbsp;if item 1 fulfils our condition, then item 1 is ‘marked’ as <code>TRUE</code>. Otherwise, it will be <code>FALSE</code></p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="co"># Create boolean vector for our condition</span></span>
-<span id="cb36-2"><a></a>criteria <span class="ot">&lt;-</span> satisfaction_scores <span class="sc">&gt;</span> <span class="dv">7</span></span>
-<span id="cb36-3"><a></a><span class="fu">print</span>(criteria)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a aria-label="1"></a><span class="co"># Create boolean vector for our condition</span></span>
+<span id="cb36-2"><a aria-label="2"></a>criteria <span class="ot">&lt;-</span> satisfaction_scores <span class="sc">&gt;</span> <span class="dv">7</span></span>
+<span id="cb36-3"><a aria-label="3"></a><span class="fu">print</span>(criteria)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE FALSE  TRUE FALSE  TRUE</code></pre>
 </div>
@@ -646,8 +652,8 @@ Bella Ratmelia &amp; Wei Xia
 <li>This line of code applies the boolean vector <code>criteria</code> to <code>satisfaction_scores</code>, and only retrieve items that fulfils the condition. i.e.&nbsp;only return TRUE value <code>criteria</code> vector</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a><span class="co"># Use the boolean vector to filter satisfaction scores</span></span>
-<span id="cb38-2"><a></a>satisfaction_scores[criteria]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a aria-label="1"></a><span class="co"># Use the boolean vector to filter satisfaction scores</span></span>
+<span id="cb38-2"><a aria-label="2"></a>satisfaction_scores[criteria]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 9 8</code></pre>
 </div>
@@ -661,15 +667,15 @@ Bella Ratmelia &amp; Wei Xia
 </ul>
 <p>Survey data often contains missing values (NA):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>financial_satisfaction <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">7</span>, <span class="cn">NA</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="cn">NA</span>, <span class="dv">7</span>)</span>
-<span id="cb40-2"><a></a></span>
-<span id="cb40-3"><a></a><span class="co"># By default, mean() will return NA if there are any NA values</span></span>
-<span id="cb40-4"><a></a><span class="fu">mean</span>(financial_satisfaction)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a aria-label="1"></a>financial_satisfaction <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">7</span>, <span class="cn">NA</span>, <span class="dv">6</span>, <span class="dv">9</span>, <span class="cn">NA</span>, <span class="dv">7</span>)</span>
+<span id="cb40-2"><a aria-label="2"></a></span>
+<span id="cb40-3"><a aria-label="3"></a><span class="co"># By default, mean() will return NA if there are any NA values</span></span>
+<span id="cb40-4"><a aria-label="4"></a><span class="fu">mean</span>(financial_satisfaction)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] NA</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="co"># Remove NA values before calculating mean by including na.rm = TRUE</span></span>
-<span id="cb42-2"><a></a><span class="fu">mean</span>(financial_satisfaction, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-label="1"></a><span class="co"># Remove NA values before calculating mean by including na.rm = TRUE</span></span>
+<span id="cb42-2"><a aria-label="2"></a><span class="fu">mean</span>(financial_satisfaction, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7.4</code></pre>
 </div>
@@ -683,12 +689,12 @@ Bella Ratmelia &amp; Wei Xia
 <li><p>You can create it by hand like so: (though more commonly you will use this to load data from external source)</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>survey_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb44-2"><a></a>    <span class="at">country =</span> <span class="fu">c</span>(<span class="st">"Indonesia"</span>, <span class="st">"Malaysia"</span>, <span class="st">"Turkey"</span>, <span class="st">"Indonesia"</span>, <span class="st">"Hong Kong SAR"</span>),</span>
-<span id="cb44-3"><a></a>    <span class="at">life_satisfaction =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">6</span>, <span class="dv">8</span>),</span>
-<span id="cb44-4"><a></a>    <span class="at">urban_rural =</span> <span class="fu">c</span>(<span class="st">"Urban"</span>, <span class="st">"Rural"</span>, <span class="st">"Urban"</span>, <span class="st">"Urban"</span>, <span class="st">"Rural"</span>)</span>
-<span id="cb44-5"><a></a>)</span>
-<span id="cb44-6"><a></a><span class="fu">print</span>(survey_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a aria-label="1"></a>survey_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb44-2"><a aria-label="2"></a>    <span class="at">country =</span> <span class="fu">c</span>(<span class="st">"Indonesia"</span>, <span class="st">"Malaysia"</span>, <span class="st">"Turkey"</span>, <span class="st">"Indonesia"</span>, <span class="st">"Hong Kong SAR"</span>),</span>
+<span id="cb44-3"><a aria-label="3"></a>    <span class="at">life_satisfaction =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">6</span>, <span class="dv">8</span>),</span>
+<span id="cb44-4"><a aria-label="4"></a>    <span class="at">urban_rural =</span> <span class="fu">c</span>(<span class="st">"Urban"</span>, <span class="st">"Rural"</span>, <span class="st">"Urban"</span>, <span class="st">"Urban"</span>, <span class="st">"Rural"</span>)</span>
+<span id="cb44-5"><a aria-label="5"></a>)</span>
+<span id="cb44-6"><a aria-label="6"></a><span class="fu">print</span>(survey_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        country life_satisfaction urban_rural
 1     Indonesia                 8       Urban
@@ -725,10 +731,20 @@ Bella Ratmelia &amp; Wei Xia
 <p>Let’s load our actual World Values Survey dataset using read_csv function.</p>
 <p>Before use read_csv install and load package tidyverse. Install the package only once and need to load the package in every session before you use it.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb46-2"><a></a></span>
-<span id="cb46-3"><a></a>wvs_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/wvs-4-countries.csv"</span>)</span>
-<span id="cb46-4"><a></a><span class="fu">head</span>(wvs_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a aria-label="1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb46-2"><a aria-label="2"></a></span>
+<span id="cb46-3"><a aria-label="3"></a>wvs_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/wvs-4-countries.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 5252 Columns: 15
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (7): country, urban_rural, income_level, sex, marital_status, education,...
+dbl (8): respondent_id, age, life_satisfaction, freedom_of_choice, emancipat...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a aria-label="1"></a><span class="fu">head</span>(wvs_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 15
   country      respondent_id   age urban_rural income_level sex   marital_status
@@ -749,37 +765,37 @@ Bella Ratmelia &amp; Wei Xia
 <section id="exploring-the-wvs-dataset" class="slide level2">
 <h2>Exploring the WVS Dataset</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-26"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-26-1" class="code-annotation-target"><a href="#annotated-cell-26-1"></a><span class="fu">dim</span>(wvs_data)</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-26-2" class="code-annotation-target"><a href="#annotated-cell-26-2"></a><span class="fu">names</span>(wvs_data)</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-26-3" class="code-annotation-target"><a href="#annotated-cell-26-3"></a><span class="fu">str</span>(wvs_data)</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-26-4" class="code-annotation-target"><a href="#annotated-cell-26-4"></a><span class="fu">summary</span>(wvs_data)</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-26-5" class="code-annotation-target"><a href="#annotated-cell-26-5"></a><span class="fu">head</span>(wvs_data, <span class="at">n=</span><span class="dv">5</span>)</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="6" onclick="event.preventDefault();">6</a><span id="annotated-cell-26-6" class="code-annotation-target"><a href="#annotated-cell-26-6"></a><span class="fu">tail</span>(wvs_data, <span class="at">n=</span><span class="dv">5</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-27"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-27-1" class="code-annotation-target"><a href="#annotated-cell-27-1" aria-label="1"></a><span class="fu">dim</span>(wvs_data)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-27-2" class="code-annotation-target"><a href="#annotated-cell-27-2" aria-label="2"></a><span class="fu">names</span>(wvs_data)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-27-3" class="code-annotation-target"><a href="#annotated-cell-27-3" aria-label="3"></a><span class="fu">str</span>(wvs_data)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-27-4" class="code-annotation-target"><a href="#annotated-cell-27-4" aria-label="4"></a><span class="fu">summary</span>(wvs_data)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-27-5" class="code-annotation-target"><a href="#annotated-cell-27-5" aria-label="5"></a><span class="fu">head</span>(wvs_data, <span class="at">n=</span><span class="dv">5</span>)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="6" onclick="event.preventDefault();">6</a><span id="annotated-cell-27-6" class="code-annotation-target"><a href="#annotated-cell-27-6" aria-label="6"></a><span class="fu">tail</span>(wvs_data, <span class="at">n=</span><span class="dv">5</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-26" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-27" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="1" data-code-annotation="1">return a vector of number of rows and columns</span>
+<span data-code-cell="annotated-cell-27" data-code-lines="1" data-code-annotation="1">return a vector of number of rows and columns</span>
 </dd>
-<dt data-target-cell="annotated-cell-26" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-27" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="2" data-code-annotation="2">inspect columns</span>
+<span data-code-cell="annotated-cell-27" data-code-lines="2" data-code-annotation="2">inspect columns</span>
 </dd>
-<dt data-target-cell="annotated-cell-26" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-27" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="3" data-code-annotation="3">inspect structure</span>
+<span data-code-cell="annotated-cell-27" data-code-lines="3" data-code-annotation="3">inspect structure</span>
 </dd>
-<dt data-target-cell="annotated-cell-26" data-target-annotation="4">4</dt>
+<dt data-target-cell="annotated-cell-27" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="4" data-code-annotation="4">print the summary stats of the entire dataframe</span>
+<span data-code-cell="annotated-cell-27" data-code-lines="4" data-code-annotation="4">print the summary stats of the entire dataframe</span>
 </dd>
-<dt data-target-cell="annotated-cell-26" data-target-annotation="5">5</dt>
+<dt data-target-cell="annotated-cell-27" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="5" data-code-annotation="5">view the first 5 rows</span>
+<span data-code-cell="annotated-cell-27" data-code-lines="5" data-code-annotation="5">view the first 5 rows</span>
 </dd>
-<dt data-target-cell="annotated-cell-26" data-target-annotation="6">6</dt>
+<dt data-target-cell="annotated-cell-27" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-cell="annotated-cell-26" data-code-lines="6" data-code-annotation="6">view the last 5 rows</span>
+<span data-code-cell="annotated-cell-27" data-code-lines="6" data-code-annotation="6">view the last 5 rows</span>
 </dd>
 </dl>
 </div>
@@ -789,32 +805,32 @@ Bella Ratmelia &amp; Wei Xia
 <h2>Basic dataframe manipulations: Retrieving values</h2>
 <p>Some basic dataframe functions before we move on to data wrangling next week:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-27"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-27-1" class="code-annotation-target"><a href="#annotated-cell-27-1"></a>wvs_data[<span class="st">"country"</span>]</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-27-2" class="code-annotation-target"><a href="#annotated-cell-27-2"></a>wvs_data<span class="sc">$</span>country</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-27-3" class="code-annotation-target"><a href="#annotated-cell-27-3"></a>wvs_data[<span class="dv">3</span>]</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-27-4" class="code-annotation-target"><a href="#annotated-cell-27-4"></a>wvs_data[<span class="dv">1</span>, <span class="dv">4</span>]</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-27" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-27-5" class="code-annotation-target"><a href="#annotated-cell-27-5"></a>wvs_data[<span class="dv">3</span>, ]</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-28"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-28" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-28-1" class="code-annotation-target"><a href="#annotated-cell-28-1" aria-label="1"></a>wvs_data[<span class="st">"country"</span>]</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-28" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-28-2" class="code-annotation-target"><a href="#annotated-cell-28-2" aria-label="2"></a>wvs_data<span class="sc">$</span>country</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-28" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-28-3" class="code-annotation-target"><a href="#annotated-cell-28-3" aria-label="3"></a>wvs_data[<span class="dv">3</span>]</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-28" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-28-4" class="code-annotation-target"><a href="#annotated-cell-28-4" aria-label="4"></a>wvs_data[<span class="dv">1</span>, <span class="dv">4</span>]</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-28" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-28-5" class="code-annotation-target"><a href="#annotated-cell-28-5" aria-label="5"></a>wvs_data[<span class="dv">3</span>, ]</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-27" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-28" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="1" data-code-annotation="1">retrieve column by column name (returns as tibble/dataframe)</span>
+<span data-code-cell="annotated-cell-28" data-code-lines="1" data-code-annotation="1">retrieve column by column name (returns as tibble/dataframe)</span>
 </dd>
-<dt data-target-cell="annotated-cell-27" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-28" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="2" data-code-annotation="2">another way to retrieve column by name (returns as vector)</span>
+<span data-code-cell="annotated-cell-28" data-code-lines="2" data-code-annotation="2">another way to retrieve column by name (returns as vector)</span>
 </dd>
-<dt data-target-cell="annotated-cell-27" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-28" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="3" data-code-annotation="3">retrieve column by index</span>
+<span data-code-cell="annotated-cell-28" data-code-lines="3" data-code-annotation="3">retrieve column by index</span>
 </dd>
-<dt data-target-cell="annotated-cell-27" data-target-annotation="4">4</dt>
+<dt data-target-cell="annotated-cell-28" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="4" data-code-annotation="4">get a cell at this row, column coord</span>
+<span data-code-cell="annotated-cell-28" data-code-lines="4" data-code-annotation="4">get a cell at this row, column coord</span>
 </dd>
-<dt data-target-cell="annotated-cell-27" data-target-annotation="5">5</dt>
+<dt data-target-cell="annotated-cell-28" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-27" data-code-lines="5" data-code-annotation="5">get an entire row</span>
+<span data-code-cell="annotated-cell-28" data-code-lines="5" data-code-annotation="5">get an entire row</span>
 </dd>
 </dl>
 </div>
@@ -835,24 +851,24 @@ Bella Ratmelia &amp; Wei Xia
 <h2>Convert dataframe columns to a Factor - Unordered</h2>
 <p>In our example, <code>country</code> should be a factor!</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a><span class="fu">str</span>(wvs_data<span class="sc">$</span>country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a aria-label="1"></a><span class="fu">str</span>(wvs_data<span class="sc">$</span>country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> chr [1:5252] "Hong Kong SAR" "Hong Kong SAR" "Hong Kong SAR" ...</code></pre>
 </div>
 </div>
 <p>Since there is no inherent order within country names, our categories will be unordered:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a>wvs_data<span class="sc">$</span>country <span class="ot">&lt;-</span> <span class="fu">factor</span>(wvs_data<span class="sc">$</span>country)</span>
-<span id="cb50-2"><a></a></span>
-<span id="cb50-3"><a></a><span class="co"># check the category levels</span></span>
-<span id="cb50-4"><a></a><span class="fu">levels</span>(wvs_data<span class="sc">$</span>country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a aria-label="1"></a>wvs_data<span class="sc">$</span>country <span class="ot">&lt;-</span> <span class="fu">factor</span>(wvs_data<span class="sc">$</span>country)</span>
+<span id="cb52-2"><a aria-label="2"></a></span>
+<span id="cb52-3"><a aria-label="3"></a><span class="co"># check the category levels</span></span>
+<span id="cb52-4"><a aria-label="4"></a><span class="fu">levels</span>(wvs_data<span class="sc">$</span>country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Hong Kong SAR" "Indonesia"     "Malaysia"      "Turkey"       </code></pre>
 </div>
 </div>
 <p>If we check the structure, <code>country</code> column should be a factor instead of characters now:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a><span class="fu">str</span>(wvs_data<span class="sc">$</span>country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a aria-label="1"></a><span class="fu">str</span>(wvs_data<span class="sc">$</span>country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Factor w/ 4 levels "Hong Kong SAR",..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
 </div>
@@ -862,16 +878,16 @@ Bella Ratmelia &amp; Wei Xia
 <h2>Convert dataframe columns to a Factor - Ordered</h2>
 <p>Some variables do have a meaningful order. For example, <code>education</code> has a clear progression from lower to higher. Let’s convert it to an ordered factor.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a>wvs_data<span class="sc">$</span>education <span class="ot">&lt;-</span> <span class="fu">factor</span>(wvs_data<span class="sc">$</span>education,</span>
-<span id="cb54-2"><a></a>                                <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Lower"</span>, <span class="st">"Middle"</span>, <span class="st">"Higher"</span>),</span>
-<span id="cb54-3"><a></a>                                <span class="at">ordered =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb54-4"><a></a></span>
-<span id="cb54-5"><a></a><span class="co"># check the category levels and structure</span></span>
-<span id="cb54-6"><a></a><span class="fu">levels</span>(wvs_data<span class="sc">$</span>education)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a aria-label="1"></a>wvs_data<span class="sc">$</span>education <span class="ot">&lt;-</span> <span class="fu">factor</span>(wvs_data<span class="sc">$</span>education,</span>
+<span id="cb56-2"><a aria-label="2"></a>                                <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Lower"</span>, <span class="st">"Middle"</span>, <span class="st">"Higher"</span>),</span>
+<span id="cb56-3"><a aria-label="3"></a>                                <span class="at">ordered =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb56-4"><a aria-label="4"></a></span>
+<span id="cb56-5"><a aria-label="5"></a><span class="co"># check the category levels and structure</span></span>
+<span id="cb56-6"><a aria-label="6"></a><span class="fu">levels</span>(wvs_data<span class="sc">$</span>education)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Lower"  "Middle" "Higher"</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a></a><span class="fu">str</span>(wvs_data<span class="sc">$</span>education)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a aria-label="1"></a><span class="fu">str</span>(wvs_data<span class="sc">$</span>education)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Ord.factor w/ 3 levels "Lower"&lt;"Middle"&lt;..: 2 3 2 3 1 2 1 3 3 1 ...</code></pre>
 </div>
@@ -942,27 +958,27 @@ Bella Ratmelia &amp; Wei Xia
 <h2>Appendix on Vector Manipulations: Add items</h2>
 <p>Several ways to add items to a vector</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-33"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-33" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-33-1" class="code-annotation-target"><a href="#annotated-cell-33-1"></a>satisfaction_scores <span class="ot">&lt;-</span> <span class="fu">c</span>(satisfaction_scores, <span class="dv">7</span>)</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-33" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-33-2" class="code-annotation-target"><a href="#annotated-cell-33-2"></a>satisfaction_scores <span class="ot">&lt;-</span> <span class="fu">c</span>(satisfaction_scores, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>)</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-33" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-33-3" class="code-annotation-target"><a href="#annotated-cell-33-3"></a>satisfaction_scores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">8</span>, satisfaction_scores)</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-33" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-33-4" class="code-annotation-target"><a href="#annotated-cell-33-4"></a>satisfaction_scores <span class="ot">&lt;-</span> <span class="fu">append</span>(satisfaction_scores, <span class="dv">9</span>, <span class="at">after =</span> <span class="dv">2</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-34"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-34" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-34-1" class="code-annotation-target"><a href="#annotated-cell-34-1" aria-label="1"></a>satisfaction_scores <span class="ot">&lt;-</span> <span class="fu">c</span>(satisfaction_scores, <span class="dv">7</span>)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-34" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-34-2" class="code-annotation-target"><a href="#annotated-cell-34-2" aria-label="2"></a>satisfaction_scores <span class="ot">&lt;-</span> <span class="fu">c</span>(satisfaction_scores, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-34" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-34-3" class="code-annotation-target"><a href="#annotated-cell-34-3" aria-label="3"></a>satisfaction_scores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">8</span>, satisfaction_scores)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-34" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-34-4" class="code-annotation-target"><a href="#annotated-cell-34-4" aria-label="4"></a>satisfaction_scores <span class="ot">&lt;-</span> <span class="fu">append</span>(satisfaction_scores, <span class="dv">9</span>, <span class="at">after =</span> <span class="dv">2</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-33" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-34" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-33" data-code-lines="1" data-code-annotation="1">Add a single score to the end of the vector using c()</span>
+<span data-code-cell="annotated-cell-34" data-code-lines="1" data-code-annotation="1">Add a single score to the end of the vector using c()</span>
 </dd>
-<dt data-target-cell="annotated-cell-33" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-34" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-33" data-code-lines="2" data-code-annotation="2">Add multiple scores to the end</span>
+<span data-code-cell="annotated-cell-34" data-code-lines="2" data-code-annotation="2">Add multiple scores to the end</span>
 </dd>
-<dt data-target-cell="annotated-cell-33" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-34" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-33" data-code-lines="3" data-code-annotation="3">Add a score to the beginning</span>
+<span data-code-cell="annotated-cell-34" data-code-lines="3" data-code-annotation="3">Add a score to the beginning</span>
 </dd>
-<dt data-target-cell="annotated-cell-33" data-target-annotation="4">4</dt>
+<dt data-target-cell="annotated-cell-34" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-33" data-code-lines="4" data-code-annotation="4">Insert a score at a specific position using append(vector_name, elements_to_be_added, from_the_position)</span>
+<span data-code-cell="annotated-cell-34" data-code-lines="4" data-code-annotation="4">Insert a score at a specific position using append(vector_name, elements_to_be_added, from_the_position)</span>
 </dd>
 </dl>
 </div>
@@ -971,22 +987,22 @@ Bella Ratmelia &amp; Wei Xia
 <section id="appendix-on-vector-manipulations-remove-items" class="slide level2">
 <h2>Appendix on Vector Manipulations: Remove items</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-34"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-34" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-34-1" class="code-annotation-target"><a href="#annotated-cell-34-1"></a>satisfaction_scores <span class="ot">&lt;-</span> satisfaction_scores[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>)]</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-34" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-34-2" class="code-annotation-target"><a href="#annotated-cell-34-2"></a>satisfaction_scores <span class="ot">&lt;-</span> satisfaction_scores[satisfaction_scores <span class="sc">&lt;=</span> <span class="dv">7</span>]</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-34" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-34-3" class="code-annotation-target"><a href="#annotated-cell-34-3"></a>satisfaction_scores <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(satisfaction_scores)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-35"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-35" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-35-1" class="code-annotation-target"><a href="#annotated-cell-35-1" aria-label="1"></a>satisfaction_scores <span class="ot">&lt;-</span> satisfaction_scores[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>)]</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-35" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-35-2" class="code-annotation-target"><a href="#annotated-cell-35-2" aria-label="2"></a>satisfaction_scores <span class="ot">&lt;-</span> satisfaction_scores[satisfaction_scores <span class="sc">&lt;=</span> <span class="dv">7</span>]</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-35" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-35-3" class="code-annotation-target"><a href="#annotated-cell-35-3" aria-label="3"></a>satisfaction_scores <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(satisfaction_scores)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-34" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-35" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-34" data-code-lines="1" data-code-annotation="1">Remove elements by index using “negative indexing”</span>
+<span data-code-cell="annotated-cell-35" data-code-lines="1" data-code-annotation="1">Remove elements by index using “negative indexing”</span>
 </dd>
-<dt data-target-cell="annotated-cell-34" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-35" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-34" data-code-lines="2" data-code-annotation="2">Remove elements based on a condition using logical indexing. Remove these items which are FALSE.</span>
+<span data-code-cell="annotated-cell-35" data-code-lines="2" data-code-annotation="2">Remove elements based on a condition using logical indexing. Remove these items which are FALSE.</span>
 </dd>
-<dt data-target-cell="annotated-cell-34" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-35" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-34" data-code-lines="3" data-code-annotation="3">Remove NA values from the vector</span>
+<span data-code-cell="annotated-cell-35" data-code-lines="3" data-code-annotation="3">Remove NA values from the vector</span>
 </dd>
 </dl>
 </div>
@@ -1210,82 +1226,6 @@ Bella Ratmelia &amp; Wei Xia
         ]
       });
     </script>
-    
-
-    <script>
-
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
-      // slide changes (different for each slide format).
-
-      (function () {
-
-        // dispatch for htmlwidgets
-
-        function fireSlideEnter() {
-
-          const event = window.document.createEvent("Event");
-
-          event.initEvent("slideenter", true, true);
-
-          window.document.dispatchEvent(event);
-
-        }
-
-    
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-
-          fireSlideEnter();
-
-    
-
-          // dispatch for shiny
-
-          if (window.jQuery) {
-
-            if (previousSlide) {
-
-              window.jQuery(previousSlide).trigger("hidden");
-
-            }
-
-            if (currentSlide) {
-
-              window.jQuery(currentSlide).trigger("shown");
-
-            }
-
-          }
-
-        }
-
-    
-
-        // hookup for slidy
-
-        if (window.w3c_slidy) {
-
-          window.w3c_slidy.add_observer(function (slide_num) {
-
-            // slide_num starts at position 1
-
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
-          });
-
-        }
-
-    
-
-      })();
-
-    </script>
-
-    
-
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")

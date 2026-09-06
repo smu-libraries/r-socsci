@@ -6,8 +6,8 @@
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.25">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Bella Ratmelia">
   <title>Introductory R for Social Sciences – Session 5: Regression and Presenting Your Result</title>
@@ -17,10 +17,16 @@
   <link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -95,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-49bde94825fa39fb910dd92406f11d8e.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-db9fb2c476e95c10b06df965ef225302.css">
   <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -198,7 +204,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Bella Ratmelia 
+Bella Ratmelia
 </div>
 </div>
 </div>
@@ -242,8 +248,8 @@ Bella Ratmelia
 <li>Paste this in:</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a></a><span class="fu">library</span>(huxtable)   <span class="co"># for presenting regression tables</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a aria-label="2"></a><span class="fu">library</span>(huxtable)   <span class="co"># for presenting regression tables</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-note callout-style-simple">
 <div class="callout-body">
@@ -259,17 +265,17 @@ Bella Ratmelia
 <section id="load-our-data-for-today" class="slide level2">
 <h2>Load our data for today!</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="co"># read the CSV with WVS data</span></span>
-<span id="cb2-2"><a></a>wvs_cleaned <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data-output/wvs_cleaned_v1.csv"</span>)</span>
-<span id="cb2-3"><a></a></span>
-<span id="cb2-4"><a></a><span class="co"># Convert categorical variables to factors</span></span>
-<span id="cb2-5"><a></a>columns_to_convert <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"sex"</span>, <span class="st">"marital_status"</span>, <span class="st">"urban_rural"</span>, <span class="st">"income_level"</span>, <span class="st">"education"</span>, <span class="st">"trust_people"</span>, <span class="st">"age_group"</span>)</span>
-<span id="cb2-6"><a></a></span>
-<span id="cb2-7"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb2-8"><a></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(columns_to_convert), as_factor))</span>
-<span id="cb2-9"><a></a></span>
-<span id="cb2-10"><a></a><span class="co"># peek at the data, pay attention to the data types!</span></span>
-<span id="cb2-11"><a></a><span class="fu">glimpse</span>(wvs_cleaned)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a><span class="co"># read the CSV with WVS data</span></span>
+<span id="cb2-2"><a aria-label="2"></a>wvs_cleaned <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data-output/wvs_cleaned_v1.csv"</span>)</span>
+<span id="cb2-3"><a aria-label="3"></a></span>
+<span id="cb2-4"><a aria-label="4"></a><span class="co"># Convert categorical variables to factors</span></span>
+<span id="cb2-5"><a aria-label="5"></a>columns_to_convert <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"sex"</span>, <span class="st">"marital_status"</span>, <span class="st">"urban_rural"</span>, <span class="st">"income_level"</span>, <span class="st">"education"</span>, <span class="st">"trust_people"</span>, <span class="st">"age_group"</span>)</span>
+<span id="cb2-6"><a aria-label="6"></a></span>
+<span id="cb2-7"><a aria-label="7"></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span> </span>
+<span id="cb2-8"><a aria-label="8"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(columns_to_convert), as_factor))</span>
+<span id="cb2-9"><a aria-label="9"></a></span>
+<span id="cb2-10"><a aria-label="10"></a><span class="co"># peek at the data, pay attention to the data types!</span></span>
+<span id="cb2-11"><a aria-label="11"></a><span class="fu">glimpse</span>(wvs_cleaned)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="from-tests-to-models" class="slide level2">
@@ -367,8 +373,8 @@ Bella Ratmelia
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>life_model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> secular_values, <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb3-2"><a></a><span class="fu">summary</span>(life_model1) <span class="co">#summarize the result</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>life_model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> secular_values, <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb3-2"><a aria-label="2"></a><span class="fu">summary</span>(life_model1) <span class="co">#summarize the result</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -427,9 +433,9 @@ F-statistic: 256.1 on 1 and 5100 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li>The predictors/IV (<span class="math inline">\(X\)</span>): <code>financial_satisfaction</code> and <code>secular_values</code></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>life_model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> financial_satisfaction <span class="sc">+</span> secular_values,</span>
-<span id="cb5-2"><a></a>                  <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb5-3"><a></a><span class="fu">summary</span>(life_model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a>life_model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> financial_satisfaction <span class="sc">+</span> secular_values,</span>
+<span id="cb5-2"><a aria-label="2"></a>                  <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb5-3"><a aria-label="3"></a><span class="fu">summary</span>(life_model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -485,10 +491,10 @@ F-statistic:  1405 on 2 and 5099 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h2>Presenting your results with huxtable</h2>
 <p><code>huxreg()</code> turns one or more models into a clean, copy-pasteable table — put several side by side to compare them:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">huxreg</span>(<span class="st">"model 1"</span> <span class="ot">=</span> life_model1, <span class="st">"model 2"</span> <span class="ot">=</span> life_model2,</span>
-<span id="cb7-2"><a></a>       <span class="at">bold_signif =</span> <span class="fl">0.05</span>,</span>
-<span id="cb7-3"><a></a>       <span class="at">statistics =</span> <span class="fu">c</span>(<span class="st">"R squared"</span> <span class="ot">=</span> <span class="st">"r.squared"</span>, <span class="st">"N"</span> <span class="ot">=</span> <span class="st">"nobs"</span>,</span>
-<span id="cb7-4"><a></a>                      <span class="st">"F"</span> <span class="ot">=</span> <span class="st">"statistic"</span>, <span class="st">"P value"</span> <span class="ot">=</span> <span class="st">"p.value"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="fu">huxreg</span>(<span class="st">"model 1"</span> <span class="ot">=</span> life_model1, <span class="st">"model 2"</span> <span class="ot">=</span> life_model2,</span>
+<span id="cb7-2"><a aria-label="2"></a>       <span class="at">bold_signif =</span> <span class="fl">0.05</span>,</span>
+<span id="cb7-3"><a aria-label="3"></a>       <span class="at">statistics =</span> <span class="fu">c</span>(<span class="st">"R squared"</span> <span class="ot">=</span> <span class="st">"r.squared"</span>, <span class="st">"N"</span> <span class="ot">=</span> <span class="st">"nobs"</span>,</span>
+<span id="cb7-4"><a aria-label="4"></a>                      <span class="st">"F"</span> <span class="ot">=</span> <span class="st">"statistic"</span>, <span class="st">"P value"</span> <span class="ot">=</span> <span class="st">"p.value"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 <div class="callout callout-tip callout-style-simple">
@@ -545,7 +551,7 @@ F-statistic:  1405 on 2 and 5099 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li><p>If they seem to be highly correlated (&gt; 5 or so), one of the easiest (and somewhat acceptable) way is to simply remove the less significant predictor from your model :D</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>car<span class="sc">::</span><span class="fu">vif</span>(life_model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a>car<span class="sc">::</span><span class="fu">vif</span>(life_model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>financial_satisfaction         secular_values 
               1.010177               1.010177 </code></pre>
@@ -573,13 +579,13 @@ F-statistic:  1405 on 2 and 5099 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="co"># country is already a factor from our load-data step — no ordering needed,</span></span>
-<span id="cb10-2"><a></a><span class="co"># since it's a nominal (unordered) variable</span></span>
-<span id="cb10-3"><a></a><span class="fu">str</span>(wvs_cleaned<span class="sc">$</span>life_satisfaction)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-label="1"></a><span class="co"># country is already a factor from our load-data step — no ordering needed,</span></span>
+<span id="cb10-2"><a aria-label="2"></a><span class="co"># since it's a nominal (unordered) variable</span></span>
+<span id="cb10-3"><a aria-label="3"></a><span class="fu">str</span>(wvs_cleaned<span class="sc">$</span>life_satisfaction)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> num [1:5102] 8 10 4 1 9 10 8 5 8 5 ...</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">str</span>(wvs_cleaned<span class="sc">$</span>country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-label="1"></a><span class="fu">str</span>(wvs_cleaned<span class="sc">$</span>country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Factor w/ 4 levels "Turkey","Hong Kong SAR",..: 1 2 2 2 2 2 2 2 2 2 ...</code></pre>
 </div>
@@ -589,8 +595,8 @@ F-statistic:  1405 on 2 and 5099 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h2>Continuing the analysis</h2>
 <p>The analysis summary should look like this:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>life_model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> country, <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb14-2"><a></a><span class="fu">summary</span>(life_model3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a>life_model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> country, <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb14-2"><a aria-label="2"></a><span class="fu">summary</span>(life_model3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -643,18 +649,18 @@ F-statistic: 88.22 on 3 and 5098 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h2>Categorical predictor: changing the reference</h2>
 <p>Let’s change the reference category for <code>country</code> to “Malaysia” (our neighbour!).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb16-2"><a></a>    <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">relevel</span>(country, <span class="at">ref =</span> <span class="st">"Malaysia"</span>))</span>
-<span id="cb16-3"><a></a></span>
-<span id="cb16-4"><a></a><span class="fu">str</span>(wvs_cleaned<span class="sc">$</span>country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-label="1"></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a aria-label="2"></a>    <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">relevel</span>(country, <span class="at">ref =</span> <span class="st">"Malaysia"</span>))</span>
+<span id="cb16-3"><a aria-label="3"></a></span>
+<span id="cb16-4"><a aria-label="4"></a><span class="fu">str</span>(wvs_cleaned<span class="sc">$</span>country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Factor w/ 4 levels "Malaysia","Turkey",..: 2 3 3 3 3 3 3 3 3 3 ...</code></pre>
 </div>
 </div>
 <p>Re-run the analysis with the new reference category</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>life_model3a <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> country, <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb18-2"><a></a><span class="fu">summary</span>(life_model3a)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-label="1"></a>life_model3a <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> country, <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb18-2"><a aria-label="2"></a><span class="fu">summary</span>(life_model3a)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -684,10 +690,10 @@ F-statistic: 88.22 on 3 and 5098 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div></section><section id="changing-baseline-category-for-ordered-factor" class="slide level2">
 <h2>Changing baseline category for ordered factor</h2>
 <p><code>income_level</code> is naturally <strong>ordered</strong>: <code>Low</code> &lt; <code>Medium</code> &lt; <code>High</code>. This is how we set (or change) that ordering explicitly as an ordered factor — put the levels in the sequence you want:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb20-2"><a></a>    <span class="fu">mutate</span>(<span class="at">income_level =</span> <span class="fu">factor</span>(income_level,</span>
-<span id="cb20-3"><a></a>                         <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Low"</span>, <span class="st">"Medium"</span>, <span class="st">"High"</span>),</span>
-<span id="cb20-4"><a></a>                         <span class="at">ordered =</span> <span class="cn">TRUE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-label="1"></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a aria-label="2"></a>    <span class="fu">mutate</span>(<span class="at">income_level =</span> <span class="fu">factor</span>(income_level,</span>
+<span id="cb20-3"><a aria-label="3"></a>                         <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Low"</span>, <span class="st">"Medium"</span>, <span class="st">"High"</span>),</span>
+<span id="cb20-4"><a aria-label="4"></a>                         <span class="at">ordered =</span> <span class="cn">TRUE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div title="Ordered factors behave differently in regression">
 <div class="callout callout-important callout-titled callout-style-simple">
 <div class="callout-body">
@@ -710,8 +716,8 @@ F-statistic: 88.22 on 3 and 5098 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>life_model4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> sex, <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb21-2"><a></a><span class="fu">summary</span>(life_model4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a>life_model4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> sex, <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb21-2"><a aria-label="2"></a><span class="fu">summary</span>(life_model4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -852,12 +858,13 @@ F-statistic: 15.22 on 1 and 5100 DF,  p-value: 9.701e-05</code></pre>
 <h2>Dummy-coding dependent variable</h2>
 <p>Before we proceed with the calculations, we need to <strong>dummy code</strong> the dependent variable into 1 and 0, with 1 = Satisfied and 0 = Not Satisfied. <a href="https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faqwhat-is-dummy-coding/">More info on dummy coding here</a></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="co"># First, we need to create a binary outcome</span></span>
-<span id="cb23-2"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb23-3"><a></a>    <span class="fu">mutate</span>(<span class="at">satisfied =</span> <span class="fu">if_else</span>(life_satisfaction <span class="sc">&gt;=</span> <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb23-4"><a></a><span class="co"># the if_else is from dplyr package (from session 2)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a><span class="co"># First, we need to create a binary outcome</span></span>
+<span id="cb23-2"><a aria-label="2"></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a aria-label="3"></a>    <span class="fu">mutate</span>(<span class="at">satisfied =</span> <span class="fu">if_else</span>(life_satisfaction <span class="sc">&gt;=</span> <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb23-4"><a aria-label="4"></a><span class="co"># the if_else is from dplyr package (from session 2)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-label="1"></a>wvs_cleaned <span class="sc">|&gt;</span> <span class="fu">select</span>(life_satisfaction, satisfied) <span class="sc">|&gt;</span> <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5,102 × 2
   life_satisfaction satisfied
@@ -875,11 +882,11 @@ F-statistic: 15.22 on 1 and 5100 DF,  p-value: 9.701e-05</code></pre>
 <h2>Conduct the analysis</h2>
 <p>Let’s conduct the analysis!</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>life_model5 <span class="ot">&lt;-</span> <span class="fu">glm</span>(satisfied <span class="sc">~</span> freedom_of_choice,</span>
-<span id="cb25-2"><a></a>                <span class="at">family =</span> binomial,</span>
-<span id="cb25-3"><a></a>                <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb25-4"><a></a></span>
-<span id="cb25-5"><a></a><span class="fu">summary</span>(life_model5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-label="1"></a>life_model5 <span class="ot">&lt;-</span> <span class="fu">glm</span>(satisfied <span class="sc">~</span> freedom_of_choice,</span>
+<span id="cb26-2"><a aria-label="2"></a>                <span class="at">family =</span> binomial,</span>
+<span id="cb26-3"><a aria-label="3"></a>                <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb26-4"><a aria-label="4"></a></span>
+<span id="cb26-5"><a aria-label="5"></a><span class="fu">summary</span>(life_model5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -907,7 +914,7 @@ Number of Fisher Scoring iterations: 3</code></pre>
 <h2>Exponentiate the coefficients</h2>
 <p>If you recall the formula, the results are expressed in Logit Probability. As we typically report the result in terms of Odd Ratios (OR), perform exponentiation on the coefficients.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">exp</span>(<span class="fu">coef</span>(life_model5))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-label="1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(life_model5))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      (Intercept) freedom_of_choice 
        0.07369649        1.57793838 </code></pre>
@@ -929,8 +936,8 @@ Number of Fisher Scoring iterations: 3</code></pre>
 <p><code>glm()</code> doesn’t print a χ² or an R², so we ask <code>DescTools::PseudoR2()</code> for them. <strong>G2</strong> is the model χ² (goodness-of-fit test vs.&nbsp;a no-predictor model); <strong>Nagelkerke</strong> is the pseudo-R² most commonly reported:</p>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model5,</span>
-<span id="cb29-2"><a></a>                    <span class="at">which =</span> <span class="fu">c</span>(<span class="st">"G2"</span>, <span class="st">"Nagelkerke"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-label="1"></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model5,</span>
+<span id="cb30-2"><a aria-label="2"></a>                    <span class="at">which =</span> <span class="fu">c</span>(<span class="st">"G2"</span>, <span class="st">"Nagelkerke"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <div class="cell-output cell-output-stdout">
 <pre><code>         G2  Nagelkerke 
@@ -988,14 +995,14 @@ Number of Fisher Scoring iterations: 3</code></pre>
 <li>The predictor/IV (<span class="math inline">\(X\)</span>): <code>marital_status</code> - let’s set “Single” as the reference category!</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb31-2"><a></a>    <span class="fu">mutate</span>(<span class="at">marital_status =</span> <span class="fu">relevel</span>(marital_status, <span class="at">ref =</span> <span class="st">"Single"</span>))</span>
-<span id="cb31-3"><a></a></span>
-<span id="cb31-4"><a></a>life_model6 <span class="ot">&lt;-</span> <span class="fu">glm</span>(satisfied <span class="sc">~</span> marital_status,</span>
-<span id="cb31-5"><a></a>                      <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
-<span id="cb31-6"><a></a>                      <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb31-7"><a></a></span>
-<span id="cb31-8"><a></a><span class="fu">summary</span>(life_model6)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-label="1"></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb32-2"><a aria-label="2"></a>    <span class="fu">mutate</span>(<span class="at">marital_status =</span> <span class="fu">relevel</span>(marital_status, <span class="at">ref =</span> <span class="st">"Single"</span>))</span>
+<span id="cb32-3"><a aria-label="3"></a></span>
+<span id="cb32-4"><a aria-label="4"></a>life_model6 <span class="ot">&lt;-</span> <span class="fu">glm</span>(satisfied <span class="sc">~</span> marital_status,</span>
+<span id="cb32-5"><a aria-label="5"></a>                      <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
+<span id="cb32-6"><a aria-label="6"></a>                      <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb32-7"><a aria-label="7"></a></span>
+<span id="cb32-8"><a aria-label="8"></a><span class="fu">summary</span>(life_model6)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -1032,7 +1039,7 @@ AIC: 6707.1
 
 Number of Fisher Scoring iterations: 4</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="fu">exp</span>(<span class="fu">coef</span>(life_model6))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a aria-label="1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(life_model6))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                             (Intercept) 
                                1.3227953 
@@ -1051,8 +1058,8 @@ marital_statusLiving together as married
 <h2>Get the χ² and R²</h2>
 <p>Same as before: <strong>G2</strong> is the model χ² (goodness-of-fit), <strong>Nagelkerke</strong> is the pseudo-R² we’ll report.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model6,</span>
-<span id="cb35-2"><a></a>                    <span class="at">which =</span> <span class="fu">c</span>(<span class="st">"G2"</span>, <span class="st">"Nagelkerke"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a aria-label="1"></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model6,</span>
+<span id="cb36-2"><a aria-label="2"></a>                    <span class="at">which =</span> <span class="fu">c</span>(<span class="st">"G2"</span>, <span class="st">"Nagelkerke"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         G2  Nagelkerke 
 43.84588476  0.01167253 </code></pre>
@@ -1077,7 +1084,7 @@ marital_statusLiving together as married
 <h2>Presenting logistic results with huxtable</h2>
 <p><code>huxreg()</code> works for <code>glm()</code> models too — here comparing both logistic models:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a><span class="fu">huxreg</span>(<span class="st">"freedom of choice"</span> <span class="ot">=</span> life_model5, <span class="st">"marital status"</span> <span class="ot">=</span> life_model6)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a aria-label="1"></a><span class="fu">huxreg</span>(<span class="st">"freedom of choice"</span> <span class="ot">=</span> life_model5, <span class="st">"marital status"</span> <span class="ot">=</span> life_model6)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 <div class="callout callout-note callout-style-simple">
@@ -1092,6 +1099,10 @@ marital_statusLiving together as married
 </div>
 </section>
 <section id="presenting-logistic-results-with-huxtable-output" class="slide level2 scrollable output-location-slide"><h2>Presenting logistic results with huxtable</h2><div class="cell output-location-slide">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in aggregate_statistics(models, glance_args, statistics): Unrecognized statistics: r.squared
+Try setting `statistics` explicitly in the call to `huxreg()`</code></pre>
+</div>
 <div class="cell-output-display">
 <table class="huxtable" data-quarto-disable-processing="true" style="margin-left: auto; margin-right: auto;">
 <colgroup><col><col><col></colgroup><thead>
@@ -1144,12 +1155,12 @@ marital_statusLiving together as married
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>life_model7 <span class="ot">&lt;-</span> <span class="fu">glm</span>(satisfied <span class="sc">~</span> sex,</span>
-<span id="cb38-2"><a></a>                  <span class="at">family =</span> <span class="st">"binomial"</span>, </span>
-<span id="cb38-3"><a></a>                  <span class="at">data =</span> wvs_cleaned) </span>
-<span id="cb38-4"><a></a></span>
-<span id="cb38-5"><a></a><span class="fu">summary</span>(life_model7)</span>
-<span id="cb38-6"><a></a><span class="fu">exp</span>(<span class="fu">coefficients</span>(life_model7))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a aria-label="1"></a>life_model7 <span class="ot">&lt;-</span> <span class="fu">glm</span>(satisfied <span class="sc">~</span> sex,</span>
+<span id="cb40-2"><a aria-label="2"></a>                  <span class="at">family =</span> <span class="st">"binomial"</span>, </span>
+<span id="cb40-3"><a aria-label="3"></a>                  <span class="at">data =</span> wvs_cleaned) </span>
+<span id="cb40-4"><a aria-label="4"></a></span>
+<span id="cb40-5"><a aria-label="5"></a><span class="fu">summary</span>(life_model7)</span>
+<span id="cb40-6"><a aria-label="6"></a><span class="fu">exp</span>(<span class="fu">coefficients</span>(life_model7))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section></section>
@@ -1293,13 +1304,13 @@ marital_statusLiving together as married
 <h2>Presenting regression tables: gtsummary (<code>tbl_regression</code>)</h2>
 <p><code>tbl_regression()</code> makes clean, publication-style tables. For logistic models, <code>exponentiate = TRUE</code> reports <strong>odds ratios</strong>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb39-2"><a></a></span>
-<span id="cb39-3"><a></a><span class="co"># linear model</span></span>
-<span id="cb39-4"><a></a>life_model2 <span class="sc">|&gt;</span> <span class="fu">tbl_regression</span>() <span class="sc">|&gt;</span> <span class="fu">bold_p</span>()</span>
-<span id="cb39-5"><a></a></span>
-<span id="cb39-6"><a></a><span class="co"># logistic model — odds ratios</span></span>
-<span id="cb39-7"><a></a>life_model5 <span class="sc">|&gt;</span> <span class="fu">tbl_regression</span>(<span class="at">exponentiate =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">bold_p</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a aria-label="1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb41-2"><a aria-label="2"></a></span>
+<span id="cb41-3"><a aria-label="3"></a><span class="co"># linear model</span></span>
+<span id="cb41-4"><a aria-label="4"></a>life_model2 <span class="sc">|&gt;</span> <span class="fu">tbl_regression</span>() <span class="sc">|&gt;</span> <span class="fu">bold_p</span>()</span>
+<span id="cb41-5"><a aria-label="5"></a></span>
+<span id="cb41-6"><a aria-label="6"></a><span class="co"># logistic model — odds ratios</span></span>
+<span id="cb41-7"><a aria-label="7"></a>life_model5 <span class="sc">|&gt;</span> <span class="fu">tbl_regression</span>(<span class="at">exponentiate =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">bold_p</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-tip callout-style-simple">
 <div class="callout-body">
@@ -1316,11 +1327,11 @@ marital_statusLiving together as married
 <h2>Table packages: apaTables</h2>
 <p><code>apaTables</code> generates APA-formatted tables for correlation, ANOVA, and regression. Limited customisation. The online docs are for the development version (not what <code>install.packages()</code> gives you), so lean on the vignette. <a href="https://dstanley4.github.io/apaTables/index.html"><strong>Documentation here</strong></a></p>
 <p>Example: a correlation table for <code>life_satisfaction</code>, <code>financial_satisfaction</code>, and <code>freedom_of_choice</code></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a><span class="fu">library</span>(apaTables)</span>
-<span id="cb40-2"><a></a></span>
-<span id="cb40-3"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb40-4"><a></a>    <span class="fu">select</span>(life_satisfaction, financial_satisfaction, freedom_of_choice) <span class="sc">|&gt;</span></span>
-<span id="cb40-5"><a></a>    <span class="fu">apa.cor.table</span>(<span class="at">table.number =</span> <span class="dv">1</span>, <span class="at">filename =</span> <span class="st">"fig-output/table-cor.doc"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-label="1"></a><span class="fu">library</span>(apaTables)</span>
+<span id="cb42-2"><a aria-label="2"></a></span>
+<span id="cb42-3"><a aria-label="3"></a>wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb42-4"><a aria-label="4"></a>    <span class="fu">select</span>(life_satisfaction, financial_satisfaction, freedom_of_choice) <span class="sc">|&gt;</span></span>
+<span id="cb42-5"><a aria-label="5"></a>    <span class="fu">apa.cor.table</span>(<span class="at">table.number =</span> <span class="dv">1</span>, <span class="at">filename =</span> <span class="st">"fig-output/table-cor.doc"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This creates a Word document with the table already formatted in APA style.</p>
 </section>
 <section id="table-packages-gtsummary-summary-tables" class="slide level2">
@@ -1328,12 +1339,12 @@ marital_statusLiving together as married
 <p>Besides <code>tbl_regression()</code>, <code>gtsummary</code> can build descriptive / mean-difference tables with <code>tbl_summary()</code>. <a href="https://www.danieldsjoberg.com/gtsummary/index.html"><strong>Documentation here</strong></a></p>
 <p>Example: mean-differences table grouped by <code>sex</code></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb41-2"><a></a></span>
-<span id="cb41-3"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb41-4"><a></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(life_satisfaction, financial_satisfaction, freedom_of_choice, sex) <span class="sc">|&gt;</span></span>
-<span id="cb41-5"><a></a>    <span class="fu">tbl_summary</span>(<span class="at">by =</span> sex) <span class="sc">|&gt;</span></span>
-<span id="cb41-6"><a></a>    <span class="fu">add_difference</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a aria-label="1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb43-2"><a aria-label="2"></a></span>
+<span id="cb43-3"><a aria-label="3"></a>wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb43-4"><a aria-label="4"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(life_satisfaction, financial_satisfaction, freedom_of_choice, sex) <span class="sc">|&gt;</span></span>
+<span id="cb43-5"><a aria-label="5"></a>    <span class="fu">tbl_summary</span>(<span class="at">by =</span> sex) <span class="sc">|&gt;</span></span>
+<span id="cb43-6"><a aria-label="6"></a>    <span class="fu">add_difference</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="computing-the-logistic-χ²-by-hand" class="slide level2">
@@ -1344,17 +1355,17 @@ marital_statusLiving together as married
 <li>df = Null df − Residual df (= number of predictors)</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="co"># Replace with the values from your summary() output</span></span>
-<span id="cb42-2"><a></a>chi_sq <span class="ot">&lt;-</span> NULL_DEVIANCE <span class="sc">-</span> RESIDUAL_DEVIANCE</span>
-<span id="cb42-3"><a></a><span class="fu">pchisq</span>(chi_sq, <span class="at">df =</span> <span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)  <span class="co"># p-value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a aria-label="1"></a><span class="co"># Replace with the values from your summary() output</span></span>
+<span id="cb44-2"><a aria-label="2"></a>chi_sq <span class="ot">&lt;-</span> NULL_DEVIANCE <span class="sc">-</span> RESIDUAL_DEVIANCE</span>
+<span id="cb44-3"><a aria-label="3"></a><span class="fu">pchisq</span>(chi_sq, <span class="at">df =</span> <span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)  <span class="co"># p-value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="other-pseudo-r²-methods" class="slide level2">
 <h2>Other pseudo-R² methods</h2>
 <p>If you specifically need a different pseudo-R² (e.g.&nbsp;McFadden, Cox-Snell), <code>PseudoR2()</code> can return them all at once:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model5,</span>
-<span id="cb43-2"><a></a>                    <span class="at">which =</span> <span class="st">"all"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a aria-label="1"></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model5,</span>
+<span id="cb45-2"><a aria-label="2"></a>                    <span class="at">which =</span> <span class="st">"all"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       McFadden     McFaddenAdj        CoxSnell      Nagelkerke   AldrichNelson 
       0.1345762       0.1339826       0.1628528       0.2221449       0.1509272 
@@ -1602,82 +1613,6 @@ VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC
         ]
       });
     </script>
-    
-
-    <script>
-
-      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
-      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
-      // slide changes (different for each slide format).
-
-      (function () {
-
-        // dispatch for htmlwidgets
-
-        function fireSlideEnter() {
-
-          const event = window.document.createEvent("Event");
-
-          event.initEvent("slideenter", true, true);
-
-          window.document.dispatchEvent(event);
-
-        }
-
-    
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-
-          fireSlideEnter();
-
-    
-
-          // dispatch for shiny
-
-          if (window.jQuery) {
-
-            if (previousSlide) {
-
-              window.jQuery(previousSlide).trigger("hidden");
-
-            }
-
-            if (currentSlide) {
-
-              window.jQuery(currentSlide).trigger("shown");
-
-            }
-
-          }
-
-        }
-
-    
-
-        // hookup for slidy
-
-        if (window.w3c_slidy) {
-
-          window.w3c_slidy.add_observer(function (slide_num) {
-
-            // slide_num starts at position 1
-
-            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
-          });
-
-        }
-
-    
-
-      })();
-
-    </script>
-
-    
-
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")

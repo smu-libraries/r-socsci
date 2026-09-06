@@ -1,10 +1,20 @@
 [
   {
+    "objectID": "supp-files/resources.html",
+    "href": "supp-files/resources.html",
+    "title": "Resources",
+    "section": "",
+    "text": "Further readings if you’d like to deepen your knowledge and skill after the workshop:\n\n\nIsmay, C., & Kim, A. Y. (2024). Statistical inference via data science. https://moderndive.com/This book offers a gentle introduction to R, while also covering foundational research methods such as sampling, hypothesis testing, and making inferences. I really like how it combines both programming and research basics; very suitable for beginners!\n\n\nWickham, H., Çetinkaya-Rundel, M., & Garrett Grolemund. (2024). R for data science (2e) (2nd ed.). https://r4ds.hadley.nz/A great book for R beginners! It introduces the popular tidyverse package and explains how to make the most of it. It also offers useful tips for managing projects and outlines recommended steps for transforming raw data into meaningful insights and discoveries.\n\n\nWilke, C. O. (2024). Fundamentals of data visualization. https://clauswilke.com/dataviz/I noticed that some of you are particularly interested in visualizations. While I couldn’t cover more of this topic during the workshops, if you’re eager to dive deeper, this book does a great job of covering foundational theories that I believe are both important and helpful.",
+    "crumbs": [
+      "Further Readings"
+    ]
+  },
+  {
     "objectID": "supp-files/sample-quarto.html",
     "href": "supp-files/sample-quarto.html",
     "title": "Sample Quarto Document",
     "section": "",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.2.1     ✔ readr     2.2.0\n✔ forcats   1.0.1     ✔ stringr   1.6.0\n✔ ggplot2   4.0.3     ✔ tibble    3.3.1\n✔ lubridate 1.9.5     ✔ tidyr     1.3.2\n✔ purrr     1.2.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ndiamonds = as_tibble(diamonds)\n\n\n\n\ndiamonds |&gt; print(n = 10)\n\n# A tibble: 53,940 × 10\n   carat cut       color clarity depth table price     x     y     z\n   &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1  0.23 Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43\n 2  0.21 Premium   E     SI1      59.8    61   326  3.89  3.84  2.31\n 3  0.23 Good      E     VS1      56.9    65   327  4.05  4.07  2.31\n 4  0.29 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63\n 5  0.31 Good      J     SI2      63.3    58   335  4.34  4.35  2.75\n 6  0.24 Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48\n 7  0.24 Very Good I     VVS1     62.3    57   336  3.95  3.98  2.47\n 8  0.26 Very Good H     SI1      61.9    55   337  4.07  4.11  2.53\n 9  0.22 Fair      E     VS2      65.1    61   337  3.87  3.78  2.49\n10  0.23 Very Good H     VS1      59.4    61   338  4     4.05  2.39\n# ℹ 53,930 more rows\n\n\nLet’s create boxplots for carats for each cut quality:\n\ndiamonds |&gt; ggplot(aes(x = cut, y = carat)) +\n    geom_boxplot() +\n    theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\n\\[\nE = mc^2\n\\]\n\n\n\nA lot of people have been saying that R is pretty cool (Wickham, Çetinkaya-Rundel, and Garrett Grolemund 2024)."
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.2.1     ✔ readr     2.2.0\n✔ forcats   1.0.1     ✔ stringr   1.6.0\n✔ ggplot2   4.0.3     ✔ tibble    3.3.1\n✔ lubridate 1.9.5     ✔ tidyr     1.3.2\n✔ purrr     1.2.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ndiamonds = as_tibble(diamonds)\n\n\n\n\ndiamonds |&gt; print(n = 10)\n\n# A tibble: 53,940 × 10\n   carat cut       color clarity depth table price     x     y     z\n   &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n 1  0.23 Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43\n 2  0.21 Premium   E     SI1      59.8    61   326  3.89  3.84  2.31\n 3  0.23 Good      E     VS1      56.9    65   327  4.05  4.07  2.31\n 4  0.29 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63\n 5  0.31 Good      J     SI2      63.3    58   335  4.34  4.35  2.75\n 6  0.24 Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48\n 7  0.24 Very Good I     VVS1     62.3    57   336  3.95  3.98  2.47\n 8  0.26 Very Good H     SI1      61.9    55   337  4.07  4.11  2.53\n 9  0.22 Fair      E     VS2      65.1    61   337  3.87  3.78  2.49\n10  0.23 Very Good H     VS1      59.4    61   338  4     4.05  2.39\n# ℹ 53,930 more rows\n\n\nLet’s create boxplots for carats for each cut quality:\n\ndiamonds |&gt; ggplot(aes(x = cut, y = carat)) +\n    geom_boxplot() +\n    theme_minimal()\n\n\n\n\n\n\n\n\n\n\n\n\\[\nE = mc^2\n\\]\n\n\n\nA lot of people have been saying that R is pretty cool (Wickham et al. 2024)."
   },
   {
     "objectID": "supp-files/sample-quarto.html#lets-visualize-the-diamonds-data",
@@ -25,262 +35,14 @@
     "href": "supp-files/sample-quarto.html#text-with-citations",
     "title": "Sample Quarto Document",
     "section": "",
-    "text": "A lot of people have been saying that R is pretty cool (Wickham, Çetinkaya-Rundel, and Garrett Grolemund 2024)."
+    "text": "A lot of people have been saying that R is pretty cool (Wickham et al. 2024)."
   },
   {
-    "objectID": "supp-files/exercises.html",
-    "href": "supp-files/exercises.html",
-    "title": "Post-workshop exercises",
+    "objectID": "supp-files/coc.html",
+    "href": "supp-files/coc.html",
+    "title": "Code of conduct",
     "section": "",
-    "text": "Have the dplyr, tidyr, and ggplot cheatsheets ready open and ready.\n\n\nthe code below will load the packages you need:\n\nlibrary(tidyverse)\nlibrary(car)\n\n\n\n\nThe code below will load and print the first few rows of the Duncan dataset. To find out more about this dataset, type ?Duncan in your RStudio console to open the vignette.\n\nduncan &lt;- as_tibble(Duncan)\nprint(duncan)\n\n# A tibble: 45 × 4\n   type  income education prestige\n   &lt;fct&gt;  &lt;int&gt;     &lt;int&gt;    &lt;int&gt;\n 1 prof      62        86       82\n 2 prof      72        76       83\n 3 prof      75        92       90\n 4 prof      55        90       76\n 5 prof      64        86       90\n 6 prof      21        84       87\n 7 prof      64        93       93\n 8 prof      80       100       90\n 9 wc        67        87       52\n10 prof      72        86       88\n# ℹ 35 more rows\n\n\nThe code below will load and print the first few rows of the WVS dataset. To find out more about this dataset, type ?WVS in your RStudio console to open the vignette.\n\nwvs &lt;- as_tibble(WVS)\nprint(wvs)\n\n# A tibble: 5,381 × 6\n   poverty     religion degree country   age gender\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt; \n 1 Too Little  yes      no     USA        44 male  \n 2 About Right yes      no     USA        40 female\n 3 Too Little  yes      no     USA        36 female\n 4 Too Much    yes      yes    USA        25 female\n 5 Too Little  yes      yes    USA        39 male  \n 6 About Right yes      no     USA        80 female\n 7 Too Much    yes      no     USA        48 female\n 8 Too Little  yes      no     USA        32 male  \n 9 Too Little  yes      no     USA        74 female\n10 Too Little  yes      no     USA        30 male  \n# ℹ 5,371 more rows",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#prep",
-    "href": "supp-files/exercises.html#prep",
-    "title": "Post-workshop exercises",
-    "section": "",
-    "text": "Have the dplyr, tidyr, and ggplot cheatsheets ready open and ready.\n\n\nthe code below will load the packages you need:\n\nlibrary(tidyverse)\nlibrary(car)\n\n\n\n\nThe code below will load and print the first few rows of the Duncan dataset. To find out more about this dataset, type ?Duncan in your RStudio console to open the vignette.\n\nduncan &lt;- as_tibble(Duncan)\nprint(duncan)\n\n# A tibble: 45 × 4\n   type  income education prestige\n   &lt;fct&gt;  &lt;int&gt;     &lt;int&gt;    &lt;int&gt;\n 1 prof      62        86       82\n 2 prof      72        76       83\n 3 prof      75        92       90\n 4 prof      55        90       76\n 5 prof      64        86       90\n 6 prof      21        84       87\n 7 prof      64        93       93\n 8 prof      80       100       90\n 9 wc        67        87       52\n10 prof      72        86       88\n# ℹ 35 more rows\n\n\nThe code below will load and print the first few rows of the WVS dataset. To find out more about this dataset, type ?WVS in your RStudio console to open the vignette.\n\nwvs &lt;- as_tibble(WVS)\nprint(wvs)\n\n# A tibble: 5,381 × 6\n   poverty     religion degree country   age gender\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt; \n 1 Too Little  yes      no     USA        44 male  \n 2 About Right yes      no     USA        40 female\n 3 Too Little  yes      no     USA        36 female\n 4 Too Much    yes      yes    USA        25 female\n 5 Too Little  yes      yes    USA        39 male  \n 6 About Right yes      no     USA        80 female\n 7 Too Much    yes      no     USA        48 female\n 8 Too Little  yes      no     USA        32 male  \n 9 Too Little  yes      no     USA        74 female\n10 Too Little  yes      no     USA        30 male  \n# ℹ 5,371 more rows",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-1",
-    "href": "supp-files/exercises.html#question-1",
-    "title": "Post-workshop exercises",
-    "section": "Question 1",
-    "text": "Question 1\nUsing wvs dataset, filter the age column to include values that is more than 29. Then, select the columns age, degree, religion and poverty. Save the result to a new dataframe called wvs_filtered.\n\n\nShow Answer\nwvs_filtered &lt;- wvs |&gt; \n    filter(age &gt; 29) |&gt; \n    select(age, degree, religion, poverty) \n\nprint(wvs_filtered)\n\n\n# A tibble: 4,228 × 4\n     age degree religion poverty    \n   &lt;int&gt; &lt;fct&gt;  &lt;fct&gt;    &lt;ord&gt;      \n 1    44 no     yes      Too Little \n 2    40 no     yes      About Right\n 3    36 no     yes      Too Little \n 4    39 yes    yes      Too Little \n 5    80 no     yes      About Right\n 6    48 no     yes      Too Much   \n 7    32 no     yes      Too Little \n 8    74 no     yes      Too Little \n 9    30 no     yes      Too Little \n10    32 yes    yes      Too Little \n# ℹ 4,218 more rows",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-2",
-    "href": "supp-files/exercises.html#question-2",
-    "title": "Post-workshop exercises",
-    "section": "Question 2",
-    "text": "Question 2\nUpdate the wvs dataset by creating a dummy-coded version of the gender variable, where male = 0 and female = 1. Save the results in a new column named gender_coded.\n\n\nShow Answer\nwvs &lt;- wvs |&gt; \n    mutate(gender_coded = if_else(gender == \"male\", 0, 1)) \n\nprint(wvs)\n\n\n# A tibble: 5,381 × 7\n   poverty     religion degree country   age gender gender_coded\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt;         &lt;dbl&gt;\n 1 Too Little  yes      no     USA        44 male              0\n 2 About Right yes      no     USA        40 female            1\n 3 Too Little  yes      no     USA        36 female            1\n 4 Too Much    yes      yes    USA        25 female            1\n 5 Too Little  yes      yes    USA        39 male              0\n 6 About Right yes      no     USA        80 female            1\n 7 Too Much    yes      no     USA        48 female            1\n 8 Too Little  yes      no     USA        32 male              0\n 9 Too Little  yes      no     USA        74 female            1\n10 Too Little  yes      no     USA        30 male              0\n# ℹ 5,371 more rows",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-3",
-    "href": "supp-files/exercises.html#question-3",
-    "title": "Post-workshop exercises",
-    "section": "Question 3",
-    "text": "Question 3\nCreate a summary of the wvs dataset showing the number of observations for each country.\n\n\nShow Answer\nwvs |&gt; \n    count(country) \n\n\n# A tibble: 4 × 2\n  country       n\n  &lt;fct&gt;     &lt;int&gt;\n1 Australia  1874\n2 Norway     1127\n3 Sweden     1003\n4 USA        1377",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-4",
-    "href": "supp-files/exercises.html#question-4",
-    "title": "Post-workshop exercises",
-    "section": "Question 4",
-    "text": "Question 4\nUsing wvs dataset, calculate the average age for each combination of gender and degree status.\n\n\nShow Answer\nwvs |&gt; \n    group_by(gender, degree) |&gt; \n    summarise(avg_age = mean(age, na.rm = TRUE))\n\n\n`summarise()` has regrouped the output.\nℹ Summaries were computed grouped by gender and degree.\nℹ Output is grouped by gender.\nℹ Use `summarise(.groups = \"drop_last\")` to silence this message.\nℹ Use `summarise(.by = c(gender, degree))` for per-operation grouping\n  (`?dplyr::dplyr_by`) instead.\n\n\n# A tibble: 4 × 3\n# Groups:   gender [2]\n  gender degree avg_age\n  &lt;fct&gt;  &lt;fct&gt;    &lt;dbl&gt;\n1 female no        45.6\n2 female yes       41.0\n3 male   no        46.0\n4 male   yes       43.3",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-5",
-    "href": "supp-files/exercises.html#question-5",
-    "title": "Post-workshop exercises",
-    "section": "Question 5",
-    "text": "Question 5\nUsing the wvs dataset, create a summary statistics for each country and religion (yes/no). Calculate the age mean, age median, number of observation.\n\n\nShow Answer\nwvs |&gt; \n    group_by(country, religion) %&gt;%\n    summarise(\n        avg_age = mean(age, na.rm = TRUE),\n        median_age = median(age, na.rm = TRUE),\n        n_observations = n()\n    ) \n\n\n`summarise()` has regrouped the output.\nℹ Summaries were computed grouped by country and religion.\nℹ Output is grouped by country.\nℹ Use `summarise(.groups = \"drop_last\")` to silence this message.\nℹ Use `summarise(.by = c(country, religion))` for per-operation grouping\n  (`?dplyr::dplyr_by`) instead.\n\n\n# A tibble: 8 × 5\n# Groups:   country [4]\n  country   religion avg_age median_age n_observations\n  &lt;fct&gt;     &lt;fct&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;int&gt;\n1 Australia no          39.9         37            375\n2 Australia yes         45.7         43           1499\n3 Norway    no          40.6         38            109\n4 Norway    yes         43.6         42           1018\n5 Sweden    no          43.7         42             15\n6 Sweden    yes         43.9         43            988\n7 USA       no          44.6         42            287\n8 USA       yes         48.9         46           1090",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-6",
-    "href": "supp-files/exercises.html#question-6",
-    "title": "Post-workshop exercises",
-    "section": "Question 6",
-    "text": "Question 6\nUsing the wvs dataset, select the 10 oldest respondents from the USA. (hint: arrange() and slice())\n\n\nShow Answer\nwvs |&gt; \n    filter(country == \"USA\", age &gt; 50) |&gt; \n    arrange(desc(age)) |&gt; \n    slice(1:10)\n\n\n# A tibble: 10 × 7\n   poverty     religion degree country   age gender gender_coded\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt;         &lt;dbl&gt;\n 1 Too Much    no       no     USA        91 male              0\n 2 Too Little  yes      no     USA        91 male              0\n 3 Too Much    yes      no     USA        88 female            1\n 4 About Right yes      no     USA        88 male              0\n 5 Too Little  yes      yes    USA        87 female            1\n 6 Too Much    yes      no     USA        87 female            1\n 7 Too Little  yes      no     USA        87 male              0\n 8 About Right yes      no     USA        87 male              0\n 9 About Right yes      no     USA        86 female            1\n10 Too Much    yes      no     USA        86 female            1",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-7",
-    "href": "supp-files/exercises.html#question-7",
-    "title": "Post-workshop exercises",
-    "section": "Question 7",
-    "text": "Question 7\nUpdate the wvs dataset by adding a new column called age_category that categorises each respondents based on the following criteria:\n\nbelow 18 = “youth” category\nbetween 18 to 34 = “young adult” category\nbetween 35 to 49 = “adult” category\nbetween 50 to 69 = “senior” category\nmore than 70 = “elderly” category\n\n\n\nShow Answer\nwvs &lt;- wvs |&gt; \n    mutate(age_category = case_when(\n        age &lt; 18 ~ \"youth\",\n        age &gt;= 18 & age &lt; 35 ~ \"young adult\",\n        age &gt;= 35 & age &lt; 50 ~ \"adult\",\n        age &gt;= 50 & age &lt; 70 ~ \"senior\",\n        age &gt;= 70 ~ \"elderly\"\n    )) \n\nprint(wvs)\n\n\n# A tibble: 5,381 × 8\n   poverty     religion degree country   age gender gender_coded age_category\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt;         &lt;dbl&gt; &lt;chr&gt;       \n 1 Too Little  yes      no     USA        44 male              0 adult       \n 2 About Right yes      no     USA        40 female            1 adult       \n 3 Too Little  yes      no     USA        36 female            1 adult       \n 4 Too Much    yes      yes    USA        25 female            1 young adult \n 5 Too Little  yes      yes    USA        39 male              0 adult       \n 6 About Right yes      no     USA        80 female            1 elderly     \n 7 Too Much    yes      no     USA        48 female            1 adult       \n 8 Too Little  yes      no     USA        32 male              0 young adult \n 9 Too Little  yes      no     USA        74 female            1 elderly     \n10 Too Little  yes      no     USA        30 male              0 young adult \n# ℹ 5,371 more rows",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-8",
-    "href": "supp-files/exercises.html#question-8",
-    "title": "Post-workshop exercises",
-    "section": "Question 8",
-    "text": "Question 8\nRecreate the following visualization:\n\n\nShow Answer\nwvs |&gt; ggplot(aes(x = country, fill = poverty)) +\n    geom_bar(position = \"dodge\") +\n    labs(title = \"Distribution of Poverty Opinions Across Countries\",\n       x = \"Country\", \n       y = \"Count\", \n       fill = \"Poverty Opinion\") +\n    theme_minimal()",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-9",
-    "href": "supp-files/exercises.html#question-9",
-    "title": "Post-workshop exercises",
-    "section": "Question 9",
-    "text": "Question 9\nRecreate the following visualization:\n\n\nShow Answer\nwvs |&gt; \n    ggplot(aes(x = country, fill = degree)) +\n    geom_bar(position = \"fill\") +\n    labs(title = \"Proportion of Degree Status by Country\", \n       x = \"Country\", y = \"Count\", fill = \"Degree Status\") +\n    theme_minimal()",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-10",
-    "href": "supp-files/exercises.html#question-10",
-    "title": "Post-workshop exercises",
-    "section": "Question 10",
-    "text": "Question 10\nRecreate the following visualization:\n\n\nShow Answer\nwvs |&gt; ggplot(aes(x = country, y = age)) +\n    geom_boxplot() +\n    labs(title = \"Age Distribution by Country\", x = \"Country\", y = \"Age\") +\n    theme_minimal() +\n    theme(legend.position = \"none\")",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-11",
-    "href": "supp-files/exercises.html#question-11",
-    "title": "Post-workshop exercises",
-    "section": "Question 11",
-    "text": "Question 11\nRecreate the following visualization:\n\n\nShow Answer\nwvs |&gt; \n    ggplot(aes(x = country, y = age)) +\n    geom_boxplot() +\n    facet_wrap(~ religion) +\n    labs(title = \"Age Distribution by Country and Religion\",\n       x = \"Country\", y = \"Age\") +\n    theme_minimal()",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-12",
-    "href": "supp-files/exercises.html#question-12",
-    "title": "Post-workshop exercises",
-    "section": "Question 12",
-    "text": "Question 12\nRecreate the following visualization using duncan dataset:\n\n\nShow Answer\nduncan |&gt; \n    ggplot(aes(x = income, y = prestige, color = type)) +\n    geom_jitter() +\n    labs(title = \"Occupation Prestige vs. Income\",\n       x = \"Income\", \n       y = \"Prestige Score\",\n       color = \"Occupation Type\") +\n    theme_minimal()",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-13",
-    "href": "supp-files/exercises.html#question-13",
-    "title": "Post-workshop exercises",
-    "section": "Question 13",
-    "text": "Question 13\nRecreate the following visualization using duncan dataset:\n\n\nShow Answer\nduncan |&gt; \n    ggplot(aes(x = type, y = income)) +\n    geom_boxplot() +\n    labs(title = \"Income Distribution by Occupation Type\",\n        x = \"Occupation Type\",\n        y = \"Income\") +\n    theme_minimal()",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-14",
-    "href": "supp-files/exercises.html#question-14",
-    "title": "Post-workshop exercises",
-    "section": "Question 14",
-    "text": "Question 14\nRecreate the following visualization using duncan dataset:\n\n\nShow Answer\nduncan |&gt; \n    ggplot(aes(x = prestige, y = income, color = type)) +\n    geom_jitter() +\n    geom_smooth(method = \"lm\") +\n    labs(\n        title = \"Relationship between Prestige and Income\",\n        subtitle = \"Grouped by Occupation Type\",\n        x = \"Prestige Score\",\n        y = \"Income\",\n        color = \"Occupation Type\"\n    ) + \n    theme_minimal()\n\n\n`geom_smooth()` using formula = 'y ~ x'",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-15",
-    "href": "supp-files/exercises.html#question-15",
-    "title": "Post-workshop exercises",
-    "section": "Question 15",
-    "text": "Question 15\nUsing duncan dataset:\n\nExamine the correlation between prestige scores and education.\nAnalyze the relationship between income and prestige scores.\n\n\n\nShow Answer\ncor.test(duncan$prestige, duncan$education)\n\n\n\n    Pearson's product-moment correlation\n\ndata:  duncan$prestige and duncan$education\nt = 10.668, df = 43, p-value = 1.171e-13\nalternative hypothesis: true correlation is not equal to 0\n95 percent confidence interval:\n 0.7445746 0.9163112\nsample estimates:\n      cor \n0.8519156 \n\n\nShow Answer\ncor.test(duncan$prestige, duncan$income)\n\n\n\n    Pearson's product-moment correlation\n\ndata:  duncan$prestige and duncan$income\nt = 10.062, df = 43, p-value = 7.144e-13\nalternative hypothesis: true correlation is not equal to 0\n95 percent confidence interval:\n 0.7217665 0.9080298\nsample estimates:\n      cor \n0.8378014",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-16",
-    "href": "supp-files/exercises.html#question-16",
-    "title": "Post-workshop exercises",
-    "section": "Question 16",
-    "text": "Question 16\nUsing duncan dataset, compare prestige scores across different occupational categories using ANOVA.\n\n\nShow Answer\nduncan_anova &lt;- aov(prestige ~ type, data=duncan)\nsummary(duncan_anova)\n\n\n            Df Sum Sq Mean Sq F value   Pr(&gt;F)    \ntype         2  33090   16545   65.57 1.21e-13 ***\nResiduals   42  10598     252                     \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-17",
-    "href": "supp-files/exercises.html#question-17",
-    "title": "Post-workshop exercises",
-    "section": "Question 17",
-    "text": "Question 17\nUsing duncan dataset, create a regression model that predicts income based on occupational prestige and education scores.\n\nlibrary(huxtable)\n\n\n\nShow Answer\nduncan_model &lt;- lm(income ~ prestige + education, data = duncan)\nhuxreg(\"income\" = duncan_model)\n\n\n\n\n\nincome\n\n\n\n(Intercept)10.426 *  \n\n(4.164)   \n\nprestige0.624 ***\n\n(0.125)   \n\neducation0.032    \n\n(0.132)   \n\nN45        \n\nR20.702    \n\nlogLik-179.902    \n\nAIC367.805    \n\n*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05.",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-18",
-    "href": "supp-files/exercises.html#question-18",
-    "title": "Post-workshop exercises",
-    "section": "Question 18",
-    "text": "Question 18\nUsing the wvs dataset, examine the relationship between religion and poverty perception.\n\n\nShow Answer\nwvs_chisq &lt;- chisq.test(table(wvs$religion, wvs$poverty))\nprint(wvs_chisq)\n\n\n\n    Pearson's Chi-squared test\n\ndata:  table(wvs$religion, wvs$poverty)\nX-squared = 0.083005, df = 2, p-value = 0.9593",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-19",
-    "href": "supp-files/exercises.html#question-19",
-    "title": "Post-workshop exercises",
-    "section": "Question 19",
-    "text": "Question 19\nUsing the wvs dataset, examine whether there is a significant difference in the average age between individuals with and without a university degree.\n\n\nShow Answer\nwvs_ttest &lt;- t.test(age ~ degree, data = wvs)\nprint(wvs_ttest)\n\n\n\n    Welch Two Sample t-test\n\ndata:  age by degree\nt = 7.0571, df = 2029, p-value = 2.325e-12\nalternative hypothesis: true difference in means between group no and group yes is not equal to 0\n95 percent confidence interval:\n 2.674321 4.732708\nsample estimates:\n mean in group no mean in group yes \n         45.82775          42.12423",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "supp-files/exercises.html#question-20",
-    "href": "supp-files/exercises.html#question-20",
-    "title": "Post-workshop exercises",
-    "section": "Question 20",
-    "text": "Question 20\nUsing wvs dataset, compare the mean of age across different countries and age categories (see Question 7 to create age_category), and investigate if there is any significant difference. Conduct the post-hoc test if needed.\n\n\nShow Answer\nwvs_anova &lt;- aov(age ~ country + age_category, data = wvs)\nsummary(wvs_anova)\n\n\n               Df  Sum Sq Mean Sq F value Pr(&gt;F)    \ncountry         3   17399    5800   235.9 &lt;2e-16 ***\nage_category    3 1424858  474953 19319.9 &lt;2e-16 ***\nResiduals    5374  132113      25                   \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1",
-    "crumbs": [
-      "Exercises for your own practice"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Introductory R for Social Sciences",
-    "section": "",
-    "text": "This site serves as a repository for the slides and codes developed for the ‘Introductory R for Social Sciences’ workshop tailored for undergraduate students at SMU. Comprising five sessions, this resource is designed for individuals with fundamental statistics knowledge who are venturing into R programming or coding for the first time."
-  },
-  {
-    "objectID": "index.html#welcome",
-    "href": "index.html#welcome",
-    "title": "Introductory R for Social Sciences",
-    "section": "",
-    "text": "This site serves as a repository for the slides and codes developed for the ‘Introductory R for Social Sciences’ workshop tailored for undergraduate students at SMU. Comprising five sessions, this resource is designed for individuals with fundamental statistics knowledge who are venturing into R programming or coding for the first time."
-  },
-  {
-    "objectID": "index.html#instructors",
-    "href": "index.html#instructors",
-    "title": "Introductory R for Social Sciences",
-    "section": "Instructors",
-    "text": "Instructors\nInstructors:\n\nWei Xia, Instruction and Learning Services, SMU Libraries\nBella Ratmelia, Research & Data Services, SMU Libraries\n\nTeaching Assistants:\n\nCamille Ong, Instruction and Learning Services, SMU Libraries\nLain Shae Goh, School of Social Sciences"
-  },
-  {
-    "objectID": "index.html#schedule",
-    "href": "index.html#schedule",
-    "title": "Introductory R for Social Sciences",
-    "section": "Schedule",
-    "text": "Schedule\nVenue : YPHSL Seminar Room 3.2\nTime : Fridays, 3:30 - 5:30 PM (All sessions)\nClick on the link under “Topic” to access the slides. Slides will be progressively made available throughout the sessions.\n\n\n\n\nSession\nDate\nTopic\nDescription\n\n\n\n\n~\nBefore the workshop\nPreparation\nComplete the Pre-workshop activities\n\n\n1\n21 Aug 2026\nIntroduction to R and RStudio\nLearn about setting up RStudio, basic data types and structures in R, and importing data files.\n\n\n2\n28 Aug 2026\nData wrangling with tidyverse\nLearn about manipulating data with tidyverse, including filtering, selecting, mutating, and grouping data.\n\n\n3\n4 Sep 2026\nData visualization and Descriptive Statistics\nLearn about creating visualizations with ggplot2 and calculating descriptive statistics like mean, median, etc.\n\n\n4\n11 Sep 2026\nBasic Inferential Tests\nLearn about conducting t-tests, chi-square tests, ANOVA, and interpreting statistical results in R.\n\n\n5\n18 Sep 2026\nRegression and Presenting Your Result\nLearn about regression and various useful packages to generate your result table.\n\n\n~\nAfter the workshop\n\nPost-workshop exercises"
-  },
-  {
-    "objectID": "index.html#pre-workshop-activities",
-    "href": "index.html#pre-workshop-activities",
-    "title": "Introductory R for Social Sciences",
-    "section": "Pre-workshop activities",
-    "text": "Pre-workshop activities\n\nAbout R and RStudio\nR and RStudio are two different but complementary tools used in data analysis and statistical computing. Understanding the difference between them is crucial (especially for beginners).\nR is a programming language and software environment specifically designed for statistical computing and graphics. It’s the core tool that actually processes your data and performs analyses.\nRStudio is an Integrated Development Environment (IDE) for R. Think of it as a user-friendly interface that makes it easier to write R code, manage projects, and visualize output. RStudio is not required to use R, but it significantly enhances the R programming experience!\n\n\n\n\n\n\nImportant\n\n\n\nAlways install R before installing RStudio, as RStudio requires R to function.\n\n\n\n\nStep 1: Install R\n\nGo to https://cran.rstudio.com/\nChoose your operating system (Windows, Mac, or Linux)\nDownload and install the latest version of R\n\n\n\nStep 2: Install RStudio\n\nVisit https://posit.co/download/rstudio-desktop/\nScroll down to “Download RStudio Desktop”\nClick “Download” and install the latest version of RStudio\n\n\n\nStep 3: Install the required packages\n\n\n\n\n\n\nNote\n\n\n\nPackages in R are collections of additional tools, functions, and datasets that extend R’s capabilities. Packages are created by contributors in the R community.\nThink of R as a smartphone, and packages as apps you download to add new features. Each package is designed to help with specific tasks or analyses, like creating graphs, analyzing particular types of data, or performing advanced statistical tests.\nPackages can save us time and leverage expert-created tools without having to write complex code from scratch. It’s very handy!\n\n\n\nOpen RStudio\nCopy the following code: install.packages(c(\"tidyverse\", \"DescTools\", \"moments\", \"corrplot\", \"apaTables\", \"gtsummary\", \"car\", \"huxtable\"))\nPaste it in the Console tab (see image below)\nPress Enter. Rstudio should proceed with installing the packages that we need.\n\n\n\n\nStep 4: Complete the pre-workshop survey\nPlease complete the pre-workshop survey here to share your goals and current knowledge. Your input will help to tailor the workshop contents and pace."
+    "text": "In order to foster a positive and professional learning environment we encourage the following kinds of behaviours:\n\nUse welcoming and inclusive language\nBe respectful of different viewpoints and experiences\nGracefully accept constructive criticism\nFocus on what is best for the community\nShow courtesy and respect towards other community members\n\n(Adapted from The Carpentries’ Code of Conduct)"
   },
   {
     "objectID": "05-more-stats.html#todays-outline",
@@ -483,7 +245,7 @@
     "href": "05-more-stats.html#dummy-coding-dependent-variable",
     "title": "Session 5: Regression and Presenting Your Result",
     "section": "Dummy-coding dependent variable",
-    "text": "Dummy-coding dependent variable\nBefore we proceed with the calculations, we need to dummy code the dependent variable into 1 and 0, with 1 = Satisfied and 0 = Not Satisfied. More info on dummy coding here\n\n# First, we need to create a binary outcome\nwvs_cleaned &lt;- wvs_cleaned |&gt;\n    mutate(satisfied = if_else(life_satisfaction &gt;= 7, 1, 0))\n# the if_else is from dplyr package (from session 2)\n\n\n\n# A tibble: 5,102 × 2\n  life_satisfaction satisfied\n              &lt;dbl&gt;     &lt;dbl&gt;\n1                 8         1\n2                10         1\n3                 4         0\n4                 1         0\n5                 9         1\n# ℹ 5,097 more rows"
+    "text": "Dummy-coding dependent variable\nBefore we proceed with the calculations, we need to dummy code the dependent variable into 1 and 0, with 1 = Satisfied and 0 = Not Satisfied. More info on dummy coding here\n\n# First, we need to create a binary outcome\nwvs_cleaned &lt;- wvs_cleaned |&gt;\n    mutate(satisfied = if_else(life_satisfaction &gt;= 7, 1, 0))\n# the if_else is from dplyr package (from session 2)\n\n\nwvs_cleaned |&gt; select(life_satisfaction, satisfied) |&gt; print(n = 5)\n\n# A tibble: 5,102 × 2\n  life_satisfaction satisfied\n              &lt;dbl&gt;     &lt;dbl&gt;\n1                 8         1\n2                10         1\n3                 4         0\n4                 1         0\n5                 9         1\n# ℹ 5,097 more rows"
   },
   {
     "objectID": "05-more-stats.html#conduct-the-analysis",
@@ -567,7 +329,7 @@
     "href": "05-more-stats.html#presenting-logistic-results-with-huxtable-output",
     "title": "Session 5: Regression and Presenting Your Result",
     "section": "Presenting logistic results with huxtable",
-    "text": "Presenting logistic results with huxtable\n\n\n\n\nfreedom of choicemarital status\n\n\n\n(Intercept)-2.608 ***0.280 ***\n\n(0.120)   (0.054)   \n\nfreedom_of_choice0.456 ***        \n\n(0.017)           \n\nmarital_statusMarried        0.383 ***\n\n        (0.065)   \n\nmarital_statusWidowed        0.165    \n\n        (0.157)   \n\nmarital_statusSeparated        -0.280    \n\n        (0.503)   \n\nmarital_statusDivorced        -0.097    \n\n        (0.165)   \n\nmarital_statusLiving together as married        -0.217    \n\n        (0.256)   \n\nN5102        5102        \n\nlogLik-2916.042    -3347.573    \n\nAIC5836.084    6707.146    \n\n*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05."
+    "text": "Presenting logistic results with huxtable\n\nWarning in aggregate_statistics(models, glance_args, statistics): Unrecognized statistics: r.squared\nTry setting `statistics` explicitly in the call to `huxreg()`\n\n\n\n\n\nfreedom of choicemarital status\n\n\n\n(Intercept)-2.608 ***0.280 ***\n\n(0.120)   (0.054)   \n\nfreedom_of_choice0.456 ***        \n\n(0.017)           \n\nmarital_statusMarried        0.383 ***\n\n        (0.065)   \n\nmarital_statusWidowed        0.165    \n\n        (0.157)   \n\nmarital_statusSeparated        -0.280    \n\n        (0.503)   \n\nmarital_statusDivorced        -0.097    \n\n        (0.165)   \n\nmarital_statusLiving together as married        -0.217    \n\n        (0.256)   \n\nN5102        5102        \n\nlogLik-2916.042    -3347.573    \n\nAIC5836.084    6707.146    \n\n*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05."
   },
   {
     "objectID": "05-more-stats.html#lets-try-this-logistic-regression-exercise-5-mins",
@@ -675,6 +437,48 @@
     "text": "R Scripts vs Quarto\n\n\nR Scripts\n\nGreat for quick debugging, experiment\nPreferred format if you are archiving your code to GitHub or data repository\nMore suitable for “production” tasks e.g. automating your data cleaning and processing, custom functions, etc.\n\n\nQuarto\n\nGreat for report and presentation to showcase your research insights/process as it integrates code, narrative text, visualizations, and results.\nVery handy when you need your report in multiple format, e.g. in Word and PPT.\nFun fact: the course website and slides are all made in Quarto"
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Introductory R for Social Sciences",
+    "section": "",
+    "text": "This site serves as a repository for the slides and codes developed for the ‘Introductory R for Social Sciences’ workshop tailored for undergraduate students at SMU. Comprising five sessions, this resource is designed for individuals with fundamental statistics knowledge who are venturing into R programming or coding for the first time."
+  },
+  {
+    "objectID": "index.html#welcome",
+    "href": "index.html#welcome",
+    "title": "Introductory R for Social Sciences",
+    "section": "",
+    "text": "This site serves as a repository for the slides and codes developed for the ‘Introductory R for Social Sciences’ workshop tailored for undergraduate students at SMU. Comprising five sessions, this resource is designed for individuals with fundamental statistics knowledge who are venturing into R programming or coding for the first time."
+  },
+  {
+    "objectID": "index.html#instructors",
+    "href": "index.html#instructors",
+    "title": "Introductory R for Social Sciences",
+    "section": "Instructors",
+    "text": "Instructors\nInstructors:\n\nWei Xia, Instruction and Learning Services, SMU Libraries\nBella Ratmelia, Research & Data Services, SMU Libraries\n\nTeaching Assistants:\n\nCamille Ong, Instruction and Learning Services, SMU Libraries\nLain Shae Goh, School of Social Sciences"
+  },
+  {
+    "objectID": "index.html#schedule",
+    "href": "index.html#schedule",
+    "title": "Introductory R for Social Sciences",
+    "section": "Schedule",
+    "text": "Schedule\nVenue : YPHSL Seminar Room 3.2\nTime : Fridays, 3:30 - 5:30 PM (All sessions)\nClick on the link under “Topic” to access the slides. Slides will be progressively made available throughout the sessions.\n\n\n\n\nSession\nDate\nTopic\nDescription\n\n\n\n\n~\nBefore the workshop\nPreparation\nComplete the Pre-workshop activities\n\n\n1\n21 Aug 2026\nIntroduction to R and RStudio\nLearn about setting up RStudio, basic data types and structures in R, and importing data files.\n\n\n2\n28 Aug 2026\nData wrangling with tidyverse\nLearn about manipulating data with tidyverse, including filtering, selecting, mutating, and grouping data.\n\n\n3\n4 Sep 2026\nData visualization and Descriptive Statistics\nLearn about creating visualizations with ggplot2 and calculating descriptive statistics like mean, median, etc.\n\n\n4\n11 Sep 2026\nBasic Inferential Tests\nLearn about conducting t-tests, chi-square tests, ANOVA, and interpreting statistical results in R.\n\n\n5\n18 Sep 2026\nRegression and Presenting Your Result\nLearn about regression and various useful packages to generate your result table.\n\n\n~\nAfter the workshop\n\nPost-workshop exercises"
+  },
+  {
+    "objectID": "index.html#pre-workshop-activities",
+    "href": "index.html#pre-workshop-activities",
+    "title": "Introductory R for Social Sciences",
+    "section": "Pre-workshop activities",
+    "text": "Pre-workshop activities\n\nAbout R and RStudio\nR and RStudio are two different but complementary tools used in data analysis and statistical computing. Understanding the difference between them is crucial (especially for beginners).\nR is a programming language and software environment specifically designed for statistical computing and graphics. It’s the core tool that actually processes your data and performs analyses.\nRStudio is an Integrated Development Environment (IDE) for R. Think of it as a user-friendly interface that makes it easier to write R code, manage projects, and visualize output. RStudio is not required to use R, but it significantly enhances the R programming experience!\n\n\n\n\n\n\nImportant\n\n\n\nAlways install R before installing RStudio, as RStudio requires R to function.\n\n\n\n\nStep 1: Install R\n\nGo to https://cran.rstudio.com/\nChoose your operating system (Windows, Mac, or Linux)\nDownload and install the latest version of R\n\n\n\nStep 2: Install RStudio\n\nVisit https://posit.co/download/rstudio-desktop/\nScroll down to “Download RStudio Desktop”\nClick “Download” and install the latest version of RStudio\n\n\n\nStep 3: Install the required packages\n\n\n\n\n\n\nNote\n\n\n\nPackages in R are collections of additional tools, functions, and datasets that extend R’s capabilities. Packages are created by contributors in the R community.\nThink of R as a smartphone, and packages as apps you download to add new features. Each package is designed to help with specific tasks or analyses, like creating graphs, analyzing particular types of data, or performing advanced statistical tests.\nPackages can save us time and leverage expert-created tools without having to write complex code from scratch. It’s very handy!\n\n\n\nOpen RStudio\nCopy the following code: install.packages(c(\"tidyverse\", \"DescTools\", \"moments\", \"corrplot\", \"apaTables\", \"gtsummary\", \"car\", \"huxtable\"))\nPaste it in the Console tab (see image below)\nPress Enter. Rstudio should proceed with installing the packages that we need.\n\n\n\n\nStep 4: Complete the pre-workshop survey\nPlease complete the pre-workshop survey here to share your goals and current knowledge. Your input will help to tailor the workshop contents and pace."
+  },
+  {
+    "objectID": "dataset.html",
+    "href": "dataset.html",
+    "title": "The World Values Survey Dataset",
+    "section": "",
+    "text": "For this workshop, we will be using dataset stored in a CSV file called wvs-4-countries.csv.\n\nWhat is a CSV?\nA CSV (Comma-Separated Values) file is a type of file that stores data in a plain text format. Each line in the file represents a row of data, and within each row, individual pieces of data (like numbers or words) are separated by commas.\nThis format is commonly used for storing and transferring data, especially in spreadsheets and databases. Because it is literally just plain text, it is an ideal format if you have large amount of data.\nYou can open CSV files in Excel, Google Sheets, or even Notepad!\n\n\nDownload the Dataset\n\nStep 1\nClick this link to access the wvs-4-countries.csv file. You should see a plain page with a bunch of text.\n\n\nStep 2\nRight click anywhere in this page, and choose Save As... or Save Page as....\n\n\nStep 3\nSave this file inside the data folder that we create together in Session 1, and you’re good to go!\n\n\n\nData Dictionary for WVS dataset\nThe World Values Survey (&lt;www.worldvaluessurvey.org&gt;) is a global network of social scientists studying changing values and their impact on social and political life, led by an international team of scholars, with the WVS association and secretariat headquartered in Stockholm, Sweden.\nThe actual questionnaire consists of over 200 questions with respondents from various countries. For the purpose of this workshop, we will use 15 variables/questions with respondents from four countries: Hong Kong SAR, Indonesia, Malaysia, and Turkey. Each country contributes 1,313 respondents, for a total of 5,252 rows. The 15 variables are:\n\ncountry\n\nCharacter variable indicating the respondent’s country: Hong Kong SAR, Indonesia, Malaysia, or Turkey\n\nrespondent_id\n\nNumeric identifier unique to each survey respondent\n\nage\n\nNumeric variable indicating respondent’s age in years\n\nurban_rural\n\nIndicates the type of settlement where the respondent lives: Urban or Rural\n\nincome_level\n\nIndicates the respondent’s household income level (recoded into three groups): Low, Medium, or High\n\nsex\n\nIndicates respondent’s gender: Male or Female\n\nmarital_status\n\nIndicates current marital status: Married, Single, Divorced, Separated, or Widowed\n\neducation\n\nHighest educational level attained by the respondent, recoded into three groups: Lower, Middle, or Higher\n\nlife_satisfaction\n\nNumeric scale from 1-10 measuring overall life satisfaction, where 1 indicates lowest satisfaction and 10 indicates highest satisfaction\n\nfreedom_of_choice\n\nNumeric scale from 1-10 measuring perceived freedom of choice and control, where 1 indicates no freedom at all and 10 indicates a great deal\n\nemancipative_values\n\nNumeric index from 0-1 measuring emancipative values (Welzel), where higher values indicate stronger support for personal freedom, gender equality, and civic participation. Composed of four sub-indices: autonomy, equality, choice, and voice.\n\ntrust_people\n\nIndicates general social trust: Trusted (most people can be trusted) or Not trusted (need to be very careful)\n\nimportance_of_god\n\nNumeric scale from 1-10 measuring how important God is in the respondent’s life, where 1 indicates not at all important and 10 indicates very important\n\nfinancial_satisfaction\n\nNumeric scale from 1-10 measuring satisfaction with the household’s financial situation, where 1 indicates dissatisfied and 10 indicates satisfied\n\nsecular_values\n\nNumeric index from 0-1 measuring overall secular values (Welzel), where higher values indicate more secular orientations. Composed of four sub-indices: defiance, disbelief, relativism, and scepticism.\n\n\nIf you’d like to find out more about this data, including the original codebook and questionnaire, check out their homepage here: https://www.worldvaluessurvey.org/WVSDocumentationWV7.jsp\n\n\nReferences\nHaerpfer, C., Inglehart, R., Moreno, A., Welzel, C., Kizilova, K., Diez-Medrano, J., Lagos, M., Norris, P., Ponarin, E. & Puranen B. (2022): World Values Survey Wave 7 (2017-2022) Cross-National Data-Set. Version: 4.0.0. World Values Survey Association. DOI: doi.org/10.14281/18241.18"
+  },
+  {
     "objectID": "03-visualization.html#todays-outline",
     "href": "03-visualization.html#todays-outline",
     "title": "Session 3: Data Visualization and Descriptive Stats",
@@ -721,7 +525,7 @@
     "href": "03-visualization.html#long-vs-wide-data-examples",
     "title": "Session 3: Data Visualization and Descriptive Stats",
     "section": "Long vs Wide Data: Examples",
-    "text": "Long vs Wide Data: Examples\n\n\nLong data:\n\n\n\nObservations (Long)\n\n\ncountry\nage_group\ncount\n\n\n\n\nTurkey\n18-28\n329\n\n\nTurkey\n29-44\n427\n\n\nTurkey\n45-60\n430\n\n\nTurkey\n61+\n30\n\n\nHong Kong SAR\n18-28\n191\n\n\nHong Kong SAR\n29-44\n384\n\n\nHong Kong SAR\n45-60\n412\n\n\nHong Kong SAR\n61+\n285\n\n\nIndonesia\n18-28\n308\n\n\nIndonesia\n29-44\n529\n\n\nIndonesia\n45-60\n360\n\n\nIndonesia\n61+\n104\n\n\nMalaysia\n18-28\n379\n\n\nMalaysia\n29-44\n511\n\n\nMalaysia\n45-60\n349\n\n\nMalaysia\n61+\n74\n\n\n\n\n\n\nWide data:\n\n\n\nObservations (Wide)\n\n\ncountry\n18-28\n29-44\n45-60\n61+\n\n\n\n\nTurkey\n329\n427\n430\n30\n\n\nHong Kong SAR\n191\n384\n412\n285\n\n\nIndonesia\n308\n529\n360\n104\n\n\nMalaysia\n379\n511\n349\n74"
+    "text": "Long vs Wide Data: Examples\n\n\nLong data:\n\n\n\nAttaching package: 'kableExtra'\n\n\nThe following object is masked from 'package:dplyr':\n\n    group_rows\n\n\n`summarise()` has regrouped the output.\nℹ Summaries were computed grouped by country and age_group.\nℹ Output is grouped by country.\nℹ Use `summarise(.groups = \"drop_last\")` to silence this message.\nℹ Use `summarise(.by = c(country, age_group))` for per-operation grouping\n  (`?dplyr::dplyr_by`) instead.\n\n\n\nObservations (Long)\n\n\ncountry\nage_group\ncount\n\n\n\n\nTurkey\n18-28\n329\n\n\nTurkey\n29-44\n427\n\n\nTurkey\n45-60\n430\n\n\nTurkey\n61+\n30\n\n\nHong Kong SAR\n18-28\n191\n\n\nHong Kong SAR\n29-44\n384\n\n\nHong Kong SAR\n45-60\n412\n\n\nHong Kong SAR\n61+\n285\n\n\nIndonesia\n18-28\n308\n\n\nIndonesia\n29-44\n529\n\n\nIndonesia\n45-60\n360\n\n\nIndonesia\n61+\n104\n\n\nMalaysia\n18-28\n379\n\n\nMalaysia\n29-44\n511\n\n\nMalaysia\n45-60\n349\n\n\nMalaysia\n61+\n74\n\n\n\n\n\n\nWide data:\n\n\n\nObservations (Wide)\n\n\ncountry\n18-28\n29-44\n45-60\n61+\n\n\n\n\nTurkey\n329\n427\n430\n30\n\n\nHong Kong SAR\n191\n384\n412\n285\n\n\nIndonesia\n308\n529\n360\n104\n\n\nMalaysia\n379\n511\n349\n74"
   },
   {
     "objectID": "03-visualization.html#long-vs-wide-data-one-way-to-spot",
@@ -861,7 +665,7 @@
     "href": "03-visualization.html#both-categorical---proportion-table",
     "title": "Session 3: Data Visualization and Descriptive Stats",
     "section": "Both categorical - Proportion table",
-    "text": "Both categorical - Proportion table\nWe can also create a proportion table just like we did earlier\n\nwvs_cleaned |&gt; \n  group_by(country, age_group) |&gt; \n  summarise(n = n()) |&gt; # count the frequency of participants by age group and country \n  mutate(prop = n/sum(n)) # calculate proportion\n\n# A tibble: 16 × 4\n# Groups:   country [4]\n   country       age_group     n   prop\n   &lt;fct&gt;         &lt;chr&gt;     &lt;int&gt;  &lt;dbl&gt;\n 1 Turkey        18-28       329 0.271 \n 2 Turkey        29-44       427 0.351 \n 3 Turkey        45-60       430 0.354 \n 4 Turkey        61+          30 0.0247\n 5 Hong Kong SAR 18-28       191 0.150 \n 6 Hong Kong SAR 29-44       384 0.302 \n 7 Hong Kong SAR 45-60       412 0.324 \n 8 Hong Kong SAR 61+         285 0.224 \n 9 Indonesia     18-28       308 0.237 \n10 Indonesia     29-44       529 0.407 \n11 Indonesia     45-60       360 0.277 \n12 Indonesia     61+         104 0.0799\n13 Malaysia      18-28       379 0.289 \n14 Malaysia      29-44       511 0.389 \n15 Malaysia      45-60       349 0.266 \n16 Malaysia      61+          74 0.0564"
+    "text": "Both categorical - Proportion table\nWe can also create a proportion table just like we did earlier\n\nwvs_cleaned |&gt; \n  group_by(country, age_group) |&gt; \n  summarise(n = n()) |&gt; # count the frequency of participants by age group and country \n  mutate(prop = n/sum(n)) # calculate proportion\n\n`summarise()` has regrouped the output.\nℹ Summaries were computed grouped by country and age_group.\nℹ Output is grouped by country.\nℹ Use `summarise(.groups = \"drop_last\")` to silence this message.\nℹ Use `summarise(.by = c(country, age_group))` for per-operation grouping\n  (`?dplyr::dplyr_by`) instead.\n\n\n# A tibble: 16 × 4\n# Groups:   country [4]\n   country       age_group     n   prop\n   &lt;fct&gt;         &lt;chr&gt;     &lt;int&gt;  &lt;dbl&gt;\n 1 Turkey        18-28       329 0.271 \n 2 Turkey        29-44       427 0.351 \n 3 Turkey        45-60       430 0.354 \n 4 Turkey        61+          30 0.0247\n 5 Hong Kong SAR 18-28       191 0.150 \n 6 Hong Kong SAR 29-44       384 0.302 \n 7 Hong Kong SAR 45-60       412 0.324 \n 8 Hong Kong SAR 61+         285 0.224 \n 9 Indonesia     18-28       308 0.237 \n10 Indonesia     29-44       529 0.407 \n11 Indonesia     45-60       360 0.277 \n12 Indonesia     61+         104 0.0799\n13 Malaysia      18-28       379 0.289 \n14 Malaysia      29-44       511 0.389 \n15 Malaysia      45-60       349 0.266 \n16 Malaysia      61+          74 0.0564"
   },
   {
     "objectID": "03-visualization.html#both-categorical---bar-chart",
@@ -924,7 +728,7 @@
     "href": "03-visualization.html#both-continuous---jitter-scatterplot-output",
     "title": "Session 3: Data Visualization and Descriptive Stats",
     "section": "Both continuous - Jitter / scatterplot",
-    "text": "Both continuous - Jitter / scatterplot"
+    "text": "Both continuous - Jitter / scatterplot\n\n`geom_smooth()` using formula = 'y ~ x'"
   },
   {
     "objectID": "03-visualization.html#one-continuous-one-categorical---summary-table",
@@ -987,7 +791,7 @@
     "href": "03-visualization.html#using-facets-for-more-complex-visualization-output",
     "title": "Session 3: Data Visualization and Descriptive Stats",
     "section": "Using Facets for more complex visualization",
-    "text": "Using Facets for more complex visualization"
+    "text": "Using Facets for more complex visualization\n\n`geom_smooth()` using formula = 'y ~ x'"
   },
   {
     "objectID": "03-visualization.html#is-fancier-better",
@@ -1036,14 +840,14 @@
     "href": "03-visualization.html#correlation-plot",
     "title": "Session 3: Data Visualization and Descriptive Stats",
     "section": "Correlation Plot",
-    "text": "Correlation Plot\nWhen there are more than two continuous variables to explore, correlation map is sometimes used. We can achieve this with ggplot, but it’s much easier to use the corrplot() function from the corrplot package.\nLet’s visualize the correlation map for these five variables. Notice the mix of positive (red) and negative (blue) correlations — for example, importance_of_god and secular_values are strongly negatively correlated.\n\nlibrary(corrplot)\n\n# select all the columns for correlation calculation, save it to columns_for_corr\ncolumns_for_corr &lt;- wvs_cleaned |&gt;\n  select(financial_satisfaction, life_satisfaction, freedom_of_choice, importance_of_god, secular_values)\n\n# pass the columns_for_corr to cor() function, and save the result to cor_matrix\ncor_matrix &lt;- cor(columns_for_corr)\n\n# visualize the cor_matrix with corrplot()!\ncorrplot(cor_matrix,\n         method = \"shade\", # show the correlation strength as color shades\n         addCoef.col = \"black\", tl.col = \"black\") # label the coefficients\n\n\n\n\nif you get an error saying “corrplot function not found” or something along that line, that means you need to install the corrplot package first! Run this line in your RStudio Console (bottom left area): install.packages(\"corrplot\")"
+    "text": "Correlation Plot\nWhen there are more than two continuous variables to explore, correlation map is sometimes used. We can achieve this with ggplot, but it’s much easier to use the corrplot() function from the corrplot package.\nLet’s visualize the correlation map for these five variables. Notice the mix of positive (red) and negative (blue) correlations — for example, importance_of_god and secular_values are strongly negatively correlated.\n\nlibrary(corrplot)\n\n\n\n\nif you get an error saying “corrplot function not found” or something along that line, that means you need to install the corrplot package first! Run this line in your RStudio Console (bottom left area): install.packages(\"corrplot\")"
   },
   {
     "objectID": "03-visualization.html#correlation-plot-output",
     "href": "03-visualization.html#correlation-plot-output",
     "title": "Session 3: Data Visualization and Descriptive Stats",
     "section": "Correlation Plot",
-    "text": "Correlation Plot"
+    "text": "Correlation Plot\n\ncorrplot 0.95 loaded\n\n# select all the columns for correlation calculation, save it to columns_for_corr\ncolumns_for_corr &lt;- wvs_cleaned |&gt;\n  select(financial_satisfaction, life_satisfaction, freedom_of_choice, importance_of_god, secular_values)\n\n# pass the columns_for_corr to cor() function, and save the result to cor_matrix\ncor_matrix &lt;- cor(columns_for_corr)\n\n# visualize the cor_matrix with corrplot()!\ncorrplot(cor_matrix,\n         method = \"shade\", # show the correlation strength as color shades\n         addCoef.col = \"black\", tl.col = \"black\") # label the coefficients"
   },
   {
     "objectID": "03-visualization.html#correlation-plot---shorter-code",
@@ -1260,7 +1064,7 @@
     "href": "01-intro.html#loading-the-wvs-dataset",
     "title": "Session 1: Introduction to R and RStudio",
     "section": "Loading the WVS Dataset",
-    "text": "Loading the WVS Dataset\nLet’s load our actual World Values Survey dataset using read_csv function.\nBefore use read_csv install and load package tidyverse. Install the package only once and need to load the package in every session before you use it.\n\nlibrary(tidyverse)\n\nwvs_data &lt;- read_csv(\"data/wvs-4-countries.csv\")\nhead(wvs_data)\n\n# A tibble: 6 × 15\n  country      respondent_id   age urban_rural income_level sex   marital_status\n  &lt;chr&gt;                &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt;         \n1 Hong Kong S…     344070882    62 Urban       Medium       Male  Married       \n2 Hong Kong S…     344070454    24 Urban       Medium       Male  Single        \n3 Hong Kong S…     344072005    29 Urban       Low          Fema… Single        \n4 Hong Kong S…     344071354    55 Urban       Medium       Fema… Separated     \n5 Hong Kong S…     344070282    62 Urban       Low          Male  Married       \n6 Hong Kong S…     344070942    41 Urban       Medium       Male  Single        \n# ℹ 8 more variables: education &lt;chr&gt;, life_satisfaction &lt;dbl&gt;,\n#   freedom_of_choice &lt;dbl&gt;, emancipative_values &lt;dbl&gt;, trust_people &lt;chr&gt;,\n#   importance_of_god &lt;dbl&gt;, financial_satisfaction &lt;dbl&gt;, secular_values &lt;dbl&gt;\n\n\nMake sure to save the CSV file in your data folder! (No auto save)"
+    "text": "Loading the WVS Dataset\nLet’s load our actual World Values Survey dataset using read_csv function.\nBefore use read_csv install and load package tidyverse. Install the package only once and need to load the package in every session before you use it.\n\nlibrary(tidyverse)\n\nwvs_data &lt;- read_csv(\"data/wvs-4-countries.csv\")\n\nRows: 5252 Columns: 15\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (7): country, urban_rural, income_level, sex, marital_status, education,...\ndbl (8): respondent_id, age, life_satisfaction, freedom_of_choice, emancipat...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\nhead(wvs_data)\n\n# A tibble: 6 × 15\n  country      respondent_id   age urban_rural income_level sex   marital_status\n  &lt;chr&gt;                &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt;         \n1 Hong Kong S…     344070882    62 Urban       Medium       Male  Married       \n2 Hong Kong S…     344070454    24 Urban       Medium       Male  Single        \n3 Hong Kong S…     344072005    29 Urban       Low          Fema… Single        \n4 Hong Kong S…     344071354    55 Urban       Medium       Fema… Separated     \n5 Hong Kong S…     344070282    62 Urban       Low          Male  Married       \n6 Hong Kong S…     344070942    41 Urban       Medium       Male  Single        \n# ℹ 8 more variables: education &lt;chr&gt;, life_satisfaction &lt;dbl&gt;,\n#   freedom_of_choice &lt;dbl&gt;, emancipative_values &lt;dbl&gt;, trust_people &lt;chr&gt;,\n#   importance_of_god &lt;dbl&gt;, financial_satisfaction &lt;dbl&gt;, secular_values &lt;dbl&gt;\n\n\nMake sure to save the CSV file in your data folder! (No auto save)"
   },
   {
     "objectID": "01-intro.html#exploring-the-wvs-dataset",
@@ -1340,328 +1144,6 @@
     "text": "Appendix on Vector Manipulations: Remove items\n\n1satisfaction_scores &lt;- satisfaction_scores[-c(2, 4)]\n2satisfaction_scores &lt;- satisfaction_scores[satisfaction_scores &lt;= 7]\n3satisfaction_scores &lt;- na.omit(satisfaction_scores)\n\n\n1\n\nRemove elements by index using “negative indexing”\n\n2\n\nRemove elements based on a condition using logical indexing. Remove these items which are FALSE.\n\n3\n\nRemove NA values from the vector"
   },
   {
-    "objectID": "02-tidyverse.html#todays-outline",
-    "href": "02-tidyverse.html#todays-outline",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Today’s Outline",
-    "text": "Today’s Outline\n\nLoading our data into RStudio environment\nData wrangling with dplyr and tidyr (part of the tidyverse package)"
-  },
-  {
-    "objectID": "02-tidyverse.html#checklist-when-you-start-rstudio",
-    "href": "02-tidyverse.html#checklist-when-you-start-rstudio",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Checklist when you start RStudio",
-    "text": "Checklist when you start RStudio\n\nGo to the folder where you put your project for this workshop\nFind a file with .Rproj extension - this is the R project file that holds all the information about your project.\n\n\n\nDouble click on the file. Rstudio should launch with your project loaded!\nRe-run the library(tidyverse) and read_csv portion in the previous session (the code is also on the next slide if you missed last week’s session)\n\nOptional (Though best practice):\n\nMake sure that Environment panel is empty (click on broom icon to clean it up).\nClear the Console and Plots too."
-  },
-  {
-    "objectID": "02-tidyverse.html#refresher-loading-from-csv-into-a-dataframe",
-    "href": "02-tidyverse.html#refresher-loading-from-csv-into-a-dataframe",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Refresher: Loading from CSV into a dataframe",
-    "text": "Refresher: Loading from CSV into a dataframe\nUse read_csv from readr package (part of tidyverse) to load our World Values Survey data. More information about the data can be found under the Dataset tab in the course website.\n\n# import tidyverse library\nlibrary(tidyverse)\n\n# read the CSV and save into a dataframe called wvs_data\nwvs_data &lt;- read_csv(\"data/wvs-4-countries.csv\")\n\n# \"peek\" at the data, pay attention to the data types!\nglimpse(wvs_data)"
-  },
-  {
-    "objectID": "02-tidyverse.html#why-do-we-need-to-clean-our-data",
-    "href": "02-tidyverse.html#why-do-we-need-to-clean-our-data",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Why do we need to clean our data?",
-    "text": "Why do we need to clean our data?\n\nResearchers spend 60-80% of their time on data preparation - investing in proper wrangling upfront saves hours of debugging and rework later.\nPoor data quality costs projects or organizations millions annually(!), and even one misclassified data point can skew entire analyses.\nClean data improves the workflow for statistical tests and can reveal hidden patterns that aren’t visible in messy datasets\nWell-documented data cleaning makes research transparent and reproducible, benefiting both future-you and collaborators."
-  },
-  {
-    "objectID": "02-tidyverse.html#why-do-it-in-r-cant-i-do-this-on-excel",
-    "href": "02-tidyverse.html#why-do-it-in-r-cant-i-do-this-on-excel",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Why do it in R? Can’t I do this on excel?",
-    "text": "Why do it in R? Can’t I do this on excel?\n\nR code creates a permanent record of exactly what you did - Excel clicks and manual edits are hard to track and reproduce (unless you note down what you did).\nR handles dates, times, text, and mixed data types much more reliably than Excel.\nExcel can automatically “correct” your data in unwanted ways (like converting your dates from DDMMYY to MMDDYY)\nWrite the cleaning code once, apply it to multiple datasets or when data updates. Whereas Excel requires manual repetition of the same steps each time.\nComplex joins, reshaping, and conditional operations that would take many Excel steps can be done in a few lines of R code.\nR scripts can be easily shared, version controlled, and integrated into reproducible workflows"
-  },
-  {
-    "objectID": "02-tidyverse.html#what-do-i-need-to-know-before-we-begin",
-    "href": "02-tidyverse.html#what-do-i-need-to-know-before-we-begin",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "What do I need to know before we begin?",
-    "text": "What do I need to know before we begin?\n\nAlways examine your data first (glimpse(), summary(), str()) before cleaning.\nNever overwrite your raw data files\nBudget extra time for data cleaning - it almost always takes longer than expected!\nHaving a clear understanding of the desired data shape is essential as real data often differs from what you imagine! Refer to codebook, actual questionnaire, appendix for guidance.\nLook out for outliers!\nRemember: Data cleaning techniques differ based on the problems, data type, and the research questions you are trying to answer. Various methods are available, each with its own trade-offs."
-  },
-  {
-    "objectID": "02-tidyverse.html#the-tools-were-going-to-use-dplyr-and-tidyr-from-tidyverse",
-    "href": "02-tidyverse.html#the-tools-were-going-to-use-dplyr-and-tidyr-from-tidyverse",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "The tools we’re going to use: dplyr and tidyr from tidyverse",
-    "text": "The tools we’re going to use: dplyr and tidyr from tidyverse\n\nPackages from tidyverse. (click here to go to the tidyverse homepage)\nPosit have created cheatsheets here! (you can have this open in another tab for reference for this session!)\n\ndplyr cheatsheet | pdf version (I personally prefer this PDF version since it’s more visual)\ntidyr cheatsheet | pdf version\n\nMost of the time, these are the ones that you will use quite often:\n\ndrop_na() - remove rows with null values\nselect() - to select column(s) from a dataframe\nfilter() - to filter rows based on criteria\nmutate() - to compute new columns or edit existing ones\nif_else() and case_when() - to be used with mutate when we want to compute/edit columns based on multiple criteria\ngroup_by() and summarize() - group data and summarize each group"
-  },
-  {
-    "objectID": "02-tidyverse.html#more-advanced-ones-which-is-not-covered-in-the-workshop-see-appendix-for-examples",
-    "href": "02-tidyverse.html#more-advanced-ones-which-is-not-covered-in-the-workshop-see-appendix-for-examples",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "More advanced ones which is not covered in the workshop (see appendix for examples)",
-    "text": "More advanced ones which is not covered in the workshop (see appendix for examples)\n\nJoining multiple dataframes’ columns: left_join(), right_join(), inner_join(), full_join()\nJoining multiple dataframes’ rows: bind_rows()\nSplitting or combining cells: unite(), separate_wider_delim(), separate_long_delim()\n\nAdditionally: you may need the forcats cheatsheet here: https://raw.githubusercontent.com/rstudio/cheatsheets/main/factors.pdf\nforcats is also part of tidyverse, specifically used to handle factor data."
-  },
-  {
-    "objectID": "02-tidyverse.html#why-are-we-using-tidyverse-is-it-a-must",
-    "href": "02-tidyverse.html#why-are-we-using-tidyverse-is-it-a-must",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Why are we using tidyverse? Is it a must?",
-    "text": "Why are we using tidyverse? Is it a must?\nIt’s not a must, but it’ll be make our job much easier! Key advantages:\n\nMore ‘English’ looking code and thus more intuitive for beginners\nTidyverse follow consistent syntax patterns - first argument is always the data to work on, followed by the function name i.e the things that we want to do on to the data.\nTidyverse gives clearer, more helpful error messages\n\nExample:\n# Base R\nsubset_data &lt;- data[data$age &gt; 18 & data$income &gt; 50000, c(\"name\", \"age\", \"salary\")]\n\n# Tidyverse  \nsubset_data &lt;- data |&gt; \n  filter(age &gt; 18 & income &gt; 50000)  |&gt; \n  select(name, age, salary)"
-  },
-  {
-    "objectID": "02-tidyverse.html#scenario-data-wrangling-activities-with-wvs-data",
-    "href": "02-tidyverse.html#scenario-data-wrangling-activities-with-wvs-data",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Scenario: Data wrangling activities with WVS data",
-    "text": "Scenario: Data wrangling activities with WVS data\nScenario: We are research assistants analyzing patterns in values, wellbeing, and demographics across four Asian countries: Hong Kong SAR, Indonesia, Malaysia, and Turkey.\nOur team has been assigned to prepare and explore this dataset to understand how key factors (education, income level, urban/rural context, and emancipative/secular values) relate to life satisfaction and personal freedom across different generations.\nTo ensure analysis quality, we were instructed to discard incomplete data and prepare the dataset for statistical analyses in later sessions.\nWe can break down the steps as such:\n\nRemove all rows with missing values (NA)\nCheck for duplicates\nSelect only the relevant columns.\n\nThough in our example, the columns in the sample dataset is ‘relevant’, i.e. will be used. To recap, the columns are respondent_id, demographic columns (age, country, sex, urban_rural, income_level, marital_status, education), and the attitudinal columns (life_satisfaction, freedom_of_choice, financial_satisfaction, trust_people, importance_of_god, emancipative_values, secular_values)\n\nFilter for respondents aged 18 or older. Optionally, we can then arrange the dataset by age (oldest to youngest)\nCreate a new column avg_satisfaction that averages life_satisfaction and financial_satisfaction as a combined well-being indicator\nCreate age groups for each generation: “18-28”, “29-44”, “45-60”, “61+”\n\nOnce we did all of the wrangling above, we can save this “wrangled” version into another CSV as a “checkpoint”."
-  },
-  {
-    "objectID": "02-tidyverse.html#step-1",
-    "href": "02-tidyverse.html#step-1",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Step #1",
-    "text": "Step #1\n\nA strategy I’d like to recommend: briefly read over the dplyr + tidyr documentation, either the PDF or HTML version, and have them open on a separate tab so that you can refer to it quickly.\n\nRemove all rows with empty values (NA) with drop_na()\n\nwvs_data &lt;- wvs_data |&gt; \n  drop_na()\n\nThe number of observations after removing NAs:\n\ndim(wvs_data)\n\n[1] 5102   15"
-  },
-  {
-    "objectID": "02-tidyverse.html#interlude-pipe-operator",
-    "href": "02-tidyverse.html#interlude-pipe-operator",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Interlude: Pipe Operator ( |> )",
-    "text": "Interlude: Pipe Operator ( |&gt; )\n\nThe pipe operator (|&gt;) allows us to chain multiple operations without creating intermediate / temporary dataframes.\nSuper handy when we perform several data wrangling tasks using tidyverse in sequence.\nHelps with readability, especially for complex operations.\nKeyboard shortcut: Ctrl+Shift+M on Windows, Cmd+Shift+M on Mac\n\n\nWithout pipe operatorWith pipe operator\n\n\nNotice that we have to create a “temp” dataframe called wvs_data_clean in this method.\nwvs_data &lt;- drop_na(wvs_data)\nwvs_data_clean &lt;- arrange(wvs_data, desc(age))\nwrite_csv(wvs_data_clean, \"data-output/wvs-clean.csv\")\n\n\nNo “temporary” dataframe needed here! :D\nwvs_data |&gt;\n    drop_na() |&gt;\n    distinct(respondent_id, .keep_all = TRUE) |&gt;\n    write_csv(\"data-output/wvs-clean.csv\")"
-  },
-  {
-    "objectID": "02-tidyverse.html#step-2",
-    "href": "02-tidyverse.html#step-2",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Step #2",
-    "text": "Step #2\nCheck for duplicates with distinct()\n\nwvs_data &lt;- wvs_data |&gt;\n  distinct(respondent_id, .keep_all = TRUE)\n\n(Our data has no duplicates, but this is still a good practice to do, especially if we were combining data from multipe sources)"
-  },
-  {
-    "objectID": "02-tidyverse.html#step-3",
-    "href": "02-tidyverse.html#step-3",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Step #3:",
-    "text": "Step #3:\nSelect only the relevant columns: respondent_id, demographic columns, and attitudinal columns.\nWe can achieve this with select()!\n\nwvs_data &lt;- wvs_data |&gt;\n    select(respondent_id, country, sex, age, urban_rural, income_level,\n           marital_status, education, life_satisfaction, freedom_of_choice,\n           financial_satisfaction, trust_people, importance_of_god,\n           emancipative_values, secular_values)\n\nPreview of the filtered data:\n\n\nRows: 5,102\nColumns: 15\n$ respondent_id          &lt;dbl&gt; 344070882, 344072005, 344071354, 344070282, 344…\n$ country                &lt;chr&gt; \"Hong Kong SAR\", \"Hong Kong SAR\", \"Hong Kong SA…\n$ sex                    &lt;chr&gt; \"Male\", \"Female\", \"Female\", \"Male\", \"Male\", \"Fe…\n$ age                    &lt;dbl&gt; 62, 29, 55, 62, 41, 69, 25, 28, 62, 66, 57, 69,…\n$ urban_rural            &lt;chr&gt; \"Urban\", \"Urban\", \"Urban\", \"Urban\", \"Urban\", \"U…\n$ income_level           &lt;chr&gt; \"Medium\", \"Low\", \"Medium\", \"Low\", \"Medium\", \"Me…\n$ marital_status         &lt;chr&gt; \"Married\", \"Single\", \"Separated\", \"Married\", \"S…\n$ education              &lt;chr&gt; \"Middle\", \"Middle\", \"Higher\", \"Lower\", \"Middle\"…\n$ life_satisfaction      &lt;dbl&gt; 8, 2, 7, 7, 7, 5, 4, 6, 10, 5, 8, 7, 5, 6, 5, 8…\n$ freedom_of_choice      &lt;dbl&gt; 7, 3, 5, 8, 6, 6, 5, 6, 10, 5, 8, 6, 5, 5, 7, 1…\n$ financial_satisfaction &lt;dbl&gt; 7, 2, 6, 9, 6, 5, 4, 5, 8, 5, 8, 7, 5, 5, 5, 8,…\n$ trust_people           &lt;chr&gt; \"Trusted\", \"Not trusted\", \"Trusted\", \"Not trust…\n$ importance_of_god      &lt;dbl&gt; 1, 1, 6, 3, 6, 5, 3, 7, 9, 3, 8, 5, 1, 5, 3, 10…\n$ emancipative_values    &lt;dbl&gt; 0.7133333, 0.8263889, 0.6137963, 0.4725926, 0.5…\n$ secular_values         &lt;dbl&gt; 0.5250000, 0.6941667, 0.4838889, 0.6794444, 0.6…"
-  },
-  {
-    "objectID": "02-tidyverse.html#step-4",
-    "href": "02-tidyverse.html#step-4",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Step #4:",
-    "text": "Step #4:\nFilter for respondents aged 18 or older. Optionally, we can then arrange the dataset by age (oldest to youngest)\n\nwvs_data &lt;- wvs_data |&gt; \n    filter(age &gt;= 18) |&gt; \n    arrange(desc(age))\n\nChecking the structure:\n\n\n# A tibble: 6 × 15\n  respondent_id country      sex     age urban_rural income_level marital_status\n          &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;         \n1     792070014 Turkey       Male     95 Urban       Medium       Single        \n2     344070043 Hong Kong S… Male     91 Urban       Low          Married       \n3     344070645 Hong Kong S… Male     89 Urban       Low          Widowed       \n4     344070124 Hong Kong S… Male     88 Urban       Medium       Widowed       \n5     344070040 Hong Kong S… Male     88 Urban       Low          Married       \n6     344070082 Hong Kong S… Male     88 Urban       Low          Married       \n# ℹ 8 more variables: education &lt;chr&gt;, life_satisfaction &lt;dbl&gt;,\n#   freedom_of_choice &lt;dbl&gt;, financial_satisfaction &lt;dbl&gt;, trust_people &lt;chr&gt;,\n#   importance_of_god &lt;dbl&gt;, emancipative_values &lt;dbl&gt;, secular_values &lt;dbl&gt;"
-  },
-  {
-    "objectID": "02-tidyverse.html#step-5",
-    "href": "02-tidyverse.html#step-5",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Step #5",
-    "text": "Step #5\nCreate a new column avg_satisfaction that averages life_satisfaction and financial_satisfaction as a combined wellbeing indicator.\nWe can achieve this with mutate()! (mutate() is to change or add new columns.)\n\nwvs_data &lt;- wvs_data |&gt;\n    mutate(avg_satisfaction = (life_satisfaction + financial_satisfaction) / 2)\n\nPreview of the new column alongside the original ones:\n\n\n# A tibble: 5,102 × 3\n  life_satisfaction financial_satisfaction avg_satisfaction\n              &lt;dbl&gt;                  &lt;dbl&gt;            &lt;dbl&gt;\n1                 8                      5              6.5\n2                10                      2              6  \n3                 4                      5              4.5\n4                 1                      1              1  \n5                 9                      8              8.5\n# ℹ 5,097 more rows"
-  },
-  {
-    "objectID": "02-tidyverse.html#step-6",
-    "href": "02-tidyverse.html#step-6",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Step #6",
-    "text": "Step #6\nCreate age groups for each generation: “18-28”, “29-44”, “45-60”, “61+”\n\nwvs_data &lt;- wvs_data |&gt;\n    mutate(age_group = case_when(\n        age &lt;= 28 ~ \"18-28\",\n        age &lt;= 44 ~ \"29-44\",\n        age &lt;= 60 ~ \"45-60\",\n        TRUE ~ \"61+\"\n    ))\n\nPreview of age groups:\n\n\n# A tibble: 5,102 × 2\n    age age_group\n  &lt;dbl&gt; &lt;chr&gt;    \n1    95 61+      \n2    91 61+      \n3    89 61+      \n4    88 61+      \n# ℹ 5,098 more rows"
-  },
-  {
-    "objectID": "02-tidyverse.html#checkpoint-1---saving-our-hard-work-into-a-csv-file",
-    "href": "02-tidyverse.html#checkpoint-1---saving-our-hard-work-into-a-csv-file",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Checkpoint 1 - saving our hard work into a CSV file",
-    "text": "Checkpoint 1 - saving our hard work into a CSV file\nWe have done some cleaning! Let’s save this cleaned data into a separate CSV file called “wvs_cleaned_v1.csv”\n\nwvs_data |&gt; write_csv(\"data-output/wvs_cleaned_v1.csv\")\n\nCheck the data output folder to make sure the CSV is created!"
-  },
-  {
-    "objectID": "02-tidyverse.html#simple-descriptive-analysis",
-    "href": "02-tidyverse.html#simple-descriptive-analysis",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Simple descriptive analysis",
-    "text": "Simple descriptive analysis\nOnce we are done with the wrangling part, we can proceed with simple descriptive analysis!\n\nPrep: Before we proceed further, convert the appropriate categorical variables (country, sex, marital_status, urban_rural, income_level, education, trust_people) to Factor\nAnalysis 1: Generate summary statistics of life_satisfaction grouped by country\nAnalysis 2: Create a new column called satisfaction_group that indicate whether each respondent has higher or lower than average life_satisfaction\nAnalysis 3: Reshape the data to show average satisfaction scores by country and age group"
-  },
-  {
-    "objectID": "02-tidyverse.html#prep-before-analysis-convert-to-factors",
-    "href": "02-tidyverse.html#prep-before-analysis-convert-to-factors",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Prep before analysis: convert to factors",
-    "text": "Prep before analysis: convert to factors\nLet’s use the wvs_cleaned dataframe for this task.\nIdentify which columns can be converted to categorial data (factor). Convert the appropriate categorical variables (country, sex, marital_status, urban_rural, income_level, education, trust_people) to Factor.\nWe can do this with mutate() and as_factor() from forcats, another sub-package within tidyverse.\n\nwvs_cleaned &lt;- read_csv(\"data-output/wvs_cleaned_v1.csv\")\nwvs_cleaned &lt;- wvs_cleaned |&gt;\n    mutate(\n        country = as_factor(country),\n        sex = as_factor(sex),\n        marital_status = as_factor(marital_status),\n        urban_rural = as_factor(urban_rural),\n        income_level = as_factor(income_level),\n        education = as_factor(education),\n        trust_people = as_factor(trust_people)\n    )\n\n# check conversion result\nstr(wvs_cleaned)\n\n\nRstudio may auto-suggest as.factor() from base R. You can use this as well, but as_factor() is preferred since we are using tidyverse approach."
-  },
-  {
-    "objectID": "02-tidyverse.html#prep-before-analysis-convert-to-factors-output",
-    "href": "02-tidyverse.html#prep-before-analysis-convert-to-factors-output",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Prep before analysis: convert to factors",
-    "text": "Prep before analysis: convert to factors\n\ntibble [5,102 × 17] (S3: tbl_df/tbl/data.frame)\n $ respondent_id         : num [1:5102] 7.92e+08 3.44e+08 3.44e+08 3.44e+08 3.44e+08 ...\n $ country               : Factor w/ 4 levels \"Turkey\",\"Hong Kong SAR\",..: 1 2 2 2 2 2 2 2 2 2 ...\n $ sex                   : Factor w/ 2 levels \"Male\",\"Female\": 1 1 1 1 1 1 1 2 1 1 ...\n $ age                   : num [1:5102] 95 91 89 88 88 88 87 86 86 86 ...\n $ urban_rural           : Factor w/ 2 levels \"Urban\",\"Rural\": 1 1 1 1 1 1 1 1 1 1 ...\n $ income_level          : Factor w/ 3 levels \"Medium\",\"Low\",..: 1 2 2 1 2 2 2 1 1 2 ...\n $ marital_status        : Factor w/ 6 levels \"Single\",\"Married\",..: 1 2 3 3 2 2 2 3 4 2 ...\n $ education             : Factor w/ 3 levels \"Lower\",\"Middle\",..: 1 1 1 1 1 1 2 1 1 1 ...\n $ life_satisfaction     : num [1:5102] 8 10 4 1 9 10 8 5 8 5 ...\n $ freedom_of_choice     : num [1:5102] 1 1 5 9 10 9 5 1 8 5 ...\n $ financial_satisfaction: num [1:5102] 5 2 5 1 8 10 6 6 6 3 ...\n $ trust_people          : Factor w/ 2 levels \"Not trusted\",..: 1 1 1 1 1 1 1 1 2 1 ...\n $ importance_of_god     : num [1:5102] 10 6 9 1 6 10 1 1 2 1 ...\n $ emancipative_values   : num [1:5102] 0.25 0.339 0.464 0.657 0.471 ...\n $ secular_values        : num [1:5102] 0.151 0.345 0.401 0.597 0.313 ...\n $ avg_satisfaction      : num [1:5102] 6.5 6 4.5 1 8.5 10 7 5.5 7 4 ...\n $ age_group             : chr [1:5102] \"61+\" \"61+\" \"61+\" \"61+\" ..."
-  },
-  {
-    "objectID": "02-tidyverse.html#prep-before-analysis-convert-to-factors-shortcut-ver.",
-    "href": "02-tidyverse.html#prep-before-analysis-convert-to-factors-shortcut-ver.",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Prep before analysis: convert to factors (shortcut ver.)",
-    "text": "Prep before analysis: convert to factors (shortcut ver.)\nIf we have a lot of columns to convert, that might be troublesome to type! This is where across() can come in handy. across(column selection, function) is to apply the same function or a set of functions to multiple columns in a single mutate () or summarize () function.\nLet’s first define a character vector that contains the names of columns we plan to convert.\n\ncolumns_to_convert &lt;- c(\"country\", \"sex\", \"marital_status\", \"urban_rural\", \"income_level\", \"education\", \"trust_people\")\n\nWe will use this vector with mutate() and across(). We tell tidyverse to convert all of the columns with the help of all_of()\n\nwvs_cleaned &lt;- wvs_cleaned |&gt; \n    mutate(across(all_of(columns_to_convert), as_factor))\n\n# check conversion result\nstr(wvs_cleaned)\n\n\nacross() is used for applying the same function to multiple columns in a single mutate() or summarise() operation."
-  },
-  {
-    "objectID": "02-tidyverse.html#prep-before-analysis-convert-to-factors-shortcut-ver.-output",
-    "href": "02-tidyverse.html#prep-before-analysis-convert-to-factors-shortcut-ver.-output",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Prep before analysis: convert to factors (shortcut ver.)",
-    "text": "Prep before analysis: convert to factors (shortcut ver.)\n\ntibble [5,102 × 17] (S3: tbl_df/tbl/data.frame)\n $ respondent_id         : num [1:5102] 7.92e+08 3.44e+08 3.44e+08 3.44e+08 3.44e+08 ...\n $ country               : Factor w/ 4 levels \"Turkey\",\"Hong Kong SAR\",..: 1 2 2 2 2 2 2 2 2 2 ...\n $ sex                   : Factor w/ 2 levels \"Male\",\"Female\": 1 1 1 1 1 1 1 2 1 1 ...\n $ age                   : num [1:5102] 95 91 89 88 88 88 87 86 86 86 ...\n $ urban_rural           : Factor w/ 2 levels \"Urban\",\"Rural\": 1 1 1 1 1 1 1 1 1 1 ...\n $ income_level          : Factor w/ 3 levels \"Medium\",\"Low\",..: 1 2 2 1 2 2 2 1 1 2 ...\n $ marital_status        : Factor w/ 6 levels \"Single\",\"Married\",..: 1 2 3 3 2 2 2 3 4 2 ...\n $ education             : Factor w/ 3 levels \"Lower\",\"Middle\",..: 1 1 1 1 1 1 2 1 1 1 ...\n $ life_satisfaction     : num [1:5102] 8 10 4 1 9 10 8 5 8 5 ...\n $ freedom_of_choice     : num [1:5102] 1 1 5 9 10 9 5 1 8 5 ...\n $ financial_satisfaction: num [1:5102] 5 2 5 1 8 10 6 6 6 3 ...\n $ trust_people          : Factor w/ 2 levels \"Not trusted\",..: 1 1 1 1 1 1 1 1 2 1 ...\n $ importance_of_god     : num [1:5102] 10 6 9 1 6 10 1 1 2 1 ...\n $ emancipative_values   : num [1:5102] 0.25 0.339 0.464 0.657 0.471 ...\n $ secular_values        : num [1:5102] 0.151 0.345 0.401 0.597 0.313 ...\n $ avg_satisfaction      : num [1:5102] 6.5 6 4.5 1 8.5 10 7 5.5 7 4 ...\n $ age_group             : chr [1:5102] \"61+\" \"61+\" \"61+\" \"61+\" ..."
-  },
-  {
-    "objectID": "02-tidyverse.html#analysis-1---summary-stats-of-life_satisfaction-for-each-country",
-    "href": "02-tidyverse.html#analysis-1---summary-stats-of-life_satisfaction-for-each-country",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Analysis 1 - summary stats of life_satisfaction for each country",
-    "text": "Analysis 1 - summary stats of life_satisfaction for each country\nGenerate summary statistics such as count (n), mean, median, and standard deviation of life_satisfaction grouped by country.\nWe can achieve this with group_by() and summarise(). It will contain one column for each grouping variable and one column for each of the summary statistics that you have specified.\n\nwvs_data |&gt;\n    group_by(country) |&gt;\n    summarise(\n        n = n(),\n        mean_satisfaction = mean(life_satisfaction),\n        median_satisfaction = median(life_satisfaction),\n        sd_satisfaction = sd(life_satisfaction)\n    ) |&gt;\n    arrange(desc(mean_satisfaction))\n\n\nWhat if we want to save this into a CSV? What if we also want to group by country AND age_group?"
-  },
-  {
-    "objectID": "02-tidyverse.html#analysis-1---summary-stats-of-life_satisfaction-for-each-country-output",
-    "href": "02-tidyverse.html#analysis-1---summary-stats-of-life_satisfaction-for-each-country-output",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Analysis 1 - summary stats of life_satisfaction for each country",
-    "text": "Analysis 1 - summary stats of life_satisfaction for each country\n\n# A tibble: 4 × 5\n  country           n mean_satisfaction median_satisfaction sd_satisfaction\n  &lt;chr&gt;         &lt;int&gt;             &lt;dbl&gt;               &lt;dbl&gt;           &lt;dbl&gt;\n1 Indonesia      1301              7.63                   8            2.39\n2 Malaysia       1313              6.99                   7            1.75\n3 Hong Kong SAR  1272              6.61                   7            1.80\n4 Turkey         1216              6.48                   7            1.85"
-  },
-  {
-    "objectID": "02-tidyverse.html#analysis-2---how-many-has-below-and-average-life_satisfaction",
-    "href": "02-tidyverse.html#analysis-2---how-many-has-below-and-average-life_satisfaction",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Analysis 2 - How many has below and average life_satisfaction?",
-    "text": "Analysis 2 - How many has below and average life_satisfaction?\nCreate a new column called satisfaction_group that indicate whether each respondent has higher or lower than average life_satisfaction\n\nmean_satisfaction &lt;- mean(wvs_data$life_satisfaction, na.rm = TRUE)\n\nwvs_data |&gt;\n    mutate(satisfaction_group = if_else(\n        life_satisfaction &gt; mean_satisfaction, # the condition to evaluate\n        \"higher\", # if condition is fulfilled, do this\n        \"lower\" # otherwise, do this\n    ))"
-  },
-  {
-    "objectID": "02-tidyverse.html#analysis-2---how-many-has-below-and-average-life_satisfaction-output",
-    "href": "02-tidyverse.html#analysis-2---how-many-has-below-and-average-life_satisfaction-output",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Analysis 2 - How many has below and average life_satisfaction?",
-    "text": "Analysis 2 - How many has below and average life_satisfaction?\n\n# A tibble: 5,102 × 18\n   respondent_id country     sex     age urban_rural income_level marital_status\n           &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;         \n 1     792070014 Turkey      Male     95 Urban       Medium       Single        \n 2     344070043 Hong Kong … Male     91 Urban       Low          Married       \n 3     344070645 Hong Kong … Male     89 Urban       Low          Widowed       \n 4     344070124 Hong Kong … Male     88 Urban       Medium       Widowed       \n 5     344070040 Hong Kong … Male     88 Urban       Low          Married       \n 6     344070082 Hong Kong … Male     88 Urban       Low          Married       \n 7     344070833 Hong Kong … Male     87 Urban       Low          Married       \n 8     344070437 Hong Kong … Fema…    86 Urban       Medium       Widowed       \n 9     344070274 Hong Kong … Male     86 Urban       Medium       Separated     \n10     344070159 Hong Kong … Male     86 Urban       Low          Married       \n# ℹ 5,092 more rows\n# ℹ 11 more variables: education &lt;chr&gt;, life_satisfaction &lt;dbl&gt;,\n#   freedom_of_choice &lt;dbl&gt;, financial_satisfaction &lt;dbl&gt;, trust_people &lt;chr&gt;,\n#   importance_of_god &lt;dbl&gt;, emancipative_values &lt;dbl&gt;, secular_values &lt;dbl&gt;,\n#   avg_satisfaction &lt;dbl&gt;, age_group &lt;chr&gt;, satisfaction_group &lt;chr&gt;"
-  },
-  {
-    "objectID": "02-tidyverse.html#analysis-3---whats-the-average-satisfaction-scores-for-each-country-and-age-group",
-    "href": "02-tidyverse.html#analysis-3---whats-the-average-satisfaction-scores-for-each-country-and-age-group",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Analysis 3 - What’s the average satisfaction scores for each country and age group?",
-    "text": "Analysis 3 - What’s the average satisfaction scores for each country and age group?\nShow the average satisfaction scores by country and age group in wide data format\n\nwvs_data |&gt;\n    group_by(country, age_group) |&gt;\n    summarise(\n        avg_satisfaction = mean(life_satisfaction, na.rm = TRUE),\n    ) |&gt;\n    pivot_wider(\n        names_from = age_group,\n        values_from = avg_satisfaction\n    ) \n\n# A tibble: 4 × 5\n# Groups:   country [4]\n  country       `18-28` `29-44` `45-60` `61+`\n  &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;\n1 Hong Kong SAR    6.31    6.33    6.57  7.26\n2 Indonesia        7.90    7.53    7.57  7.55\n3 Malaysia         7.05    6.91    7.01  7.14\n4 Turkey           6.57    6.54    6.36  6.2"
-  },
-  {
-    "objectID": "02-tidyverse.html#long-vs-wide-data",
-    "href": "02-tidyverse.html#long-vs-wide-data",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Long vs Wide Data",
-    "text": "Long vs Wide Data\n\n\nLong data:\n\nEach row is a unique observation –&gt; for a single observational unit, there might be multiple rows.\nThere is a separate column indicating the variable or type of measurements.\nThis format is more “understandable” by R, more suitable for visualizations, especially those involving grouping, summarizing, or visualizing data over time or across different categories. (which we’ll explore more next week!)\n\n\nWide data:\n\nEach row contains values from variables.\nEach column is a value in a variable –&gt; the more values you have, the “wider” is the data.\nQuick comparisons of different variables for a single entity.\nThis format is more intuitive for humans!"
-  },
-  {
-    "objectID": "02-tidyverse.html#long-vs-wide-data-examples",
-    "href": "02-tidyverse.html#long-vs-wide-data-examples",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Long vs Wide Data: Examples",
-    "text": "Long vs Wide Data: Examples\n\n\nLong data:\n\n\n\nObservations (Long)\n\n\ncountry\nage_group\ncount\n\n\n\n\nHong Kong SAR\n18-28\n191\n\n\nHong Kong SAR\n29-44\n384\n\n\nHong Kong SAR\n45-60\n412\n\n\nHong Kong SAR\n61+\n285\n\n\nIndonesia\n18-28\n308\n\n\nIndonesia\n29-44\n529\n\n\nIndonesia\n45-60\n360\n\n\nIndonesia\n61+\n104\n\n\nMalaysia\n18-28\n379\n\n\nMalaysia\n29-44\n511\n\n\nMalaysia\n45-60\n349\n\n\nMalaysia\n61+\n74\n\n\nTurkey\n18-28\n329\n\n\nTurkey\n29-44\n427\n\n\nTurkey\n45-60\n430\n\n\nTurkey\n61+\n30\n\n\n\n\n\n\nWide data:\n\n\n\nObservations (Wide)\n\n\ncountry\n18-28\n29-44\n45-60\n61+\n\n\n\n\nHong Kong SAR\n191\n384\n412\n285\n\n\nIndonesia\n308\n529\n360\n104\n\n\nMalaysia\n379\n511\n349\n74\n\n\nTurkey\n329\n427\n430\n30"
-  },
-  {
-    "objectID": "02-tidyverse.html#bonus-deleting-columns-from-dataframe",
-    "href": "02-tidyverse.html#bonus-deleting-columns-from-dataframe",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Bonus: Deleting columns from dataframe",
-    "text": "Bonus: Deleting columns from dataframe\nLet’s say I have this column called wrong_column that I want to remove:\n\nwvs_data &lt;- wvs_data |&gt; mutate(wrong_column = \"random values\")\nwvs_data |&gt; select(country, wrong_column) |&gt; print(n = 3)\n\n# A tibble: 5,102 × 2\n  country       wrong_column \n  &lt;chr&gt;         &lt;chr&gt;        \n1 Turkey        random values\n2 Hong Kong SAR random values\n3 Hong Kong SAR random values\n# ℹ 5,099 more rows"
-  },
-  {
-    "objectID": "02-tidyverse.html#remove-the-wrong-column-with-subset--",
-    "href": "02-tidyverse.html#remove-the-wrong-column-with-subset--",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Remove the wrong column with subset -:",
-    "text": "Remove the wrong column with subset -:\n\nwvs_data &lt;- wvs_data |&gt; \n    select(-wrong_column)\n\n\n\n# A tibble: 5,102 × 1\n  country      \n  &lt;chr&gt;        \n1 Turkey       \n2 Hong Kong SAR\n3 Hong Kong SAR\n# ℹ 5,099 more rows"
-  },
-  {
-    "objectID": "02-tidyverse.html#quiz-time-compulsory",
-    "href": "02-tidyverse.html#quiz-time-compulsory",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Quiz Time! (compulsory)",
-    "text": "Quiz Time! (compulsory)\nScan the QR Code below to assess your understanding of data wrangling in R using the tidyverse package. All questions are required and each is worth 1 mark.\n\n\n\n\n\n\n\nQuiz QR Code: &lt;https://forms.cloud.microsoft/r/0Vhn9mfWur&gt;"
-  },
-  {
-    "objectID": "02-tidyverse.html#to-try-at-home-exercise-1",
-    "href": "02-tidyverse.html#to-try-at-home-exercise-1",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "To try at home: Exercise 1",
-    "text": "To try at home: Exercise 1\nNow that we have a new file, load this new wvs_cleaned_v1.csv into a new dataframe called wvs_cleaned. Filter to respondents from Indonesia who live in Urban areas. Show only the respondent_id, country, urban_rural, and age. Use glimpse() or print() to check the result! (you can chain these functions at the end)\nStep 1: Load the new file\n\n\nShow answer\nlibrary(tidyverse)\nwvs_cleaned &lt;- read_csv(\"data-output/wvs_cleaned_v1.csv\")"
-  },
-  {
-    "objectID": "02-tidyverse.html#to-try-at-home-exercise-2",
-    "href": "02-tidyverse.html#to-try-at-home-exercise-2",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "To try at home: Exercise 2",
-    "text": "To try at home: Exercise 2\nGenerate a summary stats of age grouped by country and sex. The summary stats should include mean, median, max, min, std, and n (number of observations). It should look something like this:\n\n\nShow answer\nwvs_data |&gt; \n    group_by(country, sex) |&gt; \n    summarise(observation = n(), \n              mean_age = mean(age, na.rm = TRUE),\n              median_age = median(age, na.rm = TRUE), \n              oldest = max(age, na.rm = TRUE),\n              youngest = min(age, na.rm = TRUE),\n              std_dev = sd(age, na.rm = TRUE))"
-  },
-  {
-    "objectID": "02-tidyverse.html#to-try-at-home-exercise-2-output",
-    "href": "02-tidyverse.html#to-try-at-home-exercise-2-output",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "To try at home: Exercise 2",
-    "text": "To try at home: Exercise 2\n\n# A tibble: 8 × 8\n# Groups:   country [4]\n  country       sex    observation mean_age median_age oldest youngest std_dev\n  &lt;chr&gt;         &lt;chr&gt;        &lt;int&gt;    &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;\n1 Hong Kong SAR Female         687     46.8         46     86       18    15.2\n2 Hong Kong SAR Male           585     47.3         47     91       18    16.9\n3 Indonesia     Female         713     38.3         37     78       18    12.8\n4 Indonesia     Male           588     41.4         41     80       18    13.9\n5 Malaysia      Female         656     37.7         35     80       18    12.8\n6 Malaysia      Male           657     39.0         36     79       18    13.6\n7 Turkey        Female         615     40.1         38     80       18    12.5\n8 Turkey        Male           601     38.2         36     95       18    12.8"
-  },
-  {
-    "objectID": "02-tidyverse.html#joining-dataframes-by-column",
-    "href": "02-tidyverse.html#joining-dataframes-by-column",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Joining DataFrames by column",
-    "text": "Joining DataFrames by column\nLet’s assume we have two DataFrames customers and orders\n\n\ncustomers dataframe:\n(Notice that the ID is 1, 2, and 3)\n\n\n  id  name\n1  1 Alice\n2  2   Bob\n3  3 Carol\n\n\n\norders dataframe\n(Notice that the ID is 1, 2, and 4)\n\n\n  id amount\n1  1    100\n2  2    200\n3  4    150"
-  },
-  {
-    "objectID": "02-tidyverse.html#left_join-to-keep-all-rows-from-the-left-table-i.e.-customers",
-    "href": "02-tidyverse.html#left_join-to-keep-all-rows-from-the-left-table-i.e.-customers",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "left_join() to keep all rows from the left table i.e. customers",
-    "text": "left_join() to keep all rows from the left table i.e. customers\n\ncustomers |&gt; left_join(orders, by = \"id\")\n\n  id  name amount\n1  1 Alice    100\n2  2   Bob    200\n3  3 Carol     NA"
-  },
-  {
-    "objectID": "02-tidyverse.html#right_join-to-keep-all-rows-from-the-right-table-i.e.-orders",
-    "href": "02-tidyverse.html#right_join-to-keep-all-rows-from-the-right-table-i.e.-orders",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "right_join() to keep all rows from the right table i.e. orders",
-    "text": "right_join() to keep all rows from the right table i.e. orders\n\ncustomers |&gt; right_join(orders, by = \"id\")\n\n  id  name amount\n1  1 Alice    100\n2  2   Bob    200\n3  4  &lt;NA&gt;    150"
-  },
-  {
-    "objectID": "02-tidyverse.html#inner_join-to-keep-only-matching-rows",
-    "href": "02-tidyverse.html#inner_join-to-keep-only-matching-rows",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "inner_join() to keep only matching rows",
-    "text": "inner_join() to keep only matching rows\n\ncustomers |&gt; inner_join(orders, by = \"id\")\n\n  id  name amount\n1  1 Alice    100\n2  2   Bob    200"
-  },
-  {
-    "objectID": "02-tidyverse.html#full_join-to-keep-all-rows-from-both-tables",
-    "href": "02-tidyverse.html#full_join-to-keep-all-rows-from-both-tables",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "full_join() to keep all rows from both tables",
-    "text": "full_join() to keep all rows from both tables\n\ncustomers |&gt; full_join(orders, by = \"id\")\n\n  id  name amount\n1  1 Alice    100\n2  2   Bob    200\n3  3 Carol     NA\n4  4  &lt;NA&gt;    150"
-  },
-  {
-    "objectID": "02-tidyverse.html#bind_rows-to-stack-rows-from-two-different-dataframes",
-    "href": "02-tidyverse.html#bind_rows-to-stack-rows-from-two-different-dataframes",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "bind_rows() to stack rows from two different dataframes",
-    "text": "bind_rows() to stack rows from two different dataframes\nLet’s say we have the following dataframes\n\nprint(df1)\n\n   name age\n1 Alice  25\n\n\n\nprint(df2)\n\n  name age\n1  Bob  30\n\n\nStack them together:\n\ndf1 |&gt; bind_rows(df2)\n\n   name age\n1 Alice  25\n2   Bob  30"
-  },
-  {
-    "objectID": "02-tidyverse.html#splitting-and-combining-cells",
-    "href": "02-tidyverse.html#splitting-and-combining-cells",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Splitting and combining cells",
-    "text": "Splitting and combining cells\nLet’s say we have the following dataframe\n\n\n  first  last         full_address\n1  John   Doe 123 Main St, NYC, NY\n2  Jane Smith  456 Oak Ave, LA, CA"
-  },
-  {
-    "objectID": "02-tidyverse.html#combine-first-and-last-name-columns-into-one",
-    "href": "02-tidyverse.html#combine-first-and-last-name-columns-into-one",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Combine first and last name columns into one",
-    "text": "Combine first and last name columns into one\n\ndf &lt;- df |&gt; unite(\"full_name\", \"first\", \"last\", sep = \"_\")\nprint(df)\n\n   full_name         full_address\n1   John_Doe 123 Main St, NYC, NY\n2 Jane_Smith  456 Oak Ave, LA, CA"
-  },
-  {
-    "objectID": "02-tidyverse.html#split-the-full-name-column-into-multiple-by-delimiter",
-    "href": "02-tidyverse.html#split-the-full-name-column-into-multiple-by-delimiter",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Split the full name column into multiple (by delimiter)",
-    "text": "Split the full name column into multiple (by delimiter)\n\ndf &lt;- df |&gt; separate_wider_delim(\"full_name\", delim = \"_\", names = c(\"first\", \"last\"))\nprint(df)\n\n# A tibble: 2 × 3\n  first last  full_address        \n  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;               \n1 John  Doe   123 Main St, NYC, NY\n2 Jane  Smith 456 Oak Ave, LA, CA"
-  },
-  {
-    "objectID": "02-tidyverse.html#split-one-column-into-multiple-rows-long-format",
-    "href": "02-tidyverse.html#split-one-column-into-multiple-rows-long-format",
-    "title": "Session 2: Data Wrangling with Tidyverse",
-    "section": "Split one column into multiple rows (long format)",
-    "text": "Split one column into multiple rows (long format)\n\ndf |&gt; separate_longer_delim(full_address, delim = \", \")\n\n# A tibble: 6 × 3\n  first last  full_address\n  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       \n1 John  Doe   123 Main St \n2 John  Doe   NYC         \n3 John  Doe   NY          \n4 Jane  Smith 456 Oak Ave \n5 Jane  Smith LA          \n6 Jane  Smith CA"
-  },
-  {
     "objectID": "04-stats.html#todays-outline",
     "href": "04-stats.html#todays-outline",
     "title": "Session 4: Basic Inferential Stats in R",
@@ -1673,7 +1155,7 @@
     "href": "04-stats.html#refresher-data-distribution",
     "title": "Session 4: Basic Inferential Stats in R",
     "section": "Refresher: Data Distribution",
-    "text": "Refresher: Data Distribution\nThe choice of appropriate statistical tests and methods often depends on the distribution of the data. Understanding the distribution helps in selecting the right test and judging its validity."
+    "text": "Refresher: Data Distribution\nThe choice of appropriate statistical tests and methods often depends on the distribution of the data. Understanding the distribution helps in selecting the right test and judging its validity.\n\n# Set a seed for reproducibility\nset.seed(123)\n\nnormal_data &lt;- rnorm(1000, mean = 0, sd = 1)\nleft_skewed_data &lt;- rbeta(1000,5,2)\nright_skewed_data &lt;- rbeta(1000,2,5)\nbimodal_data &lt;- c(rnorm(500, mean = -2, sd = 1), rnorm(500, mean = 2, sd = 1))\nuniform_data &lt;- runif(1000, min = -1, max = 1)\n\npar(mfrow = c(2, 3), mar = c(4, 4, 2, 1))\n\n# Plot histograms or density plots for each distribution\nhist(normal_data, main = \"Normal Distribution\", col = \"lightblue\", probability = TRUE)\ncurve(dnorm(x, mean = mean(normal_data), sd = sd(normal_data)), add = TRUE, col = \"blue\", lwd = 2)\n\nhist(bimodal_data, main = \"Bimodal Distribution\", col = \"lightgoldenrod\", probability = TRUE)\nlines(density(bimodal_data), col = \"darkorange\", lwd = 2)\n\nhist(uniform_data, main = \"Uniform Distribution\", col = \"lightpink\", probability = TRUE)\ncurve(dunif(x, min = -1, max = 1), add = TRUE, col = \"deeppink\", lwd = 2)\n\nhist(left_skewed_data, main = \"Left Skewed Distribution\", col = \"lightgreen\", probability = TRUE)\ncurve(dbeta(x, 5, 2), add = TRUE, col = \"darkgreen\", lwd = 2)\n\nhist(right_skewed_data, main = \"Right Skewed Distribution\", col = \"lightcoral\", probability = TRUE)\ncurve(dbeta(x, 2, 5), add = TRUE, col = \"darkred\", lwd = 2)"
   },
   {
     "objectID": "04-stats.html#refresher-research-variables",
@@ -1764,7 +1246,7 @@
     "href": "04-stats.html#correlation-sample-problem-and-result-output",
     "title": "Session 4: Basic Inferential Stats in R",
     "section": "Correlation: Sample problem and result",
-    "text": "Correlation: Sample problem and result"
+    "text": "Correlation: Sample problem and result\n\n`geom_smooth()` using formula = 'y ~ x'"
   },
   {
     "objectID": "04-stats.html#conduct-the-correlation-test",
@@ -2009,7 +1491,7 @@
     "href": "04-stats.html#checking-equal-variance-levenes-test",
     "title": "Session 4: Basic Inferential Stats in R",
     "section": "Checking equal variance: Levene’s Test",
-    "text": "Checking equal variance: Levene’s Test\nLevene’s Test checks homogeneity of variance (homoskedasticity).\n\\(H_0\\) = variances are equal across groups.\n\n\nlibrary(car)\nleveneTest(emancipative_values ~ country,\n           data = wvs_cleaned)\n\n\nLevene's Test for Homogeneity of Variance (center = median)\n        Df F value    Pr(&gt;F)    \ngroup    3  28.818 &lt; 2.2e-16 ***\n      5098                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+    "text": "Checking equal variance: Levene’s Test\nLevene’s Test checks homogeneity of variance (homoskedasticity).\n\\(H_0\\) = variances are equal across groups.\n\n\nlibrary(car)\n\n\nLoading required package: carData\n\n\n\nAttaching package: 'car'\n\n\nThe following object is masked from 'package:dplyr':\n\n    recode\n\n\nThe following object is masked from 'package:purrr':\n\n    some\n\nleveneTest(emancipative_values ~ country,\n           data = wvs_cleaned)\n\nLevene's Test for Homogeneity of Variance (center = median)\n        Df F value    Pr(&gt;F)    \ngroup    3  28.818 &lt; 2.2e-16 ***\n      5098                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
   },
   {
     "objectID": "04-stats.html#checking-equal-variance-levenes-test---result",
@@ -2166,27 +1648,585 @@
     "text": "Exercise for Two-Way ANOVA\nIs there a significant difference in freedom of choice between different age groups?\n\nVisualize the data as well\nTest for normality and homoskedasticity, and choose the appropriate test\n\n\n\nShow answer\nfreedom_age_anova &lt;- aov(freedom_of_choice ~ age_group, data = wvs_cleaned)\nsummary(freedom_age_anova)\n\n\n              Df Sum Sq Mean Sq F value Pr(&gt;F)  \nage_group      3     31  10.397   2.288 0.0765 .\nResiduals   5098  23169   4.545                 \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
   },
   {
-    "objectID": "dataset.html",
-    "href": "dataset.html",
-    "title": "The World Values Survey Dataset",
-    "section": "",
-    "text": "For this workshop, we will be using dataset stored in a CSV file called wvs-4-countries.csv.\n\nWhat is a CSV?\nA CSV (Comma-Separated Values) file is a type of file that stores data in a plain text format. Each line in the file represents a row of data, and within each row, individual pieces of data (like numbers or words) are separated by commas.\nThis format is commonly used for storing and transferring data, especially in spreadsheets and databases. Because it is literally just plain text, it is an ideal format if you have large amount of data.\nYou can open CSV files in Excel, Google Sheets, or even Notepad!\n\n\nDownload the Dataset\n\nStep 1\nClick this link to access the wvs-4-countries.csv file. You should see a plain page with a bunch of text.\n\n\nStep 2\nRight click anywhere in this page, and choose Save As... or Save Page as....\n\n\nStep 3\nSave this file inside the data folder that we create together in Session 1, and you’re good to go!\n\n\n\nData Dictionary for WVS dataset\nThe World Values Survey (&lt;www.worldvaluessurvey.org&gt;) is a global network of social scientists studying changing values and their impact on social and political life, led by an international team of scholars, with the WVS association and secretariat headquartered in Stockholm, Sweden.\nThe actual questionnaire consists of over 200 questions with respondents from various countries. For the purpose of this workshop, we will use 15 variables/questions with respondents from four countries: Hong Kong SAR, Indonesia, Malaysia, and Turkey. Each country contributes 1,313 respondents, for a total of 5,252 rows. The 15 variables are:\n\ncountry\n\nCharacter variable indicating the respondent’s country: Hong Kong SAR, Indonesia, Malaysia, or Turkey\n\nrespondent_id\n\nNumeric identifier unique to each survey respondent\n\nage\n\nNumeric variable indicating respondent’s age in years\n\nurban_rural\n\nIndicates the type of settlement where the respondent lives: Urban or Rural\n\nincome_level\n\nIndicates the respondent’s household income level (recoded into three groups): Low, Medium, or High\n\nsex\n\nIndicates respondent’s gender: Male or Female\n\nmarital_status\n\nIndicates current marital status: Married, Single, Divorced, Separated, or Widowed\n\neducation\n\nHighest educational level attained by the respondent, recoded into three groups: Lower, Middle, or Higher\n\nlife_satisfaction\n\nNumeric scale from 1-10 measuring overall life satisfaction, where 1 indicates lowest satisfaction and 10 indicates highest satisfaction\n\nfreedom_of_choice\n\nNumeric scale from 1-10 measuring perceived freedom of choice and control, where 1 indicates no freedom at all and 10 indicates a great deal\n\nemancipative_values\n\nNumeric index from 0-1 measuring emancipative values (Welzel), where higher values indicate stronger support for personal freedom, gender equality, and civic participation. Composed of four sub-indices: autonomy, equality, choice, and voice.\n\ntrust_people\n\nIndicates general social trust: Trusted (most people can be trusted) or Not trusted (need to be very careful)\n\nimportance_of_god\n\nNumeric scale from 1-10 measuring how important God is in the respondent’s life, where 1 indicates not at all important and 10 indicates very important\n\nfinancial_satisfaction\n\nNumeric scale from 1-10 measuring satisfaction with the household’s financial situation, where 1 indicates dissatisfied and 10 indicates satisfied\n\nsecular_values\n\nNumeric index from 0-1 measuring overall secular values (Welzel), where higher values indicate more secular orientations. Composed of four sub-indices: defiance, disbelief, relativism, and scepticism.\n\n\nIf you’d like to find out more about this data, including the original codebook and questionnaire, check out their homepage here: https://www.worldvaluessurvey.org/WVSDocumentationWV7.jsp\n\n\nReferences\nHaerpfer, C., Inglehart, R., Moreno, A., Welzel, C., Kizilova, K., Diez-Medrano, J., Lagos, M., Norris, P., Ponarin, E. & Puranen B. (2022): World Values Survey Wave 7 (2017-2022) Cross-National Data-Set. Version: 4.0.0. World Values Survey Association. DOI: doi.org/10.14281/18241.18"
+    "objectID": "02-tidyverse.html#todays-outline",
+    "href": "02-tidyverse.html#todays-outline",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Today’s Outline",
+    "text": "Today’s Outline\n\nLoading our data into RStudio environment\nData wrangling with dplyr and tidyr (part of the tidyverse package)"
   },
   {
-    "objectID": "supp-files/coc.html",
-    "href": "supp-files/coc.html",
-    "title": "Code of conduct",
-    "section": "",
-    "text": "In order to foster a positive and professional learning environment we encourage the following kinds of behaviours:\n\nUse welcoming and inclusive language\nBe respectful of different viewpoints and experiences\nGracefully accept constructive criticism\nFocus on what is best for the community\nShow courtesy and respect towards other community members\n\n(Adapted from The Carpentries’ Code of Conduct)"
+    "objectID": "02-tidyverse.html#checklist-when-you-start-rstudio",
+    "href": "02-tidyverse.html#checklist-when-you-start-rstudio",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Checklist when you start RStudio",
+    "text": "Checklist when you start RStudio\n\nGo to the folder where you put your project for this workshop\nFind a file with .Rproj extension - this is the R project file that holds all the information about your project.\n\n\n\nDouble click on the file. Rstudio should launch with your project loaded!\nRe-run the library(tidyverse) and read_csv portion in the previous session (the code is also on the next slide if you missed last week’s session)\n\nOptional (Though best practice):\n\nMake sure that Environment panel is empty (click on broom icon to clean it up).\nClear the Console and Plots too."
   },
   {
-    "objectID": "supp-files/resources.html",
-    "href": "supp-files/resources.html",
-    "title": "Resources",
+    "objectID": "02-tidyverse.html#refresher-loading-from-csv-into-a-dataframe",
+    "href": "02-tidyverse.html#refresher-loading-from-csv-into-a-dataframe",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Refresher: Loading from CSV into a dataframe",
+    "text": "Refresher: Loading from CSV into a dataframe\nUse read_csv from readr package (part of tidyverse) to load our World Values Survey data. More information about the data can be found under the Dataset tab in the course website.\n\n# import tidyverse library\nlibrary(tidyverse)\n\n# read the CSV and save into a dataframe called wvs_data\nwvs_data &lt;- read_csv(\"data/wvs-4-countries.csv\")\n\n# \"peek\" at the data, pay attention to the data types!\nglimpse(wvs_data)"
+  },
+  {
+    "objectID": "02-tidyverse.html#why-do-we-need-to-clean-our-data",
+    "href": "02-tidyverse.html#why-do-we-need-to-clean-our-data",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Why do we need to clean our data?",
+    "text": "Why do we need to clean our data?\n\nResearchers spend 60-80% of their time on data preparation - investing in proper wrangling upfront saves hours of debugging and rework later.\nPoor data quality costs projects or organizations millions annually(!), and even one misclassified data point can skew entire analyses.\nClean data improves the workflow for statistical tests and can reveal hidden patterns that aren’t visible in messy datasets\nWell-documented data cleaning makes research transparent and reproducible, benefiting both future-you and collaborators."
+  },
+  {
+    "objectID": "02-tidyverse.html#why-do-it-in-r-cant-i-do-this-on-excel",
+    "href": "02-tidyverse.html#why-do-it-in-r-cant-i-do-this-on-excel",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Why do it in R? Can’t I do this on excel?",
+    "text": "Why do it in R? Can’t I do this on excel?\n\nR code creates a permanent record of exactly what you did - Excel clicks and manual edits are hard to track and reproduce (unless you note down what you did).\nR handles dates, times, text, and mixed data types much more reliably than Excel.\nExcel can automatically “correct” your data in unwanted ways (like converting your dates from DDMMYY to MMDDYY)\nWrite the cleaning code once, apply it to multiple datasets or when data updates. Whereas Excel requires manual repetition of the same steps each time.\nComplex joins, reshaping, and conditional operations that would take many Excel steps can be done in a few lines of R code.\nR scripts can be easily shared, version controlled, and integrated into reproducible workflows"
+  },
+  {
+    "objectID": "02-tidyverse.html#what-do-i-need-to-know-before-we-begin",
+    "href": "02-tidyverse.html#what-do-i-need-to-know-before-we-begin",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "What do I need to know before we begin?",
+    "text": "What do I need to know before we begin?\n\nAlways examine your data first (glimpse(), summary(), str()) before cleaning.\nNever overwrite your raw data files\nBudget extra time for data cleaning - it almost always takes longer than expected!\nHaving a clear understanding of the desired data shape is essential as real data often differs from what you imagine! Refer to codebook, actual questionnaire, appendix for guidance.\nLook out for outliers!\nRemember: Data cleaning techniques differ based on the problems, data type, and the research questions you are trying to answer. Various methods are available, each with its own trade-offs."
+  },
+  {
+    "objectID": "02-tidyverse.html#the-tools-were-going-to-use-dplyr-and-tidyr-from-tidyverse",
+    "href": "02-tidyverse.html#the-tools-were-going-to-use-dplyr-and-tidyr-from-tidyverse",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "The tools we’re going to use: dplyr and tidyr from tidyverse",
+    "text": "The tools we’re going to use: dplyr and tidyr from tidyverse\n\nPackages from tidyverse. (click here to go to the tidyverse homepage)\nPosit have created cheatsheets here! (you can have this open in another tab for reference for this session!)\n\ndplyr cheatsheet | pdf version (I personally prefer this PDF version since it’s more visual)\ntidyr cheatsheet | pdf version\n\nMost of the time, these are the ones that you will use quite often:\n\ndrop_na() - remove rows with null values\nselect() - to select column(s) from a dataframe\nfilter() - to filter rows based on criteria\nmutate() - to compute new columns or edit existing ones\nif_else() and case_when() - to be used with mutate when we want to compute/edit columns based on multiple criteria\ngroup_by() and summarize() - group data and summarize each group"
+  },
+  {
+    "objectID": "02-tidyverse.html#more-advanced-ones-which-is-not-covered-in-the-workshop-see-appendix-for-examples",
+    "href": "02-tidyverse.html#more-advanced-ones-which-is-not-covered-in-the-workshop-see-appendix-for-examples",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "More advanced ones which is not covered in the workshop (see appendix for examples)",
+    "text": "More advanced ones which is not covered in the workshop (see appendix for examples)\n\nJoining multiple dataframes’ columns: left_join(), right_join(), inner_join(), full_join()\nJoining multiple dataframes’ rows: bind_rows()\nSplitting or combining cells: unite(), separate_wider_delim(), separate_long_delim()\n\nAdditionally: you may need the forcats cheatsheet here: https://raw.githubusercontent.com/rstudio/cheatsheets/main/factors.pdf\nforcats is also part of tidyverse, specifically used to handle factor data."
+  },
+  {
+    "objectID": "02-tidyverse.html#why-are-we-using-tidyverse-is-it-a-must",
+    "href": "02-tidyverse.html#why-are-we-using-tidyverse-is-it-a-must",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Why are we using tidyverse? Is it a must?",
+    "text": "Why are we using tidyverse? Is it a must?\nIt’s not a must, but it’ll be make our job much easier! Key advantages:\n\nMore ‘English’ looking code and thus more intuitive for beginners\nTidyverse follow consistent syntax patterns - first argument is always the data to work on, followed by the function name i.e the things that we want to do on to the data.\nTidyverse gives clearer, more helpful error messages\n\nExample:\n# Base R\nsubset_data &lt;- data[data$age &gt; 18 & data$income &gt; 50000, c(\"name\", \"age\", \"salary\")]\n\n# Tidyverse  \nsubset_data &lt;- data |&gt; \n  filter(age &gt; 18 & income &gt; 50000)  |&gt; \n  select(name, age, salary)"
+  },
+  {
+    "objectID": "02-tidyverse.html#scenario-data-wrangling-activities-with-wvs-data",
+    "href": "02-tidyverse.html#scenario-data-wrangling-activities-with-wvs-data",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Scenario: Data wrangling activities with WVS data",
+    "text": "Scenario: Data wrangling activities with WVS data\nScenario: We are research assistants analyzing patterns in values, wellbeing, and demographics across four Asian countries: Hong Kong SAR, Indonesia, Malaysia, and Turkey.\nOur team has been assigned to prepare and explore this dataset to understand how key factors (education, income level, urban/rural context, and emancipative/secular values) relate to life satisfaction and personal freedom across different generations.\nTo ensure analysis quality, we were instructed to discard incomplete data and prepare the dataset for statistical analyses in later sessions.\nWe can break down the steps as such:\n\nRemove all rows with missing values (NA)\nCheck for duplicates\nSelect only the relevant columns.\n\nThough in our example, the columns in the sample dataset is ‘relevant’, i.e. will be used. To recap, the columns are respondent_id, demographic columns (age, country, sex, urban_rural, income_level, marital_status, education), and the attitudinal columns (life_satisfaction, freedom_of_choice, financial_satisfaction, trust_people, importance_of_god, emancipative_values, secular_values)\n\nFilter for respondents aged 18 or older. Optionally, we can then arrange the dataset by age (oldest to youngest)\nCreate a new column avg_satisfaction that averages life_satisfaction and financial_satisfaction as a combined well-being indicator\nCreate age groups for each generation: “18-28”, “29-44”, “45-60”, “61+”\n\nOnce we did all of the wrangling above, we can save this “wrangled” version into another CSV as a “checkpoint”."
+  },
+  {
+    "objectID": "02-tidyverse.html#step-1",
+    "href": "02-tidyverse.html#step-1",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Step #1",
+    "text": "Step #1\n\nA strategy I’d like to recommend: briefly read over the dplyr + tidyr documentation, either the PDF or HTML version, and have them open on a separate tab so that you can refer to it quickly.\n\nRemove all rows with empty values (NA) with drop_na()\n\nwvs_data &lt;- wvs_data |&gt; \n  drop_na()\n\nThe number of observations after removing NAs:\n\ndim(wvs_data)\n\n[1] 5102   15"
+  },
+  {
+    "objectID": "02-tidyverse.html#interlude-pipe-operator",
+    "href": "02-tidyverse.html#interlude-pipe-operator",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Interlude: Pipe Operator ( |> )",
+    "text": "Interlude: Pipe Operator ( |&gt; )\n\nThe pipe operator (|&gt;) allows us to chain multiple operations without creating intermediate / temporary dataframes.\nSuper handy when we perform several data wrangling tasks using tidyverse in sequence.\nHelps with readability, especially for complex operations.\nKeyboard shortcut: Ctrl+Shift+M on Windows, Cmd+Shift+M on Mac\n\n\nWithout pipe operatorWith pipe operator\n\n\nNotice that we have to create a “temp” dataframe called wvs_data_clean in this method.\nwvs_data &lt;- drop_na(wvs_data)\nwvs_data_clean &lt;- arrange(wvs_data, desc(age))\nwrite_csv(wvs_data_clean, \"data-output/wvs-clean.csv\")\n\n\nNo “temporary” dataframe needed here! :D\nwvs_data |&gt;\n    drop_na() |&gt;\n    distinct(respondent_id, .keep_all = TRUE) |&gt;\n    write_csv(\"data-output/wvs-clean.csv\")"
+  },
+  {
+    "objectID": "02-tidyverse.html#step-2",
+    "href": "02-tidyverse.html#step-2",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Step #2",
+    "text": "Step #2\nCheck for duplicates with distinct()\n\nwvs_data &lt;- wvs_data |&gt;\n  distinct(respondent_id, .keep_all = TRUE)\n\n(Our data has no duplicates, but this is still a good practice to do, especially if we were combining data from multipe sources)"
+  },
+  {
+    "objectID": "02-tidyverse.html#step-3",
+    "href": "02-tidyverse.html#step-3",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Step #3:",
+    "text": "Step #3:\nSelect only the relevant columns: respondent_id, demographic columns, and attitudinal columns.\nWe can achieve this with select()!\n\nwvs_data &lt;- wvs_data |&gt;\n    select(respondent_id, country, sex, age, urban_rural, income_level,\n           marital_status, education, life_satisfaction, freedom_of_choice,\n           financial_satisfaction, trust_people, importance_of_god,\n           emancipative_values, secular_values)\n\nPreview of the filtered data:\n\nwvs_data |&gt; glimpse()\n\nRows: 5,102\nColumns: 15\n$ respondent_id          &lt;dbl&gt; 344070882, 344072005, 344071354, 344070282, 344…\n$ country                &lt;chr&gt; \"Hong Kong SAR\", \"Hong Kong SAR\", \"Hong Kong SA…\n$ sex                    &lt;chr&gt; \"Male\", \"Female\", \"Female\", \"Male\", \"Male\", \"Fe…\n$ age                    &lt;dbl&gt; 62, 29, 55, 62, 41, 69, 25, 28, 62, 66, 57, 69,…\n$ urban_rural            &lt;chr&gt; \"Urban\", \"Urban\", \"Urban\", \"Urban\", \"Urban\", \"U…\n$ income_level           &lt;chr&gt; \"Medium\", \"Low\", \"Medium\", \"Low\", \"Medium\", \"Me…\n$ marital_status         &lt;chr&gt; \"Married\", \"Single\", \"Separated\", \"Married\", \"S…\n$ education              &lt;chr&gt; \"Middle\", \"Middle\", \"Higher\", \"Lower\", \"Middle\"…\n$ life_satisfaction      &lt;dbl&gt; 8, 2, 7, 7, 7, 5, 4, 6, 10, 5, 8, 7, 5, 6, 5, 8…\n$ freedom_of_choice      &lt;dbl&gt; 7, 3, 5, 8, 6, 6, 5, 6, 10, 5, 8, 6, 5, 5, 7, 1…\n$ financial_satisfaction &lt;dbl&gt; 7, 2, 6, 9, 6, 5, 4, 5, 8, 5, 8, 7, 5, 5, 5, 8,…\n$ trust_people           &lt;chr&gt; \"Trusted\", \"Not trusted\", \"Trusted\", \"Not trust…\n$ importance_of_god      &lt;dbl&gt; 1, 1, 6, 3, 6, 5, 3, 7, 9, 3, 8, 5, 1, 5, 3, 10…\n$ emancipative_values    &lt;dbl&gt; 0.7133333, 0.8263889, 0.6137963, 0.4725926, 0.5…\n$ secular_values         &lt;dbl&gt; 0.5250000, 0.6941667, 0.4838889, 0.6794444, 0.6…"
+  },
+  {
+    "objectID": "02-tidyverse.html#step-4",
+    "href": "02-tidyverse.html#step-4",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Step #4:",
+    "text": "Step #4:\nFilter for respondents aged 18 or older. Optionally, we can then arrange the dataset by age (oldest to youngest)\n\nwvs_data &lt;- wvs_data |&gt; \n    filter(age &gt;= 18) |&gt; \n    arrange(desc(age))\n\nChecking the structure:\n\nhead(wvs_data)\n\n# A tibble: 6 × 15\n  respondent_id country      sex     age urban_rural income_level marital_status\n          &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;         \n1     792070014 Turkey       Male     95 Urban       Medium       Single        \n2     344070043 Hong Kong S… Male     91 Urban       Low          Married       \n3     344070645 Hong Kong S… Male     89 Urban       Low          Widowed       \n4     344070124 Hong Kong S… Male     88 Urban       Medium       Widowed       \n5     344070040 Hong Kong S… Male     88 Urban       Low          Married       \n6     344070082 Hong Kong S… Male     88 Urban       Low          Married       \n# ℹ 8 more variables: education &lt;chr&gt;, life_satisfaction &lt;dbl&gt;,\n#   freedom_of_choice &lt;dbl&gt;, financial_satisfaction &lt;dbl&gt;, trust_people &lt;chr&gt;,\n#   importance_of_god &lt;dbl&gt;, emancipative_values &lt;dbl&gt;, secular_values &lt;dbl&gt;"
+  },
+  {
+    "objectID": "02-tidyverse.html#step-5",
+    "href": "02-tidyverse.html#step-5",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Step #5",
+    "text": "Step #5\nCreate a new column avg_satisfaction that averages life_satisfaction and financial_satisfaction as a combined wellbeing indicator.\nWe can achieve this with mutate()! (mutate() is to change or add new columns.)\n\nwvs_data &lt;- wvs_data |&gt;\n    mutate(avg_satisfaction = (life_satisfaction + financial_satisfaction) / 2)\n\nPreview of the new column alongside the original ones:\n\nwvs_data |&gt;\n    select(life_satisfaction, financial_satisfaction, avg_satisfaction) |&gt;\n    print(n = 5)\n\n# A tibble: 5,102 × 3\n  life_satisfaction financial_satisfaction avg_satisfaction\n              &lt;dbl&gt;                  &lt;dbl&gt;            &lt;dbl&gt;\n1                 8                      5              6.5\n2                10                      2              6  \n3                 4                      5              4.5\n4                 1                      1              1  \n5                 9                      8              8.5\n# ℹ 5,097 more rows"
+  },
+  {
+    "objectID": "02-tidyverse.html#step-6",
+    "href": "02-tidyverse.html#step-6",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Step #6",
+    "text": "Step #6\nCreate age groups for each generation: “18-28”, “29-44”, “45-60”, “61+”\n\nwvs_data &lt;- wvs_data |&gt;\n    mutate(age_group = case_when(\n        age &lt;= 28 ~ \"18-28\",\n        age &lt;= 44 ~ \"29-44\",\n        age &lt;= 60 ~ \"45-60\",\n        TRUE ~ \"61+\"\n    ))\n\nPreview of age groups:\n\nwvs_data |&gt;\n    select(age, age_group) |&gt;\n    print(n = 4)\n\n# A tibble: 5,102 × 2\n    age age_group\n  &lt;dbl&gt; &lt;chr&gt;    \n1    95 61+      \n2    91 61+      \n3    89 61+      \n4    88 61+      \n# ℹ 5,098 more rows"
+  },
+  {
+    "objectID": "02-tidyverse.html#checkpoint-1---saving-our-hard-work-into-a-csv-file",
+    "href": "02-tidyverse.html#checkpoint-1---saving-our-hard-work-into-a-csv-file",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Checkpoint 1 - saving our hard work into a CSV file",
+    "text": "Checkpoint 1 - saving our hard work into a CSV file\nWe have done some cleaning! Let’s save this cleaned data into a separate CSV file called “wvs_cleaned_v1.csv”\n\nwvs_data |&gt; write_csv(\"data-output/wvs_cleaned_v1.csv\")\n\nCheck the data output folder to make sure the CSV is created!"
+  },
+  {
+    "objectID": "02-tidyverse.html#simple-descriptive-analysis",
+    "href": "02-tidyverse.html#simple-descriptive-analysis",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Simple descriptive analysis",
+    "text": "Simple descriptive analysis\nOnce we are done with the wrangling part, we can proceed with simple descriptive analysis!\n\nPrep: Before we proceed further, convert the appropriate categorical variables (country, sex, marital_status, urban_rural, income_level, education, trust_people) to Factor\nAnalysis 1: Generate summary statistics of life_satisfaction grouped by country\nAnalysis 2: Create a new column called satisfaction_group that indicate whether each respondent has higher or lower than average life_satisfaction\nAnalysis 3: Reshape the data to show average satisfaction scores by country and age group"
+  },
+  {
+    "objectID": "02-tidyverse.html#prep-before-analysis-convert-to-factors",
+    "href": "02-tidyverse.html#prep-before-analysis-convert-to-factors",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Prep before analysis: convert to factors",
+    "text": "Prep before analysis: convert to factors\nLet’s use the wvs_cleaned dataframe for this task.\nIdentify which columns can be converted to categorial data (factor). Convert the appropriate categorical variables (country, sex, marital_status, urban_rural, income_level, education, trust_people) to Factor.\nWe can do this with mutate() and as_factor() from forcats, another sub-package within tidyverse.\n\nwvs_cleaned &lt;- read_csv(\"data-output/wvs_cleaned_v1.csv\")\n\n\nRstudio may auto-suggest as.factor() from base R. You can use this as well, but as_factor() is preferred since we are using tidyverse approach."
+  },
+  {
+    "objectID": "02-tidyverse.html#prep-before-analysis-convert-to-factors-output",
+    "href": "02-tidyverse.html#prep-before-analysis-convert-to-factors-output",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Prep before analysis: convert to factors",
+    "text": "Prep before analysis: convert to factors\n\nRows: 5102 Columns: 17\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (8): country, sex, urban_rural, income_level, marital_status, education,...\ndbl (9): respondent_id, age, life_satisfaction, freedom_of_choice, financial...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\nwvs_cleaned &lt;- wvs_cleaned |&gt;\n    mutate(\n        country = as_factor(country),\n        sex = as_factor(sex),\n        marital_status = as_factor(marital_status),\n        urban_rural = as_factor(urban_rural),\n        income_level = as_factor(income_level),\n        education = as_factor(education),\n        trust_people = as_factor(trust_people)\n    )\n\n# check conversion result\nstr(wvs_cleaned)\n\ntibble [5,102 × 17] (S3: tbl_df/tbl/data.frame)\n $ respondent_id         : num [1:5102] 7.92e+08 3.44e+08 3.44e+08 3.44e+08 3.44e+08 ...\n $ country               : Factor w/ 4 levels \"Turkey\",\"Hong Kong SAR\",..: 1 2 2 2 2 2 2 2 2 2 ...\n $ sex                   : Factor w/ 2 levels \"Male\",\"Female\": 1 1 1 1 1 1 1 2 1 1 ...\n $ age                   : num [1:5102] 95 91 89 88 88 88 87 86 86 86 ...\n $ urban_rural           : Factor w/ 2 levels \"Urban\",\"Rural\": 1 1 1 1 1 1 1 1 1 1 ...\n $ income_level          : Factor w/ 3 levels \"Medium\",\"Low\",..: 1 2 2 1 2 2 2 1 1 2 ...\n $ marital_status        : Factor w/ 6 levels \"Single\",\"Married\",..: 1 2 3 3 2 2 2 3 4 2 ...\n $ education             : Factor w/ 3 levels \"Lower\",\"Middle\",..: 1 1 1 1 1 1 2 1 1 1 ...\n $ life_satisfaction     : num [1:5102] 8 10 4 1 9 10 8 5 8 5 ...\n $ freedom_of_choice     : num [1:5102] 1 1 5 9 10 9 5 1 8 5 ...\n $ financial_satisfaction: num [1:5102] 5 2 5 1 8 10 6 6 6 3 ...\n $ trust_people          : Factor w/ 2 levels \"Not trusted\",..: 1 1 1 1 1 1 1 1 2 1 ...\n $ importance_of_god     : num [1:5102] 10 6 9 1 6 10 1 1 2 1 ...\n $ emancipative_values   : num [1:5102] 0.25 0.339 0.464 0.657 0.471 ...\n $ secular_values        : num [1:5102] 0.151 0.345 0.401 0.597 0.313 ...\n $ avg_satisfaction      : num [1:5102] 6.5 6 4.5 1 8.5 10 7 5.5 7 4 ...\n $ age_group             : chr [1:5102] \"61+\" \"61+\" \"61+\" \"61+\" ..."
+  },
+  {
+    "objectID": "02-tidyverse.html#prep-before-analysis-convert-to-factors-shortcut-ver.",
+    "href": "02-tidyverse.html#prep-before-analysis-convert-to-factors-shortcut-ver.",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Prep before analysis: convert to factors (shortcut ver.)",
+    "text": "Prep before analysis: convert to factors (shortcut ver.)\nIf we have a lot of columns to convert, that might be troublesome to type! This is where across() can come in handy. across(column selection, function) is to apply the same function or a set of functions to multiple columns in a single mutate () or summarize () function.\nLet’s first define a character vector that contains the names of columns we plan to convert.\n\ncolumns_to_convert &lt;- c(\"country\", \"sex\", \"marital_status\", \"urban_rural\", \"income_level\", \"education\", \"trust_people\")\n\nWe will use this vector with mutate() and across(). We tell tidyverse to convert all of the columns with the help of all_of()\n\nwvs_cleaned &lt;- wvs_cleaned |&gt; \n    mutate(across(all_of(columns_to_convert), as_factor))\n\n# check conversion result\nstr(wvs_cleaned)\n\n\nacross() is used for applying the same function to multiple columns in a single mutate() or summarise() operation."
+  },
+  {
+    "objectID": "02-tidyverse.html#prep-before-analysis-convert-to-factors-shortcut-ver.-output",
+    "href": "02-tidyverse.html#prep-before-analysis-convert-to-factors-shortcut-ver.-output",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Prep before analysis: convert to factors (shortcut ver.)",
+    "text": "Prep before analysis: convert to factors (shortcut ver.)\n\ntibble [5,102 × 17] (S3: tbl_df/tbl/data.frame)\n $ respondent_id         : num [1:5102] 7.92e+08 3.44e+08 3.44e+08 3.44e+08 3.44e+08 ...\n $ country               : Factor w/ 4 levels \"Turkey\",\"Hong Kong SAR\",..: 1 2 2 2 2 2 2 2 2 2 ...\n $ sex                   : Factor w/ 2 levels \"Male\",\"Female\": 1 1 1 1 1 1 1 2 1 1 ...\n $ age                   : num [1:5102] 95 91 89 88 88 88 87 86 86 86 ...\n $ urban_rural           : Factor w/ 2 levels \"Urban\",\"Rural\": 1 1 1 1 1 1 1 1 1 1 ...\n $ income_level          : Factor w/ 3 levels \"Medium\",\"Low\",..: 1 2 2 1 2 2 2 1 1 2 ...\n $ marital_status        : Factor w/ 6 levels \"Single\",\"Married\",..: 1 2 3 3 2 2 2 3 4 2 ...\n $ education             : Factor w/ 3 levels \"Lower\",\"Middle\",..: 1 1 1 1 1 1 2 1 1 1 ...\n $ life_satisfaction     : num [1:5102] 8 10 4 1 9 10 8 5 8 5 ...\n $ freedom_of_choice     : num [1:5102] 1 1 5 9 10 9 5 1 8 5 ...\n $ financial_satisfaction: num [1:5102] 5 2 5 1 8 10 6 6 6 3 ...\n $ trust_people          : Factor w/ 2 levels \"Not trusted\",..: 1 1 1 1 1 1 1 1 2 1 ...\n $ importance_of_god     : num [1:5102] 10 6 9 1 6 10 1 1 2 1 ...\n $ emancipative_values   : num [1:5102] 0.25 0.339 0.464 0.657 0.471 ...\n $ secular_values        : num [1:5102] 0.151 0.345 0.401 0.597 0.313 ...\n $ avg_satisfaction      : num [1:5102] 6.5 6 4.5 1 8.5 10 7 5.5 7 4 ...\n $ age_group             : chr [1:5102] \"61+\" \"61+\" \"61+\" \"61+\" ..."
+  },
+  {
+    "objectID": "02-tidyverse.html#analysis-1---summary-stats-of-life_satisfaction-for-each-country",
+    "href": "02-tidyverse.html#analysis-1---summary-stats-of-life_satisfaction-for-each-country",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Analysis 1 - summary stats of life_satisfaction for each country",
+    "text": "Analysis 1 - summary stats of life_satisfaction for each country\nGenerate summary statistics such as count (n), mean, median, and standard deviation of life_satisfaction grouped by country.\nWe can achieve this with group_by() and summarise(). It will contain one column for each grouping variable and one column for each of the summary statistics that you have specified.\n\nwvs_data |&gt;\n    group_by(country) |&gt;\n    summarise(\n        n = n(),\n        mean_satisfaction = mean(life_satisfaction),\n        median_satisfaction = median(life_satisfaction),\n        sd_satisfaction = sd(life_satisfaction)\n    ) |&gt;\n    arrange(desc(mean_satisfaction))\n\n\nWhat if we want to save this into a CSV? What if we also want to group by country AND age_group?"
+  },
+  {
+    "objectID": "02-tidyverse.html#analysis-1---summary-stats-of-life_satisfaction-for-each-country-output",
+    "href": "02-tidyverse.html#analysis-1---summary-stats-of-life_satisfaction-for-each-country-output",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Analysis 1 - summary stats of life_satisfaction for each country",
+    "text": "Analysis 1 - summary stats of life_satisfaction for each country\n\n# A tibble: 4 × 5\n  country           n mean_satisfaction median_satisfaction sd_satisfaction\n  &lt;chr&gt;         &lt;int&gt;             &lt;dbl&gt;               &lt;dbl&gt;           &lt;dbl&gt;\n1 Indonesia      1301              7.63                   8            2.39\n2 Malaysia       1313              6.99                   7            1.75\n3 Hong Kong SAR  1272              6.61                   7            1.80\n4 Turkey         1216              6.48                   7            1.85"
+  },
+  {
+    "objectID": "02-tidyverse.html#analysis-2---how-many-has-below-and-average-life_satisfaction",
+    "href": "02-tidyverse.html#analysis-2---how-many-has-below-and-average-life_satisfaction",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Analysis 2 - How many has below and average life_satisfaction?",
+    "text": "Analysis 2 - How many has below and average life_satisfaction?\nCreate a new column called satisfaction_group that indicate whether each respondent has higher or lower than average life_satisfaction\n\nmean_satisfaction &lt;- mean(wvs_data$life_satisfaction, na.rm = TRUE)\n\nwvs_data |&gt;\n    mutate(satisfaction_group = if_else(\n        life_satisfaction &gt; mean_satisfaction, # the condition to evaluate\n        \"higher\", # if condition is fulfilled, do this\n        \"lower\" # otherwise, do this\n    ))"
+  },
+  {
+    "objectID": "02-tidyverse.html#analysis-2---how-many-has-below-and-average-life_satisfaction-output",
+    "href": "02-tidyverse.html#analysis-2---how-many-has-below-and-average-life_satisfaction-output",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Analysis 2 - How many has below and average life_satisfaction?",
+    "text": "Analysis 2 - How many has below and average life_satisfaction?\n\n# A tibble: 5,102 × 18\n   respondent_id country     sex     age urban_rural income_level marital_status\n           &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;         \n 1     792070014 Turkey      Male     95 Urban       Medium       Single        \n 2     344070043 Hong Kong … Male     91 Urban       Low          Married       \n 3     344070645 Hong Kong … Male     89 Urban       Low          Widowed       \n 4     344070124 Hong Kong … Male     88 Urban       Medium       Widowed       \n 5     344070040 Hong Kong … Male     88 Urban       Low          Married       \n 6     344070082 Hong Kong … Male     88 Urban       Low          Married       \n 7     344070833 Hong Kong … Male     87 Urban       Low          Married       \n 8     344070437 Hong Kong … Fema…    86 Urban       Medium       Widowed       \n 9     344070274 Hong Kong … Male     86 Urban       Medium       Separated     \n10     344070159 Hong Kong … Male     86 Urban       Low          Married       \n# ℹ 5,092 more rows\n# ℹ 11 more variables: education &lt;chr&gt;, life_satisfaction &lt;dbl&gt;,\n#   freedom_of_choice &lt;dbl&gt;, financial_satisfaction &lt;dbl&gt;, trust_people &lt;chr&gt;,\n#   importance_of_god &lt;dbl&gt;, emancipative_values &lt;dbl&gt;, secular_values &lt;dbl&gt;,\n#   avg_satisfaction &lt;dbl&gt;, age_group &lt;chr&gt;, satisfaction_group &lt;chr&gt;"
+  },
+  {
+    "objectID": "02-tidyverse.html#analysis-3---whats-the-average-satisfaction-scores-for-each-country-and-age-group",
+    "href": "02-tidyverse.html#analysis-3---whats-the-average-satisfaction-scores-for-each-country-and-age-group",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Analysis 3 - What’s the average satisfaction scores for each country and age group?",
+    "text": "Analysis 3 - What’s the average satisfaction scores for each country and age group?\nShow the average satisfaction scores by country and age group in wide data format\n\nwvs_data |&gt;\n    group_by(country, age_group) |&gt;\n    summarise(\n        avg_satisfaction = mean(life_satisfaction, na.rm = TRUE),\n    ) |&gt;\n    pivot_wider(\n        names_from = age_group,\n        values_from = avg_satisfaction\n    ) \n\n`summarise()` has regrouped the output.\nℹ Summaries were computed grouped by country and age_group.\nℹ Output is grouped by country.\nℹ Use `summarise(.groups = \"drop_last\")` to silence this message.\nℹ Use `summarise(.by = c(country, age_group))` for per-operation grouping\n  (`?dplyr::dplyr_by`) instead.\n\n\n# A tibble: 4 × 5\n# Groups:   country [4]\n  country       `18-28` `29-44` `45-60` `61+`\n  &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;\n1 Hong Kong SAR    6.31    6.33    6.57  7.26\n2 Indonesia        7.90    7.53    7.57  7.55\n3 Malaysia         7.05    6.91    7.01  7.14\n4 Turkey           6.57    6.54    6.36  6.2"
+  },
+  {
+    "objectID": "02-tidyverse.html#long-vs-wide-data",
+    "href": "02-tidyverse.html#long-vs-wide-data",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Long vs Wide Data",
+    "text": "Long vs Wide Data\n\n\nLong data:\n\nEach row is a unique observation –&gt; for a single observational unit, there might be multiple rows.\nThere is a separate column indicating the variable or type of measurements.\nThis format is more “understandable” by R, more suitable for visualizations, especially those involving grouping, summarizing, or visualizing data over time or across different categories. (which we’ll explore more next week!)\n\n\nWide data:\n\nEach row contains values from variables.\nEach column is a value in a variable –&gt; the more values you have, the “wider” is the data.\nQuick comparisons of different variables for a single entity.\nThis format is more intuitive for humans!"
+  },
+  {
+    "objectID": "02-tidyverse.html#long-vs-wide-data-examples",
+    "href": "02-tidyverse.html#long-vs-wide-data-examples",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Long vs Wide Data: Examples",
+    "text": "Long vs Wide Data: Examples\n\n\nLong data:\n\n\n\nAttaching package: 'kableExtra'\n\n\nThe following object is masked from 'package:dplyr':\n\n    group_rows\n\n\n`summarise()` has regrouped the output.\nℹ Summaries were computed grouped by country and age_group.\nℹ Output is grouped by country.\nℹ Use `summarise(.groups = \"drop_last\")` to silence this message.\nℹ Use `summarise(.by = c(country, age_group))` for per-operation grouping\n  (`?dplyr::dplyr_by`) instead.\n\n\n\nObservations (Long)\n\n\ncountry\nage_group\ncount\n\n\n\n\nHong Kong SAR\n18-28\n191\n\n\nHong Kong SAR\n29-44\n384\n\n\nHong Kong SAR\n45-60\n412\n\n\nHong Kong SAR\n61+\n285\n\n\nIndonesia\n18-28\n308\n\n\nIndonesia\n29-44\n529\n\n\nIndonesia\n45-60\n360\n\n\nIndonesia\n61+\n104\n\n\nMalaysia\n18-28\n379\n\n\nMalaysia\n29-44\n511\n\n\nMalaysia\n45-60\n349\n\n\nMalaysia\n61+\n74\n\n\nTurkey\n18-28\n329\n\n\nTurkey\n29-44\n427\n\n\nTurkey\n45-60\n430\n\n\nTurkey\n61+\n30\n\n\n\n\n\n\nWide data:\n\n\n\nObservations (Wide)\n\n\ncountry\n18-28\n29-44\n45-60\n61+\n\n\n\n\nHong Kong SAR\n191\n384\n412\n285\n\n\nIndonesia\n308\n529\n360\n104\n\n\nMalaysia\n379\n511\n349\n74\n\n\nTurkey\n329\n427\n430\n30"
+  },
+  {
+    "objectID": "02-tidyverse.html#bonus-deleting-columns-from-dataframe",
+    "href": "02-tidyverse.html#bonus-deleting-columns-from-dataframe",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Bonus: Deleting columns from dataframe",
+    "text": "Bonus: Deleting columns from dataframe\nLet’s say I have this column called wrong_column that I want to remove:\n\nwvs_data &lt;- wvs_data |&gt; mutate(wrong_column = \"random values\")\nwvs_data |&gt; select(country, wrong_column) |&gt; print(n = 3)\n\n# A tibble: 5,102 × 2\n  country       wrong_column \n  &lt;chr&gt;         &lt;chr&gt;        \n1 Turkey        random values\n2 Hong Kong SAR random values\n3 Hong Kong SAR random values\n# ℹ 5,099 more rows"
+  },
+  {
+    "objectID": "02-tidyverse.html#remove-the-wrong-column-with-subset--",
+    "href": "02-tidyverse.html#remove-the-wrong-column-with-subset--",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Remove the wrong column with subset -:",
+    "text": "Remove the wrong column with subset -:\n\nwvs_data &lt;- wvs_data |&gt; \n    select(-wrong_column)\n\n\nwvs_data |&gt; select(country) |&gt; print(n = 3)\n\n# A tibble: 5,102 × 1\n  country      \n  &lt;chr&gt;        \n1 Turkey       \n2 Hong Kong SAR\n3 Hong Kong SAR\n# ℹ 5,099 more rows"
+  },
+  {
+    "objectID": "02-tidyverse.html#quiz-time-compulsory",
+    "href": "02-tidyverse.html#quiz-time-compulsory",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Quiz Time! (compulsory)",
+    "text": "Quiz Time! (compulsory)\nScan the QR Code below to assess your understanding of data wrangling in R using the tidyverse package. All questions are required and each is worth 1 mark.\n\n\n\n\n\n\n\nQuiz QR Code: &lt;https://forms.cloud.microsoft/r/0Vhn9mfWur&gt;"
+  },
+  {
+    "objectID": "02-tidyverse.html#to-try-at-home-exercise-1",
+    "href": "02-tidyverse.html#to-try-at-home-exercise-1",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "To try at home: Exercise 1",
+    "text": "To try at home: Exercise 1\nNow that we have a new file, load this new wvs_cleaned_v1.csv into a new dataframe called wvs_cleaned. Filter to respondents from Indonesia who live in Urban areas. Show only the respondent_id, country, urban_rural, and age. Use glimpse() or print() to check the result! (you can chain these functions at the end)\nStep 1: Load the new file\n\n\nShow answer\nlibrary(tidyverse)\nwvs_cleaned &lt;- read_csv(\"data-output/wvs_cleaned_v1.csv\")"
+  },
+  {
+    "objectID": "02-tidyverse.html#to-try-at-home-exercise-2",
+    "href": "02-tidyverse.html#to-try-at-home-exercise-2",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "To try at home: Exercise 2",
+    "text": "To try at home: Exercise 2\nGenerate a summary stats of age grouped by country and sex. The summary stats should include mean, median, max, min, std, and n (number of observations). It should look something like this:\n\n\nShow answer\nwvs_data |&gt; \n    group_by(country, sex) |&gt; \n    summarise(observation = n(), \n              mean_age = mean(age, na.rm = TRUE),\n              median_age = median(age, na.rm = TRUE), \n              oldest = max(age, na.rm = TRUE),\n              youngest = min(age, na.rm = TRUE),\n              std_dev = sd(age, na.rm = TRUE))"
+  },
+  {
+    "objectID": "02-tidyverse.html#to-try-at-home-exercise-2-output",
+    "href": "02-tidyverse.html#to-try-at-home-exercise-2-output",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "To try at home: Exercise 2",
+    "text": "To try at home: Exercise 2\n\n`summarise()` has regrouped the output.\nℹ Summaries were computed grouped by country and sex.\nℹ Output is grouped by country.\nℹ Use `summarise(.groups = \"drop_last\")` to silence this message.\nℹ Use `summarise(.by = c(country, sex))` for per-operation grouping\n  (`?dplyr::dplyr_by`) instead.\n\n\n# A tibble: 8 × 8\n# Groups:   country [4]\n  country       sex    observation mean_age median_age oldest youngest std_dev\n  &lt;chr&gt;         &lt;chr&gt;        &lt;int&gt;    &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;\n1 Hong Kong SAR Female         687     46.8         46     86       18    15.2\n2 Hong Kong SAR Male           585     47.3         47     91       18    16.9\n3 Indonesia     Female         713     38.3         37     78       18    12.8\n4 Indonesia     Male           588     41.4         41     80       18    13.9\n5 Malaysia      Female         656     37.7         35     80       18    12.8\n6 Malaysia      Male           657     39.0         36     79       18    13.6\n7 Turkey        Female         615     40.1         38     80       18    12.5\n8 Turkey        Male           601     38.2         36     95       18    12.8"
+  },
+  {
+    "objectID": "02-tidyverse.html#joining-dataframes-by-column",
+    "href": "02-tidyverse.html#joining-dataframes-by-column",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Joining DataFrames by column",
+    "text": "Joining DataFrames by column\nLet’s assume we have two DataFrames customers and orders\n\n\ncustomers dataframe:\n(Notice that the ID is 1, 2, and 3)\n\ncustomers &lt;- data.frame(id = 1:3, name = c(\"Alice\", \"Bob\", \"Carol\"))\nprint(customers)\n\n  id  name\n1  1 Alice\n2  2   Bob\n3  3 Carol\n\n\n\norders dataframe\n(Notice that the ID is 1, 2, and 4)\n\norders &lt;- data.frame(id = c(1,2,4), amount = c(100, 200, 150))\nprint(orders)\n\n  id amount\n1  1    100\n2  2    200\n3  4    150"
+  },
+  {
+    "objectID": "02-tidyverse.html#left_join-to-keep-all-rows-from-the-left-table-i.e.-customers",
+    "href": "02-tidyverse.html#left_join-to-keep-all-rows-from-the-left-table-i.e.-customers",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "left_join() to keep all rows from the left table i.e. customers",
+    "text": "left_join() to keep all rows from the left table i.e. customers\n\ncustomers |&gt; left_join(orders, by = \"id\")\n\n  id  name amount\n1  1 Alice    100\n2  2   Bob    200\n3  3 Carol     NA"
+  },
+  {
+    "objectID": "02-tidyverse.html#right_join-to-keep-all-rows-from-the-right-table-i.e.-orders",
+    "href": "02-tidyverse.html#right_join-to-keep-all-rows-from-the-right-table-i.e.-orders",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "right_join() to keep all rows from the right table i.e. orders",
+    "text": "right_join() to keep all rows from the right table i.e. orders\n\ncustomers |&gt; right_join(orders, by = \"id\")\n\n  id  name amount\n1  1 Alice    100\n2  2   Bob    200\n3  4  &lt;NA&gt;    150"
+  },
+  {
+    "objectID": "02-tidyverse.html#inner_join-to-keep-only-matching-rows",
+    "href": "02-tidyverse.html#inner_join-to-keep-only-matching-rows",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "inner_join() to keep only matching rows",
+    "text": "inner_join() to keep only matching rows\n\ncustomers |&gt; inner_join(orders, by = \"id\")\n\n  id  name amount\n1  1 Alice    100\n2  2   Bob    200"
+  },
+  {
+    "objectID": "02-tidyverse.html#full_join-to-keep-all-rows-from-both-tables",
+    "href": "02-tidyverse.html#full_join-to-keep-all-rows-from-both-tables",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "full_join() to keep all rows from both tables",
+    "text": "full_join() to keep all rows from both tables\n\ncustomers |&gt; full_join(orders, by = \"id\")\n\n  id  name amount\n1  1 Alice    100\n2  2   Bob    200\n3  3 Carol     NA\n4  4  &lt;NA&gt;    150"
+  },
+  {
+    "objectID": "02-tidyverse.html#bind_rows-to-stack-rows-from-two-different-dataframes",
+    "href": "02-tidyverse.html#bind_rows-to-stack-rows-from-two-different-dataframes",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "bind_rows() to stack rows from two different dataframes",
+    "text": "bind_rows() to stack rows from two different dataframes\nLet’s say we have the following dataframes\n\ndf1 &lt;- data.frame(name = \"Alice\", age = 25)\ndf2 &lt;- data.frame(name = \"Bob\", age = 30)\n\n\nprint(df1)\n\n   name age\n1 Alice  25\n\n\n\nprint(df2)\n\n  name age\n1  Bob  30\n\n\nStack them together:\n\ndf1 |&gt; bind_rows(df2)\n\n   name age\n1 Alice  25\n2   Bob  30"
+  },
+  {
+    "objectID": "02-tidyverse.html#splitting-and-combining-cells",
+    "href": "02-tidyverse.html#splitting-and-combining-cells",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Splitting and combining cells",
+    "text": "Splitting and combining cells\nLet’s say we have the following dataframe\n\ndf &lt;- data.frame(\n  first = c(\"John\", \"Jane\"),\n  last = c(\"Doe\", \"Smith\"),\n  full_address = c(\"123 Main St, NYC, NY\", \"456 Oak Ave, LA, CA\")\n)\n\nprint(df)\n\n  first  last         full_address\n1  John   Doe 123 Main St, NYC, NY\n2  Jane Smith  456 Oak Ave, LA, CA"
+  },
+  {
+    "objectID": "02-tidyverse.html#combine-first-and-last-name-columns-into-one",
+    "href": "02-tidyverse.html#combine-first-and-last-name-columns-into-one",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Combine first and last name columns into one",
+    "text": "Combine first and last name columns into one\n\ndf &lt;- df |&gt; unite(\"full_name\", \"first\", \"last\", sep = \"_\")\nprint(df)\n\n   full_name         full_address\n1   John_Doe 123 Main St, NYC, NY\n2 Jane_Smith  456 Oak Ave, LA, CA"
+  },
+  {
+    "objectID": "02-tidyverse.html#split-the-full-name-column-into-multiple-by-delimiter",
+    "href": "02-tidyverse.html#split-the-full-name-column-into-multiple-by-delimiter",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Split the full name column into multiple (by delimiter)",
+    "text": "Split the full name column into multiple (by delimiter)\n\ndf &lt;- df |&gt; separate_wider_delim(\"full_name\", delim = \"_\", names = c(\"first\", \"last\"))\nprint(df)\n\n# A tibble: 2 × 3\n  first last  full_address        \n  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;               \n1 John  Doe   123 Main St, NYC, NY\n2 Jane  Smith 456 Oak Ave, LA, CA"
+  },
+  {
+    "objectID": "02-tidyverse.html#split-one-column-into-multiple-rows-long-format",
+    "href": "02-tidyverse.html#split-one-column-into-multiple-rows-long-format",
+    "title": "Session 2: Data Wrangling with Tidyverse",
+    "section": "Split one column into multiple rows (long format)",
+    "text": "Split one column into multiple rows (long format)\n\ndf |&gt; separate_longer_delim(full_address, delim = \", \")\n\n# A tibble: 6 × 3\n  first last  full_address\n  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       \n1 John  Doe   123 Main St \n2 John  Doe   NYC         \n3 John  Doe   NY          \n4 Jane  Smith 456 Oak Ave \n5 Jane  Smith LA          \n6 Jane  Smith CA"
+  },
+  {
+    "objectID": "supp-files/concept-explainers.html",
+    "href": "supp-files/concept-explainers.html",
+    "title": "Concept explainers",
     "section": "",
-    "text": "Further readings if you’d like to deepen your knowledge and skill after the workshop:\n\n\nIsmay, C., & Kim, A. Y. (2024). Statistical inference via data science. https://moderndive.com/This book offers a gentle introduction to R, while also covering foundational research methods such as sampling, hypothesis testing, and making inferences. I really like how it combines both programming and research basics; very suitable for beginners!\n\n\nWickham, H., Çetinkaya-Rundel, M., & Garrett Grolemund. (2024). R for data science (2e) (2nd ed.). https://r4ds.hadley.nz/A great book for R beginners! It introduces the popular tidyverse package and explains how to make the most of it. It also offers useful tips for managing projects and outlines recommended steps for transforming raw data into meaningful insights and discoveries.\n\n\nWilke, C. O. (2024). Fundamentals of data visualization. https://clauswilke.com/dataviz/I noticed that some of you are particularly interested in visualizations. While I couldn’t cover more of this topic during the workshops, if you’re eager to dive deeper, this book does a great job of covering foundational theories that I believe are both important and helpful.",
+    "text": "These are little hands-on toys to poke at some concepts that are easier to feel than to read about. Nothing here is graded or required — click around and see what changes. Each one maps to something we cover in the sessions.",
     "crumbs": [
-      "Further Readings"
+      "Interactive concept explainers"
+    ]
+  },
+  {
+    "objectID": "supp-files/concept-explainers.html#tidyverse-verbs",
+    "href": "supp-files/concept-explainers.html#tidyverse-verbs",
+    "title": "Concept explainers",
+    "section": "dplyr verbs: what does each one do to your data?",
+    "text": "dplyr verbs: what does each one do to your data?\nData wrangling in the tidyverse is really just a handful of verbs, each doing one clear thing to a table. Click a verb below to watch what happens to a slice of our World Values Survey data — which rows drop, which columns appear or disappear, what gets added. mutate() has a few variants worth comparing (if_else() vs case_when()).\nRelates to Session 2 — Data Wrangling with tidyverse.\n\n\n\n  \n    A slice of our World Values Survey data (wvs_data). Click a dplyr verb to see what it does to the table.\n    reset\n  \n\n  \n    select()\n    filter()\n    mutate()\n    arrange()\n    group_by() + summarise()\n  \n\n  \n    mutate() variants:\n    basic\n    if_else()\n    case_when()",
+    "crumbs": [
+      "Interactive concept explainers"
+    ]
+  },
+  {
+    "objectID": "supp-files/concept-explainers.html#character-vs-factor",
+    "href": "supp-files/concept-explainers.html#character-vs-factor",
+    "title": "Concept explainers",
+    "section": "<chr> vs <fct>: why does R care?",
+    "text": "&lt;chr&gt; vs &lt;fct&gt;: why does R care?\nA “factor” is one of the most confusing types when you’re starting out. The key idea: a factor is not the same as “ordered” — it’s a column whose set of allowed levels is fixed and remembered. That changes how it sorts, how it plots, and what happens when a category has zero rows. Switch between an ordered (Likert) and a nominal (country) variable, and try each behaviour to see the difference side by side.\nRelates to Session 2 & 3 — data types, wrangling, and visualization.\n\n\n\n  \n    Same survey column, stored two ways. Compare how a plain character behaves versus a factor.\n  \n\n  \n    \n      variable\n      \n        agreement (ordered)\n        country (nominal)\n      \n    \n    \n      behaviour\n      \n        sort()\n        count + bar plot\n        drop a category\n      \n    \n  \n\n  \n\n  \n    \n      as character &lt;chr&gt;\n      \n    \n    \n      as factor &lt;fct&gt;",
+    "crumbs": [
+      "Interactive concept explainers"
+    ]
+  },
+  {
+    "objectID": "supp-files/concept-explainers.html#chart-chooser",
+    "href": "supp-files/concept-explainers.html#chart-chooser",
+    "title": "Concept explainers",
+    "section": "Which chart should I use?",
+    "text": "Which chart should I use?\nThe trick to picking a ggplot chart is not memorising chart names — it’s answering two questions: how many variables am I showing, and what type is each one (categorical or continuous)? The geom follows from there. Set the count and types below and you’ll get the recommended chart(s), a schematic preview, and starter code using our wvs_cleaned data.\nRelates to Session 3 — Data Visualization.\n\n\n\n  \n    The strategy: count your variables, decide each one's type, then let the chart follow.\n    Examples use our wvs_cleaned data.\n  \n\n  \n    \n      1. how many variables?\n      \n        one\n        two\n        three\n      \n    \n    \n      2. what type is each?",
+    "crumbs": [
+      "Interactive concept explainers"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html",
+    "href": "supp-files/exercises.html",
+    "title": "Post-workshop exercises",
+    "section": "",
+    "text": "Have the dplyr, tidyr, and ggplot cheatsheets ready open and ready.\n\n\nthe code below will load the packages you need:\n\nlibrary(tidyverse)\nlibrary(car)\n\n\n\n\nThe code below will load and print the first few rows of the Duncan dataset. To find out more about this dataset, type ?Duncan in your RStudio console to open the vignette.\n\nduncan &lt;- as_tibble(Duncan)\nprint(duncan)\n\n# A tibble: 45 × 4\n   type  income education prestige\n   &lt;fct&gt;  &lt;int&gt;     &lt;int&gt;    &lt;int&gt;\n 1 prof      62        86       82\n 2 prof      72        76       83\n 3 prof      75        92       90\n 4 prof      55        90       76\n 5 prof      64        86       90\n 6 prof      21        84       87\n 7 prof      64        93       93\n 8 prof      80       100       90\n 9 wc        67        87       52\n10 prof      72        86       88\n# ℹ 35 more rows\n\n\nThe code below will load and print the first few rows of the WVS dataset. To find out more about this dataset, type ?WVS in your RStudio console to open the vignette.\n\nwvs &lt;- as_tibble(WVS)\nprint(wvs)\n\n# A tibble: 5,381 × 6\n   poverty     religion degree country   age gender\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt; \n 1 Too Little  yes      no     USA        44 male  \n 2 About Right yes      no     USA        40 female\n 3 Too Little  yes      no     USA        36 female\n 4 Too Much    yes      yes    USA        25 female\n 5 Too Little  yes      yes    USA        39 male  \n 6 About Right yes      no     USA        80 female\n 7 Too Much    yes      no     USA        48 female\n 8 Too Little  yes      no     USA        32 male  \n 9 Too Little  yes      no     USA        74 female\n10 Too Little  yes      no     USA        30 male  \n# ℹ 5,371 more rows",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#prep",
+    "href": "supp-files/exercises.html#prep",
+    "title": "Post-workshop exercises",
+    "section": "",
+    "text": "Have the dplyr, tidyr, and ggplot cheatsheets ready open and ready.\n\n\nthe code below will load the packages you need:\n\nlibrary(tidyverse)\nlibrary(car)\n\n\n\n\nThe code below will load and print the first few rows of the Duncan dataset. To find out more about this dataset, type ?Duncan in your RStudio console to open the vignette.\n\nduncan &lt;- as_tibble(Duncan)\nprint(duncan)\n\n# A tibble: 45 × 4\n   type  income education prestige\n   &lt;fct&gt;  &lt;int&gt;     &lt;int&gt;    &lt;int&gt;\n 1 prof      62        86       82\n 2 prof      72        76       83\n 3 prof      75        92       90\n 4 prof      55        90       76\n 5 prof      64        86       90\n 6 prof      21        84       87\n 7 prof      64        93       93\n 8 prof      80       100       90\n 9 wc        67        87       52\n10 prof      72        86       88\n# ℹ 35 more rows\n\n\nThe code below will load and print the first few rows of the WVS dataset. To find out more about this dataset, type ?WVS in your RStudio console to open the vignette.\n\nwvs &lt;- as_tibble(WVS)\nprint(wvs)\n\n# A tibble: 5,381 × 6\n   poverty     religion degree country   age gender\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt; \n 1 Too Little  yes      no     USA        44 male  \n 2 About Right yes      no     USA        40 female\n 3 Too Little  yes      no     USA        36 female\n 4 Too Much    yes      yes    USA        25 female\n 5 Too Little  yes      yes    USA        39 male  \n 6 About Right yes      no     USA        80 female\n 7 Too Much    yes      no     USA        48 female\n 8 Too Little  yes      no     USA        32 male  \n 9 Too Little  yes      no     USA        74 female\n10 Too Little  yes      no     USA        30 male  \n# ℹ 5,371 more rows",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-1",
+    "href": "supp-files/exercises.html#question-1",
+    "title": "Post-workshop exercises",
+    "section": "Question 1",
+    "text": "Question 1\nUsing wvs dataset, filter the age column to include values that is more than 29. Then, select the columns age, degree, religion and poverty. Save the result to a new dataframe called wvs_filtered.\n\n\nShow Answer\nwvs_filtered &lt;- wvs |&gt; \n    filter(age &gt; 29) |&gt; \n    select(age, degree, religion, poverty) \n\nprint(wvs_filtered)\n\n\n# A tibble: 4,228 × 4\n     age degree religion poverty    \n   &lt;int&gt; &lt;fct&gt;  &lt;fct&gt;    &lt;ord&gt;      \n 1    44 no     yes      Too Little \n 2    40 no     yes      About Right\n 3    36 no     yes      Too Little \n 4    39 yes    yes      Too Little \n 5    80 no     yes      About Right\n 6    48 no     yes      Too Much   \n 7    32 no     yes      Too Little \n 8    74 no     yes      Too Little \n 9    30 no     yes      Too Little \n10    32 yes    yes      Too Little \n# ℹ 4,218 more rows",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-2",
+    "href": "supp-files/exercises.html#question-2",
+    "title": "Post-workshop exercises",
+    "section": "Question 2",
+    "text": "Question 2\nUpdate the wvs dataset by creating a dummy-coded version of the gender variable, where male = 0 and female = 1. Save the results in a new column named gender_coded.\n\n\nShow Answer\nwvs &lt;- wvs |&gt; \n    mutate(gender_coded = if_else(gender == \"male\", 0, 1)) \n\nprint(wvs)\n\n\n# A tibble: 5,381 × 7\n   poverty     religion degree country   age gender gender_coded\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt;         &lt;dbl&gt;\n 1 Too Little  yes      no     USA        44 male              0\n 2 About Right yes      no     USA        40 female            1\n 3 Too Little  yes      no     USA        36 female            1\n 4 Too Much    yes      yes    USA        25 female            1\n 5 Too Little  yes      yes    USA        39 male              0\n 6 About Right yes      no     USA        80 female            1\n 7 Too Much    yes      no     USA        48 female            1\n 8 Too Little  yes      no     USA        32 male              0\n 9 Too Little  yes      no     USA        74 female            1\n10 Too Little  yes      no     USA        30 male              0\n# ℹ 5,371 more rows",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-3",
+    "href": "supp-files/exercises.html#question-3",
+    "title": "Post-workshop exercises",
+    "section": "Question 3",
+    "text": "Question 3\nCreate a summary of the wvs dataset showing the number of observations for each country.\n\n\nShow Answer\nwvs |&gt; \n    count(country) \n\n\n# A tibble: 4 × 2\n  country       n\n  &lt;fct&gt;     &lt;int&gt;\n1 Australia  1874\n2 Norway     1127\n3 Sweden     1003\n4 USA        1377",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-4",
+    "href": "supp-files/exercises.html#question-4",
+    "title": "Post-workshop exercises",
+    "section": "Question 4",
+    "text": "Question 4\nUsing wvs dataset, calculate the average age for each combination of gender and degree status.\n\n\nShow Answer\nwvs |&gt; \n    group_by(gender, degree) |&gt; \n    summarise(avg_age = mean(age, na.rm = TRUE))\n\n\n`summarise()` has regrouped the output.\nℹ Summaries were computed grouped by gender and degree.\nℹ Output is grouped by gender.\nℹ Use `summarise(.groups = \"drop_last\")` to silence this message.\nℹ Use `summarise(.by = c(gender, degree))` for per-operation grouping\n  (`?dplyr::dplyr_by`) instead.\n\n\n# A tibble: 4 × 3\n# Groups:   gender [2]\n  gender degree avg_age\n  &lt;fct&gt;  &lt;fct&gt;    &lt;dbl&gt;\n1 female no        45.6\n2 female yes       41.0\n3 male   no        46.0\n4 male   yes       43.3",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-5",
+    "href": "supp-files/exercises.html#question-5",
+    "title": "Post-workshop exercises",
+    "section": "Question 5",
+    "text": "Question 5\nUsing the wvs dataset, create a summary statistics for each country and religion (yes/no). Calculate the age mean, age median, number of observation.\n\n\nShow Answer\nwvs |&gt; \n    group_by(country, religion) %&gt;%\n    summarise(\n        avg_age = mean(age, na.rm = TRUE),\n        median_age = median(age, na.rm = TRUE),\n        n_observations = n()\n    ) \n\n\n`summarise()` has regrouped the output.\nℹ Summaries were computed grouped by country and religion.\nℹ Output is grouped by country.\nℹ Use `summarise(.groups = \"drop_last\")` to silence this message.\nℹ Use `summarise(.by = c(country, religion))` for per-operation grouping\n  (`?dplyr::dplyr_by`) instead.\n\n\n# A tibble: 8 × 5\n# Groups:   country [4]\n  country   religion avg_age median_age n_observations\n  &lt;fct&gt;     &lt;fct&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;int&gt;\n1 Australia no          39.9         37            375\n2 Australia yes         45.7         43           1499\n3 Norway    no          40.6         38            109\n4 Norway    yes         43.6         42           1018\n5 Sweden    no          43.7         42             15\n6 Sweden    yes         43.9         43            988\n7 USA       no          44.6         42            287\n8 USA       yes         48.9         46           1090",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-6",
+    "href": "supp-files/exercises.html#question-6",
+    "title": "Post-workshop exercises",
+    "section": "Question 6",
+    "text": "Question 6\nUsing the wvs dataset, select the 10 oldest respondents from the USA. (hint: arrange() and slice())\n\n\nShow Answer\nwvs |&gt; \n    filter(country == \"USA\", age &gt; 50) |&gt; \n    arrange(desc(age)) |&gt; \n    slice(1:10)\n\n\n# A tibble: 10 × 7\n   poverty     religion degree country   age gender gender_coded\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt;         &lt;dbl&gt;\n 1 Too Much    no       no     USA        91 male              0\n 2 Too Little  yes      no     USA        91 male              0\n 3 Too Much    yes      no     USA        88 female            1\n 4 About Right yes      no     USA        88 male              0\n 5 Too Little  yes      yes    USA        87 female            1\n 6 Too Much    yes      no     USA        87 female            1\n 7 Too Little  yes      no     USA        87 male              0\n 8 About Right yes      no     USA        87 male              0\n 9 About Right yes      no     USA        86 female            1\n10 Too Much    yes      no     USA        86 female            1",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-7",
+    "href": "supp-files/exercises.html#question-7",
+    "title": "Post-workshop exercises",
+    "section": "Question 7",
+    "text": "Question 7\nUpdate the wvs dataset by adding a new column called age_category that categorises each respondents based on the following criteria:\n\nbelow 18 = “youth” category\nbetween 18 to 34 = “young adult” category\nbetween 35 to 49 = “adult” category\nbetween 50 to 69 = “senior” category\nmore than 70 = “elderly” category\n\n\n\nShow Answer\nwvs &lt;- wvs |&gt; \n    mutate(age_category = case_when(\n        age &lt; 18 ~ \"youth\",\n        age &gt;= 18 & age &lt; 35 ~ \"young adult\",\n        age &gt;= 35 & age &lt; 50 ~ \"adult\",\n        age &gt;= 50 & age &lt; 70 ~ \"senior\",\n        age &gt;= 70 ~ \"elderly\"\n    )) \n\nprint(wvs)\n\n\n# A tibble: 5,381 × 8\n   poverty     religion degree country   age gender gender_coded age_category\n   &lt;ord&gt;       &lt;fct&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;int&gt; &lt;fct&gt;         &lt;dbl&gt; &lt;chr&gt;       \n 1 Too Little  yes      no     USA        44 male              0 adult       \n 2 About Right yes      no     USA        40 female            1 adult       \n 3 Too Little  yes      no     USA        36 female            1 adult       \n 4 Too Much    yes      yes    USA        25 female            1 young adult \n 5 Too Little  yes      yes    USA        39 male              0 adult       \n 6 About Right yes      no     USA        80 female            1 elderly     \n 7 Too Much    yes      no     USA        48 female            1 adult       \n 8 Too Little  yes      no     USA        32 male              0 young adult \n 9 Too Little  yes      no     USA        74 female            1 elderly     \n10 Too Little  yes      no     USA        30 male              0 young adult \n# ℹ 5,371 more rows",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-8",
+    "href": "supp-files/exercises.html#question-8",
+    "title": "Post-workshop exercises",
+    "section": "Question 8",
+    "text": "Question 8\nRecreate the following visualization:\n\n\nShow Answer\nwvs |&gt; ggplot(aes(x = country, fill = poverty)) +\n    geom_bar(position = \"dodge\") +\n    labs(title = \"Distribution of Poverty Opinions Across Countries\",\n       x = \"Country\", \n       y = \"Count\", \n       fill = \"Poverty Opinion\") +\n    theme_minimal()",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-9",
+    "href": "supp-files/exercises.html#question-9",
+    "title": "Post-workshop exercises",
+    "section": "Question 9",
+    "text": "Question 9\nRecreate the following visualization:\n\n\nShow Answer\nwvs |&gt; \n    ggplot(aes(x = country, fill = degree)) +\n    geom_bar(position = \"fill\") +\n    labs(title = \"Proportion of Degree Status by Country\", \n       x = \"Country\", y = \"Count\", fill = \"Degree Status\") +\n    theme_minimal()",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-10",
+    "href": "supp-files/exercises.html#question-10",
+    "title": "Post-workshop exercises",
+    "section": "Question 10",
+    "text": "Question 10\nRecreate the following visualization:\n\n\nShow Answer\nwvs |&gt; ggplot(aes(x = country, y = age)) +\n    geom_boxplot() +\n    labs(title = \"Age Distribution by Country\", x = \"Country\", y = \"Age\") +\n    theme_minimal() +\n    theme(legend.position = \"none\")",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-11",
+    "href": "supp-files/exercises.html#question-11",
+    "title": "Post-workshop exercises",
+    "section": "Question 11",
+    "text": "Question 11\nRecreate the following visualization:\n\n\nShow Answer\nwvs |&gt; \n    ggplot(aes(x = country, y = age)) +\n    geom_boxplot() +\n    facet_wrap(~ religion) +\n    labs(title = \"Age Distribution by Country and Religion\",\n       x = \"Country\", y = \"Age\") +\n    theme_minimal()",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-12",
+    "href": "supp-files/exercises.html#question-12",
+    "title": "Post-workshop exercises",
+    "section": "Question 12",
+    "text": "Question 12\nRecreate the following visualization using duncan dataset:\n\n\nShow Answer\nduncan |&gt; \n    ggplot(aes(x = income, y = prestige, color = type)) +\n    geom_jitter() +\n    labs(title = \"Occupation Prestige vs. Income\",\n       x = \"Income\", \n       y = \"Prestige Score\",\n       color = \"Occupation Type\") +\n    theme_minimal()",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-13",
+    "href": "supp-files/exercises.html#question-13",
+    "title": "Post-workshop exercises",
+    "section": "Question 13",
+    "text": "Question 13\nRecreate the following visualization using duncan dataset:\n\n\nShow Answer\nduncan |&gt; \n    ggplot(aes(x = type, y = income)) +\n    geom_boxplot() +\n    labs(title = \"Income Distribution by Occupation Type\",\n        x = \"Occupation Type\",\n        y = \"Income\") +\n    theme_minimal()",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-14",
+    "href": "supp-files/exercises.html#question-14",
+    "title": "Post-workshop exercises",
+    "section": "Question 14",
+    "text": "Question 14\nRecreate the following visualization using duncan dataset:\n\n\nShow Answer\nduncan |&gt; \n    ggplot(aes(x = prestige, y = income, color = type)) +\n    geom_jitter() +\n    geom_smooth(method = \"lm\") +\n    labs(\n        title = \"Relationship between Prestige and Income\",\n        subtitle = \"Grouped by Occupation Type\",\n        x = \"Prestige Score\",\n        y = \"Income\",\n        color = \"Occupation Type\"\n    ) + \n    theme_minimal()\n\n\n`geom_smooth()` using formula = 'y ~ x'",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-15",
+    "href": "supp-files/exercises.html#question-15",
+    "title": "Post-workshop exercises",
+    "section": "Question 15",
+    "text": "Question 15\nUsing duncan dataset:\n\nExamine the correlation between prestige scores and education.\nAnalyze the relationship between income and prestige scores.\n\n\n\nShow Answer\ncor.test(duncan$prestige, duncan$education)\n\n\n\n    Pearson's product-moment correlation\n\ndata:  duncan$prestige and duncan$education\nt = 10.668, df = 43, p-value = 1.171e-13\nalternative hypothesis: true correlation is not equal to 0\n95 percent confidence interval:\n 0.7445746 0.9163112\nsample estimates:\n      cor \n0.8519156 \n\n\nShow Answer\ncor.test(duncan$prestige, duncan$income)\n\n\n\n    Pearson's product-moment correlation\n\ndata:  duncan$prestige and duncan$income\nt = 10.062, df = 43, p-value = 7.144e-13\nalternative hypothesis: true correlation is not equal to 0\n95 percent confidence interval:\n 0.7217665 0.9080298\nsample estimates:\n      cor \n0.8378014",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-16",
+    "href": "supp-files/exercises.html#question-16",
+    "title": "Post-workshop exercises",
+    "section": "Question 16",
+    "text": "Question 16\nUsing duncan dataset, compare prestige scores across different occupational categories using ANOVA.\n\n\nShow Answer\nduncan_anova &lt;- aov(prestige ~ type, data=duncan)\nsummary(duncan_anova)\n\n\n            Df Sum Sq Mean Sq F value   Pr(&gt;F)    \ntype         2  33090   16545   65.57 1.21e-13 ***\nResiduals   42  10598     252                     \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-17",
+    "href": "supp-files/exercises.html#question-17",
+    "title": "Post-workshop exercises",
+    "section": "Question 17",
+    "text": "Question 17\nUsing duncan dataset, create a regression model that predicts income based on occupational prestige and education scores.\n\nlibrary(huxtable)\n\n\n\nShow Answer\nduncan_model &lt;- lm(income ~ prestige + education, data = duncan)\nhuxreg(\"income\" = duncan_model)\n\n\n\n\n\nincome\n\n\n\n(Intercept)10.426 *  \n\n(4.164)   \n\nprestige0.624 ***\n\n(0.125)   \n\neducation0.032    \n\n(0.132)   \n\nN45        \n\nR20.702    \n\nlogLik-179.902    \n\nAIC367.805    \n\n*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05.",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-18",
+    "href": "supp-files/exercises.html#question-18",
+    "title": "Post-workshop exercises",
+    "section": "Question 18",
+    "text": "Question 18\nUsing the wvs dataset, examine the relationship between religion and poverty perception.\n\n\nShow Answer\nwvs_chisq &lt;- chisq.test(table(wvs$religion, wvs$poverty))\nprint(wvs_chisq)\n\n\n\n    Pearson's Chi-squared test\n\ndata:  table(wvs$religion, wvs$poverty)\nX-squared = 0.083005, df = 2, p-value = 0.9593",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-19",
+    "href": "supp-files/exercises.html#question-19",
+    "title": "Post-workshop exercises",
+    "section": "Question 19",
+    "text": "Question 19\nUsing the wvs dataset, examine whether there is a significant difference in the average age between individuals with and without a university degree.\n\n\nShow Answer\nwvs_ttest &lt;- t.test(age ~ degree, data = wvs)\nprint(wvs_ttest)\n\n\n\n    Welch Two Sample t-test\n\ndata:  age by degree\nt = 7.0571, df = 2029, p-value = 2.325e-12\nalternative hypothesis: true difference in means between group no and group yes is not equal to 0\n95 percent confidence interval:\n 2.674321 4.732708\nsample estimates:\n mean in group no mean in group yes \n         45.82775          42.12423",
+    "crumbs": [
+      "Exercises for your own practice"
+    ]
+  },
+  {
+    "objectID": "supp-files/exercises.html#question-20",
+    "href": "supp-files/exercises.html#question-20",
+    "title": "Post-workshop exercises",
+    "section": "Question 20",
+    "text": "Question 20\nUsing wvs dataset, compare the mean of age across different countries and age categories (see Question 7 to create age_category), and investigate if there is any significant difference. Conduct the post-hoc test if needed.\n\n\nShow Answer\nwvs_anova &lt;- aov(age ~ country + age_category, data = wvs)\nsummary(wvs_anova)\n\n\n               Df  Sum Sq Mean Sq F value Pr(&gt;F)    \ncountry         3   17399    5800   235.9 &lt;2e-16 ***\nage_category    3 1424858  474953 19319.9 &lt;2e-16 ***\nResiduals    5374  132113      25                   \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1",
+    "crumbs": [
+      "Exercises for your own practice"
     ]
   }
 ]
