@@ -6,10 +6,12 @@ format: revealjs
 
 ## Today's Outline
 
-1.  The various packages for tables
-2.  Simple Linear Regression in R
-3.  Binary Logistic Regression in R
-4.  Show and tell - Using Quarto to generate slides or report in R!
+Today extends Session 4's map: now the **type of your outcome** picks your model.
+
+1.  Linear regression — for **continuous** outcomes
+2.  Logistic regression — for **binary** (yes/no) outcomes
+3.  Presenting & reporting your results
+4.  *(bonus)* Quarto show-and-tell
 
 ## Open your project
 
@@ -67,47 +69,22 @@ wvs_cleaned <- wvs_cleaned |>
 glimpse(wvs_cleaned)
 ```
 
-# Quick overview - The various packages for tables
+# The map, extended
 
-## apaTables
+## From tests to models
 
-`apaTables` is a package that will generate APA-formatted report table for correlation, ANOVA, and regression. It has limited customisations and few varity of tables. The documentation online is for the "development" version which is not what we will get if we install normally with `install.packages()`, so we need to rely on the vignette more. [**View the documentation here**](https://dstanley4.github.io/apaTables/index.html)
+Session 4 asked *"which test?"* from your variable types. Regression asks the same kind of question — now the **outcome's type** picks your model:
 
-Example: get the correlation table for `political_scale`, `life_satisfaction`, and `financial_satisfaction`
+| Your outcome (Y) | Model | R function |
+|---|---|---|
+| **Continuous** | Linear regression | `lm()` |
+| **Binary** (yes/no) | Logistic regression | `glm(..., family = binomial)` |
 
-``` r
-library(apaTables)
+Whatever the model, the core skill is the same: **read one coefficient at a time, in the units of your outcome.** If a predictor is categorical, its coefficient is the difference from a **reference** group.
 
-wvs_cleaned |> 
-    select(life_satisfaction, financial_satisfaction, freedom_of_choice) |>
-    apa.cor.table( table.number = 1, filename = "fig-output/table-cor.doc")
-```
-
-This code will create a word document with the tables already formatted in APA style inside.
-
-## gtsummary
-
-Another popular packages is `gt` (stands for "great tables") and its 'add-on', `gtsummary`. It has lots of customization (which can get overwhelming!) but fortunately the documentation is pretty good and there are plenty of code samples. [**View the documentation here**](https://www.danieldsjoberg.com/gtsummary/index.html)
-
-Example: get the mean differences table for `political_scale`, `life_satisfaction`, and `financial_satisfaction`, grouped by `sex`
-
-```{r}
-#| echo: true
-#| output-location: slide
-
-library(gtsummary)
-
-wvs_cleaned |> 
-    dplyr::select(life_satisfaction, financial_satisfaction, freedom_of_choice, sex) |>
-    tbl_summary(by = sex) |>
-    add_difference()
-```
-
-## How to save gtsummary() tables
-
-1.  The tables will be displayed under the "Viewer" tab on the lower right hand side of Rstudio.
-2.  Select the entire tables, and then copy it with Ctrl + C (or Cmd + C on Macbook)
-3.  Paste the table with Ctrl + V (or Cmd + V on Macbook) to your word document or Google doc.
+::: {.callout-tip appearance="simple"}
+You already know the shape of this from school: $y = mx + c$. Regression just adds *uncertainty* (are the slope and intercept real?) and *more predictors*.
+:::
 
 # Simple Linear Regression
 
@@ -128,6 +105,10 @@ $$Y = \beta_0 + \beta_1X + \varepsilon$$
 - $\varepsilon$ - the error term. (In some examples you might see this omitted from the formula).
 :::
 :::::
+
+::: {.callout-tip appearance="simple"}
+This is the $y = mx + c$ line from secondary school, dressed up: $\beta_0$ is the intercept ($c$), $\beta_1$ is the slope ($m$). Regression's job is to find the best-fitting $m$ and $c$ from your data — and tell you whether they're statistically real.
+:::
 
 Examples:
 
@@ -216,6 +197,10 @@ summary(life_model2)
 
 life_model2 |> tbl_regression() |> bold_p()
 ```
+
+::: {.callout-tip appearance="simple" title="Saving a gtsummary / gt table"}
+These tables render in RStudio's **Viewer** pane (lower-right). Select the table, copy (Ctrl/Cmd + C), and paste straight into Word or Google Docs.
+:::
 
 ::: aside
 More on `tbl_regression()` by `gtsummary`: <https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html>
@@ -404,6 +389,10 @@ It can also be written like below, in which the $logit(P)$ part is expanded:
 
 $$P = \frac{1}{1 + e^{-(\beta_0 + \beta_1X)}}$$
 
+::: {.callout-tip appearance="simple" title="The one-paragraph mental model"}
+The outcome is now **yes/no**. You can't fit a straight line to a 0/1, so we model the **log-odds** instead — the intimidating `logit` and $e^x$ are just plumbing that keeps predicted probabilities between 0 and 1. What you actually **read** is the **odds ratio**: **>1** = event more likely, **<1** = less likely, for each 1-unit increase in X. If you hold onto just this, you're set.
+:::
+
 ## Binary Logistic Regression Examples
 
 - Does a person’s **age** and **education level** influence whether they will vote Democrat or Republican in the US election?
@@ -476,57 +465,21 @@ life_model5 |> tbl_regression(exponentiate = TRUE) |>
 More on `tbl_regression()` by `gtsummary`: <https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html>
 :::
 
-## Get the χ² (chi-squared) to report model significance
+## Model significance (χ²) and R² for logistic
 
-χ² (Chi-squared) goodness of fit tests whether your model fits the data significantly better than a null model (model with no predictors). As you can see, it is not in the `glm()` result, but we can calculate this somewhat manually using the Null and Residual deviance and df from the `summary()` output like so:
-
-- Null deviance: \[from summary output\]
-- Residual deviance: \[from summary output\]
-- χ² = Null deviance − Residual deviance
-
-To get the p-value, we need the degree of freedom and the χ²:
-
-- df = difference in degrees of freedom (Null df − Residual df = 1 for one predictor)
-
-```{r}
-#| echo: true
-#| eval: false
-
-# Replace chi_sq and df with values from your summary() output
-chi_sq <- NULL_DEVIANCE - RESIDUAL_DEVIANCE
-pchisq(chi_sq, df = 1, lower.tail = FALSE)  # will give p-value
-```
-
-## Get the χ² (chi-squared) and Pseudo R-squared (for reporting purposes)
-
-In the report, the model's χ² (chi-squared) and R-squared (indicating the proportion of variance that can be explained by the model) should be included. However, since the resulting item does not have this info, we will call upon `DescTools`' `PseudoR2()` function to help!
+`glm()` doesn't print a χ² or an R², so we ask `DescTools::PseudoR2()` for them. **G2** is the model χ² (goodness-of-fit test vs. a no-predictor model); **Nagelkerke** is the pseudo-R² most commonly reported:
 
 ```{r}
 #| echo: true
 #| output-location: column
 
-# by default, McFadden will be used
-DescTools::PseudoR2(life_model5) 
-```
-
-We can retrieve the R-squared value and the χ² (also known as the G2 value, which stands for Goodness-of-fit) at the same time like so:
-
-```{r}
-#| echo: true
-#| output-location: column
-
-DescTools::PseudoR2(life_model5, 
+DescTools::PseudoR2(life_model5,
                     which = c("G2", "Nagelkerke"))
 ```
 
-## In case you need to get other Rsquared methods
-
-```{r}
-#| echo: true
-
-DescTools::PseudoR2(life_model5, 
-                    which = "all")
-```
+::: {.callout-note appearance="simple"}
+There are several pseudo-R² flavours (McFadden, Cox-Snell, …). Pick one and be consistent — **Nagelkerke** is a safe default. *(The full list, and how to compute the χ² by hand, are in the appendix.)*
+:::
 
 ## Possible interpretation of the result
 
@@ -608,21 +561,14 @@ life_model6 |> tbl_regression(exponentiate = TRUE) |>
     bold_p()
 ```
 
-## Get the Rsquared
+## Get the χ² and R²
 
-Let's retrieve the R-squared value and the Chi-square χ² value (also known as the G2 value, which stands for Goodness-of-fit)
+Same as before: **G2** is the model χ² (goodness-of-fit), **Nagelkerke** is the pseudo-R² we'll report.
 
 ```{r}
 #| echo: true
-DescTools::PseudoR2(life_model6, 
+DescTools::PseudoR2(life_model6,
                     which = c("G2", "Nagelkerke"))
-```
-
-```{r}
-#| echo: true
-# get the other R-squared if you like
-DescTools::PseudoR2(life_model6, 
-                    which = "all")
 ```
 
 ## Narrating the results
@@ -666,60 +612,23 @@ summary(life_model7)
 exp(coefficients(life_model7))
 ```
 
-# What is Quarto? What is Markdown?
+# Bonus show-and-tell: Quarto
 
-## **Markdown (Specifically, R Markdown)** {.incremental}
+## What are Markdown, R Markdown, and Quarto?
 
-- **Markdown** is a lightweight markup language that provides a simple and readable way to write formatted text without using complex HTML or LaTeX. It is designed to make authoring content easy for everyone!
+::: incremental
+- **Markdown** — a lightweight, readable way to write formatted text (no messy HTML or LaTeX). Files end in `.md`.
+- **R Markdown** — Markdown **+ live R code chunks**, so text, code, and output (tables, plots) live in one document (`.Rmd`).
+- **Quarto** — Posit's next-generation, multi-language successor to R Markdown. It renders most `.Rmd` files unchanged and can output HTML, Word, PDF, slides, and whole websites.
+:::
 
-  - Markdown files can be converted into HTML or other formats.
-  - Generic Markdown file will have `.md` extension.
-
-- **R Markdown** is an extension of Markdown that incorporates R code chunks and allows you to create dynamic documents that integrate text, code, and output (such as tables and plots).
-
-  - RMarkdown file will have `.Rmd` extension.
-
-## RMarkdown in action
-
-![](images/rmarkdown.png){fig-align="center"}
+::: {.callout-note appearance="simple"}
+Fun fact: this entire course website **and** these slides are built in Quarto! *(A quick R-Scripts-vs-Quarto comparison is in the appendix.)*
+:::
 
 ## How it all works
 
-![Illustration by Allison Horst (www.allisonhorst.com)](images/rmarkdown_wizards.png){fig-align="center"}
-
-## Quarto
-
-- **Quarto** is a [multi-language]{.underline}, [next-generation]{.underline} version of R Markdown from Posit and includes dozens of new features and capabilities while at the same being able to render most existing Rmd files without modification.
-
 ![Illustration by Allison Horst (www.allisonhorst.com)](images/quarto-rendering.png){fig-align="center"}
-
-## Quarto in action: R scripts + Markdown
-
-![](images/quarto.png){fig-align="center"}
-
-## R Scripts vs Quarto
-
-::::: columns
-::: {.column width="50%"}
-**R Scripts**
-
-- Great for quick debugging, experiment
-
-- Preferred format if you are archiving your code to GitHub or data repository
-
-- More suitable for "production" tasks e.g. automating your data cleaning and processing, custom functions, etc.
-:::
-
-::: {.column width="50%"}
-**Quarto**
-
-- Great for report and presentation to showcase your research insights/process as it integrates code, narrative text, visualizations, and results.
-
-- Very handy when you need your report in multiple format, e.g. in Word and PPT.
-
-- Fun fact: the course website and slides are all made in Quarto
-:::
-:::::
 
 ## If you are interested to learn more about this...
 
@@ -756,6 +665,35 @@ Do check with your professor on how closely you should follow the guidelines, or
 - [Illinois State University - A Short Guide to Handling Numbers and Statistics in APA Format (in 6th Edition)](https://about.illinoisstate.edu/mshesso-test2/reporting-statistics-in-apa-style/)
 - [Statistic Tables in APA recommended format](https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-tables#regression)
 
+# One last thing: you own the analysis
+
+## "Because the AI said so" is not an answer
+
+Over five sessions you've learned to import, wrangle, visualize, and run real inferential tests in R. An AI assistant can now generate all of that code for you in seconds — and often it will do a decent job.
+
+So what's *your* job now? The parts the AI **can't be accountable for**:
+
+::: incremental
+- **Choosing** the right test for your variables — and being able to say *why* (remember the map!).
+- **Checking** whether the result can be trusted — assumptions, sample size, plain common sense.
+- **Interpreting** the output honestly — a significant p-value isn't proof, and a non-significant one isn't "no effect".
+- **Disclosing** the limitations plainly, even when they're inconvenient.
+:::
+
+When your professor, a reviewer, or a future employer asks *"why did you run this analysis, and can I trust it?"* — **"Claude/ChatGPT told me to"** is not a defensible answer. **You** are accountable for the work that carries your name.
+
+## The tools change; the thinking is yours
+
+::: incremental
+- Let AI handle the **syntax** — that's the cheap, replaceable part now.
+- *You* own the **judgement**: the choices, the checks, the honest interpretation and reporting.
+- That judgement is exactly what we've been building this whole workshop — and it's what will still matter long after today's tools have been replaced by something newer.
+:::
+
+::: {.callout-tip appearance="simple"}
+Treat AI as a **capable assistant you supervise**, not an oracle you obey. Always verify what it hands you against what you now know how to check yourself. That habit is what separates an analyst from someone who just runs code.
+:::
+
 # Thank you for your participation 😄
 
 ::::: columns
@@ -783,3 +721,95 @@ Please scan this QR code or click on the link below to fill in the post-workshop
 Survey link: <https://smusg.asia.qualtrics.com/jfe/form/SV_862Si6NAqkbWbPM>
 
 ![](images/post-workshop-qrcode.png){width="500"}
+
+# Appendix
+
+- More table packages (apaTables, gtsummary summary tables)
+- Computing the logistic χ² by hand
+- Other pseudo-R² methods
+- R Scripts vs Quarto
+
+## Table packages: apaTables
+
+`apaTables` generates APA-formatted tables for correlation, ANOVA, and regression. Limited customisation. The online docs are for the development version (not what `install.packages()` gives you), so lean on the vignette. [**Documentation here**](https://dstanley4.github.io/apaTables/index.html)
+
+Example: a correlation table for `life_satisfaction`, `financial_satisfaction`, and `freedom_of_choice`
+
+``` r
+library(apaTables)
+
+wvs_cleaned |>
+    select(life_satisfaction, financial_satisfaction, freedom_of_choice) |>
+    apa.cor.table(table.number = 1, filename = "fig-output/table-cor.doc")
+```
+
+This creates a Word document with the table already formatted in APA style.
+
+## Table packages: gtsummary summary tables
+
+Besides `tbl_regression()`, `gtsummary` can build descriptive / mean-difference tables with `tbl_summary()`. [**Documentation here**](https://www.danieldsjoberg.com/gtsummary/index.html)
+
+Example: mean-differences table grouped by `sex`
+
+```{r}
+#| echo: true
+#| output-location: slide
+
+library(gtsummary)
+
+wvs_cleaned |>
+    dplyr::select(life_satisfaction, financial_satisfaction, freedom_of_choice, sex) |>
+    tbl_summary(by = sex) |>
+    add_difference()
+```
+
+## Computing the logistic χ² by hand
+
+We used `PseudoR2(..., which = "G2")` to get the model χ². If you ever need it manually, it's the drop in deviance from the null model:
+
+- χ² = Null deviance − Residual deviance (both from the `summary()` output)
+- df = Null df − Residual df (= number of predictors)
+
+```{r}
+#| echo: true
+#| eval: false
+
+# Replace with the values from your summary() output
+chi_sq <- NULL_DEVIANCE - RESIDUAL_DEVIANCE
+pchisq(chi_sq, df = 1, lower.tail = FALSE)  # p-value
+```
+
+## Other pseudo-R² methods
+
+If you specifically need a different pseudo-R² (e.g. McFadden, Cox-Snell), `PseudoR2()` can return them all at once:
+
+```{r}
+#| echo: true
+
+DescTools::PseudoR2(life_model5,
+                    which = "all")
+```
+
+## R Scripts vs Quarto
+
+::::: columns
+::: {.column width="50%"}
+**R Scripts**
+
+- Great for quick debugging, experiment
+
+- Preferred format if you are archiving your code to GitHub or data repository
+
+- More suitable for "production" tasks e.g. automating your data cleaning and processing, custom functions, etc.
+:::
+
+::: {.column width="50%"}
+**Quarto**
+
+- Great for report and presentation to showcase your research insights/process as it integrates code, narrative text, visualizations, and results.
+
+- Very handy when you need your report in multiple format, e.g. in Word and PPT.
+
+- Fun fact: the course website and slides are all made in Quarto
+:::
+:::::

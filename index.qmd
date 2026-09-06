@@ -39,7 +39,7 @@ Teaching Assistants:
 | 3 | 4 Sep 2026 | [**Data visualization and Descriptive Statistics**](03-visualization.html) | Learn about creating visualizations with ggplot2 and calculating descriptive statistics like mean, median, etc. |
 | 4 | 11 Sep 2026 | **Basic Inferential Tests** | Learn about conducting t-tests, chi-square tests, ANOVA, and interpreting statistical results in R. |
 | 5 | 18 Sep 2026 | **Regression and Presenting Your Result** | Learn about regression and various useful packages to generate your result table. |
-| \~ | After the workshop |  | [Post-workshop exercises](exercises.html) |
+| \~ | After the workshop |  | [Post-workshop exercises](supp-files/exercises.html) |
 :::
 
 ```{=html5}

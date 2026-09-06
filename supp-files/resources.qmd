@@ -3,8 +3,8 @@ title: "Resources"
 format: html
 nocite: |
     @*
-bibliography: references.bib
-csl: apa-annotated-bibliography.csl
+bibliography: ../references.bib
+csl: ../apa-annotated-bibliography.csl
 ---
 
 Further readings if you'd like to deepen your knowledge and skill after the workshop:

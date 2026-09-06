@@ -1,19 +1,22 @@
 ---
-title: "Session 4: Basic Inferential Stats in R: Correlation, T-Tests, and ANOVA"
+title: "Session 4: Basic Inferential Stats in R"
 author: "Bella Ratmelia"
 format: revealjs
 ---
 
 ## Today's Outline
 
-1.  Refreshers on data distribution and research variables
-2.  Both categorical: chi-square
-3.  Both continuous: correlations
-4.  Categorical X and Continuous Y (comparing means): T-tests and ANOVA
+Today is really about *With these variables that I have, which test do I reach for?*
+
+1.  Both categorical → **chi-square**
+2.  Both continuous → **correlation**
+3.  Categorical (2 groups) + continuous → **t-tests**
+4.  Categorical (3+ groups) + continuous → **ANOVA**
+
 
 ## Refresher: Data Distribution
 
-The choice of appropriate statistical tests and methods often depends on the distribution of the data. Understanding the distribution helps in selecting the right and validity of the tests.
+The choice of appropriate statistical tests and methods often depends on the distribution of the data. Understanding the distribution helps in selecting the right test and judging its validity.
 
 ```{r}
 # Set a seed for reproducibility
@@ -66,6 +69,25 @@ The variables that researchers will manipulate.
 :::
 :::::
 
+::: {.callout-tip appearance="simple"}
+Naming your DV and IV (and their data type) *is* the first step in the whole process. Do this before you write a single line of code (or ask an AI for any).
+:::
+
+## Choosing a test from your variables
+
+Almost every test today comes down to reading the **types** of your variables :
+
+| Dependent variable (Y) | Independent variable (X) | Test |
+|------------------------|--------------------------|------|
+| Categorical | Categorical | **Chi-square** test of independence |
+| Continuous | Continuous | **Correlation** (Pearson / Spearman / Kendall) |
+| Continuous | Categorical, **2 groups** | **t-test** |
+| Continuous | Categorical, **3+ groups** | **ANOVA** |
+
+::: {.callout-tip appearance="simple"}
+Remember, you are responsible for your work. *"Because Claude/ChatGPT told me this is the answer"* is not a defensible answer when your professor asks you about your analysis.
+:::
+
 ## Checklist when you start RStudio
 
 1.  Go to the folder where you put your project for this workshop
@@ -111,7 +133,16 @@ wvs_cleaned <- wvs_cleaned |>
 glimpse(wvs_cleaned)
 ```
 
-# Both Categorical variables - The $X^2$ test
+# Both categorical → The $X^2$ test
+
+## Where we are right now
+
+| Y | X | Test |
+|---|---|------|
+| **Categorical** | **Categorical** | ← **Chi-square** |
+| Continuous | Continuous | Correlation |
+| Continuous | Categorical (2) | t-test |
+| Continuous | Categorical (3+) | ANOVA |
 
 ## Chi-square test of independence
 
@@ -147,6 +178,16 @@ wvs_cleaned |>
 
 Is there a relationship between education level and income level?
 
+::::: columns
+::: {.column width="50%"}
+$H_0$: Education level and income level are **independent** (no association).
+:::
+
+::: {.column width="50%"}
+$H_1$: Education level and income level are **not independent** (associated).
+:::
+:::::
+
 ```{r}
 #| echo: true
 chisq.test(table(wvs_cleaned$education, wvs_cleaned$income_level))
@@ -158,9 +199,28 @@ chisq.test(table(wvs_cleaned$education, wvs_cleaned$income_level))
 - **p-value** = the probability of getting more extreme results than what was observed. Generally, if this value is less than the pre-determined significance level (also called alpha), the result would be considered "statistically significant"
 :::
 
-*What if there is a hypothesis? How would you write this in the report?*
+*Given the hypotheses above, how would you narrate this result in your report?*
 
-# Both Continuous variables - Correlation
+## Reporting χ² in APA style
+
+Report the statistic with its **degrees of freedom** and **sample size**, then the value and p:
+
+$$\chi^2(4,\ N = 5102) = 318.06,\ p < .001$$
+
+- `df` (4) and `X-squared` (318.06) come straight from the test output
+- $N$ (5102) is your total number of observations
+- For a table with $r$ rows and $c$ columns, $df = (r-1)(c-1)$
+
+# Both continuous → Correlation
+
+## Where we are right now
+
+| Y | X | Test |
+|---|---|------|
+| Categorical | Categorical | Chi-square |
+| **Continuous** | **Continuous** | ← **Correlation** |
+| Continuous | Categorical (2) | t-test |
+| Continuous | Categorical (3+) | ANOVA |
 
 ## Correlation
 
@@ -199,6 +259,16 @@ For more info, you can refer to this reading: [Measures of Association - How to 
 
 RQ: **Is there a significant correlation between emancipative values and secular values?**
 
+::::: columns
+::: {.column width="50%"}
+$H_0$: There is **no** linear correlation between emancipative and secular values ($\rho = 0$).
+:::
+
+::: {.column width="50%"}
+$H_1$: There **is** a linear correlation between emancipative and secular values ($\rho \neq 0$).
+:::
+:::::
+
 As both variables are numerical and continuous, we can use pearson correlation.
 
 Let's start with visualizing the data, which can be used to support the explanation.
@@ -206,7 +276,7 @@ Let's start with visualizing the data, which can be used to support the explanat
 ```{r}
 #| echo: true
 #| output-location: slide
-#|
+
 wvs_cleaned |>
     ggplot(aes(x = secular_values, y = emancipative_values)) +
     geom_jitter(color="maroon", alpha=0.5) +
@@ -232,9 +302,23 @@ cor.test(wvs_cleaned$emancipative_values,
 - **sample estimates** is the correlation coefficient
 :::
 
+## Reporting r in APA style
+
+Report Pearson's correlation with its **degrees of freedom** in parentheses, the coefficient, and p:
+
+$$r(5100) = .46,\ p < .001$$
+
+- `df` (5100) and `cor` (.46) are in the test output (here $df = N - 2$)
+- Good practice is to add the 95% CI too: *r*(5100) = .46, 95% CI [.44, .48], *p* < .001
+- *(APA rounds r to 2 decimals and drops the leading zero.)*
+
 ## Learning Check #1
 
+Look at the map. `urban_rural` and `trust_people` are **both categorical** — so which test do you reach for?
+
 Is there a relationship between where someone lives (`urban_rural`) and whether they trust others (`trust_people`)? Is the result aligned with what you expected?
+
+*First, try stating $H_0$ and $H_1$ yourself — then run the test.*
 
 ```{r}
 #| echo: true
@@ -243,13 +327,22 @@ chisq.test(table(wvs_cleaned$urban_rural, wvs_cleaned$trust_people))
 
 ```
 
-# Comparing Means Between Groups - T-Tests and ANOVA
+# Categorical (2 groups) + continuous → T-Tests
+
+## Where we are right now
+
+| Y | X | Test |
+|---|---|------|
+| Categorical | Categorical | Chi-square |
+| Continuous | Continuous | Correlation |
+| **Continuous** | **Categorical (2)** | ← **t-test** |
+| Continuous | Categorical (3+) | ANOVA |
 
 ## T-Tests
 
 A **t-test** is a statistical test used to compare the means of two groups/samples of continuous data type and determine if the differences are statistically significant.
 
-- The Student's *t*-test is widely used when the sample size is reasonably small (less than approximately 30) **or** when the population standard deviation is unknown.
+- The Student's *t*-test is widely used when the sample size is reasonably small (less than approximately 30) **or** when the population standard deviation is unknown.
 
 ## 3 types of t-test
 
@@ -297,12 +390,14 @@ wvs_cleaned |>
 
 ## Visualize the differences between two samples
 
-The variance will be easier to see when we visualize it as well. Here the two groups have somewhat different spreads (the urban group is more variable), which suggests the variances may not be homogeneous — a good reason to use Welch's t-test below.
+The variance will be easier to see when we visualize it as well. 
+
+Here, the two groups have somewhat different spreads (the urban group is more variable), which suggests the variances may not be homogeneous. In this case, we can consider switching to **Welch's t-test**
 
 ```{r}
 #| echo: true
-#| output-location: fragment
-#|
+#| output-location: slide
+
 wvs_cleaned |>
     ggplot(aes(x = urban_rural, y = secular_values)) +
     geom_boxplot() +
@@ -329,18 +424,33 @@ $H_1$: There is a significant difference in mean secular values between urban an
 
 t.test(secular_values ~ urban_rural,
        data = wvs_cleaned,
-       var.equal = FALSE)
+       var.equal = FALSE) 
 ```
 
 ::: {.callout-tip appearance="simple"}
 ### Notice that we are using Welch's t-test instead of Students' t-test
 
-Welch's t-test (also known as **unequal variances t-test**, is a more robust alternative to Student's t-test. It is often used when two samples have unequal variances and possibly unequal sample sizes.
+Welch's t-test (also known as **unequal variances t-test**, is a more robust alternative to Student's t-test. It is often used when two samples have unequal variances and possibly unequal sample sizes. By default, the `t.test` function in R will run Welch's t-test.
+:::
+
+## Reporting t in APA style (independent samples)
+
+Report the **degrees of freedom**, the t statistic, and p:
+
+$$t(4547.9) = 23.42,\ p < .001$$
+
+- Read `df` and `t` from the test output. With **Welch's** t-test the `df` is often a decimal — report it as shown.
+- Good practice is to also give each group's mean, e.g. urban (*M* = 0.39) vs rural (*M* = 0.28).
+
+::: {.callout-tip appearance="simple"}
+The same `t(df)` format is used for **every** t-test — see the next slides for the paired and one-sample versions.
 :::
 
 ## T-Test: Paired Sample T-Test
 
-Unfortunately, our data is not suitable for paired T-Test. For demo purposes, we are going to use a built-in sample datasets called `sleep` from the base R dataset.
+Unfortunately, our data is not suitable for paired T-Test.
+
+For demo purposes, we are going to use a built-in sample datasets called `sleep` from the base R dataset.
 
 The dataset is already loaded, so you can use it right away!
 
@@ -357,15 +467,35 @@ print(sleep)
 
 ```
 
-## Visualise the before (group 1) and after (group 2)
+
+## Some note about Sleep data
+
+(from `?sleep`)
+
+**Format**
+
+A data frame with 20 observations on 3 variables.
+```
+[, 1]	extra	numeric	increase in hours of sleep
+[, 2]	group	factor	drug given
+[, 3]	ID	factor	patient ID
+```
+
+**Details**
+
+The group variable name may be misleading about the data: They represent measurements on 10 persons, not in groups.
+
+## Visualize the before (group 1) and after (group 2)
 
 ```{r}
 #| echo: true
 
-sleep |> 
-    group_by(group) |> 
+sleep |>
+    group_by(group) |>
     summarise(n = n(), mean = mean(extra), sd = sd(extra), variance = var(extra))
 ```
+
+------------------------------------------
 
 Visualization:
 
@@ -373,7 +503,7 @@ Visualization:
 #| echo: true
 #| output-location: slide
 
-sleep |> 
+sleep |>
     ggplot(aes(x = group, y = extra)) +
     geom_boxplot() +
     theme_minimal()
@@ -381,14 +511,14 @@ sleep |>
 
 ## Transform the data shape
 
-The data is in long format. let's transform it into wide format so that we can conduct the analysis more easily.
+The data is in long format. Let's transform it into wide format so that we can conduct the analysis more easily.
 
 ```{r}
 #| echo: true
 #| output-location: fragment
 
-sleep_wide <- sleep |> 
-    pivot_wider(names_from = group, values_from = extra, 
+sleep_wide <- sleep |>
+    pivot_wider(names_from = group, values_from = extra,
                 names_prefix = "group_")
 print(sleep_wide)
 
@@ -417,6 +547,13 @@ t.test(Pair(sleep_wide$group_1, sleep_wide$group_2) ~ 1,
 
 ```
 
+## Reporting t in APA style (paired)
+
+$$t(9) = -4.06,\ p = .003$$
+
+- Same `t(df)` format — here with a small sample, `df` = 9.
+- Note `p` is reported as `p = .003` (not `< .001`), since it's above that threshold.
+
 ## T-test: One-sample T-Test
 
 RQ: **Is the average life satisfaction in our sample significantly different from the global average of 6.5?**
@@ -427,40 +564,68 @@ Let's start with visualizing the data
 #| echo: true
 #| output-location: fragment
 
-wvs_cleaned |> 
+wvs_cleaned |>
     ggplot(aes(y = life_satisfaction)) +
-    geom_boxplot(width = 0.2) + 
-    geom_hline(yintercept = 6.5, color="red") 
+    geom_boxplot(width = 0.2) +
+    geom_hline(yintercept = 6.5, color="red")
 ```
 
 ## Conduct the One-sample T-Test
 
+Remember, the hypotheses are:
+
+::::: columns
+::: {.column width="50%"}
+$H_0$: Mean life satisfaction is **equal** to 6.5 ($\mu = 6.5$).
+:::
+
+::: {.column width="50%"}
+$H_1$: Mean life satisfaction is **different** from 6.5 ($\mu \neq 6.5$).
+:::
+:::::
+
 ```{r}
 #| echo: true
 #| output-location: fragment
-global_mean_satisfaction = 6.5  
+global_mean_satisfaction = 6.5
 
-t.test(wvs_cleaned$life_satisfaction,          
-       alternative = "two.sided", 
+t.test(wvs_cleaned$life_satisfaction,
+       alternative = "two.sided",
        mu = global_mean_satisfaction)
 
 ```
 
+## Reporting t in APA style (one-sample)
+
+$$t(5101) = 15.48,\ p < .001$$
+
+Good practice is to also state the sample mean and the value it was compared against, e.g. the sample mean (*M* = 6.94) was significantly higher than the global average of 6.5.
+
 ## Learning Check #2
 
-Look at the following data from `CO2`, which T-test to use if we want to compare difference in the carbon dioxide `uptake` between the two treatments?
+Look at the following data from `CO2`. Walk the map: `Treatment` is categorical with **2** groups, `uptake` is continuous — so which t-test compares the CO₂ `uptake` between the two treatments?
 
 ```{r}
+#| echo: true
 
 summary(CO2)
 
 ```
 
-Visualize the data:
+# Categorical (3+ groups) + continuous → ANOVA
 
-```{r}
-print(CO2)
-```
+## Where we are right now
+
+| Y | X | Test |
+|---|---|------|
+| Categorical | Categorical | Chi-square |
+| Continuous | Continuous | Correlation |
+| Continuous | Categorical (2) | t-test |
+| **Continuous** | **Categorical (3+)** | ← **ANOVA** |
+
+::: {.callout-note appearance="simple"}
+You may not have met ANOVA in your stats class yet, but that's fine! We can explore this together; IRL, you may run into this very often, as it's the tool for **"comparing means across 3 or more groups".** A t-test only handles two.
+:::
 
 ## ANOVA (Analysis of Variance)
 
@@ -470,13 +635,27 @@ There are two 'mainstream' ANOVA:
 
 ::: incremental
 - **One-Way ANOVA**: comparing means across two or more independent groups (levels) of a [**single**]{.underline} independent variable.
-- **Two-Way ANOVA**: comparing means across two or more independent groups (levels) of [**two**]{.underline} independent variable. ()
+- **Two-Way ANOVA**: comparing means across groups defined by [**two**]{.underline} independent variables. *(we'll cover this in the appendix if time allows)*
 - Other types of ANOVA that you may encounter: Repeated measures ANOVA, Multivariate ANOVA (MANOVA), ANCOVA, etc.
 :::
 
 ## One-Way ANOVA: Sample problem and result
 
 RQ: **Is there a significant difference in emancipative values between different countries?**
+
+::::: columns
+::: {.column width="50%"}
+$H_0$: All countries have the **same** mean emancipative values ($\mu_1 = \mu_2 = \dots = \mu_k$).
+:::
+
+::: {.column width="50%"}
+$H_1$: **At least one** country's mean differs from the others.
+:::
+:::::
+
+::: {.callout-note appearance="simple"}
+Note the $H_1$ — ANOVA only tells you *at least one* group stands out, **not which one(s)**. That's what the post-hoc test is for, later.
+:::
 
 Let's visualize the data first!
 
@@ -509,39 +688,266 @@ summary(emanc_country_anova)
 - **Df**: Degrees of Freedom
 :::
 
-## Post-hoc test (only when result is significant)
+The p-value is tiny — so there *is* a significant difference somewhere.
 
-If your ANOVA test indicates significant result, the next step is to figure out which category pairings are yielding the significant result.
+## Reporting F in APA style
 
-Tukey's Honest Significant Difference (HSD) can help us figure that out!
+Cite F with **both** degrees of freedom (the `country` df, then the `Residuals` df), the F value, and the p-value:
+
+$$F(3,\ 5098) = 360,\ p < .001$$
+
+- The numerator df (3) is from the `country` row, the denominator df (5098) from the `Residuals` row
+- Write `p < .001` rather than R's `<2e-16`
+
+# ANOVA - Checking assumptions
+
+## This part is *your* job, not the AI's
+
+But before we trust it — **was this even the appropriate test for our data?** An ANOVA will **always** give you an F-value and a p-value, even when it's the wrong approach for your data. R won't stop you, and Claude/ChatGPT certainly won't stop you either.
+
+::: {.callout-important appearance="simple"}
+**When and where possible, check the assumptions every time.** 
+:::
+
+Checking the assumptions is the human's job. For ANOVA, the main things to verify:
+
+- The DV is continuous; the IV is categorical ✅ (we chose it that way)
+- Observations are independent
+- The model **residuals** are approximately **normal** — note: the residuals, *not* the raw DV → *Q-Q plot, Shapiro-Wilk test*
+- The groups have roughly **equal variance** (homoskedasticity) → *Levene's test*
+- No severe outliers
+
+::: {.callout-note appearance="simple"}
+"Check" doesn't mean "run a test and obey the p-value" — it means *look* at your data and *understand* what the test needs. We'll see why that distinction matters in a moment.
+:::
+
+
+
+## Checking normality: Shapiro-Wilk Test {.scrollable}
+
+**Shapiro-Wilk Test** checks normality. $H_0$ = the residuals are normally distributed.
+
+```{r}
+#| echo: true
+#| output-location: column
+
+set.seed(123) # so it samples the same way every time
+shapiro.test(sample(residuals(emanc_country_anova), 5000))
+```
+
+The p-value is below 0.05, so *technically* the residuals aren't perfectly normal. 
+
+## Limitations of Shapiro-Wilk test
+
+Worth **understanding rather than obeying** — Shapiro-Wilk has a well-known limitation with large datasets:
+
+- **It's highly sensitive to sample size.** As $n$ grows, the test's statistical power climbs so high that it flags tiny, practically irrelevant deviations as "significant". At ~5,000 rows it will reject normality almost every time.
+- **No real-world data is *perfectly* normal.** So at this size the test is mostly detecting that unavoidable imperfection — not a problem that actually threatens your ANOVA.
+- **R even caps `shapiro.test()` at 5,000 observations** (that's why we had to `sample()` down just to run it). It isn't built for big dataset.
+
+
+Even though technically this means "assumption failed", we can treat this as a cue to *look* at the data instead.
+
+## Checking normality visually: Q-Q Plot
+
+For normality, the visualisation is more helpful, *especially* at large n, where Shapiro-Wilk over-reacts. If the points hug the diagonal, the residuals are roughly normal. Ours drift off at the tails — but we can decide: **is that drift severe, or cosmetic?**
 
 ```{r}
 #| echo: true
 #| output-location: fragment
+
+plot(emanc_country_anova, 2)
+```
+
+## Better ways to judge normality at large n 
+
+With a big sample, lean on *description and pictures* rather than the hypothesis test:
+
+
+- **Q-Q plot** (previous slide) — do the points roughly follow the diagonal? Minor wiggles at the tails are usually harmless.
+- **Histogram** — is the overall shape roughly bell-like?
+- **Skewness & kurtosis** — quick numbers for asymmetry and "peakedness". A common rule of thumb: values roughly between **−2 and +2** are acceptable for parametric tests like ANOVA.
+
+
+## Check for skewness and kurtosis
+
+```{r}
+#| echo: true
+#| output-location: column
+library(moments)
+
+resid <- residuals(emanc_country_anova)
+skewness(resid)       # ~0 = symmetric
+```
+
+```{r}
+#| echo: true
+#| output-location: column
+library(moments)
+
+resid <- residuals(emanc_country_anova)
+kurtosis(resid) - 3   # "excess" kurtosis; ~0 = normal-ish
+```
+Check whether these land inside the ±2 rule of thumb — if they do, that's a good sign the earlier Shapiro-Wilk "failure" was the test over-reacting, not a real problem.
+
+## Checking equal variance: Levene's Test 
+
+**Levene's Test** checks homogeneity of variance (homoskedasticity).
+
+$H_0$ = variances are equal across groups.
+
+```{r}
+#| echo: true
+#| output-location: column
+
+library(car)
+leveneTest(emancipative_values ~ country,
+           data = wvs_cleaned)
+```
+
+## Checking equal variance: Levene's Test - result
+
+The p-value is below 0.05, which means the variances across our comparison groups are significantly different. However, the same large-sample limitation applies as with Shapiro-Wilk:
+
+
+- **Massive statistical power at n ≈ 5,000.** Levene's test will flag a microscopic, trivial difference in spread as "significant", even when it's far too small to affect your ANOVA.
+- **Statistical ≠ practical significance.** A low p-value says a difference *exists* in the population — not that it *matters*. In big datasets, the two often come apart completely.
+
+
+::: {.callout-note appearance="simple"}
+So pair the test with the **boxplot from earlier** and ask: the p-value says the variances differ, but do the boxes look *radically* different, or basically the same? If they look similar, you can safely proceed.
+:::
+
+## Judging equal variance at large n - Strategy #1
+
+Two calmer strategies than agonising over Levene's p-value:
+
+**1. Remember ANOVA and t-tests are robust.** They tolerate *minor* unequal variances well, especially when group sizes are roughly equal. A common rule of thumb: if the **largest group variance ÷ the smallest is ≤ about 4** (with similar $n$), the violation is generally harmless.
+
+```{r}
+#| echo: true
+#| output-location: column
+
+wvs_cleaned |>
+    group_by(country) |>
+    summarise(variance = var(emancipative_values)) |>
+    arrange(variance)
+```
+
+Compare the largest and smallest — is the ratio under ~4?
+
+## Judging equal variance at large n - Strategy #2
+
+**2. Or sidestep the assumption entirely** — use a method that doesn't require equal variances:
+
+- **Welch's t-test** instead of Student's (it's already R's default!)
+- **Welch's ANOVA** — `oneway.test(..., var.equal = FALSE)` — instead of standard ANOVA *(see appendix)*.
+
+::: {.callout-note appearance="simple"}
+The 4:1 variance-ratio figure is a widely-repeated rule of thumb — treat it as a rough guide, not a hard law. Different textbooks quote slightly different thresholds.
+:::
+
+
+## Assumptions look shaky — now what?
+
+Levene flags possibly-unequal variance, and the Q-Q plot shows some non-normality. In real social-science data this is the *norm*, not the exception (human behaviour do be messy like that). A shaky assumption is a **caution flag.**
+
+And here we have a big cushion: with ~5,000 observations, the **Central Limit Theorem** makes the ANOVA F-test fairly robust to non-normality anyway. So we're not obliged to panic. But when we *are* worried, we have two moves (often both):
+
+1.  **Choose another method** — use a test that doesn't lean on those assumptions.
+2.  **Disclose the limitation** — say plainly what was shaky when you report.
+
+Alternative method: the **Kruskal-Wallis rank sum test** is the non-parametric alternative to one-way ANOVA — same question ("do the groups differ?"), no normality/equal-variance requirement:
+
+```{r}
+#| echo: true
+
+kruskal.test(emancipative_values ~ country, data = wvs_cleaned)
+```
+
+
+## Aside: even the experts argue about this
+
+Assumption-checking is less settled than a textbook makes it look. If you read working statisticians debate it, three tensions come up again and again:
+
+- **Prediction vs inference.** Assumptions matter *far* more when you're inferring (our case today) than when you only care about predictive accuracy.
+- **Don't over-test.** Some argue that running a normality test and *then* choosing your main test based on the result actually distorts your error rates — you're better off picking a robust method from the start than "testing your way" to one.
+- **Understand, don't ritualise.** Checking assumptions only helps if you understand *what* each test assumes and *why*. Don't blindly run Shapiro-Wilk on 5,000 rows.
+
+
+IRL data is complicated; **no rulebook — and no AI — removes the need for your judgement** about whether a result can be trusted.
+
+## The discipline (remember this one)
+
+For every test you run — today's and every one after — the same four-step reflex:
+
+
+1.  **Define** your research question and its variables. This will guide you in choosing the statistical test.
+2.  **Check** — understand what the test assumes and judge whether it's plausible (plots + sample size + common sense).
+3.  **Adapt** if there's real cause for concern — e.g. a non-parametric alternative or a robust method.
+4.  **Disclose** the limitation when you present, especially when real decisions is going to be made based on it — a class policy call, a client in your internship/workplace, your thesis committee.
+
+
+::: {.callout-tip appearance="simple"}
+As one data scientist put it, "your conclusions are only as strong as the assumptions behind them" *(r/datascience)*. Steps 2–4 are exactly the part you can't hand to an AI — it can generate the analysis, but it can't be *accountable* for it. You can.
+:::
+
+## Which groups differ? Post-hoc test
+
+A significant ANOVA/Kruskal-Wallis only says *"at least one group differs."* To find out *which* country pairs drive it, we run a post-hoc test. **Tukey's HSD** pairs with ANOVA:
+
+```{r}
+#| echo: true
 TukeyHSD(emanc_country_anova)
 ```
 
-## ANOVA Assumptions
+::: {.callout-note appearance="simple"}
+Strictly, when you fall back to Kruskal-Wallis the matching post-hoc is **Dunn's test** (`FSA::dunnTest()`), not Tukey. For this workshop we'll read Tukey to build intuition — but knowing *which* post-hoc matches *which* test is one example of the kind of judgement your prof might ask you to defend.
+:::
 
-1.  The Dependent variable should be a continuous variable
+# Recap
 
-2.  The Independent variable should be a categorical variable
 
-3.  The observations for Independent variable should be independent of each other
+- Start every analysis from the **research question**: read your variable types, then choose the test. That choice is something you must be able to *justify* — not outsource.
 
-4.  The Dependent Variable distribution should be approximately normal -- even more crucial if sample size is small.
+- **Both categorical** → `chisq.test()`, the $X^2$ test of independence.
 
-    - You can verify this by visualizing your data in histogram, or use Shapiro-Wilk Test, among other things
+- **Both continuous** → `cor.test()`, correlation (−1 to 1, 0 = none).
 
-5.  The variance for each combination of groups should be approximately equal -- also referred to as "homogeneity of variances" or [**homoskedasticity**]{.underline}.
+- **Categorical (2 groups) + continuous** → `t.test()`; three flavours: one-sample, independent, paired.
 
-    - One way to verify this is using Levene's Test
+- **Categorical (3+ groups) + continuous** → `aov()`, ANOVA.
 
-6.  No significant outliers
+- "Check" means *understanding* what a test assumes and judging whether it's plausible (plots + sample size + sense), not blindly obeying a normality test — remember Shapiro-Wilk over-reacts on big samples. When there's real cause for concern, adapt (e.g. `kruskal.test()`) and/or state the limitation plainly. This judgement is the part the AI can't do for you — and the part you're accountable for.
+
+
+# End of Session 4!
+
+Next session: Linear and Logistic Regressions
+
+## Quiz Time! (compulsory)
+
+Scan the QR Code below to assess your understanding of basic inferential statistics concepts in R, including variable types and common statistical tests. All questions are required and each is worth 1 mark.
+
+[![Quiz QR Code: \<https://forms.cloud.microsoft/r/CSiySf1jmL\>](images/BasicInferentialStatsinRQRCode.png){fig-alt="Quiz QR Code: https://forms.cloud.microsoft/r/CSiySf1jmL" fig-align="center" width="400"}](https://forms.cloud.microsoft/r/CSiySf1jmL)
+
+# Appendix
+
+- Two-Way ANOVA (if time allows)
+- More assumption diagnostics (Residual vs Fitted, Welch's ANOVA)
+- Reporting with apaTables / gtsummary
 
 ## Two-Way ANOVA: Sample problem and result
 
 RQ: **Is there a significant difference in emancipative values across education levels and countries?**
+
+With two IVs, we test **three** null hypotheses at once (each with its own $H_1$):
+
+::: {style="font-size: 90%"}
+- $H_0$ (education): mean emancipative values are the **same** across education levels.
+- $H_0$ (country): mean emancipative values are the **same** across countries.
+- $H_0$ (interaction): the effect of education on emancipative values **does not depend** on country (no interaction).
+:::
 
 Let's visualize the data!
 
@@ -613,103 +1019,7 @@ Some observations that we can make:
 - If the lines cross or diverge, this suggests the effect of education on emancipative values differs across countries.
 - Pay attention to which country shows the steepest slope — this indicates the strongest relationship between education level and emancipative values in that country.
 
-# Recap
-
-::: incremental
-- Data distribution, normal distribution and skewed distribution.
-
-- Use X2 test of independence, chisq.test(), to evaluate whether there is a statistically significant relationship between two categorical variables.
-
-- Use a correlation test, cor.test(), to evaluate the strength and direction of a linear relationship between two variables. The coefficient is expressed in value between -1 to 1, with 0 being no correlation at all.
-
-- Use t-test() to compare the means of two groups of continuous data and determine if the differences are statistically significant.
-
-- Three types of t-tests i.e., one-sample t-test, independent samples t-test, and paired samples t-test.
-
-- Use ANOVA (Analysis of Variance) to compare the means of three or more groups or samples and determine if the differences are statistically significant.
-:::
-
-# End of Session 4!
-
-Next session: Linear and Logistic Regressions
-
-## Quiz Time! (compulsory)
-
-Scan the QR Code below to assess your understanding of basic inferential statistics concepts in R, including variable types and common statistical tests. All questions are required and each is worth 1 mark.
-
-[![Quiz QR Code: \<https://forms.cloud.microsoft/r/CSiySf1jmL\>](images/BasicInferentialStatsinRQRCode.png){fig-alt="Quiz QR Code: https://forms.cloud.microsoft/r/CSiySf1jmL" fig-align="center" width="400"}](https://forms.cloud.microsoft/r/CSiySf1jmL)
-
-# Appendix
-
-- Reporting with apaTables
-- ANOVA assumptions
-
-## Reporting with apaTables
-
-`apaTables` is a package that will generate APA-formatted report table for correlation, ANOVA, and regression. It has limited customisations and few varity of tables. The documentation online is for the "development" version which is not what we will get if we install normally with `install.packages()`, so we need to rely on the vignette more. [**View the documentation here**](https://dstanley4.github.io/apaTables/index.html)
-
-Example: get the correlation table for `political_scale`, `life_satisfaction`, and `financial_satisfaction`
-
-``` r
-library(apaTables)
-
-wvs_cleaned |> 
-    select(life_satisfaction, financial_satisfaction, freedom_of_choice) |>
-    apa.cor.table( table.number = 1, filename = "fig-output/table-cor.doc")
-```
-
-## Reporting with gtsummary
-
-Another popular packages is `gt` (stands for "great tables") and its 'add-on', `gtsummary`. It has lots of customizations (which can get overwhelming!) but fortunately the documentation is pretty good and there are plenty of code samples. [**View the documentation here**](https://www.danieldsjoberg.com/gtsummary/index.html)
-
-Example: get the mean differences table for `political_scale`, `life_satisfaction`, and `financial_satisfaction`, grouped by `sex`
-
-```{r}
-#| echo: true
-#| output-location: slide
-
-library(gtsummary)
-
-wvs_cleaned |> 
-    dplyr::select(life_satisfaction, financial_satisfaction, freedom_of_choice, sex) |>
-    tbl_summary(by = sex) |>
-    add_difference()
-```
-
-## ANOVA Assumptions
-
-1.  The Dependent variable should be a continuous variable
-
-2.  The Independent variable should be a categorical variable
-
-3.  The observations for Independent variable should be independent of each other
-
-4.  The Dependent Variable distribution should be approximately normal -- even more crucial if sample size is small.
-
-    - You can verify this by visualizing your data in histogram, or use Shapiro-Wilk Test, among other things
-
-5.  The variance for each combination of groups should be approximately equal -- also referred to as "homogeneity of variances" or [**homoskedasticity**]{.underline}.
-
-    - One way to verify this is using Levene's Test
-
-6.  No significant outliers
-
-## Verifying the assumption: Test for Homogeneity of variance
-
-**Levene's Test** to test for homogeneity of variance i.e. homoskedasticity
-
-```{r}
-#| echo: true
-#| output-location: column
-
-library(car)
-leveneTest(emancipative_values ~ country,
-           data = wvs_cleaned)
-```
-
-The results indicate that the p-value is less than the significance level of 0.05, suggesting that there IS a significant difference in variance across the groups. Consequently, the assumption of homogeneity of variances is NOT satisfied.
-
-## Plotting Residuals: Residual vs Fitted
+## More diagnostics: Residual vs Fitted
 
 When we plot the residuals[^1], we can see some outliers as well:
 
@@ -723,49 +1033,46 @@ plot(emanc_country_anova, 1)
 
 ```
 
-## Verifying the assumptions: Test for Normality
+## When homoskedasticity fails: Welch's ANOVA
 
-**Shapiro-Wilk Test** to test for normality.
-
-```{r}
-#| echo: true
-#| output-location: column
-
-library(car)
-set.seed(123) # set seed for reproducibility, make sure it samples the same way everytime.
-shapiro.test(sample(residuals(emanc_country_anova), 5000))
-```
-
-The p-value from the Shapiro-Wilk test is less than the significance level of 0.05, indicating that the data significantly deviates from normality. Therefore, the assumption of normality is NOT satisfied.
-
-## Plotting Residuals: Q-Q Plot
-
-We can see this better from when we plot the residuals:
-
-```{r}
-#| echo: true
-#| output-location: fragment
-
-plot(emanc_country_anova, 2)
-
-```
-
-## When the assumptions are not met...
-
-We can use **Kruskal-Wallis rank sum test** as an non-parametric alternative to One-Way ANOVA!
-
-```{r}
-#| echo: true 
-
-kruskal.test(emancipative_values ~ country, data = wvs_cleaned)
-```
-
-Other alternative: **Welch's ANOVA** for when the homoskedasticity assumption is not met.
+Besides Kruskal-Wallis, **Welch's ANOVA** is an alternative for when only the equal-variance assumption is violated (but normality is roughly OK):
 
 ```{r}
 #| echo: true
 
 oneway.test(emancipative_values ~ country, data = wvs_cleaned, var.equal = FALSE)
+```
+
+## Reporting with apaTables
+
+`apaTables` generates APA-formatted report tables for correlation, ANOVA, and regression. Limited customisation. The online docs are for the development version, so lean on the vignette. [**Documentation here**](https://dstanley4.github.io/apaTables/index.html)
+
+Example: correlation table for `political_scale`, `life_satisfaction`, and `financial_satisfaction`
+
+``` r
+library(apaTables)
+
+wvs_cleaned |>
+    select(life_satisfaction, financial_satisfaction, freedom_of_choice) |>
+    apa.cor.table( table.number = 1, filename = "fig-output/table-cor.doc")
+```
+
+## Reporting with gtsummary
+
+`gt` ("great tables") and its add-on `gtsummary` offer lots of customisation with good docs. [**Documentation here**](https://www.danieldsjoberg.com/gtsummary/index.html)
+
+Example: mean-differences table grouped by `sex`
+
+```{r}
+#| echo: true
+#| output-location: slide
+
+library(gtsummary)
+
+wvs_cleaned |>
+    dplyr::select(life_satisfaction, financial_satisfaction, freedom_of_choice, sex) |>
+    tbl_summary(by = sex) |>
+    add_difference()
 ```
 
 ## Exercise for Two-Way ANOVA

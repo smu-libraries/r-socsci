@@ -10,7 +10,7 @@ website:
         text: Home
       - href: dataset.qmd
         text: Dataset
-      - href: coc.qmd
+      - href: supp-files/coc.qmd
         text: Code of conduct
       - sidebar:resources
         
@@ -18,9 +18,9 @@ website:
     - id: resources
       title: "Resources"
       contents:
-        - href: resources.qmd
+        - href: supp-files/resources.qmd
           text: "Further Readings"
-        - href: exercises.qmd
+        - href: supp-files/exercises.qmd
           text: "Exercises for your own practice"
         - href: "https://bellaratmelia.github.io/2024-08-Rworkshop/"
           text: "Past workshop - AY 24/25 Term 1 (Aug - Sep)"
