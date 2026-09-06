@@ -18,6 +18,8 @@ website:
     - id: resources
       title: "Resources"
       contents:
+        - href: supp-files/concept-explainers.qmd
+          text: "Interactive concept explainers"
         - href: supp-files/resources.qmd
           text: "Further Readings"
         - href: supp-files/exercises.qmd

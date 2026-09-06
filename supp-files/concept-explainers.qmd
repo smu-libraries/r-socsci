@@ -1,0 +1,1314 @@
+---
+title: "Concept explainers"
+subtitle: "Small interactive widgets to build intuition for a few tricky ideas"
+format: html
+toc: true
+---
+
+These are little hands-on toys to poke at some concepts that are easier to *feel* than to read about. Nothing here is graded or required — click around and see what changes. Each one maps to something we cover in the sessions.
+
+## `dplyr` verbs: what does each one do to your data? {#tidyverse-verbs}
+
+Data wrangling in the tidyverse is really just a handful of verbs, each doing one clear thing to a table. Click a verb below to watch what happens to a slice of our World Values Survey data — which rows drop, which columns appear or disappear, what gets added. `mutate()` has a few variants worth comparing (`if_else()` vs `case_when()`).
+
+*Relates to Session 2 — Data Wrangling with tidyverse.*
+
+```{=html}
+<style>
+  /* ---- Theme hooks: inherit from the Quarto site, fall back if standalone ---- */
+  .tv-explainer {
+    --tv-bg:      var(--bs-body-bg, #ffffff);
+    --tv-fg:      var(--bs-body-color, #212529);
+    --tv-primary: var(--bs-primary, #2780e3);
+    --tv-border:  var(--bs-border-color, #dee2e6);
+    --tv-muted:   var(--bs-secondary-color, #6c757d);
+    --tv-code-bg: var(--bs-tertiary-bg, #f8f9fa);
+
+    color: var(--tv-fg);
+    background: var(--tv-bg);
+    font-family: var(--bs-body-font-family, system-ui, -apple-system, "Segoe UI", sans-serif);
+    line-height: 1.5;
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
+  .tv-explainer *, .tv-explainer *::before, .tv-explainer *::after { box-sizing: border-box; }
+
+  /* ---- Verb buttons ---- */
+  .tv-verbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .tv-verb {
+    font-family: var(--bs-font-monospace, ui-monospace, "Cascadia Code", Menlo, monospace);
+    font-size: 0.9rem;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--tv-border);
+    border-radius: 0.375rem;
+    background: var(--tv-bg);
+    color: var(--tv-fg);
+    cursor: pointer;
+    transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+  }
+  .tv-verb:hover { border-color: var(--tv-primary); }
+  .tv-verb:focus-visible { outline: 2px solid var(--tv-primary); outline-offset: 2px; }
+  .tv-verb[aria-pressed="true"] {
+    background: var(--tv-primary);
+    color: #fff;
+    border-color: var(--tv-primary);
+  }
+
+  /* ---- Sub-verb row (mutate variants) ---- */
+  .tv-subverbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin: -0.5rem 0 1rem;
+    padding: 0.5rem 0.6rem;
+    border-left: 3px solid var(--tv-primary);
+    background: var(--tv-code-bg);
+    border-radius: 0 0.375rem 0.375rem 0;
+  }
+  .tv-sublabel {
+    font-size: 0.8rem;
+    color: var(--tv-muted);
+    margin-right: 0.25rem;
+    font-family: var(--bs-font-monospace, ui-monospace, Menlo, monospace);
+  }
+  .tv-subverb {
+    font-family: var(--bs-font-monospace, ui-monospace, "Cascadia Code", Menlo, monospace);
+    font-size: 0.82rem;
+    padding: 0.25rem 0.6rem;
+    border: 1px solid var(--tv-border);
+    border-radius: 0.375rem;
+    background: var(--tv-bg);
+    color: var(--tv-fg);
+    cursor: pointer;
+    transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+  }
+  .tv-subverb:hover { border-color: var(--tv-primary); }
+  .tv-subverb:focus-visible { outline: 2px solid var(--tv-primary); outline-offset: 2px; }
+  .tv-subverb[aria-pressed="true"] {
+    background: var(--tv-primary);
+    color: #fff;
+    border-color: var(--tv-primary);
+  }
+
+  /* ---- Two-column layout: code beside table ---- */
+  .tv-panels {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.9fr) 1.4fr;
+    gap: 1rem;
+    align-items: start;
+  }
+  @media (max-width: 640px) {
+    .tv-panels { grid-template-columns: 1fr; }
+  }
+
+  .tv-code {
+    font-family: var(--bs-font-monospace, ui-monospace, "Cascadia Code", Menlo, monospace);
+    font-size: 0.85rem;
+    background: var(--tv-code-bg);
+    border: 1px solid var(--tv-border);
+    border-radius: 0.375rem;
+    padding: 0.75rem 0.9rem;
+    white-space: pre-wrap;
+    overflow-x: auto;
+    margin: 0;
+  }
+  .tv-code .tv-fn { color: var(--tv-primary); font-weight: 600; }
+  .tv-code .tv-cmt { color: var(--tv-muted); }
+
+  .tv-explain {
+    font-size: 0.9rem;
+    color: var(--tv-fg);
+    margin: 0.75rem 0 0;
+    min-height: 3.5rem;
+  }
+  .tv-explain strong { color: var(--tv-primary); }
+
+  /* ---- Data table ---- */
+  .tv-table-wrap { overflow-x: auto; }
+  table.tv-table {
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    width: 100%;
+    font-family: var(--bs-font-monospace, ui-monospace, Menlo, monospace);
+  }
+  .tv-table th, .tv-table td {
+    border: 1px solid var(--tv-border);
+    padding: 0.3rem 0.55rem;
+    text-align: right;
+    white-space: nowrap;
+    transition: background 0.25s ease, opacity 0.25s ease;
+  }
+  .tv-table th {
+    background: var(--tv-code-bg);
+    font-weight: 600;
+    text-align: right;
+    position: relative;
+  }
+  .tv-table td.tv-text, .tv-table th.tv-text { text-align: left; }
+
+  /* change highlights */
+  .tv-row-drop td { opacity: 0.28; text-decoration: line-through; }
+  .tv-col-hide   { opacity: 0.22; }
+  .tv-cell-new   { background: color-mix(in srgb, var(--tv-primary) 18%, transparent); }
+  .tv-col-new th, .tv-col-new td { background: color-mix(in srgb, var(--tv-primary) 12%, transparent); }
+  .tv-row-keep td { background: color-mix(in srgb, var(--tv-primary) 8%, transparent); }
+
+  .tv-shape {
+    font-size: 0.8rem;
+    color: var(--tv-muted);
+    margin-top: 0.5rem;
+    font-family: var(--bs-font-monospace, ui-monospace, Menlo, monospace);
+  }
+  .tv-caption {
+    font-size: 0.8rem;
+    color: var(--tv-muted);
+    margin-bottom: 0.6rem;
+  }
+  .tv-reset {
+    font-size: 0.8rem;
+    background: none;
+    border: none;
+    color: var(--tv-primary);
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tv-table th, .tv-table td { transition: none; }
+  }
+</style>
+
+<div class="tv-explainer">
+  <p class="tv-caption">
+    A slice of our World Values Survey data (<code>wvs_data</code>). Click a dplyr verb to see what it does to the table.
+    <button class="tv-reset" id="tvReset" type="button">reset</button>
+  </p>
+
+  <div class="tv-verbs" id="tvVerbs" role="group" aria-label="dplyr verbs">
+    <button class="tv-verb" data-verb="select"    type="button" aria-pressed="false">select()</button>
+    <button class="tv-verb" data-verb="filter"    type="button" aria-pressed="false">filter()</button>
+    <button class="tv-verb" data-verb="mutate"    type="button" aria-pressed="false">mutate()</button>
+    <button class="tv-verb" data-verb="arrange"   type="button" aria-pressed="false">arrange()</button>
+    <button class="tv-verb" data-verb="summarise" type="button" aria-pressed="false">group_by() + summarise()</button>
+  </div>
+
+  <div class="tv-subverbs" id="tvSubverbs" role="group" aria-label="mutate variants" hidden>
+    <span class="tv-sublabel">mutate() variants:</span>
+    <button class="tv-subverb" data-sub="basic"    type="button" aria-pressed="false">basic</button>
+    <button class="tv-subverb" data-sub="ifelse"   type="button" aria-pressed="false">if_else()</button>
+    <button class="tv-subverb" data-sub="casewhen" type="button" aria-pressed="false">case_when()</button>
+  </div>
+
+  <div class="tv-panels">
+    <div>
+      <pre class="tv-code" id="tvCode" aria-live="polite"></pre>
+      <p class="tv-explain" id="tvExplain" aria-live="polite"></p>
+    </div>
+    <div>
+      <div class="tv-table-wrap">
+        <table class="tv-table" id="tvTable"></table>
+      </div>
+      <div class="tv-shape" id="tvShape"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  // --- Sample data: a tidy slice resembling the WVS Wave 7 SG/CA/NZ set ---
+  // Columns kept small and readable on purpose.
+  var COLS = [
+    { key: "id",       label: "id",        type: "num"  },
+    { key: "country",  label: "country",   type: "text" },
+    { key: "age",      label: "age",       type: "num"  },
+    { key: "lifesat",  label: "lifesat",   type: "num"  }, // 1-10 life satisfaction
+    { key: "trust",    label: "trust",     type: "num"  }  // 1-4 trust in people
+  ];
+
+  var BASE = [
+    { id: 1, country: "SG", age: 34, lifesat: 8, trust: 3 },
+    { id: 2, country: "CA", age: 52, lifesat: 6, trust: 2 },
+    { id: 3, country: "NZ", age: 19, lifesat: 9, trust: 4 },
+    { id: 4, country: "SG", age: 16, lifesat: 7, trust: 3 },
+    { id: 5, country: "CA", age: 41, lifesat: 5, trust: 1 },
+    { id: 6, country: "NZ", age: 28, lifesat: 8, trust: 4 }
+  ];
+
+  // Each verb returns a "view": which cols show, which rows drop, added col, code, explanation.
+  var VERBS = {
+    select: function () {
+      return {
+        cols: ["country", "age", "lifesat"],      // shown columns
+        rows: BASE.slice(),
+        code: [
+          ["cmt", "# keep only the columns you want"],
+          ["run", "wvs_data |> "],
+          ["fn",  "  select", "(country, age, lifesat)"]
+        ],
+        explain: "<strong>select()</strong> picks columns. The table keeps the same rows; unwanted columns (id, trust) are dropped. Think vertical slicing.",
+        shape: function (v) { return "5 columns -> " + v.cols.length + " columns (6 rows unchanged)"; }
+      };
+    },
+    filter: function () {
+      var keep = BASE.map(function (r) { return r.age >= 18; });
+      return {
+        cols: null,
+        rows: BASE.slice(),
+        dropMask: keep.map(function (k) { return !k; }),
+        code: [
+          ["cmt", "# keep only rows that meet a condition"],
+          ["run", "wvs_data |> "],
+          ["fn",  "  filter", "(age >= 18)"]
+        ],
+        explain: "<strong>filter()</strong> picks rows by a condition. Here respondents under 18 are removed. All columns stay. Think horizontal slicing.",
+        shape: function () {
+          var n = keep.filter(Boolean).length;
+          return "6 rows -> " + n + " rows (5 columns unchanged)";
+        }
+      };
+    },
+    // mutate has three sub-variants; the active one is passed in.
+    mutate: function (sub) {
+      sub = sub || "basic";
+
+      if (sub === "basic") {
+        return {
+          cols: null,
+          rows: BASE.slice(),
+          addCol: {
+            key: "is_adult",
+            label: "is_adult",
+            type: "text",
+            compute: function (r) { return r.age >= 18 ? "TRUE" : "FALSE"; }
+          },
+          code: [
+            ["cmt", "# add a new column from a condition"],
+            ["run", "wvs_data |> "],
+            ["fn",  "  mutate", "(is_adult = age >= 18)"]
+          ],
+          explain: "<strong>mutate()</strong> adds a new column. Here <code>age >= 18</code> returns TRUE/FALSE for each row. Same condition as filter(), but it makes a column instead of dropping rows.",
+          shape: function () { return "5 columns -> 6 columns (6 rows unchanged)"; }
+        };
+      }
+
+      if (sub === "ifelse") {
+        return {
+          cols: null,
+          rows: BASE.slice(),
+          addCol: {
+            key: "age_group",
+            label: "age_group",
+            type: "text",
+            compute: function (r) { return r.age >= 18 ? "adult" : "minor"; }
+          },
+          code: [
+            ["cmt", "# if_else: one condition, two outcomes"],
+            ["run", "wvs_data |> "],
+            ["fn",  "  mutate", "(age_group ="],
+            ["fn",  "    if_else", "(age >= 18, \"adult\", \"minor\"))"]
+          ],
+          explain: "<strong>if_else()</strong> gives a value when the test is TRUE and another when FALSE. Use it for a clean two-way split; it also checks both outcomes are the same type.",
+          shape: function () { return "5 columns -> 6 columns (6 rows unchanged)"; }
+        };
+      }
+
+      // case_when
+      return {
+        cols: null,
+        rows: BASE.slice(),
+        addCol: {
+          key: "life_band",
+          label: "life_band",
+          type: "text",
+          compute: function (r) {
+            if (r.lifesat >= 8) return "high";
+            if (r.lifesat >= 6) return "medium";
+            return "low";
+          }
+        },
+        code: [
+          ["cmt", "# case_when: many conditions, checked in order"],
+          ["run", "wvs_data |> "],
+          ["fn",  "  mutate", "(life_band = "],
+          ["fn",  "    case_when", "("],
+          ["run", "    lifesat >= 8 ~ \"high\","],
+          ["run", "    lifesat >= 6 ~ \"medium\","],
+          ["run", "    .default = \"low\"))"]
+        ],
+        explain: "<strong>case_when()</strong> handles more than two outcomes. Conditions are checked top to bottom; the first match wins. <code>.default</code> catches everything else. Reach for this when if_else() would nest.",
+        shape: function () { return "5 columns -> 6 columns (6 rows unchanged)"; }
+      };
+    },
+    arrange: function () {
+      var sorted = BASE.slice().sort(function (a, b) { return b.age - a.age; });
+      return {
+        cols: null,
+        rows: sorted,
+        highlightCol: "age",
+        code: [
+          ["cmt", "# reorder rows by a column"],
+          ["run", "wvs_data |> "],
+          ["fn",  "  arrange", "(desc(age))"]
+        ],
+        explain: "<strong>arrange()</strong> reorders rows; nothing is added or removed. Here rows are sorted by age, oldest first (desc).",
+        shape: function () { return "6 rows reordered (same 6 rows, 5 columns)"; }
+      };
+    },
+    summarise: function () {
+      // group_by(country) |> summarise(mean lifesat, n)
+      var groups = {};
+      BASE.forEach(function (r) {
+        (groups[r.country] = groups[r.country] || []).push(r);
+      });
+      var rows = Object.keys(groups).sort().map(function (c, i) {
+        var g = groups[c];
+        var mean = g.reduce(function (s, r) { return s + r.lifesat; }, 0) / g.length;
+        return { id: i + 1, country: c, mean_lifesat: mean.toFixed(1), n: g.length };
+      });
+      return {
+        replace: {
+          cols: [
+            { key: "country",      label: "country",      type: "text" },
+            { key: "mean_lifesat", label: "mean_lifesat", type: "num"  },
+            { key: "n",            label: "n",            type: "num"  }
+          ],
+          rows: rows,
+          newCols: ["mean_lifesat", "n"]
+        },
+        code: [
+          ["cmt", "# collapse groups of rows into summaries"],
+          ["run", "wvs_data |> "],
+          ["fn",  "  group_by", "(country) |> "],
+          ["fn",  "  summarise", "(mean_lifesat = mean(lifesat), n = n())"]
+        ],
+        explain: "<strong>group_by() + summarise()</strong> splits rows into groups, then collapses each group into one summary row. 6 respondents become 3 country rows.",
+        shape: function () { return "6 rows -> 3 rows, one per country group"; }
+      };
+    }
+  };
+
+  // --- DOM refs ---
+  var tableEl   = document.getElementById("tvTable");
+  var codeEl    = document.getElementById("tvCode");
+  var explainEl = document.getElementById("tvExplain");
+  var shapeEl   = document.getElementById("tvShape");
+  var verbsEl   = document.getElementById("tvVerbs");
+  var subEl     = document.getElementById("tvSubverbs");
+  var resetBtn  = document.getElementById("tvReset");
+
+  var mutateSub = "basic"; // remembers the last-picked mutate variant
+
+  function esc(s) {
+    return String(s).replace(/[&<>]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c];
+    });
+  }
+
+  function renderCode(lines) {
+    if (!lines) {
+      codeEl.innerHTML =
+        '<span class="tv-cmt"># the raw data</span>\n' +
+        'wvs_data';
+      return;
+    }
+    var html = lines.map(function (l) {
+      if (l[0] === "cmt") return '<span class="tv-cmt">' + esc(l[1]) + '</span>';
+      if (l[0] === "fn")  return '<span class="tv-fn">' + esc(l[1]) + '</span>' + esc(l[2] || "");
+      return esc(l[1]);
+    }).join("\n");
+    codeEl.innerHTML = html;
+  }
+
+  // Render the base table, optionally with a computed "view"
+  function renderTable(view) {
+    var cols, rows;
+    var addCol = view && view.addCol;
+    var replace = view && view.replace;
+
+    if (replace) {
+      cols = replace.cols;
+      rows = replace.rows;
+    } else {
+      cols = COLS.slice();
+      rows = view && view.rows ? view.rows : BASE.slice();
+      if (addCol) cols = cols.concat([addCol]);
+    }
+
+    var shownKeys = (view && view.cols) ? view.cols : null; // for select()
+    var dropMask  = (view && view.dropMask) ? view.dropMask : null;
+    var newColKeys = replace ? (replace.newCols || []) : (addCol ? [addCol.key] : []);
+    var highlightCol = view && view.highlightCol;
+
+    // header
+    var thead = "<thead><tr>";
+    cols.forEach(function (c) {
+      var cls = [];
+      if (c.type === "text") cls.push("tv-text");
+      if (shownKeys && shownKeys.indexOf(c.key) === -1) cls.push("tv-col-hide");
+      if (newColKeys.indexOf(c.key) !== -1) cls.push("tv-col-new");
+      if (highlightCol === c.key) cls.push("tv-col-new");
+      thead += '<th class="' + cls.join(" ") + '">' + esc(c.label) + "</th>";
+    });
+    thead += "</tr></thead>";
+
+    // body
+    var tbody = "<tbody>";
+    rows.forEach(function (r, i) {
+      var trCls = [];
+      if (dropMask && dropMask[i]) trCls.push("tv-row-drop");
+      tbody += '<tr class="' + trCls.join(" ") + '">';
+      cols.forEach(function (c) {
+        var cls = [];
+        if (c.type === "text") cls.push("tv-text");
+        if (shownKeys && shownKeys.indexOf(c.key) === -1) cls.push("tv-col-hide");
+        if (newColKeys.indexOf(c.key) !== -1) cls.push("tv-cell-new");
+        var val;
+        if (addCol && c.key === addCol.key) val = addCol.compute(r);
+        else val = r[c.key];
+        tbody += '<td class="' + cls.join(" ") + '">' + esc(val == null ? "" : val) + "</td>";
+      });
+      tbody += "</tr>";
+    });
+    tbody += "</tbody>";
+
+    tableEl.innerHTML = thead + tbody;
+  }
+
+  function showBase() {
+    renderCode(null);
+    renderTable(null);
+    explainEl.innerHTML = "This is the starting data frame: 6 rows, 5 columns. Pick a verb above.";
+    shapeEl.textContent = "6 rows x 5 columns";
+    setPressed(null);
+    subEl.hidden = true;
+    setSubPressed(null);
+  }
+
+  function setPressed(verb) {
+    Array.prototype.forEach.call(verbsEl.querySelectorAll(".tv-verb"), function (b) {
+      b.setAttribute("aria-pressed", b.dataset.verb === verb ? "true" : "false");
+    });
+  }
+
+  function setSubPressed(sub) {
+    Array.prototype.forEach.call(subEl.querySelectorAll(".tv-subverb"), function (b) {
+      b.setAttribute("aria-pressed", b.dataset.sub === sub ? "true" : "false");
+    });
+  }
+
+  function applyVerb(verb) {
+    // mutate takes the remembered sub-variant; others ignore the argument
+    var view = VERBS[verb](verb === "mutate" ? mutateSub : undefined);
+    renderCode(view.code);
+    renderTable(view);
+    explainEl.innerHTML = view.explain;
+    shapeEl.textContent = view.shape ? view.shape(view) : "";
+    setPressed(verb);
+
+    // show the variant row only for mutate
+    if (verb === "mutate") {
+      subEl.hidden = false;
+      setSubPressed(mutateSub);
+    } else {
+      subEl.hidden = true;
+      setSubPressed(null);
+    }
+  }
+
+  verbsEl.addEventListener("click", function (e) {
+    var btn = e.target.closest(".tv-verb");
+    if (!btn) return;
+    if (btn.getAttribute("aria-pressed") === "true") { showBase(); return; }
+    applyVerb(btn.dataset.verb);
+  });
+
+  subEl.addEventListener("click", function (e) {
+    var btn = e.target.closest(".tv-subverb");
+    if (!btn) return;
+    mutateSub = btn.dataset.sub;
+    applyVerb("mutate");
+  });
+
+  resetBtn.addEventListener("click", showBase);
+
+  showBase();
+})();
+</script>
+```
+
+## `<chr>` vs `<fct>`: why does R care? {#character-vs-factor}
+
+A "factor" is one of the most confusing types when you're starting out. The key idea: a factor is **not** the same as "ordered" — it's a column whose set of allowed *levels* is fixed and remembered. That changes how it sorts, how it plots, and what happens when a category has zero rows. Switch between an ordered (Likert) and a nominal (country) variable, and try each behaviour to see the difference side by side.
+
+*Relates to Session 2 & 3 — data types, wrangling, and visualization.*
+
+```{=html}
+<style>
+  .fct-explainer {
+    --fx-bg:      var(--bs-body-bg, #ffffff);
+    --fx-fg:      var(--bs-body-color, #212529);
+    --fx-primary: var(--bs-primary, #2780e3);
+    --fx-border:  var(--bs-border-color, #dee2e6);
+    --fx-muted:   var(--bs-secondary-color, #6c757d);
+    --fx-code-bg: var(--bs-tertiary-bg, #f8f9fa);
+
+    color: var(--fx-fg);
+    background: var(--fx-bg);
+    font-family: var(--bs-body-font-family, system-ui, -apple-system, "Segoe UI", sans-serif);
+    line-height: 1.5;
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
+  .fct-explainer *, .fct-explainer *::before, .fct-explainer *::after { box-sizing: border-box; }
+
+  .fx-caption { font-size: 0.8rem; color: var(--fx-muted); margin-bottom: 0.6rem; }
+
+  /* ---- control rows ---- */
+  .fx-controls { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-bottom: 1rem; }
+  .fx-group { display: flex; flex-direction: column; gap: 0.35rem; }
+  .fx-group-label {
+    font-size: 0.75rem; color: var(--fx-muted);
+    font-family: var(--bs-font-monospace, ui-monospace, Menlo, monospace);
+  }
+  .fx-btns { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .fx-btn {
+    font-family: var(--bs-font-monospace, ui-monospace, "Cascadia Code", Menlo, monospace);
+    font-size: 0.82rem;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--fx-border);
+    border-radius: 0.375rem;
+    background: var(--fx-bg);
+    color: var(--fx-fg);
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+  }
+  .fx-btn:hover { border-color: var(--fx-primary); }
+  .fx-btn:focus-visible { outline: 2px solid var(--fx-primary); outline-offset: 2px; }
+  .fx-btn[aria-pressed="true"] {
+    background: var(--fx-primary); color: #fff; border-color: var(--fx-primary);
+  }
+
+  /* ---- code block ---- */
+  .fx-code {
+    font-family: var(--bs-font-monospace, ui-monospace, "Cascadia Code", Menlo, monospace);
+    font-size: 0.85rem;
+    background: var(--fx-code-bg);
+    border: 1px solid var(--fx-border);
+    border-radius: 0.375rem;
+    padding: 0.75rem 0.9rem;
+    white-space: pre-wrap;
+    overflow-x: auto;
+    margin: 0 0 0.75rem;
+  }
+  .fx-code .fx-fn  { color: var(--fx-primary); font-weight: 600; }
+  .fx-code .fx-cmt { color: var(--fx-muted); }
+
+  /* ---- two panels: chr result vs fct result ---- */
+  .fx-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+  @media (max-width: 620px) { .fx-panels { grid-template-columns: 1fr; } }
+
+  .fx-panel {
+    border: 1px solid var(--fx-border);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+  }
+  .fx-panel-head {
+    font-family: var(--bs-font-monospace, ui-monospace, Menlo, monospace);
+    font-size: 0.85rem;
+    margin: 0 0 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .fx-tag {
+    font-size: 0.7rem;
+    padding: 0.05rem 0.4rem;
+    border-radius: 0.25rem;
+    border: 1px solid var(--fx-border);
+    color: var(--fx-muted);
+  }
+  .fx-tag.fx-fct { color: var(--fx-primary); border-color: var(--fx-primary); }
+
+  /* ---- value list (for sort view) ---- */
+  .fx-values { list-style: none; margin: 0; padding: 0; }
+  .fx-values li {
+    font-family: var(--bs-font-monospace, ui-monospace, Menlo, monospace);
+    font-size: 0.82rem;
+    padding: 0.22rem 0.45rem;
+    border-bottom: 1px solid var(--fx-border);
+  }
+  .fx-values li:last-child { border-bottom: none; }
+
+  /* ---- bar plot ---- */
+  .fx-bars { display: flex; flex-direction: column; gap: 0.4rem; }
+  .fx-bar-row { display: grid; grid-template-columns: 7.5rem 1fr; align-items: center; gap: 0.5rem; }
+  .fx-bar-label {
+    font-family: var(--bs-font-monospace, ui-monospace, Menlo, monospace);
+    font-size: 0.78rem;
+    text-align: right;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .fx-bar-track { position: relative; height: 1.3rem; }
+  .fx-bar-fill {
+    height: 100%;
+    background: var(--fx-primary);
+    border-radius: 0.2rem;
+    min-width: 2px;
+    transition: width 0.4s ease;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 0.3rem;
+    color: #fff; font-size: 0.7rem;
+    font-family: var(--bs-font-monospace, ui-monospace, Menlo, monospace);
+  }
+  .fx-bar-fill.fx-empty {
+    background: transparent;
+    border: 1px dashed var(--fx-border);
+    color: var(--fx-muted);
+    justify-content: flex-start;
+    padding-left: 0.3rem;
+  }
+
+  .fx-note {
+    font-size: 0.82rem;
+    margin: 0.6rem 0 0;
+    color: var(--fx-fg);
+  }
+  .fx-note strong { color: var(--fx-primary); }
+  .fx-levels {
+    font-size: 0.75rem;
+    color: var(--fx-muted);
+    font-family: var(--bs-font-monospace, ui-monospace, Menlo, monospace);
+    margin-top: 0.5rem;
+  }
+  @media (prefers-reduced-motion: reduce) { .fx-bar-fill { transition: none; } }
+</style>
+
+<div class="fct-explainer">
+  <p class="fx-caption">
+    Same survey column, stored two ways. Compare how a plain <code>character</code> behaves versus a <code>factor</code>.
+  </p>
+
+  <div class="fx-controls">
+    <div class="fx-group">
+      <span class="fx-group-label">variable</span>
+      <div class="fx-btns" id="fxVar" role="group" aria-label="demo variable">
+        <button class="fx-btn" data-var="likert"  type="button" aria-pressed="true">agreement (ordered)</button>
+        <button class="fx-btn" data-var="country" type="button" aria-pressed="false">country (nominal)</button>
+      </div>
+    </div>
+    <div class="fx-group">
+      <span class="fx-group-label">behaviour</span>
+      <div class="fx-btns" id="fxView" role="group" aria-label="behaviour to demonstrate">
+        <button class="fx-btn" data-view="sort"  type="button" aria-pressed="true">sort()</button>
+        <button class="fx-btn" data-view="plot"  type="button" aria-pressed="false">count + bar plot</button>
+        <button class="fx-btn" data-view="empty" type="button" aria-pressed="false">drop a category</button>
+      </div>
+    </div>
+  </div>
+
+  <pre class="fx-code" id="fxCode" aria-live="polite"></pre>
+
+  <div class="fx-panels">
+    <div class="fx-panel">
+      <p class="fx-panel-head">as character <span class="fx-tag">&lt;chr&gt;</span></p>
+      <div id="fxChr"></div>
+    </div>
+    <div class="fx-panel">
+      <p class="fx-panel-head">as factor <span class="fx-tag fx-fct">&lt;fct&gt;</span></p>
+      <div id="fxFct"></div>
+    </div>
+  </div>
+
+  <p class="fx-note" id="fxNote"></p>
+</div>
+
+<script>
+(function () {
+  // ---------- Demo data ----------
+  // Each variable has: the raw responses (with repeats), and the "correct" factor level order.
+  var VARS = {
+    likert: {
+      name: "agreement",
+      ordered: true,
+      // declared, meaningful order
+      levels: ["Strongly disagree", "Disagree", "Agree", "Strongly agree"],
+      // raw responses as they might appear in the data (note: no "Disagree" present, on purpose,
+      // so the "drop a category" view has a natural empty level to reveal)
+      raw: ["Agree", "Strongly agree", "Agree", "Strongly disagree", "Strongly agree", "Agree"],
+      code_levels: 'levels = c("Strongly disagree", "Disagree",\n                    "Agree", "Strongly agree")'
+    },
+    country: {
+      name: "country",
+      ordered: false,
+      levels: ["SG", "CA", "NZ"],   // nominal: order is just how we list them, not a ranking
+      raw: ["SG", "NZ", "SG", "CA", "SG", "NZ"],
+      code_levels: 'levels = c("SG", "CA", "NZ")'
+    }
+  };
+
+  var state = { variable: "likert", view: "sort" };
+
+  // ---------- helpers ----------
+  function esc(s) {
+    return String(s).replace(/[&<>]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c];
+    });
+  }
+  function alphaSort(arr) { return arr.slice().sort(function (a, b) { return a < b ? -1 : a > b ? 1 : 0; }); }
+  function levelSort(arr, levels) {
+    return arr.slice().sort(function (a, b) { return levels.indexOf(a) - levels.indexOf(b); });
+  }
+  function counts(arr) {
+    var m = {};
+    arr.forEach(function (v) { m[v] = (m[v] || 0) + 1; });
+    return m;
+  }
+
+  // ---------- renderers for each behaviour ----------
+  function renderSort(v, target, asFactor) {
+    var sorted = asFactor ? levelSort(v.raw, v.levels) : alphaSort(v.raw);
+    var html = '<ul class="fx-values">';
+    sorted.forEach(function (val) { html += "<li>" + esc(val) + "</li>"; });
+    html += "</ul>";
+    if (asFactor) {
+      var sep = v.ordered ? " &lt; " : ", ";
+      html += '<div class="fx-levels">levels: ' + v.levels.map(esc).join(sep) + "</div>";
+    }
+    target.innerHTML = html;
+  }
+
+  function renderBars(v, target, asFactor, opts) {
+    opts = opts || {};
+    var cts = counts(v.raw);
+    var cats;
+    if (asFactor) {
+      cats = v.levels.slice();               // factor: every level, in order, even 0-count
+    } else {
+      cats = alphaSort(Object.keys(cts));    // character: only observed values, alphabetical
+    }
+    if (opts.dropped) cats = cats;           // handled by caller adjusting v.raw upstream
+
+    var max = Math.max.apply(null, v.levels.map(function (c) { return cts[c] || 0; }).concat([1]));
+    var html = '<div class="fx-bars">';
+    cats.forEach(function (c) {
+      var n = cts[c] || 0;
+      var pct = (n / max) * 100;
+      var empty = n === 0;
+      html += '<div class="fx-bar-row">' +
+                '<span class="fx-bar-label" title="' + esc(c) + '">' + esc(c) + '</span>' +
+                '<div class="fx-bar-track">' +
+                  '<div class="fx-bar-fill' + (empty ? " fx-empty" : "") + '" style="width:' +
+                     (empty ? 100 : pct) + '%">' + (empty ? "0 (level kept)" : n) + '</div>' +
+                '</div>' +
+              '</div>';
+    });
+    html += "</div>";
+    target.innerHTML = html;
+  }
+
+  // ---------- code + note text per view ----------
+  function codeFor(v, view) {
+    var mk = function (order) {
+      return [
+        ["cmt", "# store the column as a factor"],
+        ["fn",  "factor", "(responses,"],
+        ["run", "       " + v.code_levels + (v.ordered ? "," : "") ],
+      ].concat(v.ordered ? [["run", "       ordered = TRUE)"]] : [["run", "       )"]]);
+    };
+    if (view === "sort") {
+      return [["cmt", "# character sorts alphabetically; factor sorts by level order"],
+              ["fn", "sort", "(responses)"]];
+    }
+    if (view === "plot") {
+      return [["cmt", "# count each category, then plot"],
+              ["run", "responses |> "],
+              ["fn", "  table", "() |> barplot()"]];
+    }
+    // empty
+    return [["cmt", "# remove all \"" + (v.ordered ? "Strongly agree" : "SG") + "\" rows, then count"],
+            ["run", "filtered |> "],
+            ["fn", "  table", "()   # factor still shows the dropped level"]];
+  }
+
+  // ---------- main render ----------
+  function render() {
+    var base = VARS[state.variable];
+    // clone so "drop a category" doesn't mutate the original
+    var v = {
+      name: base.name, ordered: base.ordered,
+      levels: base.levels.slice(), raw: base.raw.slice(),
+      code_levels: base.code_levels
+    };
+
+    // "drop a category": remove all rows of the first observed category,
+    // leaving its level defined (so the factor keeps an empty level)
+    if (state.view === "empty") {
+      var dropVal = v.ordered ? "Strongly agree" : "SG";
+      v.raw = v.raw.filter(function (x) { return x !== dropVal; });
+    }
+
+    // code block
+    var lines = codeFor(v, state.view);
+    var codeEl = document.getElementById("fxCode");
+    codeEl.innerHTML = lines.map(function (l) {
+      if (l[0] === "cmt") return '<span class="fx-cmt">' + esc(l[1]) + "</span>";
+      if (l[0] === "fn")  return '<span class="fx-fn">' + esc(l[1]) + "</span>" + esc(l[2] || "");
+      return esc(l[1]);
+    }).join("\n");
+
+    var chr = document.getElementById("fxChr");
+    var fct = document.getElementById("fxFct");
+    var note = document.getElementById("fxNote");
+
+    if (state.view === "sort") {
+      renderSort(v, chr, false);
+      renderSort(v, fct, true);
+      note.innerHTML = v.ordered
+        ? "<strong>Sorting.</strong> The character version sorts A-Z, so \"Agree\" lands before \"Strongly disagree\" — the meaningful order is lost. The factor sorts by its declared levels, keeping the scale intact."
+        : "<strong>Sorting.</strong> A-Z ordering (CA, NZ, SG) is fine for nominal data, but note the factor still controls the order you get. For country there's no 'right' ranking; you set the order you want.";
+    } else if (state.view === "plot") {
+      renderBars(v, chr, false);
+      renderBars(v, fct, true);
+      note.innerHTML = v.ordered
+        ? "<strong>Plotting.</strong> Bars follow whatever order the data type gives: alphabetical for character, level order for the factor. Notice \"Disagree\" — it's a declared level with zero responses, so the factor shows it and the character version can't."
+        : "<strong>Plotting.</strong> Both show the observed countries. The factor lets you fix bar order (e.g. by region or sample size) instead of being stuck with alphabetical.";
+    } else {
+      renderBars(v, chr, false);
+      renderBars(v, fct, true);
+      var dropVal = v.ordered ? "Strongly agree" : "SG";
+      note.innerHTML = "<strong>Empty levels.</strong> We removed every \"" + esc(dropVal) +
+        "\" row. The character column simply forgets that value ever existed. The factor keeps it as a level with count 0 — which is exactly what you want when comparing groups or building a complete results table.";
+    }
+  }
+
+  // ---------- wiring ----------
+  function wire(groupId, key) {
+    var el = document.getElementById(groupId);
+    el.addEventListener("click", function (e) {
+      var btn = e.target.closest(".fx-btn");
+      if (!btn) return;
+      state[key] = btn.dataset[key === "variable" ? "var" : "view"];
+      Array.prototype.forEach.call(el.querySelectorAll(".fx-btn"), function (b) {
+        b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+      });
+      render();
+    });
+  }
+  wire("fxVar", "variable");
+  wire("fxView", "view");
+
+  render();
+})();
+</script>
+```
+
+## Which chart should I use? {#chart-chooser}
+
+The trick to picking a `ggplot` chart is not memorising chart names — it's answering two questions: **how many variables** am I showing, and **what type** is each one (categorical or continuous)? The geom follows from there. Set the count and types below and you'll get the recommended chart(s), a schematic preview, and starter code using our `wvs_cleaned` data.
+
+*Relates to Session 3 — Data Visualization.*
+
+```{=html}
+<style>
+  .cc-explainer {
+    --cc-bg:      var(--bs-body-bg, #ffffff);
+    --cc-fg:      var(--bs-body-color, #212529);
+    --cc-primary: var(--bs-primary, #2780e3);
+    --cc-border:  var(--bs-border-color, #dee2e6);
+    --cc-muted:   var(--bs-secondary-color, #6c757d);
+    --cc-code-bg: var(--bs-tertiary-bg, #f8f9fa);
+
+    color: var(--cc-fg);
+    background: var(--cc-bg);
+    font-family: var(--bs-body-font-family, system-ui, -apple-system, "Segoe UI", sans-serif);
+    line-height: 1.5;
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
+  .cc-explainer *, .cc-explainer *::before, .cc-explainer *::after { box-sizing: border-box; }
+
+  .cc-caption { font-size: 0.8rem; color: var(--cc-muted); margin-bottom: 0.75rem; }
+  .cc-caption strong { color: var(--cc-fg); }
+
+  /* ---- step controls ---- */
+  .cc-steps { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-bottom: 1rem; }
+  .cc-step { display: flex; flex-direction: column; gap: 0.35rem; }
+  .cc-step-label {
+    font-size: 0.75rem; color: var(--cc-muted);
+    font-family: var(--bs-font-monospace, ui-monospace, Menlo, monospace);
+  }
+  .cc-btns { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .cc-btn {
+    font-family: var(--bs-font-monospace, ui-monospace, "Cascadia Code", Menlo, monospace);
+    font-size: 0.82rem;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--cc-border);
+    border-radius: 0.375rem;
+    background: var(--cc-bg);
+    color: var(--cc-fg);
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+  }
+  .cc-btn:hover { border-color: var(--cc-primary); }
+  .cc-btn:focus-visible { outline: 2px solid var(--cc-primary); outline-offset: 2px; }
+  .cc-btn[aria-pressed="true"] {
+    background: var(--cc-primary); color: #fff; border-color: var(--cc-primary);
+  }
+  .cc-btn[disabled] { opacity: 0.4; cursor: not-allowed; }
+
+  /* ---- results: cards of recommended charts ---- */
+  .cc-result-head {
+    font-size: 0.85rem;
+    margin: 0.25rem 0 0.75rem;
+    color: var(--cc-fg);
+  }
+  .cc-result-head code { color: var(--cc-primary); }
+
+  .cc-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+  .cc-card {
+    border: 1px solid var(--cc-border);
+    border-radius: 0.5rem;
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .cc-card.cc-primary-card { border-color: var(--cc-primary); border-width: 2px; }
+  .cc-card-title {
+    font-family: var(--bs-font-monospace, ui-monospace, Menlo, monospace);
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+  }
+  .cc-badge {
+    font-size: 0.65rem;
+    padding: 0.05rem 0.4rem;
+    border-radius: 0.25rem;
+    background: var(--cc-primary);
+    color: #fff;
+    font-weight: 600;
+  }
+  .cc-badge.cc-alt {
+    background: transparent; color: var(--cc-muted); border: 1px solid var(--cc-border);
+  }
+  .cc-preview {
+    background: var(--cc-code-bg);
+    border-radius: 0.375rem;
+    padding: 0.4rem;
+    display: flex; justify-content: center; align-items: center;
+  }
+  .cc-preview svg { width: 100%; height: auto; max-height: 120px; }
+  .cc-desc { font-size: 0.8rem; color: var(--cc-fg); margin: 0; }
+  .cc-code {
+    font-family: var(--bs-font-monospace, ui-monospace, "Cascadia Code", Menlo, monospace);
+    font-size: 0.76rem;
+    background: var(--cc-code-bg);
+    border: 1px solid var(--cc-border);
+    border-radius: 0.375rem;
+    padding: 0.55rem 0.65rem;
+    white-space: pre-wrap;
+    overflow-x: auto;
+    margin: 0;
+  }
+  .cc-code .cc-fn { color: var(--cc-primary); font-weight: 600; }
+  .cc-code .cc-cmt { color: var(--cc-muted); }
+
+  /* SVG palette hooks */
+  .cc-preview svg .s-fill   { fill: var(--cc-primary); }
+  .cc-preview svg .s-fill2  { fill: color-mix(in srgb, var(--cc-primary) 45%, transparent); }
+  .cc-preview svg .s-fill3  { fill: color-mix(in srgb, var(--cc-primary) 20%, transparent); }
+  .cc-preview svg .s-stroke { stroke: var(--cc-primary); fill: none; stroke-width: 2; }
+  .cc-preview svg .s-axis   { stroke: var(--cc-muted); stroke-width: 1; }
+  .cc-preview svg .s-dot    { fill: var(--cc-primary); opacity: 0.55; }
+</style>
+
+<div class="cc-explainer">
+  <p class="cc-caption">
+    <strong>The strategy:</strong> count your variables, decide each one's type, then let the chart follow.
+    Examples use our <code>wvs_cleaned</code> data.
+  </p>
+
+  <div class="cc-steps">
+    <div class="cc-step">
+      <span class="cc-step-label">1. how many variables?</span>
+      <div class="cc-btns" id="ccCount" role="group" aria-label="number of variables">
+        <button class="cc-btn" data-count="1" type="button" aria-pressed="true">one</button>
+        <button class="cc-btn" data-count="2" type="button" aria-pressed="false">two</button>
+        <button class="cc-btn" data-count="3" type="button" aria-pressed="false">three</button>
+      </div>
+    </div>
+    <div class="cc-step">
+      <span class="cc-step-label">2. what type is each?</span>
+      <div class="cc-btns" id="ccType" role="group" aria-label="variable types"></div>
+    </div>
+  </div>
+
+  <p class="cc-result-head" id="ccResultHead"></p>
+  <div class="cc-cards" id="ccCards"></div>
+</div>
+
+<script>
+(function () {
+  // ---------- SVG preview builders (schematic, theme-aware via CSS classes) ----------
+  var SVG = {
+    histogram: '<svg viewBox="0 0 160 100"><line class="s-axis" x1="15" y1="88" x2="155" y2="88"/><line class="s-axis" x1="15" y1="12" x2="15" y2="88"/>' +
+      [30,45,62,50,32,20].map(function (h, i) {
+        return '<rect class="s-fill" x="' + (18 + i * 22) + '" y="' + (88 - h) + '" width="20" height="' + h + '"/>';
+      }).join('') + '</svg>',
+    boxplot: '<svg viewBox="0 0 160 100"><line class="s-axis" x1="15" y1="88" x2="155" y2="88"/>' +
+      '<line class="s-axis" x1="30" y1="50" x2="60" y2="50"/><line class="s-axis" x1="110" y1="50" x2="140" y2="50"/>' +
+      '<line class="s-axis" x1="60" y1="50" x2="60" y2="50"/><rect class="s-fill2" x="60" y="35" width="50" height="30"/>' +
+      '<line class="s-stroke" x1="85" y1="35" x2="85" y2="65"/></svg>',
+    bar: '<svg viewBox="0 0 160 100"><line class="s-axis" x1="15" y1="88" x2="155" y2="88"/><line class="s-axis" x1="15" y1="12" x2="15" y2="88"/>' +
+      [55,68,48,60].map(function (h, i) {
+        return '<rect class="s-fill" x="' + (24 + i * 33) + '" y="' + (88 - h) + '" width="24" height="' + h + '"/>';
+      }).join('') + '</svg>',
+    pie: '<svg viewBox="0 0 160 100"><circle class="s-fill3" cx="80" cy="50" r="38"/>' +
+      '<path class="s-fill" d="M80 50 L80 12 A38 38 0 0 1 113 69 Z"/>' +
+      '<path class="s-fill2" d="M80 50 L113 69 A38 38 0 0 1 55 82 Z"/></svg>',
+    dodge: '<svg viewBox="0 0 160 100"><line class="s-axis" x1="15" y1="88" x2="155" y2="88"/>' +
+      [[40,55],[60,42],[50,63]].map(function (p, i) {
+        var x = 26 + i * 44;
+        return '<rect class="s-fill" x="' + x + '" y="' + (88 - p[0]) + '" width="16" height="' + p[0] + '"/>' +
+               '<rect class="s-fill2" x="' + (x + 17) + '" y="' + (88 - p[1]) + '" width="16" height="' + p[1] + '"/>';
+      }).join('') + '</svg>',
+    stack: '<svg viewBox="0 0 160 100"><line class="s-axis" x1="15" y1="88" x2="155" y2="88"/>' +
+      [0,1,2,3].map(function (i) {
+        var x = 24 + i * 33;
+        return '<rect class="s-fill3" x="' + x + '" y="30" width="24" height="26"/>' +
+               '<rect class="s-fill2" x="' + x + '" y="56" width="24" height="16"/>' +
+               '<rect class="s-fill" x="' + x + '" y="72" width="24" height="16"/>';
+      }).join('') + '</svg>',
+    fill: '<svg viewBox="0 0 160 100"><line class="s-axis" x1="15" y1="88" x2="155" y2="88"/>' +
+      [0,1,2,3].map(function (i) {
+        var x = 24 + i * 33;
+        return '<rect class="s-fill3" x="' + x + '" y="14" width="24" height="30"/>' +
+               '<rect class="s-fill2" x="' + x + '" y="44" width="24" height="24"/>' +
+               '<rect class="s-fill" x="' + x + '" y="68" width="24" height="20"/>';
+      }).join('') + '</svg>',
+    scatter: '<svg viewBox="0 0 160 100"><line class="s-axis" x1="15" y1="88" x2="155" y2="88"/><line class="s-axis" x1="15" y1="12" x2="15" y2="88"/>' +
+      [[30,70],[45,60],[55,64],[70,50],[85,45],[95,52],[110,35],[125,30],[60,55],[40,68],[100,42],[80,48]]
+        .map(function (p) { return '<circle class="s-dot" cx="' + p[0] + '" cy="' + p[1] + '" r="4"/>'; }).join('') +
+      '<line class="s-stroke" x1="25" y1="72" x2="140" y2="30"/></svg>',
+    violin: '<svg viewBox="0 0 160 100"><line class="s-axis" x1="15" y1="88" x2="155" y2="88"/>' +
+      '<path class="s-fill2" d="M50 20 C30 35 30 65 50 80 C70 65 70 35 50 20 Z"/>' +
+      '<path class="s-fill2" d="M110 25 C92 40 92 68 110 82 C128 68 128 40 110 25 Z"/>' +
+      '<rect class="s-fill" x="46" y="42" width="8" height="26"/><rect class="s-fill" x="106" y="46" width="8" height="24"/></svg>',
+    facet: '<svg viewBox="0 0 160 100">' +
+      [0,1,2,3].map(function (i) {
+        var gx = (i % 2) * 78 + 8, gy = Math.floor(i / 2) * 48 + 6;
+        return '<rect x="' + gx + '" y="' + gy + '" width="70" height="42" fill="none" class="s-axis"/>' +
+          [[12,30],[24,24],[36,20],[50,14]].map(function (p) {
+            return '<circle class="s-dot" cx="' + (gx + p[0]) + '" cy="' + (gy + p[1]) + '" r="2.5"/>';
+          }).join('') +
+          '<line class="s-stroke" x1="' + (gx + 8) + '" y1="' + (gy + 34) + '" x2="' + (gx + 60) + '" y2="' + (gy + 10) + '"/>';
+      }).join('') + '</svg>',
+    colour: '<svg viewBox="0 0 160 100"><line class="s-axis" x1="15" y1="88" x2="155" y2="88"/><line class="s-axis" x1="15" y1="12" x2="15" y2="88"/>' +
+      [[30,68],[45,62],[60,58],[40,70]].map(function (p) { return '<circle class="s-dot" cx="' + p[0] + '" cy="' + p[1] + '" r="4"/>'; }).join('') +
+      [[95,45],[110,38],[125,32],[105,50]].map(function (p) { return '<circle class="s-fill2" cx="' + p[0] + '" cy="' + p[1] + '" r="4"/>'; }).join('') +
+      '</svg>',
+    corr: '<svg viewBox="0 0 160 100">' +
+      [0,1,2,3].map(function (r) {
+        return [0,1,2,3].map(function (c) {
+          var cls = r === c ? 's-fill' : ((r + c) % 2 ? 's-fill2' : 's-fill3');
+          return '<rect class="' + cls + '" x="' + (36 + c * 22) + '" y="' + (12 + r * 22) + '" width="20" height="20"/>';
+        }).join('');
+      }).join('') + '</svg>'
+  };
+
+  // ---------- Recommendation catalogue, keyed by variable signature ----------
+  // Signatures: sorted type codes joined by "+". c = categorical, n = continuous.
+  var RECS = {
+    // ----- one variable -----
+    "n": {
+      head: 'One <b>continuous</b> variable (e.g. <code>age</code>)',
+      charts: [
+        { title: "Histogram", tag: "start here", svg: "histogram",
+          desc: "Shows the shape and spread of a single continuous variable.",
+          code: [["run","wvs_cleaned |> "],["fn","  ggplot","(aes(x = age)) +"],["fn","  geom_histogram","(binwidth = 1)"]] },
+        { title: "Boxplot", tag: "alt", svg: "boxplot",
+          desc: "Compact view of median, quartiles, and outliers.",
+          code: [["run","wvs_cleaned |> "],["fn","  ggplot","(aes(x = age)) +"],["fn","  geom_boxplot","()"]] }
+      ]
+    },
+    "c": {
+      head: 'One <b>categorical</b> variable (e.g. <code>country</code>)',
+      charts: [
+        { title: "Bar chart", tag: "start here", svg: "bar",
+          desc: "Frequency of each category (counts).",
+          code: [["run","wvs_cleaned |> "],["fn","  ggplot","(aes(x = country, fill = country)) +"],["fn","  geom_bar","()"]] },
+        { title: "Pie chart", tag: "alt", svg: "pie",
+          desc: "Proportion as parts of a whole. Best with few categories; compute proportions first.",
+          code: [["cmt","# after building a proportion table"],["run","... |> "],["fn","  ggplot","(aes(x = \"\", y = proportion, fill = country)) +"],["fn","  geom_bar","(stat = \"identity\") +"],["fn","  coord_polar","(\"y\")"]] }
+      ]
+    },
+    // ----- two variables -----
+    "c+c": {
+      head: 'Two <b>categorical</b> variables (e.g. <code>country</code> and <code>age_group</code>)',
+      charts: [
+        { title: "Dodged bar", tag: "start here", svg: "dodge",
+          desc: "Side-by-side bars compare counts across groups.",
+          code: [["run","wvs_cleaned |> "],["fn","  ggplot","(aes(x = country, fill = age_group)) +"],["fn","  geom_bar","(position = \"dodge\")"]] },
+        { title: "Stacked bar", tag: "alt", svg: "stack",
+          desc: "Stack groups to show composition within each category.",
+          code: [["fn","  geom_bar","(position = \"stack\")"]] },
+        { title: "Percent-stacked", tag: "alt", svg: "fill",
+          desc: "position = \"fill\" normalises each bar to 100% for comparing proportions.",
+          code: [["fn","  geom_bar","(position = \"fill\")"]] }
+      ]
+    },
+    "n+n": {
+      head: 'Two <b>continuous</b> variables (e.g. <code>emancipative_values</code> and <code>secular_values</code>)',
+      charts: [
+        { title: "Scatter / jitter", tag: "start here", svg: "scatter",
+          desc: "Reveals the relationship; add geom_smooth for a trend line. Pair with cor().",
+          code: [["run","wvs_cleaned |> "],["fn","  ggplot","(aes(x = emancipative_values, y = secular_values)) +"],["fn","  geom_jitter","(alpha = 0.3) +"],["fn","  geom_smooth","(method = \"lm\")"]] }
+      ]
+    },
+    "c+n": {
+      head: 'One <b>categorical</b> + one <b>continuous</b> (e.g. <code>country</code> and <code>secular_values</code>)',
+      charts: [
+        { title: "Side-by-side boxplot", tag: "start here", svg: "boxplot",
+          desc: "Compares a continuous variable's distribution across groups.",
+          code: [["run","wvs_cleaned |> "],["fn","  ggplot","(aes(x = country, y = secular_values)) +"],["fn","  geom_boxplot","()"]] },
+        { title: "Violin + boxplot", tag: "alt", svg: "violin",
+          desc: "Layer a violin under a thin boxplot to show full distribution shape per group.",
+          code: [["fn","  geom_violin","(fill = \"lightblue\", alpha = 0.5) +"],["fn","  geom_boxplot","(width = 0.1)"]] }
+      ]
+    },
+    // ----- three variables -----
+    "c+n+n": {
+      head: 'Two <b>continuous</b> + one <b>categorical</b> (add the 3rd via colour or facet)',
+      charts: [
+        { title: "Colour by category", tag: "start here", svg: "colour",
+          desc: "Map the categorical variable to colour to see group patterns in one panel.",
+          code: [["run","wvs_cleaned |> "],["fn","  ggplot","(aes(x = emancipative_values, y = secular_values, colour = sex)) +"],["fn","  geom_point","(alpha = 0.3)"]] },
+        { title: "Facet", tag: "alt", svg: "facet",
+          desc: "Split into small multiples, one panel per group, when colour gets crowded.",
+          code: [["fn","  geom_point","(alpha = 0.3) +"],["fn","  facet_wrap","(~ sex)"]] }
+      ]
+    },
+    "c+c+n": {
+      head: 'One <b>continuous</b> + two <b>categorical</b> (add the 3rd via fill or facet)',
+      charts: [
+        { title: "Boxplot + fill", tag: "start here", svg: "violin",
+          desc: "One categorical on x, the other as fill, continuous on y.",
+          code: [["run","wvs_cleaned |> "],["fn","  ggplot","(aes(x = country, y = secular_values, fill = sex)) +"],["fn","  geom_boxplot","()"]] },
+        { title: "Facet grid", tag: "alt", svg: "facet",
+          desc: "Facet by one categorical, keep the other on x, for cleaner separation.",
+          code: [["fn","  geom_boxplot","() +"],["fn","  facet_wrap","(~ sex)"]] }
+      ]
+    },
+    "c+c+c": {
+      head: 'Three <b>categorical</b> variables (facet a grouped bar)',
+      charts: [
+        { title: "Grouped bar + facet", tag: "start here", svg: "facet",
+          desc: "Two categoricals in the bar (x + fill), the third as facets.",
+          code: [["run","wvs_cleaned |> "],["fn","  ggplot","(aes(x = country, fill = age_group)) +"],["fn","  geom_bar","(position = \"dodge\") +"],["fn","  facet_wrap","(~ sex)"]] }
+      ]
+    },
+    "n+n+n": {
+      head: 'Three (or more) <b>continuous</b> variables',
+      charts: [
+        { title: "Correlation plot", tag: "start here", svg: "corr",
+          desc: "For several continuous variables, a correlation matrix beats many scatterplots. Uses the corrplot package.",
+          code: [["run","wvs_cleaned |> "],["fn","  select","(financial_satisfaction, life_satisfaction, freedom_of_choice) |> "],["fn","  cor","() |> "],["fn","  corrplot","(method = \"shade\")"]] },
+        { title: "Faceted scatter", tag: "alt", svg: "facet",
+          desc: "If one variable can be binned into groups, facet scatterplots of the other two.",
+          code: [["fn","  geom_point","() +"],["fn","  facet_wrap","(~ group)"]] }
+      ]
+    }
+  };
+
+  var state = { count: 1, types: ["n"] };
+
+  // ---------- rendering ----------
+  function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { "&":"&amp;","<":"&lt;",">":"&gt;" }[c]; }); }
+
+  function sig(types) { return types.slice().sort().join("+"); }
+
+  function renderTypePickers() {
+    var wrap = document.getElementById("ccType");
+    wrap.innerHTML = "";
+    for (var i = 0; i < state.count; i++) {
+      (function (idx) {
+        var group = document.createElement("span");
+        group.style.display = "inline-flex";
+        group.style.gap = "0.3rem";
+        group.style.marginRight = "0.5rem";
+        ["c", "n"].forEach(function (t) {
+          var b = document.createElement("button");
+          b.className = "cc-btn";
+          b.type = "button";
+          b.textContent = t === "c" ? "var " + (idx + 1) + ": categorical" : "var " + (idx + 1) + ": continuous";
+          b.setAttribute("aria-pressed", state.types[idx] === t ? "true" : "false");
+          b.addEventListener("click", function () {
+            state.types[idx] = t;
+            renderTypePickers();
+            renderResult();
+          });
+          group.appendChild(b);
+        });
+        wrap.appendChild(group);
+      })(i);
+    }
+  }
+
+  function renderResult() {
+    var head = document.getElementById("ccResultHead");
+    var cards = document.getElementById("ccCards");
+    var rec = RECS[sig(state.types)];
+
+    if (!rec) {
+      head.innerHTML = "That combination isn't covered in this session; try a different mix.";
+      cards.innerHTML = "";
+      return;
+    }
+    head.innerHTML = rec.head;
+    cards.innerHTML = rec.charts.map(function (ch) {
+      var codeHtml = ch.code.map(function (l) {
+        if (l[0] === "cmt") return '<span class="cc-cmt">' + esc(l[1]) + "</span>";
+        if (l[0] === "fn")  return '<span class="cc-fn">' + esc(l[1]) + "</span>" + esc(l[2] || "");
+        return esc(l[1]);
+      }).join("\n");
+      var isPrimary = ch.tag === "start here";
+      return '<div class="cc-card' + (isPrimary ? " cc-primary-card" : "") + '">' +
+               '<div class="cc-card-title">' + esc(ch.title) +
+                 '<span class="cc-badge' + (isPrimary ? "" : " cc-alt") + '">' + esc(ch.tag) + '</span>' +
+               '</div>' +
+               '<div class="cc-preview">' + (SVG[ch.svg] || "") + '</div>' +
+               '<p class="cc-desc">' + esc(ch.desc) + '</p>' +
+               '<pre class="cc-code">' + codeHtml + '</pre>' +
+             '</div>';
+    }).join("");
+  }
+
+  // count buttons
+  document.getElementById("ccCount").addEventListener("click", function (e) {
+    var btn = e.target.closest(".cc-btn");
+    if (!btn) return;
+    var n = parseInt(btn.dataset.count, 10);
+    state.count = n;
+    // resize types array, defaulting new slots sensibly
+    var defaults = ["n", "c", "n"];
+    var next = [];
+    for (var i = 0; i < n; i++) next.push(state.types[i] || defaults[i]);
+    state.types = next;
+    Array.prototype.forEach.call(this.querySelectorAll(".cc-btn"), function (b) {
+      b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+    });
+    renderTypePickers();
+    renderResult();
+  });
+
+  renderTypePickers();
+  renderResult();
+})();
+</script>
+```
