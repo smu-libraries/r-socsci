@@ -1974,40 +1974,28 @@
     "href": "supp-files/concept-explainers.html",
     "title": "Concept explainers",
     "section": "",
-    "text": "These are little hands-on toys to poke at some concepts that are easier to feel than to read about. Nothing here is graded or required — click around and see what changes. Each one maps to something we cover in the sessions.",
-    "crumbs": [
-      "Interactive concept explainers"
-    ]
+    "text": "These are little hands-on toys to poke at some concepts that are easier to feel than to read about. Nothing here is graded or required — click around and see what changes. Each one maps to something we cover in the sessions."
   },
   {
     "objectID": "supp-files/concept-explainers.html#tidyverse-verbs",
     "href": "supp-files/concept-explainers.html#tidyverse-verbs",
     "title": "Concept explainers",
     "section": "dplyr verbs: what does each one do to your data?",
-    "text": "dplyr verbs: what does each one do to your data?\nData wrangling in the tidyverse is really just a handful of verbs, each doing one clear thing to a table. Click a verb below to watch what happens to a slice of our World Values Survey data — which rows drop, which columns appear or disappear, what gets added. mutate() has a few variants worth comparing (if_else() vs case_when()).\nRelates to Session 2 — Data Wrangling with tidyverse.\n\n\n\n  \n    A slice of our World Values Survey data (wvs_data). Click a dplyr verb to see what it does to the table.\n    reset\n  \n\n  \n    select()\n    filter()\n    mutate()\n    arrange()\n    group_by() + summarise()\n  \n\n  \n    mutate() variants:\n    basic\n    if_else()\n    case_when()",
-    "crumbs": [
-      "Interactive concept explainers"
-    ]
+    "text": "dplyr verbs: what does each one do to your data?\nData wrangling in the tidyverse is really just a handful of verbs, each doing one clear thing to a table. Click a verb below to watch what happens to a slice of our World Values Survey data — which rows drop, which columns appear or disappear, what gets added. mutate() has a few variants worth comparing (if_else() vs case_when()).\nRelates to Session 2 — Data Wrangling with tidyverse.\n\n\n\n  \n    A slice of our World Values Survey data (wvs_data). Click a dplyr verb to see what it does to the table.\n    reset\n  \n\n  \n    select()\n    filter()\n    mutate()\n    arrange()\n    group_by() + summarise()\n  \n\n  \n    mutate() variants:\n    basic\n    if_else()\n    case_when()"
   },
   {
     "objectID": "supp-files/concept-explainers.html#character-vs-factor",
     "href": "supp-files/concept-explainers.html#character-vs-factor",
     "title": "Concept explainers",
     "section": "<chr> vs <fct>: why does R care?",
-    "text": "&lt;chr&gt; vs &lt;fct&gt;: why does R care?\nA “factor” is one of the most confusing types when you’re starting out. The key idea: a factor is not the same as “ordered” — it’s a column whose set of allowed levels is fixed and remembered. That changes how it sorts, how it plots, and what happens when a category has zero rows. Switch between an ordered (Likert) and a nominal (country) variable, and try each behaviour to see the difference side by side.\nRelates to Session 2 & 3 — data types, wrangling, and visualization.\n\n\n\n  \n    Same survey column, stored two ways. Compare how a plain character behaves versus a factor.\n  \n\n  \n    \n      variable\n      \n        agreement (ordered)\n        country (nominal)\n      \n    \n    \n      behaviour\n      \n        sort()\n        count + bar plot\n        drop a category\n      \n    \n  \n\n  \n\n  \n    \n      as character &lt;chr&gt;\n      \n    \n    \n      as factor &lt;fct&gt;",
-    "crumbs": [
-      "Interactive concept explainers"
-    ]
+    "text": "&lt;chr&gt; vs &lt;fct&gt;: why does R care?\nA “factor” is one of the most confusing types when you’re starting out. The key idea: a factor is not the same as “ordered” — it’s a column whose set of allowed levels is fixed and remembered. That changes how it sorts, how it plots, and what happens when a category has zero rows. Switch between an ordered (Likert) and a nominal (country) variable, and try each behaviour to see the difference side by side.\nRelates to Session 2 & 3 — data types, wrangling, and visualization.\n\n\n\n  \n    Same survey column, stored two ways. Compare how a plain character behaves versus a factor.\n  \n\n  \n    \n      variable\n      \n        agreement (ordered)\n        country (nominal)\n      \n    \n    \n      behaviour\n      \n        sort()\n        count + bar plot\n        drop a category\n      \n    \n  \n\n  \n\n  \n    \n      as character &lt;chr&gt;\n      \n    \n    \n      as factor &lt;fct&gt;"
   },
   {
     "objectID": "supp-files/concept-explainers.html#chart-chooser",
     "href": "supp-files/concept-explainers.html#chart-chooser",
     "title": "Concept explainers",
     "section": "Which chart should I use?",
-    "text": "Which chart should I use?\nThe trick to picking a ggplot chart is not memorising chart names — it’s answering two questions: how many variables am I showing, and what type is each one (categorical or continuous)? The geom follows from there. Set the count and types below and you’ll get the recommended chart(s), a schematic preview, and starter code using our wvs_cleaned data.\nRelates to Session 3 — Data Visualization.\n\n\n\n  \n    The strategy: count your variables, decide each one's type, then let the chart follow.\n    Examples use our wvs_cleaned data.\n  \n\n  \n    \n      1. how many variables?\n      \n        one\n        two\n        three\n      \n    \n    \n      2. what type is each?",
-    "crumbs": [
-      "Interactive concept explainers"
-    ]
+    "text": "Which chart should I use?\nThe trick to picking a ggplot chart is not memorising chart names — it’s answering two questions: how many variables am I showing, and what type is each one (categorical or continuous)? The geom follows from there. Set the count and types below and you’ll get the recommended chart(s), a schematic preview, and starter code using our wvs_cleaned data.\nRelates to Session 3 — Data Visualization.\n\n\n\n  \n    The strategy: count your variables, decide each one's type, then let the chart follow.\n    Examples use our wvs_cleaned data.\n  \n\n  \n    \n      1. how many variables?\n      \n        one\n        two\n        three\n      \n    \n    \n      2. what type is each?"
   },
   {
     "objectID": "supp-files/exercises.html",
