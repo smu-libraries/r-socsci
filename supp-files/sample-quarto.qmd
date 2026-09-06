@@ -2,7 +2,7 @@
 title: "Sample Quarto Document"
 author: "Bella Ratmelia"
 format: html
-bibliography: ../references.bib
+bibliography: references.bib
 ---
 
 # Hello Quarto!
