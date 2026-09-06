@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.8.25">
 
   <meta name="author" content="Bella Ratmelia">
-  <title>Introductory R for Social Sciences – Session 4: Basic Inferential Stats in R: Correlation, T-Tests, and ANOVA</title>
+  <title>Introductory R for Social Sciences – Session 4: Basic Inferential Stats in R</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -193,7 +193,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Session 4: Basic Inferential Stats in R: Correlation, T-Tests, and ANOVA</h1>
+  <h1 class="title">Session 4: Basic Inferential Stats in R</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -206,46 +206,19 @@ Bella Ratmelia
 </section>
 <section id="todays-outline" class="slide level2">
 <h2>Today’s Outline</h2>
+<p>Today is really about <em>With these variables that I have, which test do I reach for?</em></p>
 <ol type="1">
-<li>Refreshers on data distribution and research variables</li>
-<li>Both categorical: chi-square</li>
-<li>Both continuous: correlations</li>
-<li>Categorical X and Continuous Y (comparing means): T-tests and ANOVA</li>
+<li>Both categorical → <strong>chi-square</strong></li>
+<li>Both continuous → <strong>correlation</strong></li>
+<li>Categorical (2 groups) + continuous → <strong>t-tests</strong></li>
+<li>Categorical (3+ groups) + continuous → <strong>ANOVA</strong></li>
 </ol>
 </section>
 <section id="refresher-data-distribution" class="slide level2">
 <h2>Refresher: Data Distribution</h2>
-<p>The choice of appropriate statistical tests and methods often depends on the distribution of the data. Understanding the distribution helps in selecting the right and validity of the tests.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="co"># Set a seed for reproducibility</span></span>
-<span id="cb1-2"><a></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb1-3"><a></a></span>
-<span id="cb1-4"><a></a>normal_data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb1-5"><a></a>left_skewed_data <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(<span class="dv">1000</span>,<span class="dv">5</span>,<span class="dv">2</span>)</span>
-<span id="cb1-6"><a></a>right_skewed_data <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(<span class="dv">1000</span>,<span class="dv">2</span>,<span class="dv">5</span>)</span>
-<span id="cb1-7"><a></a>bimodal_data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="at">mean =</span> <span class="sc">-</span><span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">1</span>), <span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">1</span>))</span>
-<span id="cb1-8"><a></a>uniform_data <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1000</span>, <span class="at">min =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">max =</span> <span class="dv">1</span>)</span>
-<span id="cb1-9"><a></a></span>
-<span id="cb1-10"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb1-11"><a></a></span>
-<span id="cb1-12"><a></a><span class="co"># Plot histograms or density plots for each distribution</span></span>
-<span id="cb1-13"><a></a><span class="fu">hist</span>(normal_data, <span class="at">main =</span> <span class="st">"Normal Distribution"</span>, <span class="at">col =</span> <span class="st">"lightblue"</span>, <span class="at">probability =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-14"><a></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="fu">mean</span>(normal_data), <span class="at">sd =</span> <span class="fu">sd</span>(normal_data)), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb1-15"><a></a></span>
-<span id="cb1-16"><a></a><span class="fu">hist</span>(bimodal_data, <span class="at">main =</span> <span class="st">"Bimodal Distribution"</span>, <span class="at">col =</span> <span class="st">"lightgoldenrod"</span>, <span class="at">probability =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-17"><a></a><span class="fu">lines</span>(<span class="fu">density</span>(bimodal_data), <span class="at">col =</span> <span class="st">"darkorange"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb1-18"><a></a></span>
-<span id="cb1-19"><a></a><span class="fu">hist</span>(uniform_data, <span class="at">main =</span> <span class="st">"Uniform Distribution"</span>, <span class="at">col =</span> <span class="st">"lightpink"</span>, <span class="at">probability =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-20"><a></a><span class="fu">curve</span>(<span class="fu">dunif</span>(x, <span class="at">min =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">max =</span> <span class="dv">1</span>), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"deeppink"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb1-21"><a></a></span>
-<span id="cb1-22"><a></a><span class="fu">hist</span>(left_skewed_data, <span class="at">main =</span> <span class="st">"Left Skewed Distribution"</span>, <span class="at">col =</span> <span class="st">"lightgreen"</span>, <span class="at">probability =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-23"><a></a><span class="fu">curve</span>(<span class="fu">dbeta</span>(x, <span class="dv">5</span>, <span class="dv">2</span>), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb1-24"><a></a></span>
-<span id="cb1-25"><a></a><span class="fu">hist</span>(right_skewed_data, <span class="at">main =</span> <span class="st">"Right Skewed Distribution"</span>, <span class="at">col =</span> <span class="st">"lightcoral"</span>, <span class="at">probability =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-26"><a></a><span class="fu">curve</span>(<span class="fu">dbeta</span>(x, <span class="dv">2</span>, <span class="dv">5</span>), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"darkred"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The choice of appropriate statistical tests and methods often depends on the distribution of the data. Understanding the distribution helps in selecting the right test and judging its validity.</p>
 
-</div>
-<img data-src="04-stats_files/figure-html/unnamed-chunk-1-1.png" width="672" class="r-stretch"></section>
+<img data-src="04-stats_files/figure-revealjs/unnamed-chunk-1-1.png" width="1344" class="r-stretch"></section>
 <section id="refresher-research-variables" class="slide level2">
 <h2>Refresher: Research Variables</h2>
 <div class="columns">
@@ -264,6 +237,66 @@ Bella Ratmelia
 <li>Often denoted as <span class="math inline">\(x\)</span></li>
 </ul>
 </div></div>
+<div class="callout callout-tip callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>Naming your DV and IV (and their data type) <em>is</em> the first step in the whole process. Do this before you write a single line of code (or ask an AI for any).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="choosing-a-test-from-your-variables" class="slide level2">
+<h2>Choosing a test from your variables</h2>
+<p>Almost every test today comes down to reading the <strong>types</strong> of your variables :</p>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 46%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dependent variable (Y)</th>
+<th>Independent variable (X)</th>
+<th>Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Categorical</td>
+<td>Categorical</td>
+<td><strong>Chi-square</strong> test of independence</td>
+</tr>
+<tr class="even">
+<td>Continuous</td>
+<td>Continuous</td>
+<td><strong>Correlation</strong> (Pearson / Spearman / Kendall)</td>
+</tr>
+<tr class="odd">
+<td>Continuous</td>
+<td>Categorical, <strong>2 groups</strong></td>
+<td><strong>t-test</strong></td>
+</tr>
+<tr class="even">
+<td>Continuous</td>
+<td>Categorical, <strong>3+ groups</strong></td>
+<td><strong>ANOVA</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-tip callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>Remember, you are responsible for your work. <em>“Because Claude/ChatGPT told me this is the answer”</em> is not a defensible answer when your professor asks you about your analysis.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="checklist-when-you-start-rstudio" class="slide level2">
 <h2>Checklist when you start RStudio</h2>
@@ -285,30 +318,64 @@ Bella Ratmelia
 <h2>Load our data for today!</h2>
 <p>Let’s create a new R script called <code>session-4.R</code>, and then copy the code below to load our data for today. This code uses <code>read_csv</code> from <code>readr</code> package (part of <code>tidyverse</code>) to load our cleaned CSV (from the first checkpoint)</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="co"># import tidyverse library</span></span>
-<span id="cb2-2"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-3"><a></a></span>
-<span id="cb2-4"><a></a><span class="co"># read the CSV with WVS data</span></span>
-<span id="cb2-5"><a></a>wvs_cleaned <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data-output/wvs_cleaned_v1.csv"</span>)</span>
-<span id="cb2-6"><a></a></span>
-<span id="cb2-7"><a></a><span class="co"># Convert categorical variables to factors</span></span>
-<span id="cb2-8"><a></a>columns_to_convert <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"sex"</span>, <span class="st">"marital_status"</span>, <span class="st">"urban_rural"</span>, <span class="st">"income_level"</span>, <span class="st">"education"</span>, <span class="st">"trust_people"</span>)</span>
-<span id="cb2-9"><a></a></span>
-<span id="cb2-10"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb2-11"><a></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(columns_to_convert), as_factor))</span>
-<span id="cb2-12"><a></a></span>
-<span id="cb2-13"><a></a><span class="co"># put income_level in a natural low-to-high order (instead of alphabetical)</span></span>
-<span id="cb2-14"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb2-15"><a></a>    <span class="fu">mutate</span>(<span class="at">income_level =</span> <span class="fu">factor</span>(income_level, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Low"</span>, <span class="st">"Medium"</span>, <span class="st">"High"</span>)))</span>
-<span id="cb2-16"><a></a></span>
-<span id="cb2-17"><a></a><span class="co"># peek at the data, pay attention to the data types!</span></span>
-<span id="cb2-18"><a></a><span class="fu">glimpse</span>(wvs_cleaned)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="co"># import tidyverse library</span></span>
+<span id="cb1-2"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a></a></span>
+<span id="cb1-4"><a></a><span class="co"># read the CSV with WVS data</span></span>
+<span id="cb1-5"><a></a>wvs_cleaned <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data-output/wvs_cleaned_v1.csv"</span>)</span>
+<span id="cb1-6"><a></a></span>
+<span id="cb1-7"><a></a><span class="co"># Convert categorical variables to factors</span></span>
+<span id="cb1-8"><a></a>columns_to_convert <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"country"</span>, <span class="st">"sex"</span>, <span class="st">"marital_status"</span>, <span class="st">"urban_rural"</span>, <span class="st">"income_level"</span>, <span class="st">"education"</span>, <span class="st">"trust_people"</span>)</span>
+<span id="cb1-9"><a></a></span>
+<span id="cb1-10"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb1-11"><a></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(columns_to_convert), as_factor))</span>
+<span id="cb1-12"><a></a></span>
+<span id="cb1-13"><a></a><span class="co"># put income_level in a natural low-to-high order (instead of alphabetical)</span></span>
+<span id="cb1-14"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb1-15"><a></a>    <span class="fu">mutate</span>(<span class="at">income_level =</span> <span class="fu">factor</span>(income_level, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Low"</span>, <span class="st">"Medium"</span>, <span class="st">"High"</span>)))</span>
+<span id="cb1-16"><a></a></span>
+<span id="cb1-17"><a></a><span class="co"># peek at the data, pay attention to the data types!</span></span>
+<span id="cb1-18"><a></a><span class="fu">glimpse</span>(wvs_cleaned)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section>
-<section id="both-categorical-variables---the-x2-test" class="title-slide slide level1 center">
-<h1>Both Categorical variables - The <span class="math inline">\(X^2\)</span> test</h1>
+<section id="both-categorical-the-x2-test" class="title-slide slide level1 center">
+<h1>Both categorical → The <span class="math inline">\(X^2\)</span> test</h1>
 
+</section>
+<section id="where-we-are-right-now" class="slide level2">
+<h2>Where we are right now</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Y</th>
+<th>X</th>
+<th>Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Categorical</strong></td>
+<td><strong>Categorical</strong></td>
+<td>← <strong>Chi-square</strong></td>
+</tr>
+<tr class="even">
+<td>Continuous</td>
+<td>Continuous</td>
+<td>Correlation</td>
+</tr>
+<tr class="odd">
+<td>Continuous</td>
+<td>Categorical (2)</td>
+<td>t-test</td>
+</tr>
+<tr class="even">
+<td>Continuous</td>
+<td>Categorical (3+)</td>
+<td>ANOVA</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="chi-square-test-of-independence" class="slide level2">
 <h2>Chi-square test of independence</h2>
@@ -317,7 +384,7 @@ Bella Ratmelia
 <p><strong>Example</strong>: Is there a relationship between <code>education</code> level and <code>income_level</code> in our WVS data?</p>
 <p>Typically, we can start with the contingency table first, and then the visualization</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">table</span>(wvs_cleaned<span class="sc">$</span>education, wvs_cleaned<span class="sc">$</span>income_level)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">table</span>(wvs_cleaned<span class="sc">$</span>education, wvs_cleaned<span class="sc">$</span>income_level)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        
           Low Medium High
@@ -331,19 +398,25 @@ Bella Ratmelia
 <h2>Chi-square test of independence - visualizing data</h2>
 <p>We can use percent-stacked bar chart to visualize this (remember from last week!)</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb5-2"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> income_level, <span class="at">fill =</span> education)) <span class="sc">+</span></span>
-<span id="cb5-3"><a></a>    <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
-<span id="cb5-4"><a></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Proportion of education level for each income level"</span>) <span class="sc">+</span></span>
-<span id="cb5-5"><a></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> income_level, <span class="at">fill =</span> education)) <span class="sc">+</span></span>
+<span id="cb4-3"><a></a>    <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
+<span id="cb4-4"><a></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Proportion of education level for each income level"</span>) <span class="sc">+</span></span>
+<span id="cb4-5"><a></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="04-stats_files/figure-html/unnamed-chunk-3-1.png" width="672" class="r-stretch"></section>
+<img data-src="04-stats_files/figure-revealjs/unnamed-chunk-3-1.png" width="1344" class="r-stretch"></section>
 <section id="chi-square-sample-problem-and-results" class="slide level2">
 <h2>Chi-Square: Sample problem and results</h2>
 <p>Is there a relationship between education level and income level?</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="math inline">\(H_0\)</span>: Education level and income level are <strong>independent</strong> (no association).</p>
+</div><div class="column" style="width:50%;">
+<p><span class="math inline">\(H_1\)</span>: Education level and income level are <strong>not independent</strong> (associated).</p>
+</div></div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(wvs_cleaned<span class="sc">$</span>education, wvs_cleaned<span class="sc">$</span>income_level))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(wvs_cleaned<span class="sc">$</span>education, wvs_cleaned<span class="sc">$</span>income_level))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's Chi-squared test
@@ -359,12 +432,56 @@ X-squared = 318.06, df = 4, p-value &lt; 2.2e-16</code></pre>
 <li><strong>p-value</strong> = the probability of getting more extreme results than what was observed. Generally, if this value is less than the pre-determined significance level (also called alpha), the result would be considered “statistically significant”</li>
 </ul>
 </div>
-<p><em>What if there is a hypothesis? How would you write this in the report?</em></p>
+<p><em>Given the hypotheses above, how would you narrate this result in your report?</em></p>
+</section>
+<section id="reporting-χ²-in-apa-style" class="slide level2">
+<h2>Reporting χ² in APA style</h2>
+<p>Report the statistic with its <strong>degrees of freedom</strong> and <strong>sample size</strong>, then the value and p:</p>
+<p><span class="math display">\[\chi^2(4,\ N = 5102) = 318.06,\ p &lt; .001\]</span></p>
+<ul>
+<li><code>df</code> (4) and <code>X-squared</code> (318.06) come straight from the test output</li>
+<li><span class="math inline">\(N\)</span> (5102) is your total number of observations</li>
+<li>For a table with <span class="math inline">\(r\)</span> rows and <span class="math inline">\(c\)</span> columns, <span class="math inline">\(df = (r-1)(c-1)\)</span></li>
+</ul>
 </section></section>
 <section>
-<section id="both-continuous-variables---correlation" class="title-slide slide level1 center">
-<h1>Both Continuous variables - Correlation</h1>
+<section id="both-continuous-correlation" class="title-slide slide level1 center">
+<h1>Both continuous → Correlation</h1>
 
+</section>
+<section id="where-we-are-right-now-1" class="slide level2">
+<h2>Where we are right now</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Y</th>
+<th>X</th>
+<th>Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Categorical</td>
+<td>Categorical</td>
+<td>Chi-square</td>
+</tr>
+<tr class="even">
+<td><strong>Continuous</strong></td>
+<td><strong>Continuous</strong></td>
+<td>← <strong>Correlation</strong></td>
+</tr>
+<tr class="odd">
+<td>Continuous</td>
+<td>Categorical (2)</td>
+<td>t-test</td>
+</tr>
+<tr class="even">
+<td>Continuous</td>
+<td>Categorical (3+)</td>
+<td>ANOVA</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="correlation" class="slide level2">
 <h2>Correlation</h2>
@@ -398,25 +515,27 @@ X-squared = 318.06, df = 4, p-value &lt; 2.2e-16</code></pre>
 <section id="correlation-sample-problem-and-result" class="slide level2">
 <h2>Correlation: Sample problem and result</h2>
 <p>RQ: <strong>Is there a significant correlation between emancipative values and secular values?</strong></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="math inline">\(H_0\)</span>: There is <strong>no</strong> linear correlation between emancipative and secular values (<span class="math inline">\(\rho = 0\)</span>).</p>
+</div><div class="column" style="width:50%;">
+<p><span class="math inline">\(H_1\)</span>: There <strong>is</strong> a linear correlation between emancipative and secular values (<span class="math inline">\(\rho \neq 0\)</span>).</p>
+</div></div>
 <p>As both variables are numerical and continuous, we can use pearson correlation.</p>
 <p>Let’s start with visualizing the data, which can be used to support the explanation.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="co">#|</span></span>
-<span id="cb8-2"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb8-3"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> secular_values, <span class="at">y =</span> emancipative_values)) <span class="sc">+</span></span>
-<span id="cb8-4"><a></a>    <span class="fu">geom_jitter</span>(<span class="at">color=</span><span class="st">"maroon"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb8-5"><a></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="co"># se shows the confidence interval</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> secular_values, <span class="at">y =</span> emancipative_values)) <span class="sc">+</span></span>
+<span id="cb7-3"><a></a>    <span class="fu">geom_jitter</span>(<span class="at">color=</span><span class="st">"maroon"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb7-4"><a></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="co"># se shows the confidence interval</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
 <section id="correlation-sample-problem-and-result-output" class="slide level2 output-location-slide"><h2>Correlation: Sample problem and result</h2><div class="cell output-location-slide">
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-stats_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
+<p><img data-src="04-stats_files/figure-revealjs/unnamed-chunk-5-1.png" width="1344"></p>
 </figure>
 </div>
 </div>
@@ -424,9 +543,9 @@ X-squared = 318.06, df = 4, p-value &lt; 2.2e-16</code></pre>
 <h2>Conduct the correlation test</h2>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">cor.test</span>(wvs_cleaned<span class="sc">$</span>emancipative_values,</span>
-<span id="cb10-2"><a></a>         wvs_cleaned<span class="sc">$</span>secular_values,</span>
-<span id="cb10-3"><a></a>         <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">cor.test</span>(wvs_cleaned<span class="sc">$</span>emancipative_values,</span>
+<span id="cb8-2"><a></a>         wvs_cleaned<span class="sc">$</span>secular_values,</span>
+<span id="cb8-3"><a></a>         <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -453,11 +572,23 @@ sample estimates:
 </ul>
 </div>
 </section>
+<section id="reporting-r-in-apa-style" class="slide level2">
+<h2>Reporting r in APA style</h2>
+<p>Report Pearson’s correlation with its <strong>degrees of freedom</strong> in parentheses, the coefficient, and p:</p>
+<p><span class="math display">\[r(5100) = .46,\ p &lt; .001\]</span></p>
+<ul>
+<li><code>df</code> (5100) and <code>cor</code> (.46) are in the test output (here <span class="math inline">\(df = N - 2\)</span>)</li>
+<li>Good practice is to add the 95% CI too: <em>r</em>(5100) = .46, 95% CI [.44, .48], <em>p</em> &lt; .001</li>
+<li><em>(APA rounds r to 2 decimals and drops the leading zero.)</em></li>
+</ul>
+</section>
 <section id="learning-check-1" class="slide level2">
 <h2>Learning Check #1</h2>
+<p>Look at the map. <code>urban_rural</code> and <code>trust_people</code> are <strong>both categorical</strong> — so which test do you reach for?</p>
 <p>Is there a relationship between where someone lives (<code>urban_rural</code>) and whether they trust others (<code>trust_people</code>)? Is the result aligned with what you expected?</p>
+<p><em>First, try stating <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span> yourself — then run the test.</em></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(wvs_cleaned<span class="sc">$</span>urban_rural, wvs_cleaned<span class="sc">$</span>trust_people))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(wvs_cleaned<span class="sc">$</span>urban_rural, wvs_cleaned<span class="sc">$</span>trust_people))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's Chi-squared test with Yates' continuity correction
@@ -468,15 +599,49 @@ X-squared = 157.66, df = 1, p-value &lt; 2.2e-16</code></pre>
 </div>
 </section></section>
 <section>
-<section id="comparing-means-between-groups---t-tests-and-anova" class="title-slide slide level1 center">
-<h1>Comparing Means Between Groups - T-Tests and ANOVA</h1>
+<section id="categorical-2-groups-continuous-t-tests" class="title-slide slide level1 center">
+<h1>Categorical (2 groups) + continuous → T-Tests</h1>
 
+</section>
+<section id="where-we-are-right-now-2" class="slide level2">
+<h2>Where we are right now</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Y</th>
+<th>X</th>
+<th>Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Categorical</td>
+<td>Categorical</td>
+<td>Chi-square</td>
+</tr>
+<tr class="even">
+<td>Continuous</td>
+<td>Continuous</td>
+<td>Correlation</td>
+</tr>
+<tr class="odd">
+<td><strong>Continuous</strong></td>
+<td><strong>Categorical (2)</strong></td>
+<td>← <strong>t-test</strong></td>
+</tr>
+<tr class="even">
+<td>Continuous</td>
+<td>Categorical (3+)</td>
+<td>ANOVA</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="t-tests" class="slide level2">
 <h2>T-Tests</h2>
 <p>A <strong>t-test</strong> is a statistical test used to compare the means of two groups/samples of continuous data type and determine if the differences are statistically significant.</p>
 <ul>
-<li>The Student’s&nbsp;<em>t</em>-test is widely used when the sample size is reasonably small (less than approximately 30) <strong>or</strong> when the population standard deviation is unknown.</li>
+<li>The Student’s <em>t</em>-test is widely used when the sample size is reasonably small (less than approximately 30) <strong>or</strong> when the population standard deviation is unknown.</li>
 </ul>
 </section>
 <section id="types-of-t-test" class="slide level2">
@@ -500,12 +665,12 @@ X-squared = 157.66, df = 1, p-value &lt; 2.2e-16</code></pre>
 <p>RQ: <strong>Is there a significant difference in secular values between urban and rural residents?</strong></p>
 <p>Let’s first take only the necessary columns and get some summary statistics, particularly on the number of samples for each group, as well as the mean, standard deviation, and variance.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a></a>    <span class="fu">group_by</span>(urban_rural) <span class="sc">|&gt;</span></span>
-<span id="cb14-3"><a></a>    <span class="fu">summarise</span>(<span class="at">total =</span> <span class="fu">n</span>(),</span>
-<span id="cb14-4"><a></a>              <span class="at">mean =</span> <span class="fu">mean</span>(secular_values),</span>
-<span id="cb14-5"><a></a>              <span class="at">variance =</span> <span class="fu">var</span>(secular_values),</span>
-<span id="cb14-6"><a></a>              <span class="at">stdeviation =</span> <span class="fu">sd</span>(secular_values))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a></a>    <span class="fu">group_by</span>(urban_rural) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a></a>    <span class="fu">summarise</span>(<span class="at">total =</span> <span class="fu">n</span>(),</span>
+<span id="cb12-4"><a></a>              <span class="at">mean =</span> <span class="fu">mean</span>(secular_values),</span>
+<span id="cb12-5"><a></a>              <span class="at">variance =</span> <span class="fu">var</span>(secular_values),</span>
+<span id="cb12-6"><a></a>              <span class="at">stdeviation =</span> <span class="fu">sd</span>(secular_values))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -519,25 +684,25 @@ X-squared = 157.66, df = 1, p-value &lt; 2.2e-16</code></pre>
 </section>
 <section id="visualize-the-differences-between-two-samples" class="slide level2">
 <h2>Visualize the differences between two samples</h2>
-<p>The variance will be easier to see when we visualize it as well. Here the two groups have somewhat different spreads (the urban group is more variable), which suggests the variances may not be homogeneous — a good reason to use Welch’s t-test below.</p>
+<p>The variance will be easier to see when we visualize it as well.</p>
+<p>Here, the two groups have somewhat different spreads (the urban group is more variable), which suggests the variances may not be homogeneous. In this case, we can consider switching to <strong>Welch’s t-test</strong></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="co">#|</span></span>
-<span id="cb16-2"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> urban_rural, <span class="at">y =</span> secular_values)) <span class="sc">+</span></span>
-<span id="cb16-4"><a></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb16-5"><a></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> urban_rural, <span class="at">y =</span> secular_values)) <span class="sc">+</span></span>
+<span id="cb14-3"><a></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb14-4"><a></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="cell fragment">
+
+</section>
+<section id="visualize-the-differences-between-two-samples-output" class="slide level2 output-location-slide"><h2>Visualize the differences between two samples</h2><div class="cell output-location-slide">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-stats_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
+<p><img data-src="04-stats_files/figure-revealjs/unnamed-chunk-9-1.png" width="1344"></p>
 </figure>
 </div>
 </div>
-</div>
-</section>
-<section id="conduct-the-independent-samples-t-test" class="slide level2">
+</div></section><section id="conduct-the-independent-samples-t-test" class="slide level2">
 <h2>Conduct the independent samples T-test</h2>
 <p>Remember, the hypotheses are:</p>
 <div class="columns">
@@ -548,9 +713,9 @@ X-squared = 157.66, df = 1, p-value &lt; 2.2e-16</code></pre>
 </div></div>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">t.test</span>(secular_values <span class="sc">~</span> urban_rural,</span>
-<span id="cb17-2"><a></a>       <span class="at">data =</span> wvs_cleaned,</span>
-<span id="cb17-3"><a></a>       <span class="at">var.equal =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">t.test</span>(secular_values <span class="sc">~</span> urban_rural,</span>
+<span id="cb15-2"><a></a>       <span class="at">data =</span> wvs_cleaned,</span>
+<span id="cb15-3"><a></a>       <span class="at">var.equal =</span> <span class="cn">FALSE</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -575,14 +740,34 @@ mean in group Urban mean in group Rural
 <p><strong>Notice that we are using Welch’s t-test instead of Students’ t-test</strong></p>
 </div>
 <div class="callout-content">
-<p>Welch’s t-test (also known as <strong>unequal variances t-test</strong>, is a more robust alternative to Student’s t-test. It is often used when two samples have unequal variances and possibly unequal sample sizes.</p>
+<p>Welch’s t-test (also known as <strong>unequal variances t-test</strong>, is a more robust alternative to Student’s t-test. It is often used when two samples have unequal variances and possibly unequal sample sizes. By default, the <code>t.test</code> function in R will run Welch’s t-test.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="reporting-t-in-apa-style-independent-samples" class="slide level2">
+<h2>Reporting t in APA style (independent samples)</h2>
+<p>Report the <strong>degrees of freedom</strong>, the t statistic, and p:</p>
+<p><span class="math display">\[t(4547.9) = 23.42,\ p &lt; .001\]</span></p>
+<ul>
+<li>Read <code>df</code> and <code>t</code> from the test output. With <strong>Welch’s</strong> t-test the <code>df</code> is often a decimal — report it as shown.</li>
+<li>Good practice is to also give each group’s mean, e.g.&nbsp;urban (<em>M</em> = 0.39) vs rural (<em>M</em> = 0.28).</li>
+</ul>
+<div class="callout callout-tip callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>The same <code>t(df)</code> format is used for <strong>every</strong> t-test — see the next slides for the paired and one-sample versions.</p>
 </div>
 </div>
 </div>
 </section>
 <section id="t-test-paired-sample-t-test" class="slide level2">
 <h2>T-Test: Paired Sample T-Test</h2>
-<p>Unfortunately, our data is not suitable for paired T-Test. For demo purposes, we are going to use a built-in sample datasets called <code>sleep</code> from the base R dataset.</p>
+<p>Unfortunately, our data is not suitable for paired T-Test.</p>
+<p>For demo purposes, we are going to use a built-in sample datasets called <code>sleep</code> from the base R dataset.</p>
 <p>The dataset is already loaded, so you can use it right away!</p>
 <ul>
 <li>type <code>View(sleep)</code> in your R console (bottom left), and then press enter. RStudio will open up the preview of the dataset.</li>
@@ -590,8 +775,8 @@ mean in group Urban mean in group Rural
 <li>type <code>data()</code> in your console to see what are the available datasets that you can use for practice!</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>sleep <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(sleep)</span>
-<span id="cb19-2"><a></a><span class="fu">print</span>(sleep)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>sleep <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(sleep)</span>
+<span id="cb17-2"><a></a><span class="fu">print</span>(sleep)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -621,12 +806,23 @@ mean in group Urban mean in group Rural
 19   4.6 2     9    
 20   3.4 2     10   </code></pre>
 </div>
-</div></section><section id="visualise-the-before-group-1-and-after-group-2" class="slide level2">
-<h2>Visualise the before (group 1) and after (group 2)</h2>
+</div></section><section id="some-note-about-sleep-data" class="slide level2">
+<h2>Some note about Sleep data</h2>
+<p>(from <code>?sleep</code>)</p>
+<p><strong>Format</strong></p>
+<p>A data frame with 20 observations on 3 variables.</p>
+<pre><code>[, 1]   extra   numeric increase in hours of sleep
+[, 2]   group   factor  drug given
+[, 3]   ID  factor  patient ID</code></pre>
+<p><strong>Details</strong></p>
+<p>The group variable name may be misleading about the data: They represent measurements on 10 persons, not in groups.</p>
+</section>
+<section id="visualize-the-before-group-1-and-after-group-2" class="slide level2">
+<h2>Visualize the before (group 1) and after (group 2)</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>sleep <span class="sc">|&gt;</span> </span>
-<span id="cb21-2"><a></a>    <span class="fu">group_by</span>(group) <span class="sc">|&gt;</span> </span>
-<span id="cb21-3"><a></a>    <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean =</span> <span class="fu">mean</span>(extra), <span class="at">sd =</span> <span class="fu">sd</span>(extra), <span class="at">variance =</span> <span class="fu">var</span>(extra))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>sleep <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a></a>    <span class="fu">group_by</span>(group) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a></a>    <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">mean =</span> <span class="fu">mean</span>(extra), <span class="at">sd =</span> <span class="fu">sd</span>(extra), <span class="at">variance =</span> <span class="fu">var</span>(extra))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   group     n  mean    sd variance
@@ -635,31 +831,34 @@ mean in group Urban mean in group Rural
 2 2        10  2.33  2.00     4.01</code></pre>
 </div>
 </div>
+</section>
+<section class="slide level2">
+
 <p>Visualization:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>sleep <span class="sc">|&gt;</span> </span>
-<span id="cb23-2"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> extra)) <span class="sc">+</span></span>
-<span id="cb23-3"><a></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb23-4"><a></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>sleep <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> extra)) <span class="sc">+</span></span>
+<span id="cb22-3"><a></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb22-4"><a></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
-<section id="visualise-the-before-group-1-and-after-group-2-output" class="slide level2 output-location-slide"><h2>Visualise the before (group 1) and after (group 2)</h2><div class="cell output-location-slide">
+<section id="" class="slide level2 output-location-slide"><div class="cell output-location-slide">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-stats_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
+<p><img data-src="04-stats_files/figure-revealjs/unnamed-chunk-13-1.png" width="1344"></p>
 </figure>
 </div>
 </div>
 </div></section><section id="transform-the-data-shape" class="slide level2">
 <h2>Transform the data shape</h2>
-<p>The data is in long format. let’s transform it into wide format so that we can conduct the analysis more easily.</p>
+<p>The data is in long format. Let’s transform it into wide format so that we can conduct the analysis more easily.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>sleep_wide <span class="ot">&lt;-</span> sleep <span class="sc">|&gt;</span> </span>
-<span id="cb24-2"><a></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> group, <span class="at">values_from =</span> extra, </span>
-<span id="cb24-3"><a></a>                <span class="at">names_prefix =</span> <span class="st">"group_"</span>)</span>
-<span id="cb24-4"><a></a><span class="fu">print</span>(sleep_wide)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>sleep_wide <span class="ot">&lt;-</span> sleep <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> group, <span class="at">values_from =</span> extra,</span>
+<span id="cb23-3"><a></a>                <span class="at">names_prefix =</span> <span class="st">"group_"</span>)</span>
+<span id="cb23-4"><a></a><span class="fu">print</span>(sleep_wide)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -689,8 +888,8 @@ mean in group Urban mean in group Rural
 <p><span class="math inline">\(H_1\)</span>: There is a significant difference in the increase in hours of sleep.</p>
 </div></div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">t.test</span>(<span class="fu">Pair</span>(sleep_wide<span class="sc">$</span>group_1, sleep_wide<span class="sc">$</span>group_2) <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb26-2"><a></a>       <span class="at">data =</span> sleep)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">t.test</span>(<span class="fu">Pair</span>(sleep_wide<span class="sc">$</span>group_1, sleep_wide<span class="sc">$</span>group_2) <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb25-2"><a></a>       <span class="at">data =</span> sleep)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -708,21 +907,29 @@ mean difference
 </div>
 </div>
 </section>
+<section id="reporting-t-in-apa-style-paired" class="slide level2">
+<h2>Reporting t in APA style (paired)</h2>
+<p><span class="math display">\[t(9) = -4.06,\ p = .003\]</span></p>
+<ul>
+<li>Same <code>t(df)</code> format — here with a small sample, <code>df</code> = 9.</li>
+<li>Note <code>p</code> is reported as <code>p = .003</code> (not <code>&lt; .001</code>), since it’s above that threshold.</li>
+</ul>
+</section>
 <section id="t-test-one-sample-t-test" class="slide level2">
 <h2>T-test: One-sample T-Test</h2>
 <p>RQ: <strong>Is the average life satisfaction in our sample significantly different from the global average of 6.5?</strong></p>
 <p>Let’s start with visualizing the data</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb28-2"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> life_satisfaction)) <span class="sc">+</span></span>
-<span id="cb28-3"><a></a>    <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
-<span id="cb28-4"><a></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">6.5</span>, <span class="at">color=</span><span class="st">"red"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> life_satisfaction)) <span class="sc">+</span></span>
+<span id="cb27-3"><a></a>    <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb27-4"><a></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">6.5</span>, <span class="at">color=</span><span class="st">"red"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-stats_files/figure-html/unnamed-chunk-16-1.png" width="672"></p>
+<p><img data-src="04-stats_files/figure-revealjs/unnamed-chunk-16-1.png" width="1344"></p>
 </figure>
 </div>
 </div>
@@ -730,12 +937,19 @@ mean difference
 </section>
 <section id="conduct-the-one-sample-t-test" class="slide level2">
 <h2>Conduct the One-sample T-Test</h2>
+<p>Remember, the hypotheses are:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="math inline">\(H_0\)</span>: Mean life satisfaction is <strong>equal</strong> to 6.5 (<span class="math inline">\(\mu = 6.5\)</span>).</p>
+</div><div class="column" style="width:50%;">
+<p><span class="math inline">\(H_1\)</span>: Mean life satisfaction is <strong>different</strong> from 6.5 (<span class="math inline">\(\mu \neq 6.5\)</span>).</p>
+</div></div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>global_mean_satisfaction <span class="ot">=</span> <span class="fl">6.5</span>  </span>
-<span id="cb29-2"><a></a></span>
-<span id="cb29-3"><a></a><span class="fu">t.test</span>(wvs_cleaned<span class="sc">$</span>life_satisfaction,          </span>
-<span id="cb29-4"><a></a>       <span class="at">alternative =</span> <span class="st">"two.sided"</span>, </span>
-<span id="cb29-5"><a></a>       <span class="at">mu =</span> global_mean_satisfaction)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>global_mean_satisfaction <span class="ot">=</span> <span class="fl">6.5</span></span>
+<span id="cb28-2"><a></a></span>
+<span id="cb28-3"><a></a><span class="fu">t.test</span>(wvs_cleaned<span class="sc">$</span>life_satisfaction,</span>
+<span id="cb28-4"><a></a>       <span class="at">alternative =</span> <span class="st">"two.sided"</span>,</span>
+<span id="cb28-5"><a></a>       <span class="at">mu =</span> global_mean_satisfaction)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -753,11 +967,16 @@ mean of x
 </div>
 </div>
 </section>
+<section id="reporting-t-in-apa-style-one-sample" class="slide level2">
+<h2>Reporting t in APA style (one-sample)</h2>
+<p><span class="math display">\[t(5101) = 15.48,\ p &lt; .001\]</span></p>
+<p>Good practice is to also state the sample mean and the value it was compared against, e.g.&nbsp;the sample mean (<em>M</em> = 6.94) was significantly higher than the global average of 6.5.</p>
+</section>
 <section id="learning-check-2" class="slide level2">
 <h2>Learning Check #2</h2>
-<p>Look at the following data from <code>CO2</code>, which T-test to use if we want to compare difference in the carbon dioxide <code>uptake</code> between the two treatments?</p>
+<p>Look at the following data from <code>CO2</code>. Walk the map: <code>Treatment</code> is categorical with <strong>2</strong> groups, <code>uptake</code> is continuous — so which t-test compares the CO₂ <code>uptake</code> between the two treatments?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">summary</span>(CO2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">summary</span>(CO2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Plant             Type         Treatment       conc          uptake     
  Qn1    : 7   Quebec     :42   nonchilled:42   Min.   :  95   Min.   : 7.70  
@@ -769,96 +988,53 @@ mean of x
  (Other):42                                                                  </code></pre>
 </div>
 </div>
-<p>Visualize the data:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="fu">print</span>(CO2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Grouped Data: uptake ~ conc | Plant
-   Plant        Type  Treatment conc uptake
-1    Qn1      Quebec nonchilled   95   16.0
-2    Qn1      Quebec nonchilled  175   30.4
-3    Qn1      Quebec nonchilled  250   34.8
-4    Qn1      Quebec nonchilled  350   37.2
-5    Qn1      Quebec nonchilled  500   35.3
-6    Qn1      Quebec nonchilled  675   39.2
-7    Qn1      Quebec nonchilled 1000   39.7
-8    Qn2      Quebec nonchilled   95   13.6
-9    Qn2      Quebec nonchilled  175   27.3
-10   Qn2      Quebec nonchilled  250   37.1
-11   Qn2      Quebec nonchilled  350   41.8
-12   Qn2      Quebec nonchilled  500   40.6
-13   Qn2      Quebec nonchilled  675   41.4
-14   Qn2      Quebec nonchilled 1000   44.3
-15   Qn3      Quebec nonchilled   95   16.2
-16   Qn3      Quebec nonchilled  175   32.4
-17   Qn3      Quebec nonchilled  250   40.3
-18   Qn3      Quebec nonchilled  350   42.1
-19   Qn3      Quebec nonchilled  500   42.9
-20   Qn3      Quebec nonchilled  675   43.9
-21   Qn3      Quebec nonchilled 1000   45.5
-22   Qc1      Quebec    chilled   95   14.2
-23   Qc1      Quebec    chilled  175   24.1
-24   Qc1      Quebec    chilled  250   30.3
-25   Qc1      Quebec    chilled  350   34.6
-26   Qc1      Quebec    chilled  500   32.5
-27   Qc1      Quebec    chilled  675   35.4
-28   Qc1      Quebec    chilled 1000   38.7
-29   Qc2      Quebec    chilled   95    9.3
-30   Qc2      Quebec    chilled  175   27.3
-31   Qc2      Quebec    chilled  250   35.0
-32   Qc2      Quebec    chilled  350   38.8
-33   Qc2      Quebec    chilled  500   38.6
-34   Qc2      Quebec    chilled  675   37.5
-35   Qc2      Quebec    chilled 1000   42.4
-36   Qc3      Quebec    chilled   95   15.1
-37   Qc3      Quebec    chilled  175   21.0
-38   Qc3      Quebec    chilled  250   38.1
-39   Qc3      Quebec    chilled  350   34.0
-40   Qc3      Quebec    chilled  500   38.9
-41   Qc3      Quebec    chilled  675   39.6
-42   Qc3      Quebec    chilled 1000   41.4
-43   Mn1 Mississippi nonchilled   95   10.6
-44   Mn1 Mississippi nonchilled  175   19.2
-45   Mn1 Mississippi nonchilled  250   26.2
-46   Mn1 Mississippi nonchilled  350   30.0
-47   Mn1 Mississippi nonchilled  500   30.9
-48   Mn1 Mississippi nonchilled  675   32.4
-49   Mn1 Mississippi nonchilled 1000   35.5
-50   Mn2 Mississippi nonchilled   95   12.0
-51   Mn2 Mississippi nonchilled  175   22.0
-52   Mn2 Mississippi nonchilled  250   30.6
-53   Mn2 Mississippi nonchilled  350   31.8
-54   Mn2 Mississippi nonchilled  500   32.4
-55   Mn2 Mississippi nonchilled  675   31.1
-56   Mn2 Mississippi nonchilled 1000   31.5
-57   Mn3 Mississippi nonchilled   95   11.3
-58   Mn3 Mississippi nonchilled  175   19.4
-59   Mn3 Mississippi nonchilled  250   25.8
-60   Mn3 Mississippi nonchilled  350   27.9
-61   Mn3 Mississippi nonchilled  500   28.5
-62   Mn3 Mississippi nonchilled  675   28.1
-63   Mn3 Mississippi nonchilled 1000   27.8
-64   Mc1 Mississippi    chilled   95   10.5
-65   Mc1 Mississippi    chilled  175   14.9
-66   Mc1 Mississippi    chilled  250   18.1
-67   Mc1 Mississippi    chilled  350   18.9
-68   Mc1 Mississippi    chilled  500   19.5
-69   Mc1 Mississippi    chilled  675   22.2
-70   Mc1 Mississippi    chilled 1000   21.9
-71   Mc2 Mississippi    chilled   95    7.7
-72   Mc2 Mississippi    chilled  175   11.4
-73   Mc2 Mississippi    chilled  250   12.3
-74   Mc2 Mississippi    chilled  350   13.0
-75   Mc2 Mississippi    chilled  500   12.5
-76   Mc2 Mississippi    chilled  675   13.7
-77   Mc2 Mississippi    chilled 1000   14.4
-78   Mc3 Mississippi    chilled   95   10.6
-79   Mc3 Mississippi    chilled  175   18.0
-80   Mc3 Mississippi    chilled  250   17.9
-81   Mc3 Mississippi    chilled  350   17.9
-82   Mc3 Mississippi    chilled  500   17.9
-83   Mc3 Mississippi    chilled  675   18.9
-84   Mc3 Mississippi    chilled 1000   19.9</code></pre>
+</section></section>
+<section>
+<section id="categorical-3-groups-continuous-anova" class="title-slide slide level1 center">
+<h1>Categorical (3+ groups) + continuous → ANOVA</h1>
+
+</section>
+<section id="where-we-are-right-now-3" class="slide level2">
+<h2>Where we are right now</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Y</th>
+<th>X</th>
+<th>Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Categorical</td>
+<td>Categorical</td>
+<td>Chi-square</td>
+</tr>
+<tr class="even">
+<td>Continuous</td>
+<td>Continuous</td>
+<td>Correlation</td>
+</tr>
+<tr class="odd">
+<td>Continuous</td>
+<td>Categorical (2)</td>
+<td>t-test</td>
+</tr>
+<tr class="even">
+<td><strong>Continuous</strong></td>
+<td><strong>Categorical (3+)</strong></td>
+<td>← <strong>ANOVA</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-note callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>You may not have met ANOVA in your stats class yet, but that’s fine! We can explore this together; IRL, you may run into this very often, as it’s the tool for <strong>“comparing means across 3 or more groups”.</strong> A t-test only handles two.</p>
+</div>
 </div>
 </div>
 </section>
@@ -868,20 +1044,36 @@ mean of x
 <p>There are two ‘mainstream’ ANOVA:</p>
 <ul>
 <li class="fragment"><strong>One-Way ANOVA</strong>: comparing means across two or more independent groups (levels) of a <u><strong>single</strong></u> independent variable.</li>
-<li class="fragment"><strong>Two-Way ANOVA</strong>: comparing means across two or more independent groups (levels) of <u><strong>two</strong></u> independent variable. ()</li>
+<li class="fragment"><strong>Two-Way ANOVA</strong>: comparing means across groups defined by <u><strong>two</strong></u> independent variables. <em>(we’ll cover this in the appendix if time allows)</em></li>
 <li class="fragment">Other types of ANOVA that you may encounter: Repeated measures ANOVA, Multivariate ANOVA (MANOVA), ANCOVA, etc.</li>
 </ul>
 </section>
 <section id="one-way-anova-sample-problem-and-result" class="slide level2">
 <h2>One-Way ANOVA: Sample problem and result</h2>
 <p>RQ: <strong>Is there a significant difference in emancipative values between different countries?</strong></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="math inline">\(H_0\)</span>: All countries have the <strong>same</strong> mean emancipative values (<span class="math inline">\(\mu_1 = \mu_2 = \dots = \mu_k\)</span>).</p>
+</div><div class="column" style="width:50%;">
+<p><span class="math inline">\(H_1\)</span>: <strong>At least one</strong> country’s mean differs from the others.</p>
+</div></div>
+<div class="callout callout-note callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>Note the <span class="math inline">\(H_1\)</span> — ANOVA only tells you <em>at least one</em> group stands out, <strong>not which one(s)</strong>. That’s what the post-hoc test is for, later.</p>
+</div>
+</div>
+</div>
 <p>Let’s visualize the data first!</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb35-2"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">y =</span> emancipative_values)) <span class="sc">+</span></span>
-<span id="cb35-3"><a></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb35-4"><a></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb35-5"><a></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb32-2"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">y =</span> emancipative_values)) <span class="sc">+</span></span>
+<span id="cb32-3"><a></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb32-4"><a></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb32-5"><a></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -889,15 +1081,15 @@ mean of x
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-stats_files/figure-html/unnamed-chunk-20-1.png" width="672"></p>
+<p><img data-src="04-stats_files/figure-revealjs/unnamed-chunk-19-1.png" width="1344"></p>
 </figure>
 </div>
 </div>
 </div></section><section id="conduct-the-one-way-anova-test" class="slide level2">
 <h2>Conduct the one-way Anova test</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>emanc_country_anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(emancipative_values <span class="sc">~</span> country, <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb36-2"><a></a><span class="fu">summary</span>(emanc_country_anova)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>emanc_country_anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(emancipative_values <span class="sc">~</span> country, <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb33-2"><a></a><span class="fu">summary</span>(emanc_country_anova)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -917,15 +1109,267 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><strong>Df</strong>: Degrees of Freedom</li>
 </ul>
 </div>
+<p>The p-value is tiny — so there <em>is</em> a significant difference somewhere.</p>
 </section>
-<section id="post-hoc-test-only-when-result-is-significant" class="slide level2">
-<h2>Post-hoc test (only when result is significant)</h2>
-<p>If your ANOVA test indicates significant result, the next step is to figure out which category pairings are yielding the significant result.</p>
-<p>Tukey’s Honest Significant Difference (HSD) can help us figure that out!</p>
+<section id="reporting-f-in-apa-style" class="slide level2">
+<h2>Reporting F in APA style</h2>
+<p>Cite F with <strong>both</strong> degrees of freedom (the <code>country</code> df, then the <code>Residuals</code> df), the F value, and the p-value:</p>
+<p><span class="math display">\[F(3,\ 5098) = 360,\ p &lt; .001\]</span></p>
+<ul>
+<li>The numerator df (3) is from the <code>country</code> row, the denominator df (5098) from the <code>Residuals</code> row</li>
+<li>Write <code>p &lt; .001</code> rather than R’s <code>&lt;2e-16</code></li>
+</ul>
+</section></section>
+<section>
+<section id="anova---checking-assumptions" class="title-slide slide level1 center">
+<h1>ANOVA - Checking assumptions</h1>
+
+</section>
+<section id="this-part-is-your-job-not-the-ais" class="slide level2">
+<h2>This part is <em>your</em> job, not the AI’s</h2>
+<p>But before we trust it — <strong>was this even the appropriate test for our data?</strong> An ANOVA will <strong>always</strong> give you an F-value and a p-value, even when it’s the wrong approach for your data. R won’t stop you, and Claude/ChatGPT certainly won’t stop you either.</p>
+<div class="callout callout-important callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p><strong>When and where possible, check the assumptions every time.</strong></p>
+</div>
+</div>
+</div>
+<p>Checking the assumptions is the human’s job. For ANOVA, the main things to verify:</p>
+<ul>
+<li>The DV is continuous; the IV is categorical ✅ (we chose it that way)</li>
+<li>Observations are independent</li>
+<li>The model <strong>residuals</strong> are approximately <strong>normal</strong> — note: the residuals, <em>not</em> the raw DV → <em>Q-Q plot, Shapiro-Wilk test</em></li>
+<li>The groups have roughly <strong>equal variance</strong> (homoskedasticity) → <em>Levene’s test</em></li>
+<li>No severe outliers</li>
+</ul>
+<div class="callout callout-note callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>“Check” doesn’t mean “run a test and obey the p-value” — it means <em>look</em> at your data and <em>understand</em> what the test needs. We’ll see why that distinction matters in a moment.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="checking-normality-shapiro-wilk-test" class="slide level2 scrollable">
+<h2>Checking normality: Shapiro-Wilk Test</h2>
+<p><strong>Shapiro-Wilk Test</strong> checks normality. <span class="math inline">\(H_0\)</span> = the residuals are normally distributed.</p>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># so it samples the same way every time</span></span>
+<span id="cb35-2"><a></a><span class="fu">shapiro.test</span>(<span class="fu">sample</span>(<span class="fu">residuals</span>(emanc_country_anova), <span class="dv">5000</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  sample(residuals(emanc_country_anova), 5000)
+W = 0.99354, p-value = 2.908e-14</code></pre>
+</div>
+</div></div>
+<p>The p-value is below 0.05, so <em>technically</em> the residuals aren’t perfectly normal.</p>
+</section>
+<section id="limitations-of-shapiro-wilk-test" class="slide level2">
+<h2>Limitations of Shapiro-Wilk test</h2>
+<p>Worth <strong>understanding rather than obeying</strong> — Shapiro-Wilk has a well-known limitation with large datasets:</p>
+<ul>
+<li><strong>It’s highly sensitive to sample size.</strong> As <span class="math inline">\(n\)</span> grows, the test’s statistical power climbs so high that it flags tiny, practically irrelevant deviations as “significant”. At ~5,000 rows it will reject normality almost every time.</li>
+<li><strong>No real-world data is <em>perfectly</em> normal.</strong> So at this size the test is mostly detecting that unavoidable imperfection — not a problem that actually threatens your ANOVA.</li>
+<li><strong>R even caps <code>shapiro.test()</code> at 5,000 observations</strong> (that’s why we had to <code>sample()</code> down just to run it). It isn’t built for big dataset.</li>
+</ul>
+<p>Even though technically this means “assumption failed”, we can treat this as a cue to <em>look</em> at the data instead.</p>
+</section>
+<section id="checking-normality-visually-q-q-plot" class="slide level2">
+<h2>Checking normality visually: Q-Q Plot</h2>
+<p>For normality, the visualisation is more helpful, <em>especially</em> at large n, where Shapiro-Wilk over-reacts. If the points hug the diagonal, the residuals are roughly normal. Ours drift off at the tails — but we can decide: <strong>is that drift severe, or cosmetic?</strong></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a><span class="fu">TukeyHSD</span>(emanc_country_anova)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a><span class="fu">plot</span>(emanc_country_anova, <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell fragment">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="04-stats_files/figure-revealjs/unnamed-chunk-22-1.png" width="1344"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="better-ways-to-judge-normality-at-large-n" class="slide level2">
+<h2>Better ways to judge normality at large n</h2>
+<p>With a big sample, lean on <em>description and pictures</em> rather than the hypothesis test:</p>
+<ul>
+<li><strong>Q-Q plot</strong> (previous slide) — do the points roughly follow the diagonal? Minor wiggles at the tails are usually harmless.</li>
+<li><strong>Histogram</strong> — is the overall shape roughly bell-like?</li>
+<li><strong>Skewness &amp; kurtosis</strong> — quick numbers for asymmetry and “peakedness”. A common rule of thumb: values roughly between <strong>−2 and +2</strong> are acceptable for parametric tests like ANOVA.</li>
+</ul>
+</section>
+<section id="check-for-skewness-and-kurtosis" class="slide level2">
+<h2>Check for skewness and kurtosis</h2>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a><span class="fu">library</span>(moments)</span>
+<span id="cb38-2"><a></a></span>
+<span id="cb38-3"><a></a>resid <span class="ot">&lt;-</span> <span class="fu">residuals</span>(emanc_country_anova)</span>
+<span id="cb38-4"><a></a><span class="fu">skewness</span>(resid)       <span class="co"># ~0 = symmetric</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3277311</code></pre>
+</div>
+</div></div>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a><span class="fu">library</span>(moments)</span>
+<span id="cb40-2"><a></a></span>
+<span id="cb40-3"><a></a>resid <span class="ot">&lt;-</span> <span class="fu">residuals</span>(emanc_country_anova)</span>
+<span id="cb40-4"><a></a><span class="fu">kurtosis</span>(resid) <span class="sc">-</span> <span class="dv">3</span>   <span class="co"># "excess" kurtosis; ~0 = normal-ish</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.07103331</code></pre>
+</div>
+</div></div>
+<p>Check whether these land inside the ±2 rule of thumb — if they do, that’s a good sign the earlier Shapiro-Wilk “failure” was the test over-reacting, not a real problem.</p>
+</section>
+<section id="checking-equal-variance-levenes-test" class="slide level2">
+<h2>Checking equal variance: Levene’s Test</h2>
+<p><strong>Levene’s Test</strong> checks homogeneity of variance (homoskedasticity).</p>
+<p><span class="math inline">\(H_0\)</span> = variances are equal across groups.</p>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="fu">library</span>(car)</span>
+<span id="cb42-2"><a></a><span class="fu">leveneTest</span>(emancipative_values <span class="sc">~</span> country,</span>
+<span id="cb42-3"><a></a>           <span class="at">data =</span> wvs_cleaned)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>Levene's Test for Homogeneity of Variance (center = median)
+        Df F value    Pr(&gt;F)    
+group    3  28.818 &lt; 2.2e-16 ***
+      5098                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div></div>
+</section>
+<section id="checking-equal-variance-levenes-test---result" class="slide level2">
+<h2>Checking equal variance: Levene’s Test - result</h2>
+<p>The p-value is below 0.05, which means the variances across our comparison groups are significantly different. However, the same large-sample limitation applies as with Shapiro-Wilk:</p>
+<ul>
+<li><strong>Massive statistical power at n ≈ 5,000.</strong> Levene’s test will flag a microscopic, trivial difference in spread as “significant”, even when it’s far too small to affect your ANOVA.</li>
+<li><strong>Statistical ≠ practical significance.</strong> A low p-value says a difference <em>exists</em> in the population — not that it <em>matters</em>. In big datasets, the two often come apart completely.</li>
+</ul>
+<div class="callout callout-note callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>So pair the test with the <strong>boxplot from earlier</strong> and ask: the p-value says the variances differ, but do the boxes look <em>radically</em> different, or basically the same? If they look similar, you can safely proceed.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="judging-equal-variance-at-large-n---strategy-1" class="slide level2">
+<h2>Judging equal variance at large n - Strategy #1</h2>
+<p>Two calmer strategies than agonising over Levene’s p-value:</p>
+<p><strong>1. Remember ANOVA and t-tests are robust.</strong> They tolerate <em>minor</em> unequal variances well, especially when group sizes are roughly equal. A common rule of thumb: if the <strong>largest group variance ÷ the smallest is ≤ about 4</strong> (with similar <span class="math inline">\(n\)</span>), the violation is generally harmless.</p>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb44-2"><a></a>    <span class="fu">group_by</span>(country) <span class="sc">|&gt;</span></span>
+<span id="cb44-3"><a></a>    <span class="fu">summarise</span>(<span class="at">variance =</span> <span class="fu">var</span>(emancipative_values)) <span class="sc">|&gt;</span></span>
+<span id="cb44-4"><a></a>    <span class="fu">arrange</span>(variance)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  country       variance
+  &lt;fct&gt;            &lt;dbl&gt;
+1 Indonesia       0.0131
+2 Malaysia        0.0187
+3 Turkey          0.0202
+4 Hong Kong SAR   0.0219</code></pre>
+</div>
+</div></div>
+<p>Compare the largest and smallest — is the ratio under ~4?</p>
+</section>
+<section id="judging-equal-variance-at-large-n---strategy-2" class="slide level2">
+<h2>Judging equal variance at large n - Strategy #2</h2>
+<p><strong>2. Or sidestep the assumption entirely</strong> — use a method that doesn’t require equal variances:</p>
+<ul>
+<li><strong>Welch’s t-test</strong> instead of Student’s (it’s already R’s default!)</li>
+<li><strong>Welch’s ANOVA</strong> — <code>oneway.test(..., var.equal = FALSE)</code> — instead of standard ANOVA <em>(see appendix)</em>.</li>
+</ul>
+<div class="callout callout-note callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>The 4:1 variance-ratio figure is a widely-repeated rule of thumb — treat it as a rough guide, not a hard law. Different textbooks quote slightly different thresholds.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="assumptions-look-shaky-now-what" class="slide level2">
+<h2>Assumptions look shaky — now what?</h2>
+<p>Levene flags possibly-unequal variance, and the Q-Q plot shows some non-normality. In real social-science data this is the <em>norm</em>, not the exception (human behaviour do be messy like that). A shaky assumption is a <strong>caution flag.</strong></p>
+<p>And here we have a big cushion: with ~5,000 observations, the <strong>Central Limit Theorem</strong> makes the ANOVA F-test fairly robust to non-normality anyway. So we’re not obliged to panic. But when we <em>are</em> worried, we have two moves (often both):</p>
+<ol type="1">
+<li><strong>Choose another method</strong> — use a test that doesn’t lean on those assumptions.</li>
+<li><strong>Disclose the limitation</strong> — say plainly what was shaky when you report.</li>
+</ol>
+<p>Alternative method: the <strong>Kruskal-Wallis rank sum test</strong> is the non-parametric alternative to one-way ANOVA — same question (“do the groups differ?”), no normality/equal-variance requirement:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a><span class="fu">kruskal.test</span>(emancipative_values <span class="sc">~</span> country, <span class="at">data =</span> wvs_cleaned)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Kruskal-Wallis rank sum test
+
+data:  emancipative_values by country
+Kruskal-Wallis chi-squared = 856.58, df = 3, p-value &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="aside-even-the-experts-argue-about-this" class="slide level2">
+<h2>Aside: even the experts argue about this</h2>
+<p>Assumption-checking is less settled than a textbook makes it look. If you read working statisticians debate it, three tensions come up again and again:</p>
+<ul>
+<li><strong>Prediction vs inference.</strong> Assumptions matter <em>far</em> more when you’re inferring (our case today) than when you only care about predictive accuracy.</li>
+<li><strong>Don’t over-test.</strong> Some argue that running a normality test and <em>then</em> choosing your main test based on the result actually distorts your error rates — you’re better off picking a robust method from the start than “testing your way” to one.</li>
+<li><strong>Understand, don’t ritualise.</strong> Checking assumptions only helps if you understand <em>what</em> each test assumes and <em>why</em>. Don’t blindly run Shapiro-Wilk on 5,000 rows.</li>
+</ul>
+<p>IRL data is complicated; <strong>no rulebook — and no AI — removes the need for your judgement</strong> about whether a result can be trusted.</p>
+</section>
+<section id="the-discipline-remember-this-one" class="slide level2">
+<h2>The discipline (remember this one)</h2>
+<p>For every test you run — today’s and every one after — the same four-step reflex:</p>
+<ol type="1">
+<li><strong>Define</strong> your research question and its variables. This will guide you in choosing the statistical test.</li>
+<li><strong>Check</strong> — understand what the test assumes and judge whether it’s plausible (plots + sample size + common sense).</li>
+<li><strong>Adapt</strong> if there’s real cause for concern — e.g.&nbsp;a non-parametric alternative or a robust method.</li>
+<li><strong>Disclose</strong> the limitation when you present, especially when real decisions is going to be made based on it — a class policy call, a client in your internship/workplace, your thesis committee.</li>
+</ol>
+<div class="callout callout-tip callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>As one data scientist put it, “your conclusions are only as strong as the assumptions behind them” <em>(r/datascience)</em>. Steps 2–4 are exactly the part you can’t hand to an AI — it can generate the analysis, but it can’t be <em>accountable</em> for it. You can.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="which-groups-differ-post-hoc-test" class="slide level2">
+<h2>Which groups differ? Post-hoc test</h2>
+<p>A significant ANOVA/Kruskal-Wallis only says <em>“at least one group differs.”</em> To find out <em>which</em> country pairs drive it, we run a post-hoc test. <strong>Tukey’s HSD</strong> pairs with ANOVA:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a><span class="fu">TukeyHSD</span>(emanc_country_anova)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Tukey multiple comparisons of means
     95% family-wise confidence level
@@ -942,35 +1386,76 @@ Malaysia-Hong Kong SAR  -0.07812595 -0.09185011 -0.06440180 0.00e+00
 Malaysia-Indonesia       0.08430934  0.07066310  0.09795558 0.00e+00</code></pre>
 </div>
 </div>
+<div class="callout callout-note callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>Strictly, when you fall back to Kruskal-Wallis the matching post-hoc is <strong>Dunn’s test</strong> (<code>FSA::dunnTest()</code>), not Tukey. For this workshop we’ll read Tukey to build intuition — but knowing <em>which</em> post-hoc matches <em>which</em> test is one example of the kind of judgement your prof might ask you to defend.</p>
+</div>
+</div>
+</div>
+</section></section>
+<section id="recap" class="title-slide slide level1 center">
+<h1>Recap</h1>
+<ul>
+<li><p>Start every analysis from the <strong>research question</strong>: read your variable types, then choose the test. That choice is something you must be able to <em>justify</em> — not outsource.</p></li>
+<li><p><strong>Both categorical</strong> → <code>chisq.test()</code>, the <span class="math inline">\(X^2\)</span> test of independence.</p></li>
+<li><p><strong>Both continuous</strong> → <code>cor.test()</code>, correlation (−1 to 1, 0 = none).</p></li>
+<li><p><strong>Categorical (2 groups) + continuous</strong> → <code>t.test()</code>; three flavours: one-sample, independent, paired.</p></li>
+<li><p><strong>Categorical (3+ groups) + continuous</strong> → <code>aov()</code>, ANOVA.</p></li>
+<li><p>“Check” means <em>understanding</em> what a test assumes and judging whether it’s plausible (plots + sample size + sense), not blindly obeying a normality test — remember Shapiro-Wilk over-reacts on big samples. When there’s real cause for concern, adapt (e.g.&nbsp;<code>kruskal.test()</code>) and/or state the limitation plainly. This judgement is the part the AI can’t do for you — and the part you’re accountable for.</p></li>
+</ul>
 </section>
-<section id="anova-assumptions" class="slide level2">
-<h2>ANOVA Assumptions</h2>
-<ol type="1">
-<li><p>The Dependent variable should be a continuous variable</p></li>
-<li><p>The Independent variable should be a categorical variable</p></li>
-<li><p>The observations for Independent variable should be independent of each other</p></li>
-<li><p>The Dependent Variable distribution should be approximately normal – even more crucial if sample size is small.</p>
+
+<section>
+<section id="end-of-session-4" class="title-slide slide level1 center">
+<h1>End of Session 4!</h1>
+<p>Next session: Linear and Logistic Regressions</p>
+</section>
+<section id="quiz-time-compulsory" class="slide level2">
+<h2>Quiz Time! (compulsory)</h2>
+<p>Scan the QR Code below to assess your understanding of basic inferential statistics concepts in R, including variable types and common statistical tests. All questions are required and each is worth 1 mark.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><a href="https://forms.cloud.microsoft/r/CSiySf1jmL"><img data-src="images/BasicInferentialStatsinRQRCode.png" class="quarto-figure quarto-figure-center" alt="Quiz QR Code: https://forms.cloud.microsoft/r/CSiySf1jmL" width="400"></a></p>
+</figure>
+</div>
+<figcaption>Quiz QR Code: &lt;https://forms.cloud.microsoft/r/CSiySf1jmL&gt;</figcaption>
+</figure>
+</div>
+</section></section>
+<section>
+<section id="appendix" class="title-slide slide level1 center">
+<h1>Appendix</h1>
 <ul>
-<li>You can verify this by visualizing your data in histogram, or use Shapiro-Wilk Test, among other things</li>
-</ul></li>
-<li><p>The variance for each combination of groups should be approximately equal – also referred to as “homogeneity of variances” or <u><strong>homoskedasticity</strong></u>.</p>
-<ul>
-<li>One way to verify this is using Levene’s Test</li>
-</ul></li>
-<li><p>No significant outliers</p></li>
-</ol>
+<li>Two-Way ANOVA (if time allows)</li>
+<li>More assumption diagnostics (Residual vs Fitted, Welch’s ANOVA)</li>
+<li>Reporting with apaTables / gtsummary</li>
+</ul>
 </section>
 <section id="two-way-anova-sample-problem-and-result" class="slide level2">
 <h2>Two-Way ANOVA: Sample problem and result</h2>
 <p>RQ: <strong>Is there a significant difference in emancipative values across education levels and countries?</strong></p>
+<p>With two IVs, we test <strong>three</strong> null hypotheses at once (each with its own <span class="math inline">\(H_1\)</span>):</p>
+<div style="font-size: 90%">
+<ul>
+<li><span class="math inline">\(H_0\)</span> (education): mean emancipative values are the <strong>same</strong> across education levels.</li>
+<li><span class="math inline">\(H_0\)</span> (country): mean emancipative values are the <strong>same</strong> across countries.</li>
+<li><span class="math inline">\(H_0\)</span> (interaction): the effect of education on emancipative values <strong>does not depend</strong> on country (no interaction).</li>
+</ul>
+</div>
 <p>Let’s visualize the data!</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb40-2"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> education, <span class="at">y =</span> emancipative_values)) <span class="sc">+</span></span>
-<span id="cb40-3"><a></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb40-4"><a></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> country) <span class="sc">+</span></span>
-<span id="cb40-5"><a></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb40-6"><a></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb50-2"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> education, <span class="at">y =</span> emancipative_values)) <span class="sc">+</span></span>
+<span id="cb50-3"><a></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb50-4"><a></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> country) <span class="sc">+</span></span>
+<span id="cb50-5"><a></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb50-6"><a></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -978,16 +1463,16 @@ Malaysia-Indonesia       0.08430934  0.07066310  0.09795558 0.00e+00</code></pre
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-stats_files/figure-html/unnamed-chunk-23-1.png" width="672"></p>
+<p><img data-src="04-stats_files/figure-revealjs/unnamed-chunk-29-1.png" width="1344"></p>
 </figure>
 </div>
 </div>
 </div></section><section id="conduct-the-two-way-anova-test-additive-model" class="slide level2">
 <h2>Conduct the Two-way ANOVA test (Additive model)</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a>emanc_edu_country_anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(emancipative_values <span class="sc">~</span> education <span class="sc">+</span> country,</span>
-<span id="cb41-2"><a></a>                               <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb41-3"><a></a><span class="fu">summary</span>(emanc_edu_country_anova)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a>emanc_edu_country_anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(emancipative_values <span class="sc">~</span> education <span class="sc">+</span> country,</span>
+<span id="cb51-2"><a></a>                               <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb51-3"><a></a><span class="fu">summary</span>(emanc_edu_country_anova)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1003,7 +1488,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="post-hoc-test-for-two-way-anova" class="slide level2">
 <h2>Post-hoc test for Two-way ANOVA</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="fu">TukeyHSD</span>(emanc_edu_country_anova)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a><span class="fu">TukeyHSD</span>(emanc_edu_country_anova)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1033,9 +1518,9 @@ Malaysia-Indonesia       0.07133132  0.05784989  0.08481275 0.0000000</code></pr
 <h2>Conduct the Two-way ANOVA test (with Interaction)</h2>
 <p>“With interaction” means we are testing whether the effect of one variable (education) on the outcome (emancipative values) depends on the level of the other variable (country), or vice versa. For the R code, we use <code>education * country</code> instead of <code>education + country</code></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>emanc_edu_country_anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(emancipative_values <span class="sc">~</span> education <span class="sc">*</span> country,</span>
-<span id="cb45-2"><a></a>                               <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb45-3"><a></a><span class="fu">summary</span>(emanc_edu_country_anova)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a>emanc_edu_country_anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(emancipative_values <span class="sc">~</span> education <span class="sc">*</span> country,</span>
+<span id="cb55-2"><a></a>                               <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb55-3"><a></a><span class="fu">summary</span>(emanc_edu_country_anova)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1053,12 +1538,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h2>Interaction plot</h2>
 <p>To better see this effect, let’s plot the interaction.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb47-2"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> education, <span class="at">y =</span> emancipative_values,</span>
-<span id="cb47-3"><a></a>                          <span class="at">group =</span> country, <span class="at">color =</span> country)) <span class="sc">+</span> <span class="co"># lines will be grouped and colored by country</span></span>
-<span id="cb47-4"><a></a>    <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span> <span class="co"># Add points to show mean emancipative_values for each education level by country</span></span>
-<span id="cb47-5"><a></a>    <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>) <span class="sc">+</span> <span class="co"># Connect the points with lines</span></span>
-<span id="cb47-6"><a></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb57-2"><a></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> education, <span class="at">y =</span> emancipative_values,</span>
+<span id="cb57-3"><a></a>                          <span class="at">group =</span> country, <span class="at">color =</span> country)) <span class="sc">+</span> <span class="co"># lines will be grouped and colored by country</span></span>
+<span id="cb57-4"><a></a>    <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span> <span class="co"># Add points to show mean emancipative_values for each education level by country</span></span>
+<span id="cb57-5"><a></a>    <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>) <span class="sc">+</span> <span class="co"># Connect the points with lines</span></span>
+<span id="cb57-6"><a></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -1066,7 +1551,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="04-stats_files/figure-html/unnamed-chunk-27-1.png" width="672"></p>
+<p><img data-src="04-stats_files/figure-revealjs/unnamed-chunk-33-1.png" width="1344"></p>
 </figure>
 </div>
 </div>
@@ -1078,89 +1563,80 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>If the lines cross or diverge, this suggests the effect of education on emancipative values differs across countries.</li>
 <li>Pay attention to which country shows the steepest slope — this indicates the strongest relationship between education level and emancipative values in that country.</li>
 </ul>
-</section></section>
-<section id="recap" class="title-slide slide level1 center">
-<h1>Recap</h1>
-<ul>
-<li class="fragment"><p>Data distribution, normal distribution and skewed distribution.</p></li>
-<li class="fragment"><p>Use X2 test of independence, chisq.test(), to evaluate whether there is a statistically significant relationship between two categorical variables.</p></li>
-<li class="fragment"><p>Use a correlation test, cor.test(), to evaluate the strength and direction of a linear relationship between two variables. The coefficient is expressed in value between -1 to 1, with 0 being no correlation at all.</p></li>
-<li class="fragment"><p>Use t-test() to compare the means of two groups of continuous data and determine if the differences are statistically significant.</p></li>
-<li class="fragment"><p>Three types of t-tests i.e., one-sample t-test, independent samples t-test, and paired samples t-test.</p></li>
-<li class="fragment"><p>Use ANOVA (Analysis of Variance) to compare the means of three or more groups or samples and determine if the differences are statistically significant.</p></li>
-</ul>
 </section>
+<section id="more-diagnostics-residual-vs-fitted" class="slide level2">
+<h2>More diagnostics: Residual vs Fitted</h2>
+<p>When we plot the residuals<sup>1</sup>, we can see some outliers as well:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a></a><span class="fu">plot</span>(emanc_country_anova, <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="04-stats_files/figure-revealjs/unnamed-chunk-34-1.png" width="1344"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>Residual = difference between an observed value and the mean of all values for that group.</p></li></ol></aside></section>
+<section id="when-homoskedasticity-fails-welchs-anova" class="slide level2">
+<h2>When homoskedasticity fails: Welch’s ANOVA</h2>
+<p>Besides Kruskal-Wallis, <strong>Welch’s ANOVA</strong> is an alternative for when only the equal-variance assumption is violated (but normality is roughly OK):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a><span class="fu">oneway.test</span>(emancipative_values <span class="sc">~</span> country, <span class="at">data =</span> wvs_cleaned, <span class="at">var.equal =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One-way analysis of means (not assuming equal variances)
 
-<section>
-<section id="end-of-session-4" class="title-slide slide level1 center">
-<h1>End of Session 4!</h1>
-<p>Next session: Linear and Logistic Regressions</p>
-</section>
-<section id="quiz-time-compulsory" class="slide level2">
-<h2>Quiz Time! (compulsory)</h2>
-<p>Scan the QR Code below to assess your understanding of basic inferential statistics concepts in R, including variable types and common statistical tests. All questions are required and each is worth 1 mark.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><a href="https://forms.cloud.microsoft/r/CSiySf1jmL"><img data-src="images/BasicInferentialStatsinRQRCode.png" class="quarto-figure quarto-figure-center" alt="Quiz QR Code: https://forms.cloud.microsoft/r/CSiySf1jmL" width="400"></a></p>
-</figure>
+data:  emancipative_values and country
+F = 359.64, num df = 3.0, denom df = 2806.7, p-value &lt; 2.2e-16</code></pre>
 </div>
-<figcaption>Quiz QR Code: &lt;https://forms.cloud.microsoft/r/CSiySf1jmL&gt;</figcaption>
-</figure>
 </div>
-</section></section>
-<section>
-<section id="appendix" class="title-slide slide level1 center">
-<h1>Appendix</h1>
-<ul>
-<li>Reporting with apaTables</li>
-<li>ANOVA assumptions</li>
-</ul>
 </section>
 <section id="reporting-with-apatables" class="slide level2">
 <h2>Reporting with apaTables</h2>
-<p><code>apaTables</code> is a package that will generate APA-formatted report table for correlation, ANOVA, and regression. It has limited customisations and few varity of tables. The documentation online is for the “development” version which is not what we will get if we install normally with <code>install.packages()</code>, so we need to rely on the vignette more. <a href="https://dstanley4.github.io/apaTables/index.html"><strong>View the documentation here</strong></a></p>
-<p>Example: get the correlation table for <code>political_scale</code>, <code>life_satisfaction</code>, and <code>financial_satisfaction</code></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a><span class="fu">library</span>(apaTables)</span>
-<span id="cb48-2"><a></a></span>
-<span id="cb48-3"><a></a>wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb48-4"><a></a>    <span class="fu">select</span>(life_satisfaction, financial_satisfaction, freedom_of_choice) <span class="sc">|&gt;</span></span>
-<span id="cb48-5"><a></a>    <span class="fu">apa.cor.table</span>( <span class="at">table.number =</span> <span class="dv">1</span>, <span class="at">filename =</span> <span class="st">"fig-output/table-cor.doc"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>apaTables</code> generates APA-formatted report tables for correlation, ANOVA, and regression. Limited customisation. The online docs are for the development version, so lean on the vignette. <a href="https://dstanley4.github.io/apaTables/index.html"><strong>Documentation here</strong></a></p>
+<p>Example: correlation table for <code>political_scale</code>, <code>life_satisfaction</code>, and <code>financial_satisfaction</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a><span class="fu">library</span>(apaTables)</span>
+<span id="cb61-2"><a></a></span>
+<span id="cb61-3"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb61-4"><a></a>    <span class="fu">select</span>(life_satisfaction, financial_satisfaction, freedom_of_choice) <span class="sc">|&gt;</span></span>
+<span id="cb61-5"><a></a>    <span class="fu">apa.cor.table</span>( <span class="at">table.number =</span> <span class="dv">1</span>, <span class="at">filename =</span> <span class="st">"fig-output/table-cor.doc"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="reporting-with-gtsummary" class="slide level2">
 <h2>Reporting with gtsummary</h2>
-<p>Another popular packages is <code>gt</code> (stands for “great tables”) and its ‘add-on’, <code>gtsummary</code>. It has lots of customizations (which can get overwhelming!) but fortunately the documentation is pretty good and there are plenty of code samples. <a href="https://www.danieldsjoberg.com/gtsummary/index.html"><strong>View the documentation here</strong></a></p>
-<p>Example: get the mean differences table for <code>political_scale</code>, <code>life_satisfaction</code>, and <code>financial_satisfaction</code>, grouped by <code>sex</code></p>
+<p><code>gt</code> (“great tables”) and its add-on <code>gtsummary</code> offer lots of customisation with good docs. <a href="https://www.danieldsjoberg.com/gtsummary/index.html"><strong>Documentation here</strong></a></p>
+<p>Example: mean-differences table grouped by <code>sex</code></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb49-2"><a></a></span>
-<span id="cb49-3"><a></a>wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb49-4"><a></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(life_satisfaction, financial_satisfaction, freedom_of_choice, sex) <span class="sc">|&gt;</span></span>
-<span id="cb49-5"><a></a>    <span class="fu">tbl_summary</span>(<span class="at">by =</span> sex) <span class="sc">|&gt;</span></span>
-<span id="cb49-6"><a></a>    <span class="fu">add_difference</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb62-2"><a></a></span>
+<span id="cb62-3"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb62-4"><a></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(life_satisfaction, financial_satisfaction, freedom_of_choice, sex) <span class="sc">|&gt;</span></span>
+<span id="cb62-5"><a></a>    <span class="fu">tbl_summary</span>(<span class="at">by =</span> sex) <span class="sc">|&gt;</span></span>
+<span id="cb62-6"><a></a>    <span class="fu">add_difference</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
 <section id="reporting-with-gtsummary-output" class="slide level2 output-location-slide"><h2>Reporting with gtsummary</h2><div class="cell output-location-slide">
 <div class="cell-output-display">
-<div id="hysrztkjoh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#hysrztkjoh table {
+<div id="rjlkfkissb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#rjlkfkissb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#hysrztkjoh thead, #hysrztkjoh tbody, #hysrztkjoh tfoot, #hysrztkjoh tr, #hysrztkjoh td, #hysrztkjoh th {
+#rjlkfkissb thead, #rjlkfkissb tbody, #rjlkfkissb tfoot, #rjlkfkissb tr, #rjlkfkissb td, #rjlkfkissb th {
   border-style: none;
 }
 
-#hysrztkjoh p {
+#rjlkfkissb p {
   margin: 0;
   padding: 0;
 }
 
-#hysrztkjoh .gt_table {
+#rjlkfkissb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1186,12 +1662,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#hysrztkjoh .gt_caption {
+#rjlkfkissb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#hysrztkjoh .gt_title {
+#rjlkfkissb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1203,7 +1679,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-bottom-width: 0;
 }
 
-#hysrztkjoh .gt_subtitle {
+#rjlkfkissb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1215,7 +1691,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-top-width: 0;
 }
 
-#hysrztkjoh .gt_heading {
+#rjlkfkissb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1227,13 +1703,13 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#hysrztkjoh .gt_bottom_border {
+#rjlkfkissb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#hysrztkjoh .gt_col_headings {
+#rjlkfkissb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1248,7 +1724,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#hysrztkjoh .gt_col_heading {
+#rjlkfkissb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1268,7 +1744,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   overflow-x: hidden;
 }
 
-#hysrztkjoh .gt_column_spanner_outer {
+#rjlkfkissb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1280,15 +1756,15 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   padding-right: 4px;
 }
 
-#hysrztkjoh .gt_column_spanner_outer:first-child {
+#rjlkfkissb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#hysrztkjoh .gt_column_spanner_outer:last-child {
+#rjlkfkissb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#hysrztkjoh .gt_column_spanner {
+#rjlkfkissb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1300,11 +1776,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   width: 100%;
 }
 
-#hysrztkjoh .gt_spanner_row {
+#rjlkfkissb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#hysrztkjoh .gt_group_heading {
+#rjlkfkissb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1330,7 +1806,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   text-align: left;
 }
 
-#hysrztkjoh .gt_empty_group_heading {
+#rjlkfkissb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1345,15 +1821,15 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   vertical-align: middle;
 }
 
-#hysrztkjoh .gt_from_md > :first-child {
+#rjlkfkissb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hysrztkjoh .gt_from_md > :last-child {
+#rjlkfkissb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hysrztkjoh .gt_row {
+#rjlkfkissb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1372,7 +1848,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   overflow-x: hidden;
 }
 
-#hysrztkjoh .gt_stub {
+#rjlkfkissb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1385,7 +1861,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   padding-right: 5px;
 }
 
-#hysrztkjoh .gt_stub_row_group {
+#rjlkfkissb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1399,15 +1875,15 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   vertical-align: top;
 }
 
-#hysrztkjoh .gt_row_group_first td {
+#rjlkfkissb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#hysrztkjoh .gt_row_group_first th {
+#rjlkfkissb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#hysrztkjoh .gt_summary_row {
+#rjlkfkissb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1417,16 +1893,16 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   padding-right: 5px;
 }
 
-#hysrztkjoh .gt_first_summary_row {
+#rjlkfkissb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#hysrztkjoh .gt_first_summary_row.thick {
+#rjlkfkissb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#hysrztkjoh .gt_last_summary_row {
+#rjlkfkissb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1436,7 +1912,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#hysrztkjoh .gt_grand_summary_row {
+#rjlkfkissb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1446,7 +1922,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   padding-right: 5px;
 }
 
-#hysrztkjoh .gt_first_grand_summary_row {
+#rjlkfkissb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1456,7 +1932,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#hysrztkjoh .gt_last_grand_summary_row_top {
+#rjlkfkissb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1466,11 +1942,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#hysrztkjoh .gt_striped {
+#rjlkfkissb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#hysrztkjoh .gt_table_body {
+#rjlkfkissb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1479,7 +1955,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#hysrztkjoh .gt_footnotes {
+#rjlkfkissb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1493,7 +1969,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#hysrztkjoh .gt_footnote {
+#rjlkfkissb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1502,7 +1978,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   padding-right: 5px;
 }
 
-#hysrztkjoh .gt_sourcenotes {
+#rjlkfkissb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1516,7 +1992,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#hysrztkjoh .gt_sourcenote {
+#rjlkfkissb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1524,72 +2000,72 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   padding-right: 5px;
 }
 
-#hysrztkjoh .gt_left {
+#rjlkfkissb .gt_left {
   text-align: left;
 }
 
-#hysrztkjoh .gt_center {
+#rjlkfkissb .gt_center {
   text-align: center;
 }
 
-#hysrztkjoh .gt_right {
+#rjlkfkissb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hysrztkjoh .gt_font_normal {
+#rjlkfkissb .gt_font_normal {
   font-weight: normal;
 }
 
-#hysrztkjoh .gt_font_bold {
+#rjlkfkissb .gt_font_bold {
   font-weight: bold;
 }
 
-#hysrztkjoh .gt_font_italic {
+#rjlkfkissb .gt_font_italic {
   font-style: italic;
 }
 
-#hysrztkjoh .gt_super {
+#rjlkfkissb .gt_super {
   font-size: 65%;
 }
 
-#hysrztkjoh .gt_footnote_marks {
+#rjlkfkissb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#hysrztkjoh .gt_asterisk {
+#rjlkfkissb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#hysrztkjoh .gt_indent_1 {
+#rjlkfkissb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#hysrztkjoh .gt_indent_2 {
+#rjlkfkissb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#hysrztkjoh .gt_indent_3 {
+#rjlkfkissb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#hysrztkjoh .gt_indent_4 {
+#rjlkfkissb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#hysrztkjoh .gt_indent_5 {
+#rjlkfkissb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#hysrztkjoh .katex-display {
+#rjlkfkissb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#hysrztkjoh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#rjlkfkissb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1656,137 +2132,7 @@ N = 2,671<span class="gt_footnote_marks" style="white-space:nowrap;font-style:it
 
 </div>
 </div>
-</div></section><section id="anova-assumptions-1" class="slide level2">
-<h2>ANOVA Assumptions</h2>
-<ol type="1">
-<li><p>The Dependent variable should be a continuous variable</p></li>
-<li><p>The Independent variable should be a categorical variable</p></li>
-<li><p>The observations for Independent variable should be independent of each other</p></li>
-<li><p>The Dependent Variable distribution should be approximately normal – even more crucial if sample size is small.</p>
-<ul>
-<li>You can verify this by visualizing your data in histogram, or use Shapiro-Wilk Test, among other things</li>
-</ul></li>
-<li><p>The variance for each combination of groups should be approximately equal – also referred to as “homogeneity of variances” or <u><strong>homoskedasticity</strong></u>.</p>
-<ul>
-<li>One way to verify this is using Levene’s Test</li>
-</ul></li>
-<li><p>No significant outliers</p></li>
-</ol>
-</section>
-<section id="verifying-the-assumption-test-for-homogeneity-of-variance" class="slide level2">
-<h2>Verifying the assumption: Test for Homogeneity of variance</h2>
-<p><strong>Levene’s Test</strong> to test for homogeneity of variance i.e.&nbsp;homoskedasticity</p>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a><span class="fu">library</span>(car)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div><div class="column">
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: carData</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'car'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:dplyr':
-
-    recode</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:purrr':
-
-    some</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a><span class="fu">leveneTest</span>(emancipative_values <span class="sc">~</span> country,</span>
-<span id="cb55-2"><a></a>           <span class="at">data =</span> wvs_cleaned)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Levene's Test for Homogeneity of Variance (center = median)
-        Df F value    Pr(&gt;F)    
-group    3  28.818 &lt; 2.2e-16 ***
-      5098                      
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-</div>
-</div></div>
-<p>The results indicate that the p-value is less than the significance level of 0.05, suggesting that there IS a significant difference in variance across the groups. Consequently, the assumption of homogeneity of variances is NOT satisfied.</p>
-</section>
-<section id="plotting-residuals-residual-vs-fitted" class="slide level2">
-<h2>Plotting Residuals: Residual vs Fitted</h2>
-<p>When we plot the residuals<sup>1</sup>, we can see some outliers as well:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a><span class="fu">plot</span>(emanc_country_anova, <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell fragment">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="04-stats_files/figure-html/unnamed-chunk-30-1.png" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>Residual = difference between an observed value and the mean of all values for that group.</p></li></ol></aside></section>
-<section id="verifying-the-assumptions-test-for-normality" class="slide level2">
-<h2>Verifying the assumptions: Test for Normality</h2>
-<p><strong>Shapiro-Wilk Test</strong> to test for normality.</p>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a></a><span class="fu">library</span>(car)</span>
-<span id="cb58-2"><a></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># set seed for reproducibility, make sure it samples the same way everytime.</span></span>
-<span id="cb58-3"><a></a><span class="fu">shapiro.test</span>(<span class="fu">sample</span>(<span class="fu">residuals</span>(emanc_country_anova), <span class="dv">5000</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div><div class="column">
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Shapiro-Wilk normality test
-
-data:  sample(residuals(emanc_country_anova), 5000)
-W = 0.99354, p-value = 2.908e-14</code></pre>
-</div>
-</div></div>
-<p>The p-value from the Shapiro-Wilk test is less than the significance level of 0.05, indicating that the data significantly deviates from normality. Therefore, the assumption of normality is NOT satisfied.</p>
-</section>
-<section id="plotting-residuals-q-q-plot" class="slide level2">
-<h2>Plotting Residuals: Q-Q Plot</h2>
-<p>We can see this better from when we plot the residuals:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a></a><span class="fu">plot</span>(emanc_country_anova, <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell fragment">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="04-stats_files/figure-html/unnamed-chunk-32-1.png" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="when-the-assumptions-are-not-met" class="slide level2">
-<h2>When the assumptions are not met…</h2>
-<p>We can use <strong>Kruskal-Wallis rank sum test</strong> as an non-parametric alternative to One-Way ANOVA!</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a><span class="fu">kruskal.test</span>(emancipative_values <span class="sc">~</span> country, <span class="at">data =</span> wvs_cleaned)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Kruskal-Wallis rank sum test
-
-data:  emancipative_values by country
-Kruskal-Wallis chi-squared = 856.58, df = 3, p-value &lt; 2.2e-16</code></pre>
-</div>
-</div>
-<p>Other alternative: <strong>Welch’s ANOVA</strong> for when the homoskedasticity assumption is not met.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a><span class="fu">oneway.test</span>(emancipative_values <span class="sc">~</span> country, <span class="at">data =</span> wvs_cleaned, <span class="at">var.equal =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    One-way analysis of means (not assuming equal variances)
-
-data:  emancipative_values and country
-F = 359.64, num df = 3.0, denom df = 2806.7, p-value &lt; 2.2e-16</code></pre>
-</div>
-</div>
-</section>
-<section id="exercise-for-two-way-anova" class="slide level2">
+</div></section><section id="exercise-for-two-way-anova" class="slide level2">
 <h2>Exercise for Two-Way ANOVA</h2>
 <p>Is there a significant difference in freedom of choice between different age groups?</p>
 <ul>
@@ -1796,8 +2142,8 @@ F = 359.64, num df = 3.0, denom df = 2806.7, p-value &lt; 2.2e-16</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show answer</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a></a>freedom_age_anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(freedom_of_choice <span class="sc">~</span> age_group, <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb65-2"><a></a><span class="fu">summary</span>(freedom_age_anova)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a>freedom_age_anova <span class="ot">&lt;-</span> <span class="fu">aov</span>(freedom_of_choice <span class="sc">~</span> age_group, <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb63-2"><a></a><span class="fu">summary</span>(freedom_age_anova)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>              Df Sum Sq Mean Sq F value Pr(&gt;F)  
@@ -1814,7 +2160,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Show answer</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a><span class="fu">TukeyHSD</span>(freedom_age_anova)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a></a><span class="fu">TukeyHSD</span>(freedom_age_anova)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Tukey multiple comparisons of means
@@ -2052,6 +2398,82 @@ $age_group
         ]
       });
     </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")

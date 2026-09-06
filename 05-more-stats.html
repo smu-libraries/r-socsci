@@ -206,11 +206,21 @@ Bella Ratmelia
 </section>
 <section id="todays-outline" class="slide level2">
 <h2>Today’s Outline</h2>
+<p>Today extends Session 4’s map: now the <strong>type of your outcome</strong> picks your model.</p>
 <ol type="1">
-<li>The various packages for tables</li>
-<li>Simple Linear Regression in R</li>
-<li>Binary Logistic Regression in R</li>
-<li>Show and tell - Using Quarto to generate slides or report in R!</li>
+<li>Linear regression — for <strong>continuous</strong> outcomes
+<ul>
+<li>one continuous predictor</li>
+<li>multiple continuous predictor</li>
+<li>one categorical predictor</li>
+</ul></li>
+<li>Logistic regression — for <strong>binary</strong> (yes/no) outcomes
+<ul>
+<li>one continuous predictor</li>
+<li>one categorical predictor</li>
+</ul></li>
+<li>Presenting &amp; reporting your results</li>
+<li><em>(bonus)</em> Quarto show-and-tell</li>
 </ol>
 </section>
 <section id="open-your-project" class="slide level2">
@@ -224,26 +234,26 @@ Bella Ratmelia
 <li>Double click on the file. Rstudio should launch with your project loaded!</li>
 </ol>
 </section>
-<section id="install-and-load-extra-packages-we-need-today" class="slide level2">
-<h2>Install and load extra packages we need today</h2>
+<section id="set-up-for-today" class="slide level2">
+<h2>Set up for today</h2>
+<p>Today’s main flow runs on <strong>tidyverse + huxtable</strong> (for result tables). <code>car</code> and <code>DescTools</code> (from Session 1) are each used once via the <code>car::</code> / <code>DescTools::</code> prefix.</p>
 <ol type="1">
-<li><p>Type the following line in your R console (bottom left section). Type them one by one.</p>
-<ul>
-<li><code>install.packages("apaTables")</code></li>
-<li><code>install.packages("huxtable")</code></li>
-<li><code>install.packages("gtsummary")</code></li>
-<li><code>install.packages("car")</code></li>
-</ul></li>
-<li><p>Create a new R script called <code>session-5.R</code></p></li>
-<li><p>Paste the following lines into the script:</p></li>
+<li>Create a new R script called <code>session-5.R</code></li>
+<li>Paste this in:</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="co"># loading the packages</span></span>
-<span id="cb1-2"><a></a><span class="fu">library</span>(apaTables)</span>
-<span id="cb1-3"><a></a><span class="fu">library</span>(huxtable)</span>
-<span id="cb1-4"><a></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb1-5"><a></a><span class="fu">library</span>(car)</span>
-<span id="cb1-6"><a></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a></a><span class="fu">library</span>(huxtable)   <span class="co"># for presenting regression tables</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-note callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p><code>gtsummary</code> and <code>apaTables</code> produce prettier tables but have heavier dependencies — they’re <strong>optional</strong>, with examples in the appendix. <code>huxtable</code> is lighter, and it’s all we need today.</p>
+</div>
+</div>
 </div>
 </section>
 <section id="load-our-data-for-today" class="slide level2">
@@ -262,558 +272,47 @@ Bella Ratmelia
 <span id="cb2-11"><a></a><span class="fu">glimpse</span>(wvs_cleaned)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section>
-<section id="quick-overview---the-various-packages-for-tables" class="title-slide slide level1 center">
-<h1>Quick overview - The various packages for tables</h1>
-
-</section>
-<section id="apatables" class="slide level2">
-<h2>apaTables</h2>
-<p><code>apaTables</code> is a package that will generate APA-formatted report table for correlation, ANOVA, and regression. It has limited customisations and few varity of tables. The documentation online is for the “development” version which is not what we will get if we install normally with <code>install.packages()</code>, so we need to rely on the vignette more. <a href="https://dstanley4.github.io/apaTables/index.html"><strong>View the documentation here</strong></a></p>
-<p>Example: get the correlation table for <code>political_scale</code>, <code>life_satisfaction</code>, and <code>financial_satisfaction</code></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">library</span>(apaTables)</span>
-<span id="cb3-2"><a></a></span>
-<span id="cb3-3"><a></a>wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb3-4"><a></a>    <span class="fu">select</span>(life_satisfaction, financial_satisfaction, freedom_of_choice) <span class="sc">|&gt;</span></span>
-<span id="cb3-5"><a></a>    <span class="fu">apa.cor.table</span>( <span class="at">table.number =</span> <span class="dv">1</span>, <span class="at">filename =</span> <span class="st">"fig-output/table-cor.doc"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This code will create a word document with the tables already formatted in APA style inside.</p>
-</section>
-<section id="gtsummary" class="slide level2">
-<h2>gtsummary</h2>
-<p>Another popular packages is <code>gt</code> (stands for “great tables”) and its ‘add-on’, <code>gtsummary</code>. It has lots of customization (which can get overwhelming!) but fortunately the documentation is pretty good and there are plenty of code samples. <a href="https://www.danieldsjoberg.com/gtsummary/index.html"><strong>View the documentation here</strong></a></p>
-<p>Example: get the mean differences table for <code>political_scale</code>, <code>life_satisfaction</code>, and <code>financial_satisfaction</code>, grouped by <code>sex</code></p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb4-2"><a></a></span>
-<span id="cb4-3"><a></a>wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb4-4"><a></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(life_satisfaction, financial_satisfaction, freedom_of_choice, sex) <span class="sc">|&gt;</span></span>
-<span id="cb4-5"><a></a>    <span class="fu">tbl_summary</span>(<span class="at">by =</span> sex) <span class="sc">|&gt;</span></span>
-<span id="cb4-6"><a></a>    <span class="fu">add_difference</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-
-</section>
-<section id="gtsummary-output" class="slide level2 output-location-slide"><h2>gtsummary</h2><div class="cell output-location-slide">
-<div class="cell-output-display">
-<div id="lfbofuestq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#lfbofuestq table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#lfbofuestq thead, #lfbofuestq tbody, #lfbofuestq tfoot, #lfbofuestq tr, #lfbofuestq td, #lfbofuestq th {
-  border-style: none;
-}
-
-#lfbofuestq p {
-  margin: 0;
-  padding: 0;
-}
-
-#lfbofuestq .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#lfbofuestq .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#lfbofuestq .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#lfbofuestq .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#lfbofuestq .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#lfbofuestq .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#lfbofuestq .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#lfbofuestq .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#lfbofuestq .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#lfbofuestq .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#lfbofuestq .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#lfbofuestq .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#lfbofuestq .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#lfbofuestq .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#lfbofuestq .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#lfbofuestq .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#lfbofuestq .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#lfbofuestq .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#lfbofuestq .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#lfbofuestq .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#lfbofuestq .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#lfbofuestq .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#lfbofuestq .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#lfbofuestq .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#lfbofuestq .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#lfbofuestq .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#lfbofuestq .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#lfbofuestq .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#lfbofuestq .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#lfbofuestq .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#lfbofuestq .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#lfbofuestq .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#lfbofuestq .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#lfbofuestq .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#lfbofuestq .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#lfbofuestq .gt_left {
-  text-align: left;
-}
-
-#lfbofuestq .gt_center {
-  text-align: center;
-}
-
-#lfbofuestq .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#lfbofuestq .gt_font_normal {
-  font-weight: normal;
-}
-
-#lfbofuestq .gt_font_bold {
-  font-weight: bold;
-}
-
-#lfbofuestq .gt_font_italic {
-  font-style: italic;
-}
-
-#lfbofuestq .gt_super {
-  font-size: 65%;
-}
-
-#lfbofuestq .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#lfbofuestq .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#lfbofuestq .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#lfbofuestq .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#lfbofuestq .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#lfbofuestq .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#lfbofuestq .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#lfbofuestq .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#lfbofuestq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table caption-top" style="width:100%;" data-quarto-bootstrap="false">
+<section id="from-tests-to-models" class="slide level2">
+<h2>From tests to models</h2>
+<p>Session 4 asked <em>“which test?”</em> from your variable types. Regression asks the same kind of question — now the <strong>outcome’s type</strong> picks your model:</p>
+<table class="caption-top">
 <colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
-<tr class="gt_col_headings header">
-<th id="label" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Characteristic</strong></th>
-<th id="stat_1" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>Male</strong><br>
-N = 2,431<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-<th id="stat_2" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>Female</strong><br>
-N = 2,671<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span></th>
-<th id="estimate" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>Difference</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span></th>
-<th id="conf.low" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>95% CI</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span></th>
-<th id="p.value" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>p-value</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span></th>
+<tr class="header">
+<th>Your outcome (Y)</th>
+<th>Model</th>
+<th>R function</th>
 </tr>
 </thead>
-<tbody class="gt_table_body">
+<tbody>
 <tr class="odd">
-<td class="gt_row gt_left" headers="label">life_satisfaction</td>
-<td class="gt_row gt_center" headers="stat_1">7.00 (6.00, 8.00)</td>
-<td class="gt_row gt_center" headers="stat_2">7.00 (6.00, 8.00)</td>
-<td class="gt_row gt_center" headers="estimate">-0.22</td>
-<td class="gt_row gt_center" headers="conf.low">-0.33, -0.11</td>
-<td class="gt_row gt_center" headers="p.value">&lt;0.001</td>
+<td><strong>Continuous</strong></td>
+<td>Linear regression</td>
+<td><code>lm()</code></td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left" headers="label">financial_satisfaction</td>
-<td class="gt_row gt_center" headers="stat_1">6.00 (5.00, 8.00)</td>
-<td class="gt_row gt_center" headers="stat_2">7.00 (5.00, 8.00)</td>
-<td class="gt_row gt_center" headers="estimate">-0.15</td>
-<td class="gt_row gt_center" headers="conf.low">-0.27, -0.03</td>
-<td class="gt_row gt_center" headers="p.value">0.014</td>
+<td><strong>Binary</strong> (yes/no)</td>
+<td>Logistic regression</td>
+<td><code>glm(..., family = binomial)</code></td>
 </tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">freedom_of_choice</td>
-<td class="gt_row gt_center" headers="stat_1">7.00 (6.00, 8.00)</td>
-<td class="gt_row gt_center" headers="stat_2">7.00 (6.00, 9.00)</td>
-<td class="gt_row gt_center" headers="estimate">-0.13</td>
-<td class="gt_row gt_center" headers="conf.low">-0.25, -0.01</td>
-<td class="gt_row gt_center" headers="p.value">0.033</td>
-</tr>
-</tbody><tfoot>
-<tr class="gt_footnotes odd">
-<td colspan="6" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> Median (Q1, Q3)</td>
-</tr>
-<tr class="gt_footnotes even">
-<td colspan="6" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>2</sup></span> Welch Two Sample t-test</td>
-</tr>
-<tr class="gt_sourcenotes odd">
-<td colspan="6" class="gt_sourcenote">Abbreviation: CI = Confidence Interval</td>
-</tr>
-</tfoot>
-
+</tbody>
 </table>
-
+<p>Whatever the model, the core skill is the same: <strong>read one coefficient at a time, in the units of your outcome.</strong> If a predictor is categorical, its coefficient is the difference from a <strong>reference</strong> group.</p>
+<div class="callout callout-tip callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>You already know the shape of this from school: <span class="math inline">\(y = mx + c\)</span>. Regression just adds <em>uncertainty</em> (are the slope and intercept real?) and <em>more predictors</em>.</p>
 </div>
 </div>
-</div></section><section id="how-to-save-gtsummary-tables" class="slide level2">
-<h2>How to save gtsummary() tables</h2>
-<ol type="1">
-<li>The tables will be displayed under the “Viewer” tab on the lower right hand side of Rstudio.</li>
-<li>Select the entire tables, and then copy it with Ctrl + C (or Cmd + C on Macbook)</li>
-<li>Paste the table with Ctrl + V (or Cmd + V on Macbook) to your word document or Google doc.</li>
-</ol>
-</section></section>
+</div>
+</section>
 <section>
 <section id="simple-linear-regression" class="title-slide slide level1 center">
 <h1>Simple Linear Regression</h1>
@@ -834,6 +333,16 @@ N = 2,671<span class="gt_footnote_marks" style="white-space:nowrap;font-style:it
 <li><span class="math inline">\(\varepsilon\)</span> - the error term. (In some examples you might see this omitted from the formula).</li>
 </ul>
 </div></div>
+<div class="callout callout-tip callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>This is the <span class="math inline">\(y = mx + c\)</span> line from secondary school, dressed up: <span class="math inline">\(\beta_0\)</span> is the intercept (<span class="math inline">\(c\)</span>), <span class="math inline">\(\beta_1\)</span> is the slope (<span class="math inline">\(m\)</span>). Regression’s job is to find the best-fitting <span class="math inline">\(m\)</span> and <span class="math inline">\(c\)</span> from your data — and tell you whether they’re statistically real.</p>
+</div>
+</div>
+</div>
 <p>Examples:</p>
 <ul>
 <li>Does a person’s <strong>secular values</strong> affect their <strong>life satisfaction</strong>?</li>
@@ -858,8 +367,8 @@ N = 2,671<span class="gt_footnote_marks" style="white-space:nowrap;font-style:it
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>life_model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> secular_values, <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb5-2"><a></a><span class="fu">summary</span>(life_model1) <span class="co">#summarize the result</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>life_model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> secular_values, <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb3-2"><a></a><span class="fu">summary</span>(life_model1) <span class="co">#summarize the result</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -910,40 +419,6 @@ F-statistic: 256.1 on 1 and 5100 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>The model was statistically significant (F(1, 5100) = 256.13, p &lt; 0.001) but explained only about 4.8% of the variance in life satisfaction (R² = 0.048).</p>
 </blockquote>
 </section>
-<section id="present-your-regression-result---huxtable" class="slide level2">
-<h2>Present your regression result - huxtable</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">huxreg</span>(<span class="st">"life satisfaction"</span> <span class="ot">=</span> life_model1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="huxtable" data-quarto-disable-processing="true" style="margin-left: auto; margin-right: auto;">
-<colgroup><col><col></colgroup><thead>
-<tr>
-<th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;      font-weight: normal;"></th><th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.8pt 0pt 0.4pt 0pt;      font-weight: normal;">life satisfaction</th></tr>
-</thead>
-<tbody>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">(Intercept)</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">7.798 ***</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.060)&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">secular_values</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">-2.437 ***</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">(0.152)&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">N</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">5102&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">R2</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.048&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">logLik</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">-10689.633&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;      font-weight: normal;">AIC</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">21385.266&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" colspan="2" style="border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;      font-weight: normal;">*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05.</th></tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
 <section id="linear-regression-multiple-continuous-predictors" class="slide level2">
 <h2>Linear Regression: Multiple continuous predictors</h2>
 <p><strong>Research Question:</strong> Do a person’s <strong>financial satisfaction</strong> and <strong>secular values</strong> affect their <strong>life satisfaction</strong>?</p>
@@ -952,9 +427,9 @@ F-statistic: 256.1 on 1 and 5100 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li>The predictors/IV (<span class="math inline">\(X\)</span>): <code>financial_satisfaction</code> and <code>secular_values</code></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>life_model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> financial_satisfaction <span class="sc">+</span> secular_values,</span>
-<span id="cb8-2"><a></a>                  <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb8-3"><a></a><span class="fu">summary</span>(life_model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>life_model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> financial_satisfaction <span class="sc">+</span> secular_values,</span>
+<span id="cb5-2"><a></a>                  <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb5-3"><a></a><span class="fu">summary</span>(life_model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -990,498 +465,6 @@ F-statistic:  1405 on 2 and 5099 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>The model was statistically significant (F(2, 5099) = 1405.49, p &lt; 0.001) and explained about 35.5% of the variance in life satisfaction (R² = 0.355).</p>
 </blockquote>
 </section>
-<section id="present-your-regression-result---tbl_regression-from-gtsummary" class="slide level2">
-<h2>Present your regression result - tbl_regression() from gtsummary</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>life_model2 <span class="sc">|&gt;</span> <span class="fu">tbl_regression</span>() <span class="sc">|&gt;</span> <span class="fu">bold_p</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div id="lcbfszvdnq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#lcbfszvdnq table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#lcbfszvdnq thead, #lcbfszvdnq tbody, #lcbfszvdnq tfoot, #lcbfszvdnq tr, #lcbfszvdnq td, #lcbfszvdnq th {
-  border-style: none;
-}
-
-#lcbfszvdnq p {
-  margin: 0;
-  padding: 0;
-}
-
-#lcbfszvdnq .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#lcbfszvdnq .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#lcbfszvdnq .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#lcbfszvdnq .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#lcbfszvdnq .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#lcbfszvdnq .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#lcbfszvdnq .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#lcbfszvdnq .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#lcbfszvdnq .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#lcbfszvdnq .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#lcbfszvdnq .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#lcbfszvdnq .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#lcbfszvdnq .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#lcbfszvdnq .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#lcbfszvdnq .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#lcbfszvdnq .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#lcbfszvdnq .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#lcbfszvdnq .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#lcbfszvdnq .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#lcbfszvdnq .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#lcbfszvdnq .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#lcbfszvdnq .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#lcbfszvdnq .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#lcbfszvdnq .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#lcbfszvdnq .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#lcbfszvdnq .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#lcbfszvdnq .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#lcbfszvdnq .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#lcbfszvdnq .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#lcbfszvdnq .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#lcbfszvdnq .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#lcbfszvdnq .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#lcbfszvdnq .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#lcbfszvdnq .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#lcbfszvdnq .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#lcbfszvdnq .gt_left {
-  text-align: left;
-}
-
-#lcbfszvdnq .gt_center {
-  text-align: center;
-}
-
-#lcbfszvdnq .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#lcbfszvdnq .gt_font_normal {
-  font-weight: normal;
-}
-
-#lcbfszvdnq .gt_font_bold {
-  font-weight: bold;
-}
-
-#lcbfszvdnq .gt_font_italic {
-  font-style: italic;
-}
-
-#lcbfszvdnq .gt_super {
-  font-size: 65%;
-}
-
-#lcbfszvdnq .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#lcbfszvdnq .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#lcbfszvdnq .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#lcbfszvdnq .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#lcbfszvdnq .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#lcbfszvdnq .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#lcbfszvdnq .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#lcbfszvdnq .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#lcbfszvdnq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table caption-top" data-quarto-bootstrap="false">
-<thead>
-<tr class="gt_col_headings header">
-<th id="label" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Characteristic</strong></th>
-<th id="estimate" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>Beta</strong></th>
-<th id="conf.low" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>95% CI</strong></th>
-<th id="p.value" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>p-value</strong></th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">financial_satisfaction</td>
-<td class="gt_row gt_center" headers="estimate">0.52</td>
-<td class="gt_row gt_center" headers="conf.low">0.50, 0.54</td>
-<td class="gt_row gt_center" headers="p.value" style="font-weight: bold">&lt;0.001</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label">secular_values</td>
-<td class="gt_row gt_center" headers="estimate">-1.8</td>
-<td class="gt_row gt_center" headers="conf.low">-2.1, -1.6</td>
-<td class="gt_row gt_center" headers="p.value" style="font-weight: bold">&lt;0.001</td>
-</tr>
-</tbody><tfoot>
-<tr class="gt_sourcenotes odd">
-<td colspan="4" class="gt_sourcenote">Abbreviation: CI = Confidence Interval</td>
-</tr>
-</tfoot>
-
-</table>
-
-</div>
-</div>
-</div>
-
-<aside><div>
-<p>More on <code>tbl_regression()</code> by <code>gtsummary</code>: <a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html" class="uri">https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html</a></p>
-</div></aside></section>
 <section id="reporting-result-a-sample-regression-table" class="slide level2">
 <h2>Reporting result: A sample regression table</h2>
 <div class="columns">
@@ -1498,52 +481,55 @@ F-statistic:  1405 on 2 and 5099 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li><a href="https://apastyle.apa.org/style-grammar-guidelines/tables-figures/sample-tables#regression">APA recommended format</a></li>
 </ul>
 </div></aside></section>
-<section id="presenting-your-models" class="slide level2 scrollable">
-<h2>Presenting your models</h2>
-<p>If you get an error saying “huxreg not found”, you may need to:</p>
-<ol type="1">
-<li><p>Install the library by running this line in your terminal: <code>install.packages("huxtable")</code></p></li>
-<li><p>And then load them to your script with this line: <code>library(huxtable)</code></p></li>
-</ol>
-<p>For more info about huxreg, go here: <a href="https://cran.r-project.org/web/packages/huxtable/vignettes/huxreg.html" class="uri">https://cran.r-project.org/web/packages/huxtable/vignettes/huxreg.html</a></p>
+<section id="presenting-your-results-with-huxtable" class="slide level2 scrollable">
+<h2>Presenting your results with huxtable</h2>
+<p><code>huxreg()</code> turns one or more models into a clean, copy-pasteable table — put several side by side to compare them:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">huxreg</span>(<span class="st">"life_satisfaction (model1)"</span> <span class="ot">=</span> life_model1, </span>
-<span id="cb11-2"><a></a>       <span class="st">"life_satisfaction (model2)"</span> <span class="ot">=</span> life_model2,</span>
-<span id="cb11-3"><a></a>       <span class="at">number_format =</span> <span class="dv">4</span>,</span>
-<span id="cb11-4"><a></a>       <span class="at">bold_signif =</span> <span class="fl">0.05</span>,</span>
-<span id="cb11-5"><a></a>       <span class="at">statistics =</span> <span class="fu">c</span>( <span class="st">"R squared"</span> <span class="ot">=</span> <span class="st">"r.squared"</span>, <span class="st">"N"</span> <span class="ot">=</span> <span class="st">"nobs"</span>, <span class="st">"F"</span> <span class="ot">=</span> <span class="st">"statistic"</span>,</span>
-<span id="cb11-6"><a></a>      <span class="st">"P value"</span> <span class="ot">=</span> <span class="st">"p.value"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">huxreg</span>(<span class="st">"model 1"</span> <span class="ot">=</span> life_model1, <span class="st">"model 2"</span> <span class="ot">=</span> life_model2,</span>
+<span id="cb7-2"><a></a>       <span class="at">bold_signif =</span> <span class="fl">0.05</span>,</span>
+<span id="cb7-3"><a></a>       <span class="at">statistics =</span> <span class="fu">c</span>(<span class="st">"R squared"</span> <span class="ot">=</span> <span class="st">"r.squared"</span>, <span class="st">"N"</span> <span class="ot">=</span> <span class="st">"nobs"</span>,</span>
+<span id="cb7-4"><a></a>                      <span class="st">"F"</span> <span class="ot">=</span> <span class="st">"statistic"</span>, <span class="st">"P value"</span> <span class="ot">=</span> <span class="st">"p.value"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
+<div class="callout callout-tip callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>For a single model, just <code>huxreg(life_model1)</code>. The table appears in RStudio’s <strong>Viewer</strong> pane — select it, copy (Ctrl/Cmd + C), and paste into Word or Google Docs.</p>
+</div>
+</div>
+</div>
 </section>
-<section id="presenting-your-models-output" class="slide level2 scrollable output-location-slide"><h2>Presenting your models</h2><div class="cell output-location-slide">
+<section id="presenting-your-results-with-huxtable-output" class="slide level2 scrollable output-location-slide"><h2>Presenting your results with huxtable</h2><div class="cell output-location-slide">
 <div class="cell-output-display">
 <table class="huxtable" data-quarto-disable-processing="true" style="margin-left: auto; margin-right: auto;">
 <colgroup><col><col><col></colgroup><thead>
 <tr>
-<th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;      font-weight: normal;"></th><th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.8pt 0pt 0.4pt 0pt;      font-weight: normal;">life_satisfaction (model1)</th><th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.8pt 0pt 0.4pt 0pt;      font-weight: normal;">life_satisfaction (model2)</th></tr>
+<th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;      font-weight: normal;"></th><th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.8pt 0pt 0.4pt 0pt;      font-weight: normal;">model 1</th><th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.8pt 0pt 0.4pt 0pt;      font-weight: normal;">model 2</th></tr>
 </thead>
 <tbody>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">(Intercept)</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;      font-weight: bold;">7.7979 ***</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;      font-weight: bold;">4.3700 ***</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">(Intercept)</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;      font-weight: bold;">7.798 ***</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;      font-weight: bold;">4.370 ***</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.0604)&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.0855)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.060)&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.085)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">secular_values</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">-2.4373 ***</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">-1.8138 ***</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">secular_values</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">-2.437 ***</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">-1.814 ***</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.1523)&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.1260)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.152)&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.126)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">financial_satisfaction</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">0.5159 ***</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">financial_satisfaction</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">0.516 ***</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;      font-weight: bold;">(0.0105)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;      font-weight: bold;">(0.010)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">R squared</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">0.0478&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">0.3554&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">R squared</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">0.048&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">0.355&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">N</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">5102&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">5102&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">N</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">5102&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">5102&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">F</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">256.1283&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">1405.4919&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">F</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">256.128&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">1405.492&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;      font-weight: normal;">P value</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">0.0000&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">0.0000&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;      font-weight: normal;">P value</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">0.000&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">0.000&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
 <th class="huxtable-cell huxtable-header" colspan="3" style="border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;      font-weight: normal;">*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05.</th></tr>
 </tbody>
@@ -1559,7 +545,7 @@ F-statistic:  1405 on 2 and 5099 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li><p>If they seem to be highly correlated (&gt; 5 or so), one of the easiest (and somewhat acceptable) way is to simply remove the less significant predictor from your model :D</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>car<span class="sc">::</span><span class="fu">vif</span>(life_model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>car<span class="sc">::</span><span class="fu">vif</span>(life_model2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>financial_satisfaction         secular_values 
               1.010177               1.010177 </code></pre>
@@ -1568,10 +554,10 @@ F-statistic:  1405 on 2 and 5099 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="linear-regression-one-categorical-predictor" class="slide level2">
 <h2>Linear Regression: One categorical predictor</h2>
-<p><strong>Research Question</strong>: Explore the difference in life satisfaction between age groups</p>
+<p><strong>Research Question</strong>: Explore the difference in life satisfaction between countries</p>
 <ul>
 <li>The outcome/DV (<span class="math inline">\(Y\)</span>): <code>life_satisfaction</code></li>
-<li>The predictor/IV (<span class="math inline">\(X\)</span>): <code>age_group</code></li>
+<li>The predictor/IV (<span class="math inline">\(X\)</span>): <code>country</code> — an <strong>unordered</strong> categorical variable (the countries have no inherent order)</li>
 </ul>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -1582,24 +568,20 @@ F-statistic:  1405 on 2 and 5099 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-<p>Before proceeding with analysis, ensure that all the categorical variables involved are cast as factors!</p>
+<p>Before proceeding with analysis, ensure that all the categorical variables involved are cast as factors! (We already did this in the load-data step.)</p>
 </div>
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="co"># put the age groups in ascending order so the youngest group (18-28)</span></span>
-<span id="cb14-2"><a></a><span class="co"># becomes the reference category</span></span>
-<span id="cb14-3"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb14-4"><a></a>    <span class="fu">mutate</span>(<span class="at">age_group =</span> <span class="fu">factor</span>(age_group,</span>
-<span id="cb14-5"><a></a>                              <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"18-28"</span>, <span class="st">"29-44"</span>, <span class="st">"45-60"</span>, <span class="st">"61+"</span>)))</span>
-<span id="cb14-6"><a></a></span>
-<span id="cb14-7"><a></a><span class="fu">str</span>(wvs_cleaned<span class="sc">$</span>life_satisfaction)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="co"># country is already a factor from our load-data step — no ordering needed,</span></span>
+<span id="cb10-2"><a></a><span class="co"># since it's a nominal (unordered) variable</span></span>
+<span id="cb10-3"><a></a><span class="fu">str</span>(wvs_cleaned<span class="sc">$</span>life_satisfaction)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> num [1:5102] 8 10 4 1 9 10 8 5 8 5 ...</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">str</span>(wvs_cleaned<span class="sc">$</span>age_group)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">str</span>(wvs_cleaned<span class="sc">$</span>country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> Factor w/ 4 levels "18-28","29-44",..: 4 4 4 4 4 4 4 4 4 4 ...</code></pre>
+<pre><code> Factor w/ 4 levels "Turkey","Hong Kong SAR",..: 1 2 2 2 2 2 2 2 2 2 ...</code></pre>
 </div>
 </div>
 </section>
@@ -1607,110 +589,72 @@ F-statistic:  1405 on 2 and 5099 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h2>Continuing the analysis</h2>
 <p>The analysis summary should look like this:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>life_model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> age_group, <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb18-2"><a></a><span class="fu">summary</span>(life_model3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>life_model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> country, <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb14-2"><a></a><span class="fu">summary</span>(life_model3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = life_satisfaction ~ age_group, data = wvs_cleaned)
+lm(formula = life_satisfaction ~ country, data = wvs_cleaned)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--6.2353 -1.0191  0.1183  1.1567  3.1567 
+-6.6311 -1.3544  0.3689  1.3876  3.5238 
 
 Coefficients:
-               Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)     7.01906    0.05793 121.166   &lt;2e-16 ***
-age_group29-44 -0.13737    0.07446  -1.845   0.0651 .  
-age_group45-60 -0.17573    0.07725  -2.275   0.0230 *  
-age_group61+    0.21624    0.10757   2.010   0.0445 *  
+                     Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)           6.47615    0.05637 114.887  &lt; 2e-16 ***
+countryHong Kong SAR  0.13627    0.07884   1.729    0.084 .  
+countryIndonesia      1.15490    0.07841  14.730  &lt; 2e-16 ***
+countryMalaysia       0.51319    0.07823   6.560 5.92e-11 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 2.013 on 5098 degrees of freedom
-Multiple R-squared:  0.003439,  Adjusted R-squared:  0.002853 
-F-statistic: 5.865 on 3 and 5098 DF,  p-value: 0.0005405</code></pre>
+Residual standard error: 1.966 on 5098 degrees of freedom
+Multiple R-squared:  0.04935,   Adjusted R-squared:  0.04879 
+F-statistic: 88.22 on 3 and 5098 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <ul>
 <li><p>When interpreting a categorical predictor in regression, one category is treated as the reference category, which serves as the baseline for comparison. In this case, the reference category corresponds to the intercept.</p></li>
-<li><p>By default, the first category in the data is used as the reference category, unless specified.</p></li>
+<li><p>By default, the first category in the data is used as the reference — here that’s <strong>Turkey</strong>, so each coefficient is a country’s difference from Turkey.</p></li>
 </ul>
+<div class="callout callout-tip callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>Sound familiar? This is the same comparison a <strong>one-way ANOVA</strong> makes (Session 4) — a one-way ANOVA <em>is</em> a linear regression with a single categorical predictor.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="narrating-the-result" class="slide level2">
 <h2>Narrating the result</h2>
 <p>Here is one possible way to narrate your result:</p>
 <blockquote>
-<p>A linear regression analysis was conducted to examine how age groups predict life satisfaction. With the youngest age group (18-28) as the reference group (intercept = 7.02, SE = 0.06), the pattern was mixed. The 29-44 age group scored 0.14 units lower, though this difference was not statistically significant (SE = 0.07, p = 0.065). The 45-60 age group scored 0.18 units lower (SE = 0.08, p = 0.023), while the oldest 61+ age group scored 0.22 units higher (SE = 0.11, p = 0.044) than the reference group.</p>
+<p>A linear regression analysis was conducted to examine how country predicts life satisfaction, with <strong>Turkey as the reference group</strong> (intercept = 6.48, SE = 0.06). Compared to Turkey, respondents in Indonesia reported significantly higher life satisfaction (B = 1.15, SE = 0.08, p &lt; 0.001), as did those in Malaysia (B = 0.51, SE = 0.08, p &lt; 0.001). Hong Kong SAR scored slightly higher, but the difference was not statistically significant (B = 0.14, SE = 0.08, p = 0.084).</p>
 </blockquote>
 <blockquote>
-<p>The model was statistically significant (F(3, 5098) = 5.86, p &lt; 0.001) but explained less than 1% of the variance in life satisfaction (R² = 0.003, Adjusted R² = 0.003).</p>
+<p>The model was statistically significant (F(3, 5098) = 88.22, p &lt; 0.001) but explained only about 4.9% of the variance in life satisfaction (R² = 0.049).</p>
 </blockquote>
 </section>
-<section id="presenting-the-regression-table" class="slide level2 scrollable">
-<h2>Presenting the regression table</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">huxreg</span>(<span class="st">"life satisfaction (model3)"</span> <span class="ot">=</span> life_model3,</span>
-<span id="cb20-2"><a></a>       <span class="at">number_format =</span> <span class="dv">4</span>,</span>
-<span id="cb20-3"><a></a>       <span class="at">bold_signif =</span> <span class="fl">0.05</span>,</span>
-<span id="cb20-4"><a></a>       <span class="at">statistics =</span> <span class="fu">c</span>( <span class="st">"R squared"</span> <span class="ot">=</span> <span class="st">"r.squared"</span>, <span class="st">"N"</span> <span class="ot">=</span> <span class="st">"nobs"</span>, <span class="st">"F"</span> <span class="ot">=</span> <span class="st">"statistic"</span>,</span>
-<span id="cb20-5"><a></a>      <span class="st">"P value"</span> <span class="ot">=</span> <span class="st">"p.value"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-
-</section>
-<section id="presenting-the-regression-table-output" class="slide level2 scrollable output-location-slide"><h2>Presenting the regression table</h2><div class="cell output-location-slide">
-<div class="cell-output-display">
-<table class="huxtable" data-quarto-disable-processing="true" style="margin-left: auto; margin-right: auto;">
-<colgroup><col><col></colgroup><thead>
-<tr>
-<th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;      font-weight: normal;"></th><th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.8pt 0pt 0.4pt 0pt;      font-weight: normal;">life satisfaction (model3)</th></tr>
-</thead>
-<tbody>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">(Intercept)</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;      font-weight: bold;">7.0191 ***</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.0579)&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">age_group29-44</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">-0.1374&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.0745)&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">age_group45-60</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">-0.1757 *&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">(0.0772)&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">age_group61+</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: bold;">0.2162 *&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;      font-weight: bold;">(0.1076)&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">R squared</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">0.0034&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">N</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">5102&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">F</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">5.8649&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;      font-weight: normal;">P value</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">0.0005&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" colspan="2" style="border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;      font-weight: normal;">*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05.</th></tr>
-</tbody>
-</table>
-</div>
-</div></section><section id="categorical-predictor-changing-the-reference" class="slide level2">
+<section id="categorical-predictor-changing-the-reference" class="slide level2">
 <h2>Categorical predictor: changing the reference</h2>
-<p>Let’s change the reference category for <code>age_group</code> variable to “61+”.</p>
+<p>Let’s change the reference category for <code>country</code> to “Malaysia” (our neighbour!).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb21-2"><a></a>    <span class="fu">mutate</span>(<span class="at">age_group =</span> <span class="fu">relevel</span>(age_group, <span class="at">ref =</span> <span class="st">"61+"</span>))</span>
-<span id="cb21-3"><a></a></span>
-<span id="cb21-4"><a></a><span class="fu">str</span>(wvs_cleaned<span class="sc">$</span>age_group)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a></a>    <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">relevel</span>(country, <span class="at">ref =</span> <span class="st">"Malaysia"</span>))</span>
+<span id="cb16-3"><a></a></span>
+<span id="cb16-4"><a></a><span class="fu">str</span>(wvs_cleaned<span class="sc">$</span>country)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> Factor w/ 4 levels "61+","18-28",..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<pre><code> Factor w/ 4 levels "Malaysia","Turkey",..: 2 3 3 3 3 3 3 3 3 3 ...</code></pre>
 </div>
 </div>
 <p>Re-run the analysis with the new reference category</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>life_model3a<span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> age_group, <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb23-2"><a></a><span class="fu">summary</span>(life_model3a)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>life_model3a <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> country, <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb18-2"><a></a><span class="fu">summary</span>(life_model3a)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -1718,43 +662,43 @@ F-statistic: 5.865 on 3 and 5098 DF,  p-value: 0.0005405</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = life_satisfaction ~ age_group, data = wvs_cleaned)
+lm(formula = life_satisfaction ~ country, data = wvs_cleaned)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--6.2353 -1.0191  0.1183  1.1567  3.1567 
+-6.6311 -1.3544  0.3689  1.3876  3.5238 
 
 Coefficients:
-               Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)     7.23529    0.09064  79.823  &lt; 2e-16 ***
-age_group18-28 -0.21624    0.10757  -2.010 0.044466 *  
-age_group29-44 -0.35361    0.10200  -3.467 0.000531 ***
-age_group45-60 -0.39197    0.10406  -3.767 0.000167 ***
+                     Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)           6.98934    0.05425 128.842  &lt; 2e-16 ***
+countryTurkey        -0.51319    0.07823  -6.560 5.92e-11 ***
+countryHong Kong SAR -0.37692    0.07733  -4.874 1.13e-06 ***
+countryIndonesia      0.64172    0.07689   8.345  &lt; 2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 2.013 on 5098 degrees of freedom
-Multiple R-squared:  0.003439,  Adjusted R-squared:  0.002853 
-F-statistic: 5.865 on 3 and 5098 DF,  p-value: 0.0005405</code></pre>
+Residual standard error: 1.966 on 5098 degrees of freedom
+Multiple R-squared:  0.04935,   Adjusted R-squared:  0.04879 
+F-statistic: 88.22 on 3 and 5098 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div></section><section id="changing-baseline-category-for-ordered-factor" class="slide level2">
 <h2>Changing baseline category for ordered factor</h2>
-<p>Assuming we have a column with ordered factor in our data called <code>education</code> with the level of <code>Primary</code>, <code>Secondary</code>, and <code>Tertiary</code>. This is how we can change the order, if we want to put <code>Secondary</code> before <code>Primary</code>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb25-2"><a></a>    <span class="fu">mutate</span>(<span class="at">education =</span> <span class="fu">factor</span>(education, </span>
-<span id="cb25-3"><a></a>                         <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Secondary"</span>, <span class="st">"Primary"</span>, <span class="st">"Tertiary"</span>), </span>
-<span id="cb25-4"><a></a>                         <span class="at">ordered =</span> <span class="cn">TRUE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div title="Releveling ordered factor">
-<div class="callout callout-note callout-titled callout-style-simple">
+<p><code>income_level</code> is naturally <strong>ordered</strong>: <code>Low</code> &lt; <code>Medium</code> &lt; <code>High</code>. This is how we set (or change) that ordering explicitly as an ordered factor — put the levels in the sequence you want:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a></a>    <span class="fu">mutate</span>(<span class="at">income_level =</span> <span class="fu">factor</span>(income_level,</span>
+<span id="cb20-3"><a></a>                         <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Low"</span>, <span class="st">"Medium"</span>, <span class="st">"High"</span>),</span>
+<span id="cb20-4"><a></a>                         <span class="at">ordered =</span> <span class="cn">TRUE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div title="Ordered factors behave differently in regression">
+<div class="callout callout-important callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Releveling ordered factor</strong></p>
+<p><strong>Ordered factors behave differently in regression</strong></p>
 </div>
 <div class="callout-content">
-<p>Previously, we could use the <code>relevel()</code> function to change the reference category for ordered factors. However, in recent R versions, this no longer works for ordered factors, so we now use the method shown in the code above. The <code>relevel()</code> function still works for unordered factors.</p>
+<p>This slide is about <strong>reordering the levels</strong> of an ordered factor. But be careful: an <strong>ordered</strong> factor doesn’t have a “reference category” the way an unordered one does. In a regression, R codes it with <strong>polynomial contrasts</strong> (you’ll see coefficients labelled <code>.L</code>, <code>.Q</code>, <code>.C</code> — linear/quadratic/cubic trends), <em>not</em> “difference from a baseline group”. So if you want the <strong>“difference from a reference group”</strong> interpretation we’ve been using, keep the factor <strong>unordered</strong> and just <code>relevel()</code> it (as we did for <code>country</code>).</p>
 </div>
 </div>
 </div>
@@ -1766,8 +710,8 @@ F-statistic: 5.865 on 3 and 5098 DF,  p-value: 0.0005405</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>life_model4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> sex, <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb26-2"><a></a><span class="fu">summary</span>(life_model4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>life_model4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> sex, <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb21-2"><a></a><span class="fu">summary</span>(life_model4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1790,6 +734,71 @@ Multiple R-squared:  0.002975,  Adjusted R-squared:  0.00278
 F-statistic: 15.22 on 1 and 5100 DF,  p-value: 9.701e-05</code></pre>
 </div>
 </div>
+</section>
+<section id="wait-how-is-this-different-from-t-tests-and-anova" class="slide level2">
+<h2>Wait — how is this different from t-tests and ANOVA?</h2>
+<p><em>In case anyone’s been wondering the same thing!</em> You don’t need this to run any analysis today — it’s just the “why” for the curious. Here’s the intuition:</p>
+<ul>
+<li><strong>t-tests &amp; ANOVA</strong> are framed around <strong>comparing</strong> group means — <em>“are these groups different?”</em></li>
+<li><strong>Correlation</strong> is framed around the <strong>strength &amp; direction of a relationship</strong> — <em>“do these two move together, and how tightly?”</em> (symmetric — no outcome vs.&nbsp;predictor)</li>
+<li><strong>Regression</strong> is framed around <strong>predicting</strong> an outcome from predictors — <em>“what’s the relationship, and how big is it?”</em></li>
+</ul>
+<p>They all belong to the <strong>general linear model</strong> family; they differ mainly in the <em>types of variables</em> they take and the <em>question they’re framed around</em>. In fact, <strong>t-tests and ANOVA are special cases of linear regression</strong></p>
+</section>
+<section id="how-theyre-all-equivalent-to-regression" class="slide level2">
+<h2>How they’re all equivalent to regression</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Traditional test</th>
+<th>Equivalent regression</th>
+<th>Gives the…</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Two-group t-test</td>
+<td><code>lm(y ~ binary_group)</code></td>
+<td>same <strong>p-value</strong></td>
+</tr>
+<tr class="even">
+<td>One-way ANOVA</td>
+<td><code>lm(y ~ multi_level_group)</code></td>
+<td>same <strong>F-statistic &amp; p-value</strong></td>
+</tr>
+<tr class="odd">
+<td>Correlation</td>
+<td><code>lm(y ~ continuous_x)</code></td>
+<td>same <strong>p-value</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-tip callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>A traditional ANOVA runs an <em>omnibus</em> test — <em>“does <strong>any</strong> group differ?”</em> — so you need a post-hoc test (Tukey’s, from Session 4) to find out <em>which</em>. Regression instead hands you <strong>specific coefficients</strong>: each one is a group’s difference from the <strong>reference</strong> category, directly. The underlying math is roughly the same!</p>
+</div>
+</div>
+</div>
+
+<aside><div>
+<p>Want to dig deeper? <a href="https://stats.stackexchange.com/questions/403517/t-test-anova-or-regression-whats-the-difference" target="_blank">This StackExchange thread</a> and StatQuest’s <a href="https://www.youtube.com/watch?v=NF5_btOaCig" target="_blank"><em>General Linear Models Pt. 2: t-tests and ANOVA</em></a> both explain why these are the same model.</p>
+</div></aside></section>
+<section id="so-which-one-should-i-use" class="slide level2">
+<h2>So which one should I use?</h2>
+<ul>
+<li><strong>Any of them</strong> — pick the framing that fits your <strong>question</strong> and what your <strong>reader</strong> expects (many fields/professors expect a “t-test” or “ANOVA” for a group comparison).</li>
+<li><strong>Regression</strong> is the most general, flexible member of the family: many predictors, continuous + categorical mixed, and interactions.</li>
+<li>And <strong>logistic regression</strong> extends the very same idea to <em>binary</em> outcomes — which is exactly where we’re headed next.</li>
+</ul>
 </section></section>
 <section>
 <section id="binary-logistic-regression" class="title-slide slide level1 center">
@@ -1804,6 +813,21 @@ F-statistic: 15.22 on 1 and 5100 DF,  p-value: 9.701e-05</code></pre>
 <p><span class="math display">\[logit(P) = \beta_0 + \beta_1X_1 + \beta_2X_2 + … + \beta_nX_n\]</span></p>
 <p>It can also be written like below, in which the <span class="math inline">\(logit(P)\)</span> part is expanded:</p>
 <p><span class="math display">\[P = \frac{1}{1 + e^{-(\beta_0 + \beta_1X)}}\]</span></p>
+<div title="The one-paragraph mental model">
+<div class="callout callout-tip callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>The one-paragraph mental model</strong></p>
+</div>
+<div class="callout-content">
+<p>The outcome is now <strong>yes/no</strong>. You can’t fit a straight line to a 0/1, so we model the <strong>log-odds</strong> instead — the intimidating <code>logit</code> and <span class="math inline">\(e^x\)</span> are just plumbing that keeps predicted probabilities between 0 and 1. What you actually <strong>read</strong> is the <strong>odds ratio</strong>: <strong>&gt;1</strong> = event more likely, <strong>&lt;1</strong> = less likely, for each 1-unit increase in X. If you hold onto just this, you’re set.</p>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="binary-logistic-regression-examples" class="slide level2">
 <h2>Binary Logistic Regression Examples</h2>
@@ -1828,10 +852,10 @@ F-statistic: 15.22 on 1 and 5100 DF,  p-value: 9.701e-05</code></pre>
 <h2>Dummy-coding dependent variable</h2>
 <p>Before we proceed with the calculations, we need to <strong>dummy code</strong> the dependent variable into 1 and 0, with 1 = Satisfied and 0 = Not Satisfied. <a href="https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faqwhat-is-dummy-coding/">More info on dummy coding here</a></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="co"># First, we need to create a binary outcome</span></span>
-<span id="cb28-2"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb28-3"><a></a>    <span class="fu">mutate</span>(<span class="at">satisfied =</span> <span class="fu">if_else</span>(life_satisfaction <span class="sc">&gt;=</span> <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb28-4"><a></a><span class="co"># the if_else is from dplyr package (from session 2)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="co"># First, we need to create a binary outcome</span></span>
+<span id="cb23-2"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a></a>    <span class="fu">mutate</span>(<span class="at">satisfied =</span> <span class="fu">if_else</span>(life_satisfaction <span class="sc">&gt;=</span> <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb23-4"><a></a><span class="co"># the if_else is from dplyr package (from session 2)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -1851,11 +875,11 @@ F-statistic: 15.22 on 1 and 5100 DF,  p-value: 9.701e-05</code></pre>
 <h2>Conduct the analysis</h2>
 <p>Let’s conduct the analysis!</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>life_model5 <span class="ot">&lt;-</span> <span class="fu">glm</span>(satisfied <span class="sc">~</span> freedom_of_choice,</span>
-<span id="cb30-2"><a></a>                <span class="at">family =</span> binomial,</span>
-<span id="cb30-3"><a></a>                <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb30-4"><a></a></span>
-<span id="cb30-5"><a></a><span class="fu">summary</span>(life_model5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>life_model5 <span class="ot">&lt;-</span> <span class="fu">glm</span>(satisfied <span class="sc">~</span> freedom_of_choice,</span>
+<span id="cb25-2"><a></a>                <span class="at">family =</span> binomial,</span>
+<span id="cb25-3"><a></a>                <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb25-4"><a></a></span>
+<span id="cb25-5"><a></a><span class="fu">summary</span>(life_model5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1883,554 +907,44 @@ Number of Fisher Scoring iterations: 3</code></pre>
 <h2>Exponentiate the coefficients</h2>
 <p>If you recall the formula, the results are expressed in Logit Probability. As we typically report the result in terms of Odd Ratios (OR), perform exponentiation on the coefficients.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="fu">exp</span>(<span class="fu">coef</span>(life_model5))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">exp</span>(<span class="fu">coef</span>(life_model5))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      (Intercept) freedom_of_choice 
        0.07369649        1.57793838 </code></pre>
 </div>
 </div>
-<p>We can also use <code>tbl_regression()</code> to do this for us:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb34-2"><a></a>life_model5 <span class="sc">|&gt;</span> <span class="fu">tbl_regression</span>(<span class="at">exponentiate =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb34-3"><a></a>    <span class="fu">bold_p</span>() </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div id="kwhfvjsjoo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#kwhfvjsjoo table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#kwhfvjsjoo thead, #kwhfvjsjoo tbody, #kwhfvjsjoo tfoot, #kwhfvjsjoo tr, #kwhfvjsjoo td, #kwhfvjsjoo th {
-  border-style: none;
-}
-
-#kwhfvjsjoo p {
-  margin: 0;
-  padding: 0;
-}
-
-#kwhfvjsjoo .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#kwhfvjsjoo .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#kwhfvjsjoo .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#kwhfvjsjoo .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#kwhfvjsjoo .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#kwhfvjsjoo .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#kwhfvjsjoo .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#kwhfvjsjoo .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#kwhfvjsjoo .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#kwhfvjsjoo .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#kwhfvjsjoo .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#kwhfvjsjoo .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#kwhfvjsjoo .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#kwhfvjsjoo .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#kwhfvjsjoo .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#kwhfvjsjoo .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#kwhfvjsjoo .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#kwhfvjsjoo .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#kwhfvjsjoo .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#kwhfvjsjoo .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#kwhfvjsjoo .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#kwhfvjsjoo .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#kwhfvjsjoo .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#kwhfvjsjoo .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#kwhfvjsjoo .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#kwhfvjsjoo .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#kwhfvjsjoo .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#kwhfvjsjoo .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#kwhfvjsjoo .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#kwhfvjsjoo .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#kwhfvjsjoo .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#kwhfvjsjoo .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#kwhfvjsjoo .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#kwhfvjsjoo .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#kwhfvjsjoo .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#kwhfvjsjoo .gt_left {
-  text-align: left;
-}
-
-#kwhfvjsjoo .gt_center {
-  text-align: center;
-}
-
-#kwhfvjsjoo .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#kwhfvjsjoo .gt_font_normal {
-  font-weight: normal;
-}
-
-#kwhfvjsjoo .gt_font_bold {
-  font-weight: bold;
-}
-
-#kwhfvjsjoo .gt_font_italic {
-  font-style: italic;
-}
-
-#kwhfvjsjoo .gt_super {
-  font-size: 65%;
-}
-
-#kwhfvjsjoo .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#kwhfvjsjoo .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#kwhfvjsjoo .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#kwhfvjsjoo .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#kwhfvjsjoo .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#kwhfvjsjoo .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#kwhfvjsjoo .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#kwhfvjsjoo .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#kwhfvjsjoo div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table caption-top" data-quarto-bootstrap="false">
-<thead>
-<tr class="gt_col_headings header">
-<th id="label" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Characteristic</strong></th>
-<th id="estimate" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>OR</strong></th>
-<th id="conf.low" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>95% CI</strong></th>
-<th id="p.value" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>p-value</strong></th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">freedom_of_choice</td>
-<td class="gt_row gt_center" headers="estimate">1.58</td>
-<td class="gt_row gt_center" headers="conf.low">1.53, 1.63</td>
-<td class="gt_row gt_center" headers="p.value" style="font-weight: bold">&lt;0.001</td>
-</tr>
-</tbody><tfoot>
-<tr class="gt_sourcenotes odd">
-<td colspan="4" class="gt_sourcenote">Abbreviations: CI = Confidence Interval, OR = Odds Ratio</td>
-</tr>
-</tfoot>
-
-</table>
-
+<div class="callout callout-tip callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p><code>exp(coef(model))</code> is all you need to turn the log-odds into <strong>odds ratios</strong> — the numbers you actually report. (A formatted table version using <code>tbl_regression()</code> is in the appendix.)</p>
 </div>
 </div>
-</div>
-
-<aside><div>
-<p>More on <code>tbl_regression()</code> by <code>gtsummary</code>: <a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html" class="uri">https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html</a></p>
-</div></aside></section>
-<section id="get-the-χ²-chi-squared-to-report-model-significance" class="slide level2">
-<h2>Get the χ² (chi-squared) to report model significance</h2>
-<p>χ² (Chi-squared) goodness of fit tests whether your model fits the data significantly better than a null model (model with no predictors). As you can see, it is not in the <code>glm()</code> result, but we can calculate this somewhat manually using the Null and Residual deviance and df from the <code>summary()</code> output like so:</p>
-<ul>
-<li>Null deviance: [from summary output]</li>
-<li>Residual deviance: [from summary output]</li>
-<li>χ² = Null deviance − Residual deviance</li>
-</ul>
-<p>To get the p-value, we need the degree of freedom and the χ²:</p>
-<ul>
-<li>df = difference in degrees of freedom (Null df − Residual df = 1 for one predictor)</li>
-</ul>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="co"># Replace chi_sq and df with values from your summary() output</span></span>
-<span id="cb35-2"><a></a>chi_sq <span class="ot">&lt;-</span> NULL_DEVIANCE <span class="sc">-</span> RESIDUAL_DEVIANCE</span>
-<span id="cb35-3"><a></a><span class="fu">pchisq</span>(chi_sq, <span class="at">df =</span> <span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)  <span class="co"># will give p-value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="get-the-χ²-chi-squared-and-pseudo-r-squared-for-reporting-purposes" class="slide level2">
-<h2>Get the χ² (chi-squared) and Pseudo R-squared (for reporting purposes)</h2>
-<p>In the report, the model’s χ² (chi-squared) and R-squared (indicating the proportion of variance that can be explained by the model) should be included. However, since the resulting item does not have this info, we will call upon <code>DescTools</code>’ <code>PseudoR2()</code> function to help!</p>
+<section id="model-significance-χ²-and-r²-for-logistic" class="slide level2">
+<h2>Model significance (χ²) and R² for logistic</h2>
+<p><code>glm()</code> doesn’t print a χ² or an R², so we ask <code>DescTools::PseudoR2()</code> for them. <strong>G2</strong> is the model χ² (goodness-of-fit test vs.&nbsp;a no-predictor model); <strong>Nagelkerke</strong> is the pseudo-R² most commonly reported:</p>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="co"># by default, McFadden will be used</span></span>
-<span id="cb36-2"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model5) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div><div class="column">
-<div class="cell-output cell-output-stdout">
-<pre><code> McFadden 
-0.1345762 </code></pre>
-</div>
-</div></div>
-<p>We can retrieve the R-squared value and the χ² (also known as the G2 value, which stands for Goodness-of-fit) at the same time like so:</p>
-<div class="cell columns column-output-location">
-<div class="column">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model5, </span>
-<span id="cb38-2"><a></a>                    <span class="at">which =</span> <span class="fu">c</span>(<span class="st">"G2"</span>, <span class="st">"Nagelkerke"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model5,</span>
+<span id="cb29-2"><a></a>                    <span class="at">which =</span> <span class="fu">c</span>(<span class="st">"G2"</span>, <span class="st">"Nagelkerke"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column">
 <div class="cell-output cell-output-stdout">
 <pre><code>         G2  Nagelkerke 
 906.9076503   0.2221449 </code></pre>
 </div>
 </div></div>
-</section>
-<section id="in-case-you-need-to-get-other-rsquared-methods" class="slide level2">
-<h2>In case you need to get other Rsquared methods</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model5, </span>
-<span id="cb40-2"><a></a>                    <span class="at">which =</span> <span class="st">"all"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       McFadden     McFaddenAdj        CoxSnell      Nagelkerke   AldrichNelson 
-      0.1345762       0.1339826       0.1628528       0.2221449       0.1509272 
-VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC 
-      0.2651922       0.1844291       0.2233348       0.1772867    5836.0841311 
-            BIC          logLik         logLik0              G2 
-   5849.1589069   -2916.0420655   -3369.4958907     906.9076503 </code></pre>
+<div class="callout callout-note callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>There are several pseudo-R² flavours (McFadden, Cox-Snell, …). Pick one and be consistent — <strong>Nagelkerke</strong> is a safe default. <em>(The full list, and how to compute the χ² by hand, are in the appendix.)</em></p>
+</div>
 </div>
 </div>
 </section>
@@ -2451,10 +965,10 @@ VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC
 <section id="recap---why-do-i-need-to-report-these" class="slide level2">
 <h2>Recap - why do I need to report these?</h2>
 <ul>
-<li><p>χ² (Chi-squared) goodness of fit tests whether your model fits the data significantly better than a null model (model with no predictors).</p></li>
-<li><p>“Standard” R-squared isn’t typically reported for logistic regression because it’s not as meaningful as it is in linear regression. But we do still want to see how much of the variance in the data can be explained by the model.</p></li>
-<li><p>Pseudo R-squared tries to mimic traditional R-squared by showing how much of the variation in the outcome your model explains, but it’s adjusted to work with binary outcomes. It’s sort of answering the question of “How well does my model explain the data?”</p></li>
-<li><p>It is possible to have a significant χ² (meaning your model is statistically significant and better than nothing) but a low Pseudo R-squared (showing it still doesn’t explain much variation). This isn’t contradictory - it just means your model is better than random guessing but there’s still a lot of unexplained variation. (Pretty common in social sciences; after all, human behaviours are complex!)</p></li>
+<li class="fragment"><p>χ² (Chi-squared) goodness of fit tests whether your model fits the data significantly better than a null model (model with no predictors).</p></li>
+<li class="fragment"><p>“Standard” R-squared isn’t typically reported for logistic regression because it’s not as meaningful as it is in linear regression. But we do still want to see how much of the variance in the data can be explained by the model.</p></li>
+<li class="fragment"><p>Pseudo R-squared tries to mimic traditional R-squared by showing how much of the variation in the outcome your model explains, but it’s adjusted to work with binary outcomes. It’s sort of answering the question of “How well does my model explain the data?”</p></li>
+<li class="fragment"><p>It is possible to have a significant χ² (meaning your model is statistically significant and better than nothing) but a low Pseudo R-squared (showing it still doesn’t explain much variation). This isn’t contradictory - it just means your model is better than random guessing but there’s still a lot of unexplained variation. (Pretty common in social sciences; after all, human behaviours are complex!)</p></li>
 </ul>
 </section>
 <section id="fyi---irl-sample-of-reporting-logistic-regression" class="slide level2">
@@ -2466,53 +980,22 @@ VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC
 <aside><div>
 <p>The screenshot is retrieved from <a href="https://statistics.laerd.com/spss-tutorials/binomial-logistic-regression-using-spss-statistics.php" class="uri">https://statistics.laerd.com/spss-tutorials/binomial-logistic-regression-using-spss-statistics.php</a></p>
 </div></aside></section>
-<section id="regression-tables" class="slide level2">
-<h2>Regression tables</h2>
-<p>Even with huxtable, you may need to edit the table further to include the missing stats</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="fu">huxreg</span>(<span class="st">"life_satisfaction"</span> <span class="ot">=</span> life_model5, <span class="at">statistics =</span> <span class="fu">c</span>(<span class="st">"R2"</span> <span class="ot">=</span> <span class="st">"r.squared"</span>, <span class="st">"logLik"</span>, <span class="st">"AIC"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<table class="huxtable" data-quarto-disable-processing="true" style="margin-left: auto; margin-right: auto;">
-<colgroup><col><col></colgroup><thead>
-<tr>
-<th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;      font-weight: normal;"></th><th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.8pt 0pt 0.4pt 0pt;      font-weight: normal;">life_satisfaction</th></tr>
-</thead>
-<tbody>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">(Intercept)</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">-2.608 ***</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.120)&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">freedom_of_choice</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.456 ***</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">(0.017)&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">logLik</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">-2916.042&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;      font-weight: normal;">AIC</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">5836.084&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-<tr>
-<th class="huxtable-cell huxtable-header" colspan="2" style="border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;      font-weight: normal;">*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05.</th></tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
 <section id="binary-logistic-regression-one-categorical-predictor" class="slide level2">
 <h2>Binary Logistic Regression: One Categorical Predictor</h2>
-<p><strong>Research Question</strong>: Does <strong>education level</strong> affect the likelihood of being satisfied with life?</p>
+<p><strong>Research Question</strong>: Does <strong>marital status</strong> affect the likelihood of being satisfied with life?</p>
 <ul>
 <li>The outcome/DV (<span class="math inline">\(Y\)</span>): <code>satisfied</code></li>
-<li>The predictor/IV (<span class="math inline">\(X\)</span>): <code>education</code> - let’s set “Lower” as the reference category!</li>
+<li>The predictor/IV (<span class="math inline">\(X\)</span>): <code>marital_status</code> - let’s set “Single” as the reference category!</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
-<span id="cb43-2"><a></a>    <span class="fu">mutate</span>(<span class="at">education =</span> <span class="fu">relevel</span>(education, <span class="at">ref =</span> <span class="st">"Lower"</span>))</span>
-<span id="cb43-3"><a></a></span>
-<span id="cb43-4"><a></a>life_model6 <span class="ot">&lt;-</span> <span class="fu">glm</span>(satisfied <span class="sc">~</span> education,</span>
-<span id="cb43-5"><a></a>                      <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
-<span id="cb43-6"><a></a>                      <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb43-7"><a></a></span>
-<span id="cb43-8"><a></a><span class="fu">summary</span>(life_model6)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a></a>    <span class="fu">mutate</span>(<span class="at">marital_status =</span> <span class="fu">relevel</span>(marital_status, <span class="at">ref =</span> <span class="st">"Single"</span>))</span>
+<span id="cb31-3"><a></a></span>
+<span id="cb31-4"><a></a>life_model6 <span class="ot">&lt;-</span> <span class="fu">glm</span>(satisfied <span class="sc">~</span> marital_status,</span>
+<span id="cb31-5"><a></a>                      <span class="at">family =</span> <span class="st">"binomial"</span>,</span>
+<span id="cb31-6"><a></a>                      <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb31-7"><a></a></span>
+<span id="cb31-8"><a></a><span class="fu">summary</span>(life_model6)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 </section>
@@ -2520,565 +1003,59 @@ VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-glm(formula = satisfied ~ education, family = "binomial", data = wvs_cleaned)
+glm(formula = satisfied ~ marital_status, family = "binomial", 
+    data = wvs_cleaned)
 
 Coefficients:
-                Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)      0.49303    0.04214  11.699   &lt;2e-16 ***
-educationMiddle  0.08011    0.06855   1.169    0.243    
-educationHigher  0.01693    0.07249   0.234    0.815    
+                                         Estimate Std. Error z value Pr(&gt;|z|)
+(Intercept)                               0.27975    0.05405   5.175 2.27e-07
+marital_statusMarried                     0.38281    0.06546   5.848 4.97e-09
+marital_statusWidowed                     0.16494    0.15749   1.047    0.295
+marital_statusSeparated                  -0.27975    0.50291  -0.556    0.578
+marital_statusDivorced                   -0.09743    0.16543  -0.589    0.556
+marital_statusLiving together as married -0.21723    0.25590  -0.849    0.396
+                                            
+(Intercept)                              ***
+marital_statusMarried                    ***
+marital_statusWidowed                       
+marital_statusSeparated                     
+marital_statusDivorced                      
+marital_statusLiving together as married    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
     Null deviance: 6739.0  on 5101  degrees of freedom
-Residual deviance: 6737.6  on 5099  degrees of freedom
-AIC: 6743.6
+Residual deviance: 6695.1  on 5096  degrees of freedom
+AIC: 6707.1
 
 Number of Fisher Scoring iterations: 4</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a><span class="fu">exp</span>(<span class="fu">coef</span>(life_model6))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="fu">exp</span>(<span class="fu">coef</span>(life_model6))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    (Intercept) educationMiddle educationHigher 
-       1.637266        1.083411        1.017072 </code></pre>
+<pre><code>                             (Intercept) 
+                               1.3227953 
+                   marital_statusMarried 
+                               1.4664008 
+                   marital_statusWidowed 
+                               1.1793208 
+                 marital_statusSeparated 
+                               0.7559748 
+                  marital_statusDivorced 
+                               0.9071698 
+marital_statusLiving together as married 
+                               0.8047474 </code></pre>
 </div>
-</div></section><section id="exponentiate-the-coefficients-1" class="slide level2">
-<h2>Exponentiate the coefficients</h2>
-<p>If you recall the formula, the results are expressed in Logit Probability. As we typically report the result in terms of Odd Ratios (OR), perform exponentiation on the coefficients.</p>
+</div></section><section id="get-the-χ²-and-r²" class="slide level2">
+<h2>Get the χ² and R²</h2>
+<p>Same as before: <strong>G2</strong> is the model χ² (goodness-of-fit), <strong>Nagelkerke</strong> is the pseudo-R² we’ll report.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb47-2"><a></a>life_model6 <span class="sc">|&gt;</span> <span class="fu">tbl_regression</span>(<span class="at">exponentiate =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span>  </span>
-<span id="cb47-3"><a></a>    <span class="fu">bold_p</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div id="bvshurjloa" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bvshurjloa table {
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#bvshurjloa thead, #bvshurjloa tbody, #bvshurjloa tfoot, #bvshurjloa tr, #bvshurjloa td, #bvshurjloa th {
-  border-style: none;
-}
-
-#bvshurjloa p {
-  margin: 0;
-  padding: 0;
-}
-
-#bvshurjloa .gt_table {
-  display: table;
-  border-collapse: collapse;
-  line-height: normal;
-  margin-left: auto;
-  margin-right: auto;
-  color: #333333;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  background-color: #FFFFFF;
-  width: auto;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #A8A8A8;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #A8A8A8;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-}
-
-#bvshurjloa .gt_caption {
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-#bvshurjloa .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#bvshurjloa .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 3px;
-  padding-bottom: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#bvshurjloa .gt_heading {
-  background-color: #FFFFFF;
-  text-align: center;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#bvshurjloa .gt_bottom_border {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#bvshurjloa .gt_col_headings {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#bvshurjloa .gt_col_heading {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 6px;
-  padding-left: 5px;
-  padding-right: 5px;
-  overflow-x: hidden;
-}
-
-#bvshurjloa .gt_column_spanner_outer {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: normal;
-  text-transform: inherit;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#bvshurjloa .gt_column_spanner_outer:first-child {
-  padding-left: 0;
-}
-
-#bvshurjloa .gt_column_spanner_outer:last-child {
-  padding-right: 0;
-}
-
-#bvshurjloa .gt_column_spanner {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: bottom;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  overflow-x: hidden;
-  display: inline-block;
-  width: 100%;
-}
-
-#bvshurjloa .gt_spanner_row {
-  border-bottom-style: hidden;
-}
-
-#bvshurjloa .gt_group_heading {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  text-align: left;
-}
-
-#bvshurjloa .gt_empty_group_heading {
-  padding: 0.5px;
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  vertical-align: middle;
-}
-
-#bvshurjloa .gt_from_md > :first-child {
-  margin-top: 0;
-}
-
-#bvshurjloa .gt_from_md > :last-child {
-  margin-bottom: 0;
-}
-
-#bvshurjloa .gt_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 10px;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-  vertical-align: middle;
-  overflow-x: hidden;
-}
-
-#bvshurjloa .gt_stub {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#bvshurjloa .gt_stub_row_group {
-  color: #333333;
-  background-color: #FFFFFF;
-  font-size: 100%;
-  font-weight: initial;
-  text-transform: inherit;
-  border-right-style: solid;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-  padding-left: 5px;
-  padding-right: 5px;
-  vertical-align: top;
-}
-
-#bvshurjloa .gt_row_group_first td {
-  border-top-width: 2px;
-}
-
-#bvshurjloa .gt_row_group_first th {
-  border-top-width: 2px;
-}
-
-#bvshurjloa .gt_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#bvshurjloa .gt_first_summary_row {
-  border-top-style: solid;
-  border-top-color: #D3D3D3;
-}
-
-#bvshurjloa .gt_first_summary_row.thick {
-  border-top-width: 2px;
-}
-
-#bvshurjloa .gt_last_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#bvshurjloa .gt_grand_summary_row {
-  color: #333333;
-  background-color: #FFFFFF;
-  text-transform: inherit;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#bvshurjloa .gt_first_grand_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-top-style: double;
-  border-top-width: 6px;
-  border-top-color: #D3D3D3;
-}
-
-#bvshurjloa .gt_last_grand_summary_row_top {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom-style: double;
-  border-bottom-width: 6px;
-  border-bottom-color: #D3D3D3;
-}
-
-#bvshurjloa .gt_striped {
-  background-color: rgba(128, 128, 128, 0.05);
-}
-
-#bvshurjloa .gt_table_body {
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-}
-
-#bvshurjloa .gt_footnotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#bvshurjloa .gt_footnote {
-  margin: 0px;
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#bvshurjloa .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#bvshurjloa .gt_sourcenote {
-  font-size: 90%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#bvshurjloa .gt_left {
-  text-align: left;
-}
-
-#bvshurjloa .gt_center {
-  text-align: center;
-}
-
-#bvshurjloa .gt_right {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-#bvshurjloa .gt_font_normal {
-  font-weight: normal;
-}
-
-#bvshurjloa .gt_font_bold {
-  font-weight: bold;
-}
-
-#bvshurjloa .gt_font_italic {
-  font-style: italic;
-}
-
-#bvshurjloa .gt_super {
-  font-size: 65%;
-}
-
-#bvshurjloa .gt_footnote_marks {
-  font-size: 75%;
-  vertical-align: 0.4em;
-  position: initial;
-}
-
-#bvshurjloa .gt_asterisk {
-  font-size: 100%;
-  vertical-align: 0;
-}
-
-#bvshurjloa .gt_indent_1 {
-  text-indent: 5px;
-}
-
-#bvshurjloa .gt_indent_2 {
-  text-indent: 10px;
-}
-
-#bvshurjloa .gt_indent_3 {
-  text-indent: 15px;
-}
-
-#bvshurjloa .gt_indent_4 {
-  text-indent: 20px;
-}
-
-#bvshurjloa .gt_indent_5 {
-  text-indent: 25px;
-}
-
-#bvshurjloa .katex-display {
-  display: inline-flex !important;
-  margin-bottom: 0.75em !important;
-}
-
-#bvshurjloa div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
-  height: 0px !important;
-}
-</style>
-
-<table class="gt_table caption-top" data-quarto-bootstrap="false">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="gt_col_headings header">
-<th id="label" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Characteristic</strong></th>
-<th id="estimate" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>OR</strong></th>
-<th id="conf.low" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>95% CI</strong></th>
-<th id="p.value" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>p-value</strong></th>
-</tr>
-</thead>
-<tbody class="gt_table_body">
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">education</td>
-<td class="gt_row gt_center" headers="estimate"><br>
-</td>
-<td class="gt_row gt_center" headers="conf.low"><br>
-</td>
-<td class="gt_row gt_center" headers="p.value"><br>
-</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Lower</td>
-<td class="gt_row gt_center" headers="estimate">—</td>
-<td class="gt_row gt_center" headers="conf.low">—</td>
-<td class="gt_row gt_center" headers="p.value"><br>
-</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Middle</td>
-<td class="gt_row gt_center" headers="estimate">1.08</td>
-<td class="gt_row gt_center" headers="conf.low">0.95, 1.24</td>
-<td class="gt_row gt_center" headers="p.value">0.2</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Higher</td>
-<td class="gt_row gt_center" headers="estimate">1.02</td>
-<td class="gt_row gt_center" headers="conf.low">0.88, 1.17</td>
-<td class="gt_row gt_center" headers="p.value">0.8</td>
-</tr>
-</tbody><tfoot>
-<tr class="gt_sourcenotes odd">
-<td colspan="4" class="gt_sourcenote">Abbreviations: CI = Confidence Interval, OR = Odds Ratio</td>
-</tr>
-</tfoot>
-
-</table>
-
-</div>
-</div>
-</div>
-</section>
-<section id="get-the-rsquared" class="slide level2">
-<h2>Get the Rsquared</h2>
-<p>Let’s retrieve the R-squared value and the Chi-square χ² value (also known as the G2 value, which stands for Goodness-of-fit)</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model6, </span>
-<span id="cb48-2"><a></a>                    <span class="at">which =</span> <span class="fu">c</span>(<span class="st">"G2"</span>, <span class="st">"Nagelkerke"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model6,</span>
+<span id="cb35-2"><a></a>                    <span class="at">which =</span> <span class="fu">c</span>(<span class="st">"G2"</span>, <span class="st">"Nagelkerke"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>          G2   Nagelkerke 
-1.4085255589 0.0003765352 </code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a><span class="co"># get the other R-squared if you like</span></span>
-<span id="cb50-2"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model6, </span>
-<span id="cb50-3"><a></a>                    <span class="at">which =</span> <span class="st">"all"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       McFadden     McFaddenAdj        CoxSnell      Nagelkerke   AldrichNelson 
-   2.090113e-04   -6.813296e-04    2.760351e-04    3.765352e-04    2.759970e-04 
-VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC 
-   4.849507e-04    2.754025e-04    3.605521e-04    2.754025e-04    6.743583e+03 
-            BIC          logLik         logLik0              G2 
-   6.763195e+03   -3.368792e+03   -3.369496e+03    1.408526e+00 </code></pre>
+<pre><code>         G2  Nagelkerke 
+43.84588476  0.01167253 </code></pre>
 </div>
 </div>
 </section>
@@ -3087,129 +1064,122 @@ VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC
 <p><strong>Possible interpretation:</strong></p>
 <p><em>(The intercept isn’t typically interpreted as an odds ratio, so we’ll ignore that for now)</em></p>
 <blockquote>
-<p>A logistic regression was performed to ascertain the effects of education level on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ² (2, N = [N]) = [χ²], p &lt; .001.</p>
+<p>A logistic regression was performed to ascertain the effects of marital status on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ²(5, N = 5102) = 43.9, p &lt; .001.</p>
 </blockquote>
 <blockquote>
-<p>The model explained [Nagelkerke R²]% (Nagelkerke R²) of the variance in life satisfaction. Compared to respondents with lower education (reference group), those with middle education had [higher/lower] odds of life satisfaction (OR = [OR], 95% CI [[lower], [upper]], p = [p]), and those with higher education had [higher/lower] odds of life satisfaction (OR = [OR], 95% CI [[lower], [upper]], p = [p]).</p>
+<p>The model explained about 1.2% of the variance in life satisfaction (Nagelkerke R² ≈ 0.012 — read it off the <code>PseudoR2()</code> output). Compared to <strong>single</strong> respondents (the reference group), <strong>married</strong> respondents had significantly higher odds of being satisfied with life (OR = 1.47, 95% CI [1.29, 1.67], p &lt; .001) — roughly 47% higher odds. None of the other categories (widowed, divorced, separated, or living together) differed significantly from single respondents (all p &gt; .05).</p>
 </blockquote>
 
 <aside><div>
 <p>More on logistic regression: <a href="https://stats.oarc.ucla.edu/r/dae/logit-regression/" class="uri">https://stats.oarc.ucla.edu/r/dae/logit-regression/</a></p>
 </div></aside></section>
-<section id="present-both-models-in-a-table" class="slide level2 scrollable">
-<h2>Present both models in a table</h2>
-<p>Note that the R-squared is missing here, so be sure to put that in when you paste this table to your document.</p>
+<section id="presenting-logistic-results-with-huxtable" class="slide level2 scrollable">
+<h2>Presenting logistic results with huxtable</h2>
+<p><code>huxreg()</code> works for <code>glm()</code> models too — here comparing both logistic models:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a><span class="fu">library</span>(huxtable)</span>
-<span id="cb52-2"><a></a><span class="fu">huxreg</span>(life_model5, life_model6)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a><span class="fu">huxreg</span>(<span class="st">"freedom of choice"</span> <span class="ot">=</span> life_model5, <span class="st">"marital status"</span> <span class="ot">=</span> life_model6)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+
+<div class="callout callout-note callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>Heads-up: <code>huxreg()</code> shows the <strong>raw log-odds</strong> coefficients for a <code>glm</code>, <em>not</em> odds ratios — remember <code>exp(coef(model))</code> for the ORs you report. It also omits pseudo-R², so note that separately from <code>PseudoR2()</code>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="presenting-logistic-results-with-huxtable-output" class="slide level2 scrollable output-location-slide"><h2>Presenting logistic results with huxtable</h2><div class="cell output-location-slide">
 <div class="cell-output-display">
 <table class="huxtable" data-quarto-disable-processing="true" style="margin-left: auto; margin-right: auto;">
 <colgroup><col><col><col></colgroup><thead>
 <tr>
-<th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;      font-weight: normal;"></th><th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.8pt 0pt 0.4pt 0pt;      font-weight: normal;">(1)</th><th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.8pt 0pt 0.4pt 0pt;      font-weight: normal;">(2)</th></tr>
+<th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;      font-weight: normal;"></th><th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.8pt 0pt 0.4pt 0pt;      font-weight: normal;">freedom of choice</th><th class="huxtable-cell huxtable-header" style="text-align: center;  border-style: solid solid solid solid; border-width: 0.8pt 0pt 0.4pt 0pt;      font-weight: normal;">marital status</th></tr>
 </thead>
 <tbody>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">(Intercept)</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">-2.608 ***</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">0.493 ***</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">(Intercept)</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">-2.608 ***</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">0.280 ***</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.120)&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.042)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.120)&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.054)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
 <th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">freedom_of_choice</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.456 ***</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
 <th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.017)&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">educationMiddle</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.080&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">marital_statusMarried</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.383 ***</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.069)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.065)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">educationHigher</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.017&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">marital_statusWidowed</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">0.165&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">(0.072)&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.157)&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">marital_statusSeparated</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">-0.280&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.503)&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">marital_statusDivorced</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">-0.097&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">(0.165)&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">marital_statusLiving together as married</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">-0.217&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;"></th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;">(0.256)&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
 <th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">N</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">5102&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;">5102&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">logLik</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">-2916.042&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">-3368.792&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;      font-weight: normal;">logLik</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">-2916.042&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;">-3347.573&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
-<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;      font-weight: normal;">AIC</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">5836.084&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">6743.583&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<th class="huxtable-cell huxtable-header" style="border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;      font-weight: normal;">AIC</th><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">5836.084&nbsp;&nbsp;&nbsp;&nbsp;</td><td class="huxtable-cell" style="text-align: right;  border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;">6707.146&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr>
 <th class="huxtable-cell huxtable-header" colspan="3" style="border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;      font-weight: normal;">*** p &lt; 0.001; ** p &lt; 0.01; * p &lt; 0.05.</th></tr>
 </tbody>
 </table>
 </div>
-</div>
-</section>
-<section id="lets-try-this-logistic-regression-exercise-5-mins" class="slide level2">
+</div></section><section id="lets-try-this-logistic-regression-exercise-5-mins" class="slide level2">
 <h2>Let’s try this Logistic Regression exercise! (5 mins)</h2>
 <p>Create a regression model called <code>life_model7</code> that predicts the likelihood of being satisfied with life based on <code>sex</code>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a>life_model7 <span class="ot">&lt;-</span> <span class="fu">glm</span>(satisfied <span class="sc">~</span> sex,</span>
-<span id="cb53-2"><a></a>                  <span class="at">family =</span> <span class="st">"binomial"</span>, </span>
-<span id="cb53-3"><a></a>                  <span class="at">data =</span> wvs_cleaned) </span>
-<span id="cb53-4"><a></a></span>
-<span id="cb53-5"><a></a><span class="fu">summary</span>(life_model7)</span>
-<span id="cb53-6"><a></a><span class="fu">exp</span>(<span class="fu">coefficients</span>(life_model7))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>life_model7 <span class="ot">&lt;-</span> <span class="fu">glm</span>(satisfied <span class="sc">~</span> sex,</span>
+<span id="cb38-2"><a></a>                  <span class="at">family =</span> <span class="st">"binomial"</span>, </span>
+<span id="cb38-3"><a></a>                  <span class="at">data =</span> wvs_cleaned) </span>
+<span id="cb38-4"><a></a></span>
+<span id="cb38-5"><a></a><span class="fu">summary</span>(life_model7)</span>
+<span id="cb38-6"><a></a><span class="fu">exp</span>(<span class="fu">coefficients</span>(life_model7))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section></section>
 <section>
-<section id="what-is-quarto-what-is-markdown" class="title-slide slide level1 center">
-<h1>What is Quarto? What is Markdown?</h1>
+<section id="bonus-show-and-tell-quarto" class="title-slide slide level1 center">
+<h1>Bonus show-and-tell: Quarto</h1>
 
 </section>
-<section id="markdown-specifically-r-markdown" class="slide level2 incremental">
-<h2><strong>Markdown (Specifically, R Markdown)</strong></h2>
+<section id="what-are-markdown-r-markdown-and-quarto" class="slide level2">
+<h2>What are Markdown, R Markdown, and Quarto?</h2>
 <ul>
-<li><p><strong>Markdown</strong> is a lightweight markup language that provides a simple and readable way to write formatted text without using complex HTML or LaTeX. It is designed to make authoring content easy for everyone!</p>
-<ul>
-<li>Markdown files can be converted into HTML or other formats.</li>
-<li>Generic Markdown file will have <code>.md</code> extension.</li>
-</ul></li>
-<li><p><strong>R Markdown</strong> is an extension of Markdown that incorporates R code chunks and allows you to create dynamic documents that integrate text, code, and output (such as tables and plots).</p>
-<ul>
-<li>RMarkdown file will have <code>.Rmd</code> extension.</li>
-</ul></li>
+<li class="fragment"><strong>Markdown</strong> — a lightweight, readable way to write formatted text (no messy HTML or LaTeX). Files end in <code>.md</code>.</li>
+<li class="fragment"><strong>R Markdown</strong> — Markdown <strong>+ live R code chunks</strong>, so text, code, and output (tables, plots) live in one document (<code>.Rmd</code>).</li>
+<li class="fragment"><strong>Quarto</strong> — Posit’s next-generation, multi-language successor to R Markdown. It renders most <code>.Rmd</code> files unchanged and can output HTML, Word, PDF, slides, and whole websites.</li>
 </ul>
+<div class="callout callout-note callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>Fun fact: this entire course website <strong>and</strong> these slides are built in Quarto! <em>(A quick R-Scripts-vs-Quarto comparison is in the appendix.)</em></p>
+</div>
+</div>
+</div>
 </section>
-<section id="rmarkdown-in-action" class="slide level2">
-<h2>RMarkdown in action</h2>
-
-<img data-src="images/rmarkdown.png" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="how-it-all-works" class="slide level2">
 <h2>How it all works</h2>
 
-<img data-src="images/rmarkdown_wizards.png" class="r-stretch quarto-figure-center"><p class="caption">Illustration by Allison Horst (www.allisonhorst.com)</p></section>
-<section id="quarto" class="slide level2">
-<h2>Quarto</h2>
-<ul>
-<li><strong>Quarto</strong> is a <u>multi-language</u>, <u>next-generation</u> version of R Markdown from Posit and includes dozens of new features and capabilities while at the same being able to render most existing Rmd files without modification.</li>
-</ul>
-
 <img data-src="images/quarto-rendering.png" class="r-stretch quarto-figure-center"><p class="caption">Illustration by Allison Horst (www.allisonhorst.com)</p></section>
-<section id="quarto-in-action-r-scripts-markdown" class="slide level2">
-<h2>Quarto in action: R scripts + Markdown</h2>
-
-<img data-src="images/quarto.png" class="quarto-figure quarto-figure-center r-stretch"></section>
-<section id="r-scripts-vs-quarto" class="slide level2">
-<h2>R Scripts vs Quarto</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>R Scripts</strong></p>
-<ul>
-<li><p>Great for quick debugging, experiment</p></li>
-<li><p>Preferred format if you are archiving your code to GitHub or data repository</p></li>
-<li><p>More suitable for “production” tasks e.g.&nbsp;automating your data cleaning and processing, custom functions, etc.</p></li>
-</ul>
-</div><div class="column" style="width:50%;">
-<p><strong>Quarto</strong></p>
-<ul>
-<li><p>Great for report and presentation to showcase your research insights/process as it integrates code, narrative text, visualizations, and results.</p></li>
-<li><p>Very handy when you need your report in multiple format, e.g.&nbsp;in Word and PPT.</p></li>
-<li><p>Fun fact: the course website and slides are all made in Quarto</p></li>
-</ul>
-</div></div>
-</section>
 <section id="if-you-are-interested-to-learn-more-about-this" class="slide level2">
 <h2>If you are interested to learn more about this…</h2>
 <p>SMU Libraries regularly host Quarto workshops every semester from week 2 to week 6, taught by Prof Kam Tin Seong.</p>
@@ -3251,6 +1221,23 @@ VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC
 </ul>
 </section></section>
 <section>
+<section id="one-last-thing-you-own-the-analysis" class="title-slide slide level1 center">
+<h1>One last thing: you own the analysis</h1>
+
+</section>
+<section id="because-the-ai-said-so-is-not-an-answer" class="slide level2">
+<h2>“Because the AI said so” is not an answer</h2>
+<p>Over five sessions you’ve learned to import, wrangle, visualize, and run real inferential tests in R. An AI assistant can now generate all of that code for you in seconds — and often it will do a decent job.</p>
+<p>So what’s <em>your</em> job now? The parts the AI <strong>can’t be accountable for</strong>:</p>
+<ul>
+<li class="fragment"><strong>Define</strong> the research questions and thus test for your variables — and being able to say <em>why</em>.</li>
+<li class="fragment"><strong>Checking</strong> whether the result can be reasonably trusted — assumptions, sample size, plain common sense.</li>
+<li class="fragment"><strong>Interpreting</strong> the output honestly.</li>
+<li class="fragment"><strong>Disclosing</strong> the limitations plainly, even when they’re inconvenient.</li>
+</ul>
+<p>When your professor, a reviewer, or a future employer asks <em>“why did you run this analysis, and can I trust it?”</em> — <strong>“Claude/ChatGPT told me to”</strong> is not a defensible answer. <strong>You</strong> are accountable for the work that carries your name.</p>
+</section></section>
+<section>
 <section id="thank-you-for-your-participation" class="title-slide slide level1 center">
 <h1>Thank you for your participation 😄</h1>
 <div class="columns">
@@ -3278,11 +1265,127 @@ VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC
 <section id="post-workshop-survey" class="slide level2">
 <h2>Post-workshop survey</h2>
 <p>Please scan this QR code or click on the link below to fill in the post-workshop survey. It should not take more than 2-3 minutes.</p>
-<p>Survey link: <a href="https://smusg.asia.qualtrics.com/jfe/form/SV_862Si6NAqkbWbPM" class="uri">https://smusg.asia.qualtrics.com/jfe/form/SV_862Si6NAqkbWbPM</a></p>
-
-
+<p>Survey link: <a href="https://smusg.asia.qualtrics.com/jfe/form/SV_9Xhn2NY4vkA4GaO" class="uri">https://smusg.asia.qualtrics.com/jfe/form/SV_9Xhn2NY4vkA4GaO</a></p>
 
 <img data-src="images/post-workshop-qrcode.png" width="500" class="r-stretch"></section></section>
+<section>
+<section id="appendix" class="title-slide slide level1 center">
+<h1>Appendix</h1>
+<ul>
+<li>Prettier tables with gtsummary &amp; apaTables</li>
+<li>gtsummary summary tables</li>
+<li>Computing the logistic χ² by hand</li>
+<li>Other pseudo-R² methods</li>
+<li>R Scripts vs Quarto</li>
+</ul>
+<div class="callout callout-note callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>We used <strong>huxtable</strong> in the main session. These <code>gtsummary</code> / <code>apaTables</code> alternatives produce nicer output but have heavier dependencies — the code here is shown <strong>for reference, not executed</strong> — run it live in RStudio (after <code>install.packages()</code> + <code>library()</code>) to see the tables.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="presenting-regression-tables-gtsummary-tbl_regression" class="slide level2">
+<h2>Presenting regression tables: gtsummary (<code>tbl_regression</code>)</h2>
+<p><code>tbl_regression()</code> makes clean, publication-style tables. For logistic models, <code>exponentiate = TRUE</code> reports <strong>odds ratios</strong>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb39-2"><a></a></span>
+<span id="cb39-3"><a></a><span class="co"># linear model</span></span>
+<span id="cb39-4"><a></a>life_model2 <span class="sc">|&gt;</span> <span class="fu">tbl_regression</span>() <span class="sc">|&gt;</span> <span class="fu">bold_p</span>()</span>
+<span id="cb39-5"><a></a></span>
+<span id="cb39-6"><a></a><span class="co"># logistic model — odds ratios</span></span>
+<span id="cb39-7"><a></a>life_model5 <span class="sc">|&gt;</span> <span class="fu">tbl_regression</span>(<span class="at">exponentiate =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">bold_p</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-tip callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>These render in RStudio’s <strong>Viewer</strong> pane — select the table, copy (Ctrl/Cmd + C), and paste into Word or Google Docs.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="table-packages-apatables" class="slide level2">
+<h2>Table packages: apaTables</h2>
+<p><code>apaTables</code> generates APA-formatted tables for correlation, ANOVA, and regression. Limited customisation. The online docs are for the development version (not what <code>install.packages()</code> gives you), so lean on the vignette. <a href="https://dstanley4.github.io/apaTables/index.html"><strong>Documentation here</strong></a></p>
+<p>Example: a correlation table for <code>life_satisfaction</code>, <code>financial_satisfaction</code>, and <code>freedom_of_choice</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a><span class="fu">library</span>(apaTables)</span>
+<span id="cb40-2"><a></a></span>
+<span id="cb40-3"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb40-4"><a></a>    <span class="fu">select</span>(life_satisfaction, financial_satisfaction, freedom_of_choice) <span class="sc">|&gt;</span></span>
+<span id="cb40-5"><a></a>    <span class="fu">apa.cor.table</span>(<span class="at">table.number =</span> <span class="dv">1</span>, <span class="at">filename =</span> <span class="st">"fig-output/table-cor.doc"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This creates a Word document with the table already formatted in APA style.</p>
+</section>
+<section id="table-packages-gtsummary-summary-tables" class="slide level2">
+<h2>Table packages: gtsummary summary tables</h2>
+<p>Besides <code>tbl_regression()</code>, <code>gtsummary</code> can build descriptive / mean-difference tables with <code>tbl_summary()</code>. <a href="https://www.danieldsjoberg.com/gtsummary/index.html"><strong>Documentation here</strong></a></p>
+<p>Example: mean-differences table grouped by <code>sex</code></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb41-2"><a></a></span>
+<span id="cb41-3"><a></a>wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb41-4"><a></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(life_satisfaction, financial_satisfaction, freedom_of_choice, sex) <span class="sc">|&gt;</span></span>
+<span id="cb41-5"><a></a>    <span class="fu">tbl_summary</span>(<span class="at">by =</span> sex) <span class="sc">|&gt;</span></span>
+<span id="cb41-6"><a></a>    <span class="fu">add_difference</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="computing-the-logistic-χ²-by-hand" class="slide level2">
+<h2>Computing the logistic χ² by hand</h2>
+<p>We used <code>PseudoR2(..., which = "G2")</code> to get the model χ². If you ever need it manually, it’s the drop in deviance from the null model:</p>
+<ul>
+<li>χ² = Null deviance − Residual deviance (both from the <code>summary()</code> output)</li>
+<li>df = Null df − Residual df (= number of predictors)</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="co"># Replace with the values from your summary() output</span></span>
+<span id="cb42-2"><a></a>chi_sq <span class="ot">&lt;-</span> NULL_DEVIANCE <span class="sc">-</span> RESIDUAL_DEVIANCE</span>
+<span id="cb42-3"><a></a><span class="fu">pchisq</span>(chi_sq, <span class="at">df =</span> <span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)  <span class="co"># p-value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="other-pseudo-r²-methods" class="slide level2">
+<h2>Other pseudo-R² methods</h2>
+<p>If you specifically need a different pseudo-R² (e.g.&nbsp;McFadden, Cox-Snell), <code>PseudoR2()</code> can return them all at once:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a>DescTools<span class="sc">::</span><span class="fu">PseudoR2</span>(life_model5,</span>
+<span id="cb43-2"><a></a>                    <span class="at">which =</span> <span class="st">"all"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       McFadden     McFaddenAdj        CoxSnell      Nagelkerke   AldrichNelson 
+      0.1345762       0.1339826       0.1628528       0.2221449       0.1509272 
+VeallZimmermann           Efron McKelveyZavoina            Tjur             AIC 
+      0.2651922       0.1844291       0.2233348       0.1772867    5836.0841311 
+            BIC          logLik         logLik0              G2 
+   5849.1589069   -2916.0420655   -3369.4958907     906.9076503 </code></pre>
+</div>
+</div>
+</section>
+<section id="r-scripts-vs-quarto" class="slide level2">
+<h2>R Scripts vs Quarto</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>R Scripts</strong></p>
+<ul>
+<li><p>Great for quick debugging, experiment</p></li>
+<li><p>Preferred format if you are archiving your code to GitHub or data repository</p></li>
+<li><p>More suitable for “production” tasks e.g.&nbsp;automating your data cleaning and processing, custom functions, etc.</p></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>Quarto</strong></p>
+<ul>
+<li><p>Great for report and presentation to showcase your research insights/process as it integrates code, narrative text, visualizations, and results.</p></li>
+<li><p>Very handy when you need your report in multiple format, e.g.&nbsp;in Word and PPT.</p></li>
+<li><p>Fun fact: the course website and slides are all made in Quarto</p></li>
+</ul>
+</div></div>
+
+
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="images/smu logo.png" class="slide-logo"></p>

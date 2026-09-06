@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://smu-libraries.github.io/r-socsci/sample-quarto.html</loc>
-    <lastmod>2026-06-18T05:40:53.706Z</lastmod>
+    <loc>https://smu-libraries.github.io/r-socsci/supp-files/sample-quarto.html</loc>
+    <lastmod>2026-09-06T08:15:38.379Z</lastmod>
+  </url>
+  <url>
+    <loc>https://smu-libraries.github.io/r-socsci/supp-files/exercises.html</loc>
+    <lastmod>2026-06-18T05:40:53.000Z</lastmod>
   </url>
   <url>
     <loc>https://smu-libraries.github.io/r-socsci/index.html</loc>
-    <lastmod>2026-09-03T06:18:39.163Z</lastmod>
-  </url>
-  <url>
-    <loc>https://smu-libraries.github.io/r-socsci/dataset.html</loc>
-    <lastmod>2026-07-07T09:05:57.780Z</lastmod>
+    <lastmod>2026-09-06T06:24:35.293Z</lastmod>
   </url>
   <url>
     <loc>https://smu-libraries.github.io/r-socsci/05-more-stats.html</loc>
-    <lastmod>2026-08-13T06:26:38.444Z</lastmod>
+    <lastmod>2026-09-06T10:46:39.770Z</lastmod>
   </url>
   <url>
     <loc>https://smu-libraries.github.io/r-socsci/03-visualization.html</loc>
-    <lastmod>2026-08-13T06:26:38.438Z</lastmod>
+    <lastmod>2026-08-13T06:26:38.000Z</lastmod>
   </url>
   <url>
     <loc>https://smu-libraries.github.io/r-socsci/01-intro.html</loc>
-    <lastmod>2026-08-13T06:26:38.436Z</lastmod>
+    <lastmod>2026-08-13T06:26:38.000Z</lastmod>
   </url>
   <url>
     <loc>https://smu-libraries.github.io/r-socsci/02-tidyverse.html</loc>
-    <lastmod>2026-08-13T06:26:38.438Z</lastmod>
+    <lastmod>2026-08-13T06:26:38.000Z</lastmod>
   </url>
   <url>
     <loc>https://smu-libraries.github.io/r-socsci/04-stats.html</loc>
-    <lastmod>2026-08-13T09:45:51.173Z</lastmod>
+    <lastmod>2026-09-06T08:08:45.876Z</lastmod>
   </url>
   <url>
-    <loc>https://smu-libraries.github.io/r-socsci/coc.html</loc>
-    <lastmod>2026-06-18T05:40:53.636Z</lastmod>
+    <loc>https://smu-libraries.github.io/r-socsci/dataset.html</loc>
+    <lastmod>2026-07-07T09:05:57.000Z</lastmod>
   </url>
   <url>
-    <loc>https://smu-libraries.github.io/r-socsci/exercises.html</loc>
-    <lastmod>2026-06-18T05:40:53.650Z</lastmod>
+    <loc>https://smu-libraries.github.io/r-socsci/supp-files/coc.html</loc>
+    <lastmod>2026-06-18T05:40:53.000Z</lastmod>
   </url>
   <url>
-    <loc>https://smu-libraries.github.io/r-socsci/resources.html</loc>
-    <lastmod>2026-06-18T05:40:53.705Z</lastmod>
+    <loc>https://smu-libraries.github.io/r-socsci/supp-files/resources.html</loc>
+    <lastmod>2026-09-06T08:15:37.271Z</lastmod>
   </url>
 </urlset>
