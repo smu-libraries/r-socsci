@@ -3,23 +3,30 @@ project:
 
 website:
   title: "Introductory R for Social Sciences"
-  page-footer: "Made with love and [Quarto](https://quarto.org/) by [Bella Ratmelia](https://bellaratmelia.github.io/) - [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)."
+  page-footer:
+    center: "Made with love and [Quarto](https://quarto.org/) by [Bella Ratmelia](https://bellaratmelia.github.io/) - [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). &nbsp;·&nbsp; [CoC](supp-files/coc.qmd)"
   navbar:
     left:
       - href: index.qmd
         text: Home
+      - text: Sessions
+        menu:
+          - href: 01-intro.qmd
+            text: "1. Introduction to R and RStudio"
+          - href: 02-tidyverse.qmd
+            text: "2. Data Wrangling with tidyverse"
+          - href: 03-visualization.qmd
+            text: "3. Data Visualization & Descriptive Statistics"
       - href: dataset.qmd
         text: Dataset
-      - href: supp-files/coc.qmd
-        text: Code of conduct
+      - href: supp-files/concept-explainers.qmd
+        text: "Concept explainers"
       - sidebar:resources
-        
+
   sidebar:
     - id: resources
       title: "Resources"
       contents:
-        - href: supp-files/concept-explainers.qmd
-          text: "Interactive concept explainers"
         - href: supp-files/resources.qmd
           text: "Further Readings"
         - href: supp-files/exercises.qmd
