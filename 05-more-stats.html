@@ -274,7 +274,8 @@ Bella Ratmelia
 </section>
 <section id="from-tests-to-models" class="slide level2">
 <h2>From tests to models</h2>
-<p>Session 4 asked <em>“which test?”</em> from your variable types. Regression asks the same kind of question — now the <strong>outcome’s type</strong> picks your model:</p>
+<p>Session 4 asked <em>“which test?”</em> from your variable types.</p>
+<p>Regression asks the same kind of question, but kind of decided by <strong>outcome’s type</strong>:</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -301,17 +302,6 @@ Bella Ratmelia
 </tr>
 </tbody>
 </table>
-<p>Whatever the model, the core skill is the same: <strong>read one coefficient at a time, in the units of your outcome.</strong> If a predictor is categorical, its coefficient is the difference from a <strong>reference</strong> group.</p>
-<div class="callout callout-tip callout-style-simple">
-<div class="callout-body">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-content">
-<p>You already know the shape of this from school: <span class="math inline">\(y = mx + c\)</span>. Regression just adds <em>uncertainty</em> (are the slope and intercept real?) and <em>more predictors</em>.</p>
-</div>
-</div>
-</div>
 </section>
 <section>
 <section id="simple-linear-regression" class="title-slide slide level1 center">
@@ -339,7 +329,7 @@ Bella Ratmelia
 <i class="callout-icon"></i>
 </div>
 <div class="callout-content">
-<p>This is the <span class="math inline">\(y = mx + c\)</span> line from secondary school, dressed up: <span class="math inline">\(\beta_0\)</span> is the intercept (<span class="math inline">\(c\)</span>), <span class="math inline">\(\beta_1\)</span> is the slope (<span class="math inline">\(m\)</span>). Regression’s job is to find the best-fitting <span class="math inline">\(m\)</span> and <span class="math inline">\(c\)</span> from your data — and tell you whether they’re statistically real.</p>
+<p>This is the <span class="math inline">\(y = mx + c\)</span> line from secondary school! <span class="math inline">\(\beta_0\)</span> is the intercept (<span class="math inline">\(c\)</span>), <span class="math inline">\(\beta_1\)</span> is the slope (<span class="math inline">\(m\)</span>). Regression’s job is to find the best-fitting <span class="math inline">\(m\)</span> and <span class="math inline">\(c\)</span> from your data.</p>
 </div>
 </div>
 </div>
@@ -618,16 +608,6 @@ F-statistic: 88.22 on 3 and 5098 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li><p>When interpreting a categorical predictor in regression, one category is treated as the reference category, which serves as the baseline for comparison. In this case, the reference category corresponds to the intercept.</p></li>
 <li><p>By default, the first category in the data is used as the reference — here that’s <strong>Turkey</strong>, so each coefficient is a country’s difference from Turkey.</p></li>
 </ul>
-<div class="callout callout-tip callout-style-simple">
-<div class="callout-body">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-content">
-<p>Sound familiar? This is the same comparison a <strong>one-way ANOVA</strong> makes (Session 4) — a one-way ANOVA <em>is</em> a linear regression with a single categorical predictor.</p>
-</div>
-</div>
-</div>
 </section>
 <section id="narrating-the-result" class="slide level2">
 <h2>Narrating the result</h2>
@@ -743,7 +723,8 @@ F-statistic: 15.22 on 1 and 5100 DF,  p-value: 9.701e-05</code></pre>
 <li><strong>Correlation</strong> is framed around the <strong>strength &amp; direction of a relationship</strong> — <em>“do these two move together, and how tightly?”</em> (symmetric — no outcome vs.&nbsp;predictor)</li>
 <li><strong>Regression</strong> is framed around <strong>predicting</strong> an outcome from predictors — <em>“what’s the relationship, and how big is it?”</em></li>
 </ul>
-<p>They all belong to the <strong>general linear model</strong> family; they differ mainly in the <em>types of variables</em> they take and the <em>question they’re framed around</em>. In fact, <strong>t-tests and ANOVA are special cases of linear regression</strong></p>
+<p>They all belong to the <strong>general linear model</strong> family; they differ mainly in the <em>types of variables</em> they take and the <em>question they’re framed around</em>.</p>
+<p>In a way, <strong>t-tests and ANOVA are special cases of linear regression</strong></p>
 </section>
 <section id="how-theyre-all-equivalent-to-regression" class="slide level2">
 <h2>How they’re all equivalent to regression</h2>
@@ -1032,6 +1013,9 @@ AIC: 6707.1
 
 Number of Fisher Scoring iterations: 4</code></pre>
 </div>
+</div></section><section class="slide level2">
+
+<div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="fu">exp</span>(<span class="fu">coef</span>(life_model6))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                             (Intercept) 
@@ -1047,7 +1031,9 @@ Number of Fisher Scoring iterations: 4</code></pre>
 marital_statusLiving together as married 
                                0.8047474 </code></pre>
 </div>
-</div></section><section id="get-the-χ²-and-r²" class="slide level2">
+</div>
+</section>
+<section id="get-the-χ²-and-r²" class="slide level2">
 <h2>Get the χ² and R²</h2>
 <p>Same as before: <strong>G2</strong> is the model χ² (goodness-of-fit), <strong>Nagelkerke</strong> is the pseudo-R² we’ll report.</p>
 <div class="cell">
@@ -1164,17 +1150,8 @@ marital_statusLiving together as married
 <li class="fragment"><strong>Markdown</strong> — a lightweight, readable way to write formatted text (no messy HTML or LaTeX). Files end in <code>.md</code>.</li>
 <li class="fragment"><strong>R Markdown</strong> — Markdown <strong>+ live R code chunks</strong>, so text, code, and output (tables, plots) live in one document (<code>.Rmd</code>).</li>
 <li class="fragment"><strong>Quarto</strong> — Posit’s next-generation, multi-language successor to R Markdown. It renders most <code>.Rmd</code> files unchanged and can output HTML, Word, PDF, slides, and whole websites.</li>
+<li class="fragment">Fun fact: this entire course website <strong>and</strong> these slides are built in Quarto! <em>(A quick R-Scripts-vs-Quarto comparison is in the appendix.)</em></li>
 </ul>
-<div class="callout callout-note callout-style-simple">
-<div class="callout-body">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-content">
-<p>Fun fact: this entire course website <strong>and</strong> these slides are built in Quarto! <em>(A quick R-Scripts-vs-Quarto comparison is in the appendix.)</em></p>
-</div>
-</div>
-</div>
 </section>
 <section id="how-it-all-works" class="slide level2">
 <h2>How it all works</h2>
