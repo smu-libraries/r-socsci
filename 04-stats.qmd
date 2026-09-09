@@ -19,6 +19,9 @@ Today is really about *With these variables that I have, which test do I reach f
 The choice of appropriate statistical tests and methods often depends on the distribution of the data. Understanding the distribution helps in selecting the right test and judging its validity.
 
 ```{r}
+#| echo: false
+#| message: false
+#| output: true
 # Set a seed for reproducibility
 set.seed(123)
 
@@ -406,15 +409,13 @@ wvs_cleaned |>
 
 ## Conduct the independent samples T-test
 
-Remember, the hypotheses are:
-
 ::::: columns
 ::: {.column width="50%"}
-$H_0$: There is **no** significant difference in mean secular values between urban and rural residents.
+$H_0$: Mean secular values are **equal** for urban and rural residents ($\mu_{urban} = \mu_{rural}$).
 :::
 
 ::: {.column width="50%"}
-$H_1$: There is a significant difference in mean secular values between urban and rural residents.
+$H_1$: Mean secular values are **different** between urban and rural residents ($\mu_{urban} \neq \mu_{rural}$).
 :::
 :::::
 
@@ -424,6 +425,7 @@ $H_1$: There is a significant difference in mean secular values between urban an
 
 t.test(secular_values ~ urban_rural,
        data = wvs_cleaned,
+       alternative = "two.sided", # you can swap this with 'greater' or 'less'
        var.equal = FALSE) 
 ```
 
@@ -530,17 +532,17 @@ Remember, the hypotheses are:
 
 ::::: columns
 ::: {.column width="50%"}
-$H_0$: There is no significant difference in the increase in hours of sleep.
+$H_0$: The mean difference in extra sleep between the two drugs is **zero** ($\mu_d = 0$).
 :::
 
 ::: {.column width="50%"}
-$H_1$: There is a significant difference in the increase in hours of sleep.
+$H_1$: The mean difference in extra sleep between the two drugs is **not zero** ($\mu_d \neq 0$).
 :::
 :::::
 
 ```{r}
 #| echo: true
-#| output-location: fragment
+#| output: true
 
 t.test(Pair(sleep_wide$group_1, sleep_wide$group_2) ~ 1,
        data = sleep)
@@ -586,7 +588,7 @@ $H_1$: Mean life satisfaction is **different** from 6.5 ($\mu \neq 6.5$).
 
 ```{r}
 #| echo: true
-#| output-location: fragment
+#| output: true
 global_mean_satisfaction = 6.5
 
 t.test(wvs_cleaned$life_satisfaction,
@@ -694,10 +696,35 @@ The p-value is tiny — so there *is* a significant difference somewhere.
 
 Cite F with **both** degrees of freedom (the `country` df, then the `Residuals` df), the F value, and the p-value:
 
-$$F(3,\ 5098) = 360,\ p < .001$$
+$$F(3,\ 5098) = 360.00,\ p < .001$$
 
 - The numerator df (3) is from the `country` row, the denominator df (5098) from the `Residuals` row
 - Write `p < .001` rather than R's `<2e-16`
+
+## Side track: what *is* the F statistic?
+
+The F statistic is a **ratio of two variances**: how much the group means differ from each other, versus how much scores vary *within* the groups.
+
+$$F = \frac{\text{variance }between\text{ groups}}{\text{variance }within\text{ groups}} = \frac{\text{signal}}{\text{noise}}$$
+
+
+- **Big F** → the gaps between country means are large compared to the random noise inside each country; this means it's likely a *real* difference.
+- **F near 1** → the between-group gaps are no bigger than the ordinary variation you'd expect by chance; this means probably no real difference.
+- This is literally why it's called **Analysis of *Variance* **, because we compare means *by comparing variances*.
+
+
+## Why report F (and not just p-value)?
+
+The p-value alone tells the reader almost nothing on its own. Reporting the full $F(df_1, df_2) = \dots,\ p$ lets a reader:
+
+- **See the test and its scale.** F with its two df says *which* test you ran and how big the effect is relative to the noise, not just that $p < .05$.
+- **Judge the sample.** The degrees of freedom encode the number of groups and the sample size. A significant result on 5,000 rows will be a very different claim than one on 30.
+- **Reproduce and verify.** Anyone can recompute p from $F$ and the df, or compare your result to others. 
+
+
+::: {.callout-tip appearance="simple"}
+Same idea as the t-test: report the *statistic*, its *df*, and *p* together — never the p-value in isolation.
+:::
 
 # ANOVA - Checking assumptions
 
@@ -729,7 +756,7 @@ Checking the assumptions is the human's job. For ANOVA, the main things to verif
 
 ```{r}
 #| echo: true
-#| output-location: column
+#| output: true
 
 set.seed(123) # so it samples the same way every time
 shapiro.test(sample(residuals(emanc_country_anova), 5000))
@@ -756,7 +783,8 @@ For normality, the visualisation is more helpful, *especially* at large n, where
 #| echo: true
 #| output-location: fragment
 
-plot(emanc_country_anova, 2)
+plot(emanc_country_anova, 2) # 2 is the number for Q-Q plot for ANOVA object's plot() function.
+
 ```
 
 ## Better ways to judge normality at large n 
@@ -768,24 +796,28 @@ With a big sample, lean on *description and pictures* rather than the hypothesis
 - **Histogram** — is the overall shape roughly bell-like?
 - **Skewness & kurtosis** — quick numbers for asymmetry and "peakedness". A common rule of thumb: values roughly between **−2 and +2** are acceptable for parametric tests like ANOVA.
 
+::: {.callout-tip appearance="simple"}
+**What's a Q-Q plot?** It compares your residuals against what a *perfect* normal distribution would look like: your sorted values on the y-axis, the values a normal distribution expects on the x-axis. If the residuals are normal, the points fall along the diagonal line. Curves or points drifting off at the **tails** (top-right / bottom-left) flag departures from normality — but unlike Shapiro-Wilk, the plot lets you *see how big* the departure actually is instead of just getting a pass/fail p-value.
+:::
+
 
 ## Check for skewness and kurtosis
 
 ```{r}
 #| echo: true
-#| output-location: column
+#| output: true
 library(moments)
 
-resid <- residuals(emanc_country_anova)
+resid <- residuals(emanc_country_anova) # get just the residuals
 skewness(resid)       # ~0 = symmetric
 ```
 
 ```{r}
 #| echo: true
-#| output-location: column
+#| output: true
 library(moments)
 
-resid <- residuals(emanc_country_anova)
+resid <- residuals(emanc_country_anova) # get just the residuals
 kurtosis(resid) - 3   # "excess" kurtosis; ~0 = normal-ish
 ```
 Check whether these land inside the ±2 rule of thumb — if they do, that's a good sign the earlier Shapiro-Wilk "failure" was the test over-reacting, not a real problem.
@@ -798,7 +830,7 @@ $H_0$ = variances are equal across groups.
 
 ```{r}
 #| echo: true
-#| output-location: column
+#| output: true
 
 library(car)
 leveneTest(emancipative_values ~ country,
@@ -826,7 +858,7 @@ Two calmer strategies than agonising over Levene's p-value:
 
 ```{r}
 #| echo: true
-#| output-location: column
+#| output: true
 
 wvs_cleaned |>
     group_by(country) |>
@@ -857,10 +889,13 @@ And here we have a big cushion: with ~5,000 observations, the **Central Limit Th
 1.  **Choose another method** — use a test that doesn't lean on those assumptions.
 2.  **Disclose the limitation** — say plainly what was shaky when you report.
 
+## Sample alternative method: Kruskal-Wallis rank sum test
+
 Alternative method: the **Kruskal-Wallis rank sum test** is the non-parametric alternative to one-way ANOVA — same question ("do the groups differ?"), no normality/equal-variance requirement:
 
 ```{r}
 #| echo: true
+#| output: true
 
 kruskal.test(emancipative_values ~ country, data = wvs_cleaned)
 ```
@@ -875,15 +910,15 @@ Assumption-checking is less settled than a textbook makes it look. If you read w
 - **Understand, don't ritualise.** Checking assumptions only helps if you understand *what* each test assumes and *why*. Don't blindly run Shapiro-Wilk on 5,000 rows.
 
 
-IRL data is complicated; **no rulebook — and no AI — removes the need for your judgement** about whether a result can be trusted.
+IRL data is complicated; **no rulebook (and no AI) removes the need for your judgement** about whether a result can be trusted.
 
 ## The discipline (remember this one)
 
-For every test you run — today's and every one after — the same four-step reflex:
+For every test you run (today's and every one after) the same four steps:
 
 
 1.  **Define** your research question and its variables. This will guide you in choosing the statistical test.
-2.  **Check** — understand what the test assumes and judge whether it's plausible (plots + sample size + common sense).
+2.  **Check** — understand what the test assumes and judge whether it's plausible (plots + sample size + common sense + advice from professor if needed).
 3.  **Adapt** if there's real cause for concern — e.g. a non-parametric alternative or a robust method.
 4.  **Disclose** the limitation when you present, especially when real decisions is going to be made based on it — a class policy call, a client in your internship/workplace, your thesis committee.
 
@@ -898,6 +933,7 @@ A significant ANOVA/Kruskal-Wallis only says *"at least one group differs."* To 
 
 ```{r}
 #| echo: true
+#| output: true
 TukeyHSD(emanc_country_anova)
 ```
 
