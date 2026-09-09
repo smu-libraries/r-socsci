@@ -70,18 +70,16 @@ glimpse(wvs_cleaned)
 
 ## From tests to models
 
-Session 4 asked *"which test?"* from your variable types. Regression asks the same kind of question — now the **outcome's type** picks your model:
+Session 4 asked *"which test?"* from your variable types. 
+
+Regression asks the same kind of question, but kind of decided by **outcome's type**:
 
 | Your outcome (Y) | Model | R function |
 |---|---|---|
 | **Continuous** | Linear regression | `lm()` |
 | **Binary** (yes/no) | Logistic regression | `glm(..., family = binomial)` |
 
-Whatever the model, the core skill is the same: **read one coefficient at a time, in the units of your outcome.** If a predictor is categorical, its coefficient is the difference from a **reference** group.
 
-::: {.callout-tip appearance="simple"}
-You already know the shape of this from school: $y = mx + c$. Regression just adds *uncertainty* (are the slope and intercept real?) and *more predictors*.
-:::
 
 # Simple Linear Regression
 
@@ -104,7 +102,7 @@ $$Y = \beta_0 + \beta_1X + \varepsilon$$
 :::::
 
 ::: {.callout-tip appearance="simple"}
-This is the $y = mx + c$ line from secondary school, dressed up: $\beta_0$ is the intercept ($c$), $\beta_1$ is the slope ($m$). Regression's job is to find the best-fitting $m$ and $c$ from your data — and tell you whether they're statistically real.
+This is the $y = mx + c$ line from secondary school! $\beta_0$ is the intercept ($c$), $\beta_1$ is the slope ($m$). Regression's job is to find the best-fitting $m$ and $c$ from your data.
 :::
 
 Examples:
@@ -266,9 +264,6 @@ summary(life_model3)
 
 - By default, the first category in the data is used as the reference — here that's **Turkey**, so each coefficient is a country's difference from Turkey.
 
-::: {.callout-tip appearance="simple"}
-Sound familiar? This is the same comparison a **one-way ANOVA** makes (Session 4) — a one-way ANOVA *is* a linear regression with a single categorical predictor.
-:::
 
 ## Narrating the result
 
@@ -336,7 +331,9 @@ summary(life_model4)
 - **Correlation** is framed around the **strength & direction of a relationship** — *"do these two move together, and how tightly?"* (symmetric — no outcome vs. predictor)
 - **Regression** is framed around **predicting** an outcome from predictors — *"what's the relationship, and how big is it?"*
 
-They all belong to the **general linear model** family; they differ mainly in the *types of variables* they take and the *question they're framed around*. In fact, **t-tests and ANOVA are special cases of linear regression**
+They all belong to the **general linear model** family; they differ mainly in the *types of variables* they take and the *question they're framed around*. 
+
+In a way, **t-tests and ANOVA are special cases of linear regression**
 
 ## How they're all equivalent to regression
 
@@ -517,7 +514,16 @@ life_model6 <- glm(satisfied ~ marital_status,
                       data = wvs_cleaned)
 
 summary(life_model6)
+
+```
+
+---------------
+
+```{r}
+#| echo: true
+
 exp(coef(life_model6))
+
 ```
 
 ## Get the χ² and R²
@@ -584,10 +590,7 @@ exp(coefficients(life_model7))
 - **Markdown** — a lightweight, readable way to write formatted text (no messy HTML or LaTeX). Files end in `.md`.
 - **R Markdown** — Markdown **+ live R code chunks**, so text, code, and output (tables, plots) live in one document (`.Rmd`).
 - **Quarto** — Posit's next-generation, multi-language successor to R Markdown. It renders most `.Rmd` files unchanged and can output HTML, Word, PDF, slides, and whole websites.
-:::
-
-::: {.callout-note appearance="simple"}
-Fun fact: this entire course website **and** these slides are built in Quarto! *(A quick R-Scripts-vs-Quarto comparison is in the appendix.)*
+- Fun fact: this entire course website **and** these slides are built in Quarto! *(A quick R-Scripts-vs-Quarto comparison is in the appendix.)*
 :::
 
 ## How it all works
