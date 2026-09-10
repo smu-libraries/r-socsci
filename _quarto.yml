@@ -17,6 +17,8 @@ website:
             text: "2. Data Wrangling with tidyverse"
           - href: 03-visualization.qmd
             text: "3. Data Visualization & Descriptive Statistics"
+          - href: 04-stats.qmd
+            text: "4. Basic Inferential Tests"
       - href: dataset.qmd
         text: Dataset
       - href: supp-files/concept-explainers.qmd
