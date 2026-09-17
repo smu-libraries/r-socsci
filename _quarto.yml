@@ -19,6 +19,8 @@ website:
             text: "3. Data Visualization & Descriptive Statistics"
           - href: 04-stats.qmd
             text: "4. Basic Inferential Tests"
+          - href: 05-more-stats.qmd
+            text: "5. Linear and Logistic Regressions"
       - href: dataset.qmd
         text: Dataset
       - href: supp-files/concept-explainers.qmd
