@@ -318,7 +318,7 @@ Bella Ratmelia
 <ul>
 <li><span class="math inline">\(Y\)</span> - the dependent variable; <strong>must be continuous</strong></li>
 <li><span class="math inline">\(X\)</span> - the independent variable (if there are more than one, there will be <span class="math inline">\(X_1\)</span> , <span class="math inline">\(X_2\)</span> , and so on. This can be ordinal, nominal, or continuous</li>
-<li><span class="math inline">\(\beta_0\)</span> - the y-intercept. Represents the expected value of independent variable <span class="math inline">\(Y\)</span> when independent variable(s) <span class="math inline">\(X\)</span> are set to zero.</li>
+<li><span class="math inline">\(\beta_0\)</span> - the y-intercept. Represents the expected value of the dependent variable <span class="math inline">\(Y\)</span> when independent variable(s) <span class="math inline">\(X\)</span> are set to zero.</li>
 <li><span class="math inline">\(\beta_1\)</span> - the slope / coefficient for independent variable</li>
 <li><span class="math inline">\(\varepsilon\)</span> - the error term. (In some examples you might see this omitted from the formula).</li>
 </ul>
@@ -690,8 +690,12 @@ F-statistic: 88.22 on 3 and 5098 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>life_model4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> sex, <span class="at">data =</span> wvs_cleaned)</span>
-<span id="cb21-2"><a></a><span class="fu">summary</span>(life_model4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="co"># set "Male" as the reference category, like we did for country</span></span>
+<span id="cb21-2"><a></a>wvs_cleaned <span class="ot">&lt;-</span> wvs_cleaned <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a></a>    <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">relevel</span>(sex, <span class="at">ref =</span> <span class="st">"Male"</span>))</span>
+<span id="cb21-4"><a></a></span>
+<span id="cb21-5"><a></a>life_model4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(life_satisfaction <span class="sc">~</span> sex, <span class="at">data =</span> wvs_cleaned)</span>
+<span id="cb21-6"><a></a><span class="fu">summary</span>(life_model4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -776,9 +780,9 @@ F-statistic: 15.22 on 1 and 5100 DF,  p-value: 9.701e-05</code></pre>
 <section id="so-which-one-should-i-use" class="slide level2">
 <h2>So which one should I use?</h2>
 <ul>
-<li><strong>Any of them</strong> — pick the framing that fits your <strong>question</strong> and what your <strong>reader</strong> expects (many fields/professors expect a “t-test” or “ANOVA” for a group comparison).</li>
+<li><strong>Short answer: it depends</strong>. Pick the framing that fits your <strong>question</strong> and what your <strong>reader</strong> expects (many fields/professors expect a “t-test” or “ANOVA” for a group comparison).</li>
 <li><strong>Regression</strong> is the most general, flexible member of the family: many predictors, continuous + categorical mixed, and interactions.</li>
-<li>And <strong>logistic regression</strong> extends the very same idea to <em>binary</em> outcomes — which is exactly where we’re headed next.</li>
+<li>And <strong>logistic regression</strong> extends the very same idea to <em>binary</em> outcomes.</li>
 </ul>
 </section></section>
 <section>
@@ -824,10 +828,20 @@ F-statistic: 15.22 on 1 and 5100 DF,  p-value: 9.701e-05</code></pre>
 <ul>
 <li><p>The outcome/DV (<span class="math inline">\(Y\)</span>): <code>satisfied</code></p>
 <ul>
-<li>Our outcome is a continuous variable, but for the purpose of this workshop practice, let’s define the outcome as “Satisfied” if the life_satisfaction score is more than 7 (inclusive), and “not Satisfied” if the score is less than 7.</li>
+<li>Our outcome is a continuous variable, but for the purpose of this workshop practice, let’s define the outcome as “Satisfied” if the life_satisfaction score is <strong>7 or higher</strong>, and “not Satisfied” if the score is <strong>below 7</strong>.</li>
 </ul></li>
 <li><p>The predictor/IV (<span class="math inline">\(X\)</span>): <code>freedom_of_choice</code></p></li>
 </ul>
+<div class="callout callout-warning callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>We’re doing this only to have a binary dependent variable outcome to practice on. In real research, <strong>avoid chopping a continuous variable into two</strong> — it throws away information and statistical power. If your outcome is genuinely continuous, keep it continuous and use linear regression.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="dummy-coding-dependent-variable" class="slide level2">
 <h2>Dummy-coding dependent variable</h2>
@@ -886,7 +900,7 @@ Number of Fisher Scoring iterations: 3</code></pre>
 </section>
 <section id="exponentiate-the-coefficients" class="slide level2">
 <h2>Exponentiate the coefficients</h2>
-<p>If you recall the formula, the results are expressed in Logit Probability. As we typically report the result in terms of Odd Ratios (OR), perform exponentiation on the coefficients.</p>
+<p>If you recall the formula, the results are expressed in Logit Probability. As we typically report the result in terms of Odds Ratios (OR), perform exponentiation on the coefficients.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">exp</span>(<span class="fu">coef</span>(life_model5))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -900,7 +914,7 @@ Number of Fisher Scoring iterations: 3</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-content">
-<p><code>exp(coef(model))</code> is all you need to turn the log-odds into <strong>odds ratios</strong> — the numbers you actually report. (A formatted table version using <code>tbl_regression()</code> is in the appendix.)</p>
+<p><code>exp(coef(model))</code> is all you need to turn the log-odds into <strong>odds ratios</strong>, which is the numbers you report. (A formatted table version using <code>tbl_regression()</code> is in the appendix.)</p>
 </div>
 </div>
 </div>
@@ -924,7 +938,7 @@ Number of Fisher Scoring iterations: 3</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-content">
-<p>There are several pseudo-R² flavours (McFadden, Cox-Snell, …). Pick one and be consistent — <strong>Nagelkerke</strong> is a safe default. <em>(The full list, and how to compute the χ² by hand, are in the appendix.)</em></p>
+<p>There are several pseudo-R² flavors (McFadden, Cox-Snell, …). Pick one and be consistent — <strong>Nagelkerke</strong> is a safe default. <em>(The full list, and how to compute the χ² by hand, are in the appendix.)</em></p>
 </div>
 </div>
 </div>
@@ -934,10 +948,10 @@ Number of Fisher Scoring iterations: 3</code></pre>
 <p><strong>Possible interpretation:</strong></p>
 <p><em>(The intercept isn’t typically interpreted as an odds ratio, so we’ll ignore that for now)</em></p>
 <blockquote>
-<p>A logistic regression was performed to ascertain the effects of freedom of choice on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ² (1, N = [N]) = [χ²], p &lt; .001.</p>
+<p>A logistic regression was performed to ascertain the effects of freedom of choice on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ²(1, N = 5102) = 906.91, p &lt; .001.</p>
 </blockquote>
 <blockquote>
-<p>The model explained [Nagelkerke R²]% (Nagelkerke R²) of the variance in life satisfaction. Freedom of choice was associated with [increased/decreased] likelihood of being satisfied with life (OR = [OR], 95% CI [[lower], [upper]], p &lt; .001), indicating that for each one-unit increase in freedom of choice (1-10), the odds of being satisfied with life changed by [OR-1 as %]%.</p>
+<p>The model explained about 22.2% (Nagelkerke R²) of the variance in life satisfaction. Freedom of choice was associated with an <strong>increased</strong> likelihood of being satisfied with life (OR = 1.58, 95% CI [1.53, 1.63], p &lt; .001), indicating that for each one-unit increase in freedom of choice (1-10), the odds of being satisfied with life increased by about 58%.</p>
 </blockquote>
 
 <aside><div>
@@ -956,7 +970,7 @@ Number of Fisher Scoring iterations: 3</code></pre>
 <h2>FYI - IRL sample of reporting Logistic Regression</h2>
 <p>Below is a sample of how you may want to narrate your result. Note the resulting values mentioned in the paragraph below.</p>
 <p><img data-src="images/logreg-reporting.jpg"></p>
-<p>In a nutshell, you will most likely have to mention the p-value, the coefficients (for linear regressions), the Odd Ratios (for logistic regression) with the confidence intervals, the chi-squared (χ²), and the R-squared. You should also include these information in your regression table.</p>
+<p>In a nutshell, you will most likely have to mention the p-value, the coefficients (for linear regressions), the Odds Ratios (for logistic regression) with the confidence intervals, the chi-squared (χ²), and the R-squared. You should also include these information in your regression table.</p>
 
 <aside><div>
 <p>The screenshot is retrieved from <a href="https://statistics.laerd.com/spss-tutorials/binomial-logistic-regression-using-spss-statistics.php" class="uri">https://statistics.laerd.com/spss-tutorials/binomial-logistic-regression-using-spss-statistics.php</a></p>
@@ -1050,7 +1064,7 @@ marital_statusLiving together as married
 <p><strong>Possible interpretation:</strong></p>
 <p><em>(The intercept isn’t typically interpreted as an odds ratio, so we’ll ignore that for now)</em></p>
 <blockquote>
-<p>A logistic regression was performed to ascertain the effects of marital status on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ²(5, N = 5102) = 43.9, p &lt; .001.</p>
+<p>A logistic regression was performed to ascertain the effects of marital status on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ²(5, N = 5102) = 43.8, p &lt; .001.</p>
 </blockquote>
 <blockquote>
 <p>The model explained about 1.2% of the variance in life satisfaction (Nagelkerke R² ≈ 0.012 — read it off the <code>PseudoR2()</code> output). Compared to <strong>single</strong> respondents (the reference group), <strong>married</strong> respondents had significantly higher odds of being satisfied with life (OR = 1.47, 95% CI [1.29, 1.67], p &lt; .001) — roughly 47% higher odds. None of the other categories (widowed, divorced, separated, or living together) differed significantly from single respondents (all p &gt; .05).</p>
