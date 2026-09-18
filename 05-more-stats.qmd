@@ -95,7 +95,7 @@ $$Y = \beta_0 + \beta_1X + \varepsilon$$
 ::: {.column style="font-size: 75%; width: 70%;"}
 - $Y$ - the dependent variable; **must be continuous**
 - $X$ - the independent variable (if there are more than one, there will be $X_1$ , $X_2$ , and so on. This can be ordinal, nominal, or continuous
-- $\beta_0$ - the y-intercept. Represents the expected value of independent variable $Y$ when independent variable(s) $X$ are set to zero.
+- $\beta_0$ - the y-intercept. Represents the expected value of the dependent variable $Y$ when independent variable(s) $X$ are set to zero.
 - $\beta_1$ - the slope / coefficient for independent variable
 - $\varepsilon$ - the error term. (In some examples you might see this omitted from the formula).
 :::
@@ -319,6 +319,10 @@ Create a regression model called `life_model4` that predicts the `life_satisfact
 #| output: true
 #| code-fold: true
 
+# set "Male" as the reference category, like we did for country
+wvs_cleaned <- wvs_cleaned |>
+    mutate(sex = relevel(sex, ref = "Male"))
+
 life_model4 <- lm(life_satisfaction ~ sex, data = wvs_cleaned)
 summary(life_model4)
 ```
@@ -353,9 +357,9 @@ Want to dig deeper? [This StackExchange thread](https://stats.stackexchange.com/
 
 ## So which one should I use?
 
-- **Any of them** — pick the framing that fits your **question** and what your **reader** expects (many fields/professors expect a "t-test" or "ANOVA" for a group comparison).
+- **Short answer: it depends**. Pick the framing that fits your **question** and what your **reader** expects (many fields/professors expect a "t-test" or "ANOVA" for a group comparison).
 - **Regression** is the most general, flexible member of the family: many predictors, continuous + categorical mixed, and interactions.
-- And **logistic regression** extends the very same idea to *binary* outcomes — which is exactly where we're headed next.
+- And **logistic regression** extends the very same idea to *binary* outcomes.
 
 # Binary Logistic Regression
 
@@ -390,9 +394,13 @@ In essence, the goal of binary logistic regression is to estimate the probabilit
 
 - The outcome/DV ($Y$): `satisfied`
 
-  - Our outcome is a continuous variable, but for the purpose of this workshop practice, let's define the outcome as "Satisfied" if the life_satisfaction score is more than 7 (inclusive), and "not Satisfied" if the score is less than 7.
+  - Our outcome is a continuous variable, but for the purpose of this workshop practice, let's define the outcome as "Satisfied" if the life_satisfaction score is **7 or higher**, and "not Satisfied" if the score is **below 7**.
 
 - The predictor/IV ($X$): `freedom_of_choice`
+
+::: {.callout-warning appearance="simple"}
+We're doing this only to have a binary dependent variable outcome to practice on. In real research, **avoid chopping a continuous variable into two** — it throws away information and statistical power. If your outcome is genuinely continuous, keep it continuous and use linear regression.
+:::
 
 ## Dummy-coding dependent variable
 
@@ -427,7 +435,7 @@ summary(life_model5)
 
 ## Exponentiate the coefficients
 
-If you recall the formula, the results are expressed in Logit Probability. As we typically report the result in terms of Odd Ratios (OR), perform exponentiation on the coefficients.
+If you recall the formula, the results are expressed in Logit Probability. As we typically report the result in terms of Odds Ratios (OR), perform exponentiation on the coefficients.
 
 ```{r}
 #| echo: true
@@ -437,7 +445,7 @@ exp(coef(life_model5))
 ```
 
 ::: {.callout-tip appearance="simple"}
-`exp(coef(model))` is all you need to turn the log-odds into **odds ratios** — the numbers you actually report. (A formatted table version using `tbl_regression()` is in the appendix.)
+`exp(coef(model))` is all you need to turn the log-odds into **odds ratios**, which is the numbers you  report. (A formatted table version using `tbl_regression()` is in the appendix.)
 :::
 
 ## Model significance (χ²) and R² for logistic
@@ -453,7 +461,7 @@ DescTools::PseudoR2(life_model5,
 ```
 
 ::: {.callout-note appearance="simple"}
-There are several pseudo-R² flavours (McFadden, Cox-Snell, …). Pick one and be consistent — **Nagelkerke** is a safe default. *(The full list, and how to compute the χ² by hand, are in the appendix.)*
+There are several pseudo-R² flavors (McFadden, Cox-Snell, …). Pick one and be consistent — **Nagelkerke** is a safe default. *(The full list, and how to compute the χ² by hand, are in the appendix.)*
 :::
 
 ## Possible interpretation of the result
@@ -462,9 +470,9 @@ There are several pseudo-R² flavours (McFadden, Cox-Snell, …). Pick one and b
 
 *(The intercept isn't typically interpreted as an odds ratio, so we'll ignore that for now)*
 
-> A logistic regression was performed to ascertain the effects of freedom of choice on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ² (1, N = \[N\]) = \[χ²\], p \< .001.
+> A logistic regression was performed to ascertain the effects of freedom of choice on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ²(1, N = 5102) = 906.91, p \< .001.
 
-> The model explained \[Nagelkerke R²\]% (Nagelkerke R²) of the variance in life satisfaction. Freedom of choice was associated with \[increased/decreased\] likelihood of being satisfied with life (OR = \[OR\], 95% CI \[\[lower\], \[upper\]\], p \< .001), indicating that for each one-unit increase in freedom of choice (1-10), the odds of being satisfied with life changed by \[OR-1 as %\]%.
+> The model explained about 22.2% (Nagelkerke R²) of the variance in life satisfaction. Freedom of choice was associated with an **increased** likelihood of being satisfied with life (OR = 1.58, 95% CI \[1.53, 1.63\], p \< .001), indicating that for each one-unit increase in freedom of choice (1-10), the odds of being satisfied with life increased by about 58%.
 
 ::: aside
 More on interpreting Odds Ratio: <https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/>
@@ -489,7 +497,7 @@ Below is a sample of how you may want to narrate your result. Note the resulting
 
 ![](images/logreg-reporting.jpg)
 
-In a nutshell, you will most likely have to mention the p-value, the coefficients (for linear regressions), the Odd Ratios (for logistic regression) with the confidence intervals, the chi-squared (χ²), and the R-squared. You should also include these information in your regression table.
+In a nutshell, you will most likely have to mention the p-value, the coefficients (for linear regressions), the Odds Ratios (for logistic regression) with the confidence intervals, the chi-squared (χ²), and the R-squared. You should also include these information in your regression table.
 
 ::: aside
 The screenshot is retrieved from <https://statistics.laerd.com/spss-tutorials/binomial-logistic-regression-using-spss-statistics.php>
@@ -542,7 +550,7 @@ DescTools::PseudoR2(life_model6,
 
 *(The intercept isn't typically interpreted as an odds ratio, so we'll ignore that for now)*
 
-> A logistic regression was performed to ascertain the effects of marital status on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ²(5, N = 5102) = 43.9, p \< .001.
+> A logistic regression was performed to ascertain the effects of marital status on the likelihood that individuals will be satisfied with life versus not satisfied. The logistic regression model was statistically significant, χ²(5, N = 5102) = 43.8, p \< .001.
 
 > The model explained about 1.2% of the variance in life satisfaction (Nagelkerke R² ≈ 0.012 — read it off the `PseudoR2()` output). Compared to **single** respondents (the reference group), **married** respondents had significantly higher odds of being satisfied with life (OR = 1.47, 95% CI \[1.29, 1.67\], p \< .001) — roughly 47% higher odds. None of the other categories (widowed, divorced, separated, or living together) differed significantly from single respondents (all p \> .05).
 
